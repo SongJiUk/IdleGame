@@ -61,5 +61,10 @@ public static class Utils
         return _go != null && _go.activeSelf;
     }
 
+    //지수증가 공식(레벨, 스테이지데이터)
+    public static float CalculatedValue(float _baseValue, int _level, float _value)
+    {
+        return _baseValue * Mathf.Pow(_level, _value);
+    }
 
 }
