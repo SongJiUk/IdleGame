@@ -40,6 +40,9 @@
      <Compile Include="Assets/@Scripts/Utils/Utils.cs" />
      <Compile Include="Assets/@Scripts/Utils/Define.cs" />
      <Compile Include="Assets/@Scripts/UI/UI_EventHandler.cs" />
+     <Compile Include="Assets/@Scripts/Manager/PoolManager.cs" />
+     <Compile Include="Assets/@Scripts/Manager/Managers.cs" />
+     <Compile Include="Assets/@Scripts/Manager/UpdateManager.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/Applications/Unity/Hub/Editor/2021.3.21f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

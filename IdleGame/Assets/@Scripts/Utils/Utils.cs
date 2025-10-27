@@ -54,4 +54,12 @@ public static class Utils
 
         return null;
     }
+
+    //오브젝트가 있는지, 활성화중인지 확인하는 Util
+    public static bool IsValid(this GameObject _go)
+    {
+        return _go != null && _go.activeSelf;
+    }
+
+
 }
