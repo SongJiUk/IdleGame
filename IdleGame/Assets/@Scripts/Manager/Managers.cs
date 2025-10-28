@@ -7,10 +7,10 @@ public class Managers : MonoBehaviour
     static Managers instance;
     static bool init = false;
 
-    PoolManager poolManager = new PoolManager();
-    ResourceManager resourceManager = new ResourceManager();
+    readonly PoolManager poolManager = new();
+    readonly ResourceManager resourceManager = new();
 
-    UIManager uIManager = new UIManager();
+    readonly UIManager uIManager = new();
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
     public static ResourceManager ResourceM { get { return Instance?.resourceManager; } }

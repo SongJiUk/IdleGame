@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class UIManager
 {
-    Stack<UI_Base> popupStack = new Stack<UI_Base>();
+    readonly Stack<UI_Base> popupStack = new();
 
     public GameObject Root
     {

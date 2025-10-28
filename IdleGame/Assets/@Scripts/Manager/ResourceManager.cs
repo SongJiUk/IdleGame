@@ -13,9 +13,8 @@ using System.Linq;
 
 public class ResourceManager
 {
-    Dictionary<string, Object> resourceDic = new Dictionary<string, Object>();
-    Dictionary<string, string> keyToLabelDic = new Dictionary<string, string>();
-    public Dictionary<string, Object> ResourceDic { get; }
+    Dictionary<string, Object> resourceDic = new();
+    Dictionary<string, string> keyToLabelDic = new();
 
     public T Load<T>(string _key) where T : Object
     {

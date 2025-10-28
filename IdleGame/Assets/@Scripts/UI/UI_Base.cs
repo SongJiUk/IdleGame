@@ -36,7 +36,7 @@ public class UI_Base : MonoBehaviour
 
 
     #region 바인딩
-    protected Dictionary<Type, UnityEngine.Object[]> objs_Dic = new Dictionary<Type, UnityEngine.Object[]>();
+    protected Dictionary<Type, UnityEngine.Object[]> objs_Dic = new();
 
     protected void Bind<T>(Type _type) where T : UnityEngine.Object
     {
