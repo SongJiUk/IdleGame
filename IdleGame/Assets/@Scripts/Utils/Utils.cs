@@ -1,6 +1,11 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition.Hosting;
+using System.Globalization;
 using UnityEngine;
+using System.Runtime.InteropServices;
+using UnityEngine.EventSystems;
 
 public static class Utils
 {
@@ -67,4 +72,217 @@ public static class Utils
         return _baseValue * Mathf.Pow(_level, _value);
     }
 
+    #region UI관련
+    public static void BindEvent(this GameObject _go, Action _action = null, Action<BaseEventData> _dragAction = null, Define.UIEvent _type = Define.UIEvent.Click)
+    {
+        UI_Base.BindEvent(_go, _action, _dragAction, _type);
+    }
+    #endregion
+
+
+    #region  StringMethod
+    //StringMethod
+    const string Zero = "0";
+    static readonly string[] CurrencyUnits = new string[]
+    {
+         "",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "Z",
+            "AA",
+            "AB",
+            "AC",
+            "AD",
+            "AE",
+            "AF",
+            "AG",
+            "AH",
+            "AI",
+            "AJ",
+            "AK",
+            "AL",
+            "AM",
+            "AN",
+            "AO",
+            "AP",
+            "AQ",
+            "AR",
+            "AS",
+            "AT",
+            "AU",
+            "AV",
+            "AW",
+            "AX",
+            "AY",
+            "AZ",
+            "BA",
+            "BB",
+            "BC",
+            "BD",
+            "BE",
+            "BF",
+            "BG",
+            "BH",
+            "BI",
+            "BJ",
+            "BK",
+            "BL",
+            "BM",
+            "BN",
+            "BO",
+            "BP",
+            "BQ",
+            "BR",
+            "BS",
+            "BT",
+            "BU",
+            "BV",
+            "BW",
+            "BX",
+            "BY",
+            "BZ",
+            "CA",
+            "CB",
+            "CC",
+            "CD",
+            "CE",
+            "CF",
+            "CG",
+            "CH",
+            "CI",
+            "CJ",
+            "CK",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CP",
+            "CQ",
+            "CR",
+            "CS",
+            "CT",
+            "CU",
+            "CV",
+            "CW",
+            "CX",
+    };
+    public static string ToCurrencyString(this double _number, CurrencyType _currencyType = CurrencyType.Default)
+    {
+        if (-1d < _number && _number < 1d)
+        {
+            return Zero;
+        }
+
+        if (true == double.IsInfinity(_number))
+        {
+            return "Infinity";
+        }
+
+        string significant = (_number < 0) ? "-" : string.Empty;
+
+        string showNumber = string.Empty;
+        string unitString = string.Empty;
+
+        string[] partsSplit = _number.ToString("E").Split('+');
+
+        if (partsSplit.Length < 2)
+        {
+            Debug.LogWarning(string.Format("Failed - ToCurrencyString({0}) partsSplit[1] = {1}", _number));
+            return Zero;
+        }
+
+        if (false == int.TryParse(partsSplit[1], out int exponent))
+        {
+            Debug.LogWarning(string.Format("Failed - ToCurrencyString({0}) : partsSplit[1] = {1}", _number, partsSplit[1]));
+            return Zero;
+        }
+
+        int quotient = exponent / 3;
+        int remainder = exponent % 3;
+
+        if (exponent < 3)
+        {
+            showNumber = System.Math.Truncate(_number).ToString();
+        }
+        else
+        {
+            var temp = double.Parse(partsSplit[0].Replace("E", "")) * Math.Pow(10, remainder);
+
+            showNumber = temp.ToString("F").Replace(".00", "");
+        }
+
+        if (_currencyType == CurrencyType.Default)
+        {
+            unitString = CurrencyUnits[quotient];
+        }
+
+        return string.Format("{0}{1}{2}", significant, showNumber, unitString);
+    }
+
+    public static double ToCurrencyDouble(this string _currencyString, CurrencyType _stringType = CurrencyType.Default)
+    {
+        double result = 0;
+        bool isNumber = double.TryParse(_currencyString, out result);
+
+        if (true == isNumber)
+        {
+            return result;
+        }
+        else
+        {
+            int length = _currencyString.Length;
+            int lastNumberIndex = -1;
+
+            for (int i = length - 1; i <= i; --i)
+            {
+                if (true == char.IsNumber(_currencyString, i))
+                {
+                    lastNumberIndex = i;
+                    break;
+                }
+            }
+
+            if (lastNumberIndex < 0)
+            {
+                throw new Exception("Failed currency string");
+            }
+
+            string number = _currencyString.Substring(0, lastNumberIndex + 1);
+            string unit = _currencyString.Substring(lastNumberIndex + 1);
+
+            int index = Array.FindIndex(CurrencyUnits, p => p == unit);
+            if (-1 == index)
+            {
+                throw new Exception("Failed currency string");
+            }
+
+            string exponentNumber = string.Format("{0}E+{1]}", number, index * 3);
+
+            return double.Parse(exponentNumber);
+        }
+    }
+    #endregion
 }

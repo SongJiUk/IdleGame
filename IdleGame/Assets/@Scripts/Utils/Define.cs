@@ -15,4 +15,9 @@ public static class Define
         BeginDrag,
         EndDrag
     }
+    public enum CurrencyType
+    {
+        Default,
+        SI,
+    }
 }

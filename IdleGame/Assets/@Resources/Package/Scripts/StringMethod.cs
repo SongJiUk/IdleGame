@@ -6,7 +6,6 @@ using UnityEngine;
 public enum CurrencyType
 {
     Default,
-    SI,
 }
 
 public static partial class StringMethod
