@@ -25,7 +25,7 @@ public static class Utils
     public static GameObject FindChild(GameObject _go, string _name = null, bool _recursive = false)
     {
         Transform tr = FindChild<Transform>(_go, _name, _recursive);
-        if (tr = null) return null;
+        if (tr == null) return null;
 
         return tr.gameObject;
     }

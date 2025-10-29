@@ -15,6 +15,14 @@ public class ResourceManager
 {
     Dictionary<string, Object> resourceDic = new();
     Dictionary<string, string> keyToLabelDic = new();
+    //TODO : 지울거
+    public Dictionary<string, Object> ResourcDic
+    {
+        get
+        {
+            return resourceDic;
+        }
+    }
 
     public T Load<T>(string _key) where T : Object
     {

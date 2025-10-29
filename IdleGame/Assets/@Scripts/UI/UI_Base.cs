@@ -12,7 +12,7 @@ public class UI_Base : MonoBehaviour
     #region 초기화
     protected bool isInit = false;
 
-    protected Type gameObjects;
+    protected Type gameObjectsType;
     protected Type ImagesType;
     protected Type TextsType;
     protected Type ButtonsType;
