@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class MonsterController : CreatureController
 {
-
-    void OnEnable() => Managers.UpdateM.Register(this);
-    void OnDisable() => Managers.UpdateM.UnRegister(this);
-
-
     Vector3 startPos;
     #region 넉백 변수
     bool isKnockBack = false;
@@ -21,17 +16,30 @@ public class MonsterController : CreatureController
     float lifeTime = 8f;
     #endregion
 
+
     public override bool Init()
     {
         if (!base.Init()) return false;
         isDead = false;
-        lifeTime = 10f;
+        lifeTime = 5f;
         //TODO : 몬스터 처음나올때 초기화해주기
         //sAttack = Utils.Datas.levelData.Base_Attack;
         return true;
     }
+
+    void OnEnable()
+    {
+        Managers.UpdateM.Register(this);
+        SetInfo();
+
+    }
+    void OnDisable() => Managers.UpdateM.UnRegister(this);
+
     public override void SetInfo()
     {
+        isDead = false;
+        isKnockBack = false;
+        lifeTime = 5f;
 
     }
 
@@ -65,6 +73,7 @@ public class MonsterController : CreatureController
         if (lifeTime <= 0f)
         {
             Managers.ObjectM.DeSpawn(this);
+            isDead = true;
             return;
         }
         FindClosetTarget(Managers.ObjectM.pcSet);

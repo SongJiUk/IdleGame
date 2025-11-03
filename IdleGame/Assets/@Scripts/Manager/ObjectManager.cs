@@ -35,7 +35,7 @@ public class ObjectManager
             if (mc is MonsterController monster)
             {
                 monster.SetInfo();
-                mc.name = "";
+                mc.name = Managers.DataM.CreatureDataDic[10000].prefabName;
                 mcSet.Add(monster);
             }
 

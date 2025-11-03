@@ -6,7 +6,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour, ITickable
 {
 
-    float spawnInterval = 5f;
+    float spawnInterval = 3f;
     float spawnTimer = 0f;
 
     public bool isStop { get; set; } = false;
@@ -31,6 +31,7 @@ public class SpawnManager : MonoBehaviour, ITickable
         for (int i = 0; i < 5; i++)
         {
             Managers.ObjectM.Spawn<MonsterController>(Utils.CreateMonsterSpawnPoint(), 10000);
+
         }
     }
     public void Tick(float _deltaTime)
