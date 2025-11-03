@@ -11,9 +11,9 @@ public class Managers : MonoBehaviour
     readonly ResourceManager resourceManager = new();
 
     readonly UIManager uIManager = new();
-    UpdateManager updateManager = new();
+    UpdateManager updateManager = null;
     readonly ObjectManager objectManager = new();
-    readonly SpawnManager spawnManager = new();
+    SpawnManager spawnManager = null;
     readonly GameManager gameManager = new();
     readonly DataManager dataManager = new();
     readonly CustomSceneManager customSceneManager = new();
@@ -49,6 +49,7 @@ public class Managers : MonoBehaviour
                 DontDestroyOnLoad(go);
                 instance = go.GetComponent<Managers>();
                 instance.updateManager = go.AddComponent<UpdateManager>();
+                instance.spawnManager = go.AddComponent<SpawnManager>();
 
             }
 

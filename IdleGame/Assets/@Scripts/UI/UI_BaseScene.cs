@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class UI_BaseScene : UI_Scene
 {
@@ -126,10 +127,11 @@ public class UI_BaseScene : UI_Scene
         enforceBtn = GetButton(ButtonsType, (int)Buttons.EnforceButton);
         shopBtn = GetButton(ButtonsType, (int)Buttons.ShopButton);
 
-        Managers.SpawnM.StartSpawn();
+
+
         UpdateUIState();
         //UI_Toast ui_Toast = Managers.UIM.ShowPopup<UI_Toast>();
-
+        StartSpawnAfterDelay().Forget();
         return true;
     }
 
@@ -209,5 +211,12 @@ public class UI_BaseScene : UI_Scene
         selectedButton = clickedButton;
     }
 
+
+    async UniTaskVoid StartSpawnAfterDelay()
+    {
+        await UniTask.Yield();
+
+        Managers.SpawnM.StartSpawn();
+    }
 
 }

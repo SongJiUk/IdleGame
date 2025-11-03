@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour, ITickable
@@ -11,7 +12,12 @@ public class SpawnManager : MonoBehaviour, ITickable
     public bool isStop { get; set; } = false;
 
     public void StartSpawn()
-    {
+    {   //TODO : 이거 여기서 생성할지 생각해보자
+        for (int i = 1; i <= 1; i++)
+        {
+            Managers.ObjectM.Spawn<PlayerController>(Vector3.zero, i);
+        }
+
         Managers.UpdateM.Register(this);
     }
 

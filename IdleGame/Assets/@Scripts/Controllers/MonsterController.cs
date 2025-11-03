@@ -18,12 +18,14 @@ public class MonsterController : CreatureController
     float knockBackTime;
     float knockBackElapsed;
 
+    float lifeTime = 8f;
     #endregion
 
     public override bool Init()
     {
         if (!base.Init()) return false;
         isDead = false;
+        lifeTime = 10f;
         //TODO : 몬스터 처음나올때 초기화해주기
         //sAttack = Utils.Datas.levelData.Base_Attack;
         return true;
@@ -59,7 +61,15 @@ public class MonsterController : CreatureController
     public override void Tick(float _deltaTime)
     {
         if (isDead) return;
-        transform.LookAt(Vector3.zero);
+        lifeTime -= _deltaTime;
+        if (lifeTime <= 0f)
+        {
+            Managers.ObjectM.DeSpawn(this);
+            return;
+        }
+        FindClosetTarget(Managers.ObjectM.pcSet);
+        transform.LookAt(target.transform);
+
 
         if (isKnockBack)
         {
@@ -70,6 +80,8 @@ public class MonsterController : CreatureController
         if (target.gameObject != null)
         {
             float targetPos = Vector3.Distance(transform.position, target.transform.position);
+            transform.LookAt(target.transform);
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
         }
         else
         {

@@ -16,7 +16,7 @@ public class ObjectManager
         //TODO : 화이팅..
         if (type == typeof(PlayerController))
         {
-            GameObject go = Managers.ResourceM.Instantiate("", _pooling: true);
+            GameObject go = Managers.ResourceM.Instantiate(Managers.DataM.CreatureDataDic[1].prefabName, _pooling: true);
             go.transform.position = _pos;
             T pc = go.GetOrAddComponent<T>();
             pcSet.Add(pc as PlayerController);
@@ -28,7 +28,7 @@ public class ObjectManager
         if (type == typeof(MonsterController))
         {
             //TODO : 스폰
-            GameObject go = Managers.ResourceM.Instantiate("", _pooling: true);
+            GameObject go = Managers.ResourceM.Instantiate(Managers.DataM.CreatureDataDic[10000].prefabName, _pooling: true);
             T mc = go.GetOrAddComponent<T>();
             go.transform.position = _pos;
 

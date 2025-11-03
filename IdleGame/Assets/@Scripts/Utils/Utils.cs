@@ -71,7 +71,7 @@ public static class Utils
     }
 
     //몬스터 소환 위치
-    public static Vector2 CreateMonsterSpawnPoint()
+    public static Vector3 CreateMonsterSpawnPoint()
     {
 
         Vector3 spawnPos = Vector3.zero + UnityEngine.Random.insideUnitSphere * 5f;
