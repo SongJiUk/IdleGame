@@ -31,7 +31,7 @@ public class UpdateManager : MonoBehaviour
     }
 
 
-    void Update()
+    private void Update()
     {
         if (isPaused) return;
         float deltaTime = Time.deltaTime;

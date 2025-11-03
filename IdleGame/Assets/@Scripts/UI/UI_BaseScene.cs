@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using UnityEngine.UI;
 using UnityEngine;
 
-public class UI_BaseScene : UI_Base
+public class UI_BaseScene : UI_Scene
 {
     enum Buttons
     {
@@ -71,8 +74,28 @@ public class UI_BaseScene : UI_Base
         Character5_Icon,
         Character5_CoolTimeImage,
         Exp_FillImage,
-
     }
+
+    RectTransform statButtonRect;
+    RectTransform heroButtonRect;
+    RectTransform relicsButtonRect;
+    RectTransform dungeonButtonRect;
+    RectTransform enforceButtonRect;
+    RectTransform shopButtonRect;
+
+
+    Button selectedButton = null;
+    Button clickedButton = null;
+    Button statBtn;
+    Button heroBtn;
+    Button relicsBtn;
+    Button dungeonBtn;
+    Button enforceBtn;
+    Button shopBtn;
+
+
+
+
     public override bool Init()
     {
         if (!base.Init()) return false;
@@ -84,21 +107,33 @@ public class UI_BaseScene : UI_Base
         BindText(TextsType);
         BindImage(ImagesType);
 
-        GetButton(ButtonsType, (int)Buttons.QuestButton).gameObject.BindEvent(OnClickQuestButton);
-        GetButton(ButtonsType, (int)Buttons.StatButton).gameObject.BindEvent(OnClickStatButton);
-        GetButton(ButtonsType, (int)Buttons.HeroButton).gameObject.BindEvent(OnClickHeroButton);
-        GetButton(ButtonsType, (int)Buttons.RelicsButton).gameObject.BindEvent(OnClickRelicsButton);
-        GetButton(ButtonsType, (int)Buttons.DungeonButton).gameObject.BindEvent(OnClickDungeonButton);
-        GetButton(ButtonsType, (int)Buttons.EnforceButton).gameObject.BindEvent(OnClickEnforceButton);
-        GetButton(ButtonsType, (int)Buttons.ShopButton).gameObject.BindEvent(OnClickShopButton);
+        foreach (Buttons buttonType in Enum.GetValues(typeof(Buttons)))
+        {
+            GetButton(ButtonsType, (int)buttonType).gameObject.BindEvent(() => OnClickAnyButtons(buttonType));
+        }
+        // GetButton(ButtonsType, (int)Buttons.QuestButton).gameObject.BindEvent(OnClickQuestButton);
+        // GetButton(ButtonsType, (int)Buttons.StatButton).gameObject.BindEvent(OnClickStatButton);
+        // GetButton(ButtonsType, (int)Buttons.HeroButton).gameObject.BindEvent(OnClickHeroButton);
+        // GetButton(ButtonsType, (int)Buttons.RelicsButton).gameObject.BindEvent(OnClickRelicsButton);
+        // GetButton(ButtonsType, (int)Buttons.DungeonButton).gameObject.BindEvent(OnClickDungeonButton);
+        // GetButton(ButtonsType, (int)Buttons.EnforceButton).gameObject.BindEvent(OnClickEnforceButton);
+        // GetButton(ButtonsType, (int)Buttons.ShopButton).gameObject.BindEvent(OnClickShopButton);
 
-        UpdateUiState();
+        statBtn = GetButton(ButtonsType, (int)Buttons.StatButton);
+        heroBtn = GetButton(ButtonsType, (int)Buttons.HeroButton);
+        relicsBtn = GetButton(ButtonsType, (int)Buttons.RelicsButton);
+        dungeonBtn = GetButton(ButtonsType, (int)Buttons.DungeonButton);
+        enforceBtn = GetButton(ButtonsType, (int)Buttons.EnforceButton);
+        shopBtn = GetButton(ButtonsType, (int)Buttons.ShopButton);
 
+        Managers.SpawnM.StartSpawn();
+        UpdateUIState();
+        //UI_Toast ui_Toast = Managers.UIM.ShowPopup<UI_Toast>();
 
         return true;
     }
 
-    void UpdateUiState()
+    void UpdateUIState()
     {
         //TODO : 여기서 이제 플레이어 상황 받아와서 bool값으로 처리해 주거나 더 좋은 방법생각해보자.
         GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(false);
@@ -120,37 +155,59 @@ public class UI_BaseScene : UI_Base
         GetImage(ImagesType, (int)Images.Character4_CoolTimeImage).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.Character5_CoolTimeImage).gameObject.SetActive(false);
     }
-    void OnClickQuestButton()
+
+    void OnClickAnyButtons(Buttons _clickButtonType)
     {
-        Debug.Log("Click Quest Button");
-    }
-    void OnClickStatButton()
-    {
-        Debug.Log("Click Stat Button");
+        clickedButton = null;
+        switch (_clickButtonType)
+        {
+            case Buttons.QuestButton:
+                Debug.Log("Click Quest Button");
+                break;
+            case Buttons.StatButton:
+                Debug.Log("Click Stat Button");
+                clickedButton = statBtn;
+                break;
+
+            case Buttons.HeroButton:
+                Debug.Log("Click Hero Button");
+                clickedButton = heroBtn;
+                break;
+
+            case Buttons.RelicsButton:
+                Debug.Log("Click Relics Button");
+                clickedButton = relicsBtn;
+                break;
+
+            case Buttons.DungeonButton:
+                Debug.Log("Click Dungeon Button");
+                clickedButton = dungeonBtn;
+
+                break;
+
+            case Buttons.EnforceButton:
+                Debug.Log("Click Enforce Button");
+                clickedButton = enforceBtn;
+
+                break;
+
+            case Buttons.ShopButton:
+                Debug.Log("Click Shop Button");
+                clickedButton = shopBtn;
+                break;
+        }
+
+        if (clickedButton == null) return;
+
+        if (selectedButton != null && selectedButton != clickedButton)
+        {
+            selectedButton.transform.DOScale(Vector3.one, 0.2f);
+        }
+
+        clickedButton.transform.DOScale(Vector3.one * 1.2f, 0.2f);
+
+        selectedButton = clickedButton;
     }
 
-    void OnClickHeroButton()
-    {
-        Debug.Log("Click Hero Button");
-    }
 
-    void OnClickRelicsButton()
-    {
-        Debug.Log("Click Relics Button");
-    }
-
-    void OnClickDungeonButton()
-    {
-        Debug.Log("Click Dungeon Button");
-    }
-
-    void OnClickEnforceButton()
-    {
-        Debug.Log("Click Enforce Button");
-    }
-
-    void OnClickShopButton()
-    {
-        Debug.Log("Click Shop Button");
-    }
 }

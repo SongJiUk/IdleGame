@@ -11,10 +11,24 @@ public class Managers : MonoBehaviour
     readonly ResourceManager resourceManager = new();
 
     readonly UIManager uIManager = new();
+    UpdateManager updateManager = new();
+    readonly ObjectManager objectManager = new();
+    readonly SpawnManager spawnManager = new();
+    readonly GameManager gameManager = new();
+    readonly DataManager dataManager = new();
+    readonly CustomSceneManager customSceneManager = new();
+
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
     public static ResourceManager ResourceM { get { return Instance?.resourceManager; } }
     public static UIManager UIM { get { return Instance?.uIManager; } }
+    public static UpdateManager UpdateM { get { return Instance?.updateManager; } }
+    public static ObjectManager ObjectM { get { return Instance?.objectManager; } }
+    public static SpawnManager SpawnM { get { return Instance?.spawnManager; } }
+    public static GameManager GameM { get { return Instance?.gameManager; } }
+    public static DataManager DataM { get { return Instance?.dataManager; } }
+    public static CustomSceneManager SceneM { get { return Instance?.customSceneManager; } }
+
 
 
     public static Managers Instance
@@ -26,7 +40,7 @@ public class Managers : MonoBehaviour
                 init = true;
                 GameObject go = GameObject.Find("@Managers");
 
-                if (go = null)
+                if (go == null)
                 {
                     go = new GameObject() { name = "@Managers" };
                     go.AddComponent<Managers>();
@@ -34,6 +48,8 @@ public class Managers : MonoBehaviour
 
                 DontDestroyOnLoad(go);
                 instance = go.GetComponent<Managers>();
+                instance.updateManager = go.AddComponent<UpdateManager>();
+
             }
 
             return instance;

@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 public static class Utils
 {
-
+    //public static LevelDesign Datas = Managers.ResourceM.ResourcDic["LevelDesign"] as LevelDesign;
     public static T GetOrAddComponent<T>(this GameObject _go) where T : Component
     {
         if (_go == null) return null;
@@ -65,6 +65,20 @@ public static class Utils
     {
         return _go != null && _go.activeSelf;
     }
+    public static bool IsValid(this CreatureController _cc)
+    {
+        return _cc != null && _cc.isActiveAndEnabled;
+    }
+
+    //몬스터 소환 위치
+    public static Vector2 CreateMonsterSpawnPoint()
+    {
+
+        Vector3 spawnPos = Vector3.zero + UnityEngine.Random.insideUnitSphere * 5f;
+        spawnPos.y = 0.0f;
+
+        return spawnPos;
+    }
 
     //지수증가 공식(레벨, 스테이지데이터)
     public static float CalculatedValue(float _baseValue, int _level, float _value)
@@ -80,8 +94,7 @@ public static class Utils
     #endregion
 
 
-    #region  StringMethod
-    //StringMethod
+    #region 천문학적인 숫자알파벳으로 바꾸는 코드
     const string Zero = "0";
     static readonly string[] CurrencyUnits = new string[]
     {

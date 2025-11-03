@@ -1,0 +1,114 @@
+{
+  "WeaponData": [
+    {
+      "DataID": 1,
+      "Name": "gun",
+      "Damage": 5,
+      "Type": "Good"
+    },
+    {
+      "DataID": 2,
+      "Name": "bow",
+      "Damage": 4,
+      "Type": "Good"
+    },
+    {
+      "DataID": 3,
+      "Name": "crossbow",
+      "Damage": 2,
+      "Type": "Good"
+    },
+    {
+      "DataID": 4,
+      "Name": "nife",
+      "Damage": 4,
+      "Type": "Rare"
+    },
+    {
+      "DataID": 5,
+      "Name": "sword",
+      "Damage": 5,
+      "Type": "Rare"
+    },
+    {
+      "DataID": 6,
+      "Name": "spear",
+      "Damage": 1,
+      "Type": "Unique"
+    }
+  ],
+  "CreatureData": [
+    {
+      "DataID": 1,
+      "Name": "Cleric",
+      "NameKR": "클레릭",
+      "Description": "클레릭이다",
+      "prefabName": "Cleric",
+      "Type": "Player"
+    },
+    {
+      "DataID": 2,
+      "Name": "Barbarian",
+      "NameKR": "바바리안",
+      "Description": "바바리안이다",
+      "prefabName": "Barbarian",
+      "Type": "Player"
+    },
+    {
+      "DataID": 3,
+      "Name": "Berserker",
+      "NameKR": "버서커",
+      "Description": "버서커이다",
+      "prefabName": "Berserker",
+      "Type": "Player"
+    },
+    {
+      "DataID": 4,
+      "Name": "Elementalist_B",
+      "NameKR": "원소술사",
+      "Description": "원소술사이다",
+      "prefabName": "Elementalist_B",
+      "Type": "Player"
+    },
+    {
+      "DataID": 5,
+      "Name": "Elementalist_W",
+      "NameKR": "원소술사",
+      "Description": "원소술사이다",
+      "prefabName": "Elementalist_W",
+      "Type": "Player"
+    },
+    {
+      "DataID": 6,
+      "Name": "Hunter",
+      "NameKR": "헌터",
+      "Description": "헌터이다",
+      "prefabName": "Hunter",
+      "Type": "Player"
+    },
+    {
+      "DataID": 7,
+      "Name": "Spearman",
+      "NameKR": "스피어맨",
+      "Description": "스피어맨이다",
+      "prefabName": "Spearman",
+      "Type": "Player"
+    },
+    {
+      "DataID": 10000,
+      "Name": "Monster",
+      "NameKR": "몬스터",
+      "Description": "몬스터이다",
+      "prefabName": "Monster",
+      "Type": "Monster"
+    },
+    {
+      "DataID": 10001,
+      "Name": "Boss",
+      "NameKR": "보스몬스터",
+      "Description": "보스몬스터이다",
+      "prefabName": "Boss",
+      "Type": "Boss"
+    }
+  ]
+}

@@ -20,4 +20,37 @@ public static class Define
         Default,
         SI,
     }
+
+    public enum CreatureState
+    {
+        Idle,
+        Move,
+        Attack,
+        Hit,
+        Dead
+    }
+
+    public enum ObjectType
+    {
+        None,
+        Player,
+        Monster,
+        Boss
+    }
+
+    public enum WeaponAbilityType
+    {
+        None,
+        Good,
+        Rare,
+        Unique,
+        Legendary
+    }
+
+    public enum SceneType
+    {
+        None,
+        TitleScene,
+        GameScene
+    }
 }

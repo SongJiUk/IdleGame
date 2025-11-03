@@ -8,6 +8,8 @@ public class UIManager
 {
     readonly Stack<UI_Base> popupStack = new();
 
+    UI_Scene sceneUI = null;
+    public UI_Scene SceneUI { get { return sceneUI; } }
     public GameObject Root
     {
         get
@@ -32,6 +34,21 @@ public class UIManager
         return Utils.GetOrAddComponent<T>(go);
     }
 
+
+
+    public T ShowScene<T>(string _name = null) where T : UI_Scene
+    {
+        if (string.IsNullOrEmpty(_name))
+            _name = typeof(T).Name;
+
+        GameObject go = Managers.ResourceM.Instantiate(_name);
+        T ui = go.GetOrAddComponent<T>();
+        sceneUI = ui;
+
+        go.transform.SetParent(Root.transform);
+
+        return ui;
+    }
     #region  Popup
 
     public T ShowPopup<T>(string _name = null) where T : UI_Base

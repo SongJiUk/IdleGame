@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61632c4bfec2c4ae99006e73413c891e, type: 3}
+  m_Name: Datas
+  m_EditorClassIdentifier: 
+  WeaponDataList:
+  - DataID: 1
+    Name: gun
+    Damage: 5
+    Type: Good
+  - DataID: 2
+    Name: bow
+    Damage: 4
+    Type: Good
+  - DataID: 3
+    Name: crossbow
+    Damage: 2
+    Type: Good
+  - DataID: 4
+    Name: nife
+    Damage: 4
+    Type: Rare
+  - DataID: 5
+    Name: sword
+    Damage: 5
+    Type: Rare
+  - DataID: 6
+    Name: spear
+    Damage: 1
+    Type: Unique
+  CreatureDataList:
+  - DataID: 1
+    Name: Cleric
+    NameKR: "\uD074\uB808\uB9AD"
+    Description: "\uD074\uB808\uB9AD\uC774\uB2E4"
+    prefabName: Cleric
+    Type: Player
+  - DataID: 2
+    Name: Barbarian
+    NameKR: "\uBC14\uBC14\uB9AC\uC548"
+    Description: "\uBC14\uBC14\uB9AC\uC548\uC774\uB2E4"
+    prefabName: Barbarian
+    Type: Player
+  - DataID: 3
+    Name: Berserker
+    NameKR: "\uBC84\uC11C\uCEE4"
+    Description: "\uBC84\uC11C\uCEE4\uC774\uB2E4"
+    prefabName: Berserker
+    Type: Player
+  - DataID: 4
+    Name: Elementalist_B
+    NameKR: "\uC6D0\uC18C\uC220\uC0AC"
+    Description: "\uC6D0\uC18C\uC220\uC0AC\uC774\uB2E4"
+    prefabName: Elementalist_B
+    Type: Player
+  - DataID: 5
+    Name: Elementalist_W
+    NameKR: "\uC6D0\uC18C\uC220\uC0AC"
+    Description: "\uC6D0\uC18C\uC220\uC0AC\uC774\uB2E4"
+    prefabName: Elementalist_W
+    Type: Player
+  - DataID: 6
+    Name: Hunter
+    NameKR: "\uD5CC\uD130"
+    Description: "\uD5CC\uD130\uC774\uB2E4"
+    prefabName: Hunter
+    Type: Player
+  - DataID: 7
+    Name: Spearman
+    NameKR: "\uC2A4\uD53C\uC5B4\uB9E8"
+    Description: "\uC2A4\uD53C\uC5B4\uB9E8\uC774\uB2E4"
+    prefabName: Spearman
+    Type: Player
+  - DataID: 10000
+    Name: Monster
+    NameKR: "\uBAAC\uC2A4\uD130"
+    Description: "\uBAAC\uC2A4\uD130\uC774\uB2E4"
+    prefabName: Monster
+    Type: Monster
+  - DataID: 10001
+    Name: Boss
+    NameKR: "\uBCF4\uC2A4\uBAAC\uC2A4\uD130"
+    Description: "\uBCF4\uC2A4\uBAAC\uC2A4\uD130\uC774\uB2E4"
+    prefabName: Boss
+    Type: Monster

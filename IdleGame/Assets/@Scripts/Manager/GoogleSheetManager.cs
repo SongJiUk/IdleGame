@@ -20,38 +20,35 @@ public class GoogleSheetManager : MonoBehaviour
     [SerializeField] string availSheets = "Sheet1/Sheet2";
     [Tooltip("For example `/GenerateGoogleSheet`")]
     [SerializeField] string generateFolderPath = "/GenerateGoogleSheet";
-    [Tooltip("You must approach through `GoogleSheetManager.SO<GoogleSheetSO>()`")]
-    public ScriptableObject googleSheetSO;
+    [Tooltip("You must approach through `GoogleSheetManager.SO<Datas>()`")]
+    public ScriptableObject datasSO;
 
-    string JsonPath => $"{Application.dataPath}{generateFolderPath}/GoogleSheetJson.json";
-    string ClassPath => $"{Application.dataPath}{generateFolderPath}/GoogleSheetSO.cs";
-    string SOPath => $"Assets{generateFolderPath}/GoogleSheetSO.asset";
+    // 파일 이름 부분을 전부 Datas로 교체
+    string JsonPath => $"{Application.dataPath}{generateFolderPath}/Datas.json";
+    string ClassPath => $"{Application.dataPath}{generateFolderPath}/Datas.cs";
+    string SOPath => $"Assets{generateFolderPath}/Datas.asset";
 
     string[] availSheetArray;
     string json;
     bool refeshTrigger;
     static GoogleSheetManager instance;
 
-
-
     public static T SO<T>() where T : ScriptableObject
     {
-        if (GetInstance().googleSheetSO == null)
+        if (GetInstance().datasSO == null)
         {
-            Debug.Log($"googleSheetSO is null");
+            Debug.Log($"datasSO is null");
             return null;
         }
 
-        return GetInstance().googleSheetSO as T;
+        return GetInstance().datasSO as T;
     }
-
-
 
 #if UNITY_EDITOR
     [ContextMenu("FetchGoogleSheet")]
     async void FetchGoogleSheet()
     {
-        //Init
+        // Init
         availSheetArray = availSheets.Split('/');
 
         if (isAccessGoogleSheet)
@@ -77,7 +74,7 @@ public class GoogleSheetManager : MonoBehaviour
         }
         else
         {
-            CreateGoogleSheetSO();
+            CreateDatasSO();
             Debug.Log($"Fetch done.");
         }
     }
@@ -135,10 +132,10 @@ public class GoogleSheetManager : MonoBehaviour
         JObject jsonObject = JObject.Parse(jsonInput);
         StringBuilder classCode = new();
 
-        // Scriptable Object
+        // ScriptableObject
         classCode.AppendLine("using System;\nusing System.Collections.Generic;\nusing UnityEngine;\n");
-        classCode.AppendLine("/// <summary>You must approach through `GoogleSheetManager.SO<GoogleSheetSO>()`</summary>");
-        classCode.AppendLine("public class GoogleSheetSO : ScriptableObject\n{");
+        classCode.AppendLine("/// <summary>You must approach through `GoogleSheetManager.SO<Datas>()`</summary>");
+        classCode.AppendLine("public class Datas : ScriptableObject\n{");
 
         foreach (var sheet in jsonObject)
         {
@@ -162,7 +159,6 @@ public class GoogleSheetManager : MonoBehaviour
             var firstItem = (JObject)items[0];
             classCode.AppendLine($"[Serializable]\npublic class {className}\n{{");
 
-            // int > float > bool > string
             int itemIndex = 0;
             int propertyCount = ((JObject)items[0]).Properties().Count();
             string[] propertyTypes = new string[propertyCount];
@@ -235,12 +231,12 @@ public class GoogleSheetManager : MonoBehaviour
         }
     }
 
-    bool CreateGoogleSheetSO()
+    bool CreateDatasSO()
     {
-        if (Type.GetType("GoogleSheetSO") == null)
+        if (Type.GetType("Datas") == null)
             return false;
 
-        googleSheetSO = ScriptableObject.CreateInstance("GoogleSheetSO");
+        datasSO = ScriptableObject.CreateInstance("Datas");
         JObject jsonObject = JObject.Parse(json);
         try
         {
@@ -269,15 +265,16 @@ public class GoogleSheetManager : MonoBehaviour
                     listInst.Add(classInst);
                 }
 
-                googleSheetSO.GetType().GetField($"{className}List").SetValue(googleSheetSO, listInst);
+                datasSO.GetType().GetField($"{className}List").SetValue(datasSO, listInst);
             }
         }
         catch (Exception e)
         {
-            Debug.LogError($"CreateGoogleSheetSO error: {e.Message}");
+            Debug.LogError($"CreateDatasSO error: {e.Message}");
         }
-        print("CreateGoogleSheetSO");
-        UnityEditor.AssetDatabase.CreateAsset(googleSheetSO, SOPath);
+
+        Debug.Log("CreateDatasSO");
+        UnityEditor.AssetDatabase.CreateAsset(datasSO, SOPath);
         UnityEditor.AssetDatabase.SaveAssets();
         return true;
     }
@@ -286,7 +283,7 @@ public class GoogleSheetManager : MonoBehaviour
     {
         if (refeshTrigger)
         {
-            bool isCompleted = CreateGoogleSheetSO();
+            bool isCompleted = CreateDatasSO();
             if (isCompleted)
             {
                 refeshTrigger = false;

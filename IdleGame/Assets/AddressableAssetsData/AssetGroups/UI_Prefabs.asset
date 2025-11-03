@@ -20,7 +20,9 @@ MonoBehaviour:
   - m_GUID: 7a7ad21e51ca9df4f84ae02f95baf0d0
     m_Address: UI_Item
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - AlwaysNeed
+    - PrevLoad
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ca570c7d28bbb4267b961b4eeab1c88e, type: 2}
   m_SchemaSet:
