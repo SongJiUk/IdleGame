@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 
 public static class Utils
 {
+
     //public static LevelDesign Datas = Managers.ResourceM.ResourcDic["LevelDesign"] as LevelDesign;
     public static T GetOrAddComponent<T>(this GameObject _go) where T : Component
     {
@@ -65,7 +66,7 @@ public static class Utils
     {
         return _go != null && _go.activeSelf;
     }
-    public static bool IsValid(this CreatureController _cc)
+    public static bool IsValid(this BaseController _cc)
     {
         return _cc != null && _cc.isActiveAndEnabled;
     }

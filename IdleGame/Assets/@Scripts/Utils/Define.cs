@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class Define
 {
+    public static string AnimState = "State";
+
     public enum UIEvent
     {
         None,
@@ -35,7 +37,8 @@ public static class Define
         None,
         Player,
         Monster,
-        Boss
+        Boss,
+        Projectile
     }
 
     public enum WeaponAbilityType

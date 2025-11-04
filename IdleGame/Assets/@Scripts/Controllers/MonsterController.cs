@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,8 +21,8 @@ public class MonsterController : CreatureController
     public override bool Init()
     {
         if (!base.Init()) return false;
-        isDead = false;
-        lifeTime = 5f;
+        SetInfo();
+       
         //TODO : 몬스터 처음나올때 초기화해주기
         //sAttack = Utils.Datas.levelData.Base_Attack;
         return true;
@@ -39,7 +40,7 @@ public class MonsterController : CreatureController
     {
         isDead = false;
         isKnockBack = false;
-        lifeTime = 5f;
+        Hp = 10;
 
     }
 
@@ -69,13 +70,7 @@ public class MonsterController : CreatureController
     public override void Tick(float _deltaTime)
     {
         if (isDead) return;
-        lifeTime -= _deltaTime;
-        if (lifeTime <= 0f)
-        {
-            Managers.ObjectM.DeSpawn(this);
-            isDead = true;
-            return;
-        }
+        
         FindClosetTarget(Managers.ObjectM.pcSet);
         transform.LookAt(target.transform);
 
@@ -100,26 +95,25 @@ public class MonsterController : CreatureController
     }
 
 
-    void AnimatorChange(Define.CreatureState _state)
+    public override void GetDamage(double _dmg)
     {
-        switch (_state)
+        base.GetDamage(_dmg);
+        Hp -= _dmg;
+        Managers.ObjectM.Spawn<ObjectController>(transform.position, 20000);
+        
+        if(Hp <= 0)
         {
-            case Define.CreatureState.Idle:
-                animator.SetBool("isIdle", true);
-                break;
-            case Define.CreatureState.Move:
-                animator.SetBool("isMove", true);
-                break;
-            case Define.CreatureState.Attack:
-                animator.SetBool("isAttack", true);
-                break;
-            case Define.CreatureState.Hit:
-                animator.SetBool("isHit", true);
-                break;
-            case Define.CreatureState.Dead:
-                animator.SetBool("isDead", true);
-                break;
+            Hp = 0;
+            isDead = true;
+            Managers.ObjectM.DeSpawn(this);
+            return;
         }
+    }
+
+    //TODO : 필요하면 사용 
+    public override UniTask ReturnObject(float _time)
+    {
+        return base.ReturnObject(_time);
     }
 
 }

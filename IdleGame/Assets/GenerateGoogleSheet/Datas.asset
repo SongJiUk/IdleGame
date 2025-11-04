@@ -91,4 +91,11 @@ MonoBehaviour:
     NameKR: "\uBCF4\uC2A4\uBAAC\uC2A4\uD130"
     Description: "\uBCF4\uC2A4\uBAAC\uC2A4\uD130\uC774\uB2E4"
     prefabName: Boss
-    Type: Monster
+    Type: Boss
+  ProjectileDataList:
+  - DataID: 20000
+    Name: Projectile
+    NameKR: "\uC5D0\uB108\uC9C0\uBCFC\uD2B8"
+    Description: "\uC5D0\uB108\uC9C0\uBCFC\uD2B8\uC774\uB2E4"
+    prefabName: Projectile
+    Type: Projectile

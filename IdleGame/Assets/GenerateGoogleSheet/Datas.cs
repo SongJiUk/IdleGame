@@ -7,6 +7,7 @@ public class Datas : ScriptableObject
 {
 	public List<WeaponData> WeaponDataList;
 	public List<CreatureData> CreatureDataList;
+	public List<ProjectileData> ProjectileDataList;
 }
 
 [Serializable]
@@ -20,6 +21,17 @@ public class WeaponData
 
 [Serializable]
 public class CreatureData
+{
+	public int DataID;
+	public string Name;
+	public string NameKR;
+	public string Description;
+	public string prefabName;
+	public string Type;
+}
+
+[Serializable]
+public class ProjectileData
 {
 	public int DataID;
 	public string Name;

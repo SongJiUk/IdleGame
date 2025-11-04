@@ -60,4 +60,34 @@ namespace Data
         }
     }
     #endregion
+
+    #region ProjectileData
+    [Serializable]
+    public class ProjectileData
+    {
+        public int DataID;
+        public string Name;
+        public string NameKR;
+        public string Description;
+        public string prefabName;
+        public Define.ObjectType Type;
+    }
+
+    public class ProjectileDataLoader : ILoader<int, ProjectileData>
+    {
+        public List<ProjectileData> dataList = new List<ProjectileData>();
+
+        public Dictionary<int, ProjectileData> MakeDict()
+        {
+            Dictionary<int, ProjectileData> dic = new Dictionary<int, ProjectileData>();
+            foreach(ProjectileData data in dataList)
+            {
+                dic.Add(data.DataID, data);
+            }
+
+            return dic;
+        }
+    }
+
+    #endregion
 }

@@ -19,6 +19,7 @@ public class DataManager
 {
     public Dictionary<int, Data.CreatureData> CreatureDataDic = new Dictionary<int, Data.CreatureData>();
     public Dictionary<int, Data.WeaponData> WeaponDataDic = new Dictionary<int, Data.WeaponData>();
+    public Dictionary<int, Data.ProjectileData> ProjectileDataDic = new Dictionary<int, Data.ProjectileData>();
 
     public void Init()
     {
@@ -33,6 +34,7 @@ public class DataManager
 
         CreatureDataDic = LoadJson<Data.CreatureDataLoader, int, Data.CreatureData>(jsonObj, "CreatureData").MakeDict();
         WeaponDataDic = LoadJson<Data.WeaponDataLoader, int, Data.WeaponData>(jsonObj, "WeaponData").MakeDict();
+        ProjectileDataDic = LoadJson<Data.ProjectileDataLoader, int, Data.ProjectileData>(jsonObj, "ProjectileData").MakeDict();
     }
 
     Loader LoadJson<Loader, Tkey, TValue>(JObject _jsonObj, string _dataName) where Loader : ILoader<Tkey, TValue> where TValue : class

@@ -100,8 +100,8 @@ public class ResourceManager
         {
             resourceDic.TryAdd(_key, resultAsset);
 
-            if (handle.IsValid())
-                Addressables.Release(handle);
+            //if (handle.IsValid())
+            //    Addressables.Release(handle);
 
             return resultAsset as T;
         }

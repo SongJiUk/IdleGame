@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -28,10 +29,9 @@ public class SpawnManager : MonoBehaviour, ITickable
     void SpawnMonster()
     {
         //TODO : 몬스터 몇마리 생성할지 정하고 하드코딩 없애기(데이터도 어떻게불러올지 생각해보고 하드코딩 수정)
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 2; i++)
         {
             Managers.ObjectM.Spawn<MonsterController>(Utils.CreateMonsterSpawnPoint(), 10000);
-
         }
     }
     public void Tick(float _deltaTime)
@@ -44,6 +44,5 @@ public class SpawnManager : MonoBehaviour, ITickable
             //TODO : spawnStart
             SpawnMonster();
         }
-
     }
 }
