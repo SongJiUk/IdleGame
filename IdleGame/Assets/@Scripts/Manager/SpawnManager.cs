@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//TODO : Spawn함수를 여기서 사용할지 고민해보자
 public class SpawnManager : MonoBehaviour, ITickable
 {
 
@@ -29,7 +30,7 @@ public class SpawnManager : MonoBehaviour, ITickable
     void SpawnMonster()
     {
         //TODO : 몬스터 몇마리 생성할지 정하고 하드코딩 없애기(데이터도 어떻게불러올지 생각해보고 하드코딩 수정)
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 5; i++)
         {
             Managers.ObjectM.Spawn<MonsterController>(Utils.CreateMonsterSpawnPoint(), 10000);
         }

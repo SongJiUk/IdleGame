@@ -6,6 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class UI_TitleScene : UI_Scene
 {
+    public override Transform WorldCoinParent
+    {
+        get { return null; }
+    }
+
+    public override Transform WorldFontParent
+    {
+        get { return null; }
+    }
+    public override Transform WorldJewelParent
+    {
+        get { return null; }
+    }
 
     public enum Buttons
     {

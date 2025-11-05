@@ -4,7 +4,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading; // OperationCanceledException을 위해 필요
 
-public class ProjectileController : BaseController
+public class ProjectileController : ObjectController
 {
     Dictionary<string, GameObject> Projectiles = new Dictionary<string, GameObject>();
     Dictionary<string, ParticleSystem> Muzzles = new Dictionary<string, ParticleSystem>();

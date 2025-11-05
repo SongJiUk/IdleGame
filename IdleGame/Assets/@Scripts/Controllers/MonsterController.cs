@@ -97,15 +97,20 @@ public class MonsterController : CreatureController
 
     public override void GetDamage(double _dmg)
     {
-        base.GetDamage(_dmg);
+        
         Hp -= _dmg;
         Managers.ObjectM.Spawn<ObjectController>(transform.position, 20000);
-        
-        if(Hp <= 0)
+        base.GetDamage(_dmg);
+
+        if (Hp <= 0)
         {
             Hp = 0;
             isDead = true;
             Managers.ObjectM.DeSpawn(this);
+            //TODO : 이것도 바꿔야됌
+            GameObject go = Managers.ResourceM.Instantiate("CoinDirecting", _pooling: true);
+            CoinDirecting coinDriecting = go.GetComponent<CoinDirecting>();
+            coinDriecting.Init(transform.position);
             return;
         }
     }

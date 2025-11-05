@@ -30,11 +30,11 @@ public class UI_Inventory : UI_Base
     public override bool Init()
     {
         if (!base.Init()) return false;
-        gameObjectsType = typeof(GameObjects);
+        GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
         TextsType = typeof(Texts);
 
-        BindObject(gameObjectsType);
+        BindObject(GameObjectsType);
         BindButton(ButtonsType);
         BindText(TextsType);
 
@@ -55,8 +55,8 @@ public class UI_Inventory : UI_Base
 
     void OnClickAllButton()
     {
-        //GetObject(gameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.AllButton).transform.position;
-        Transform targetTr = GetObject(gameObjectsType, (int)GameObjects.BarObject).transform;
+        //GetObject(GameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.AllButton).transform.position;
+        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
         Vector3 endPos = GetButton(ButtonsType, (int)Buttons.AllButton).transform.position;
 
         targetTr.DOMove(endPos, 0.5f)
@@ -67,8 +67,8 @@ public class UI_Inventory : UI_Base
 
     void OnClickEquipmentButton()
     {
-        //GetObject(gameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.EquipmentButton).transform.position;
-        Transform targetTr = GetObject(gameObjectsType, (int)GameObjects.BarObject).transform;
+        //GetObject(GameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.EquipmentButton).transform.position;
+        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
         Vector3 endPos = GetButton(ButtonsType, (int)Buttons.EquipmentButton).transform.position;
 
         targetTr.DOMove(endPos, 0.5f)
@@ -77,8 +77,8 @@ public class UI_Inventory : UI_Base
 
     void OnClickConsumableButton()
     {
-        //GetObject(gameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.ConsumableButton).transform.position;
-        Transform targetTr = GetObject(gameObjectsType, (int)GameObjects.BarObject).transform;
+        //GetObject(GameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.ConsumableButton).transform.position;
+        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
         Vector3 endPos = GetButton(ButtonsType, (int)Buttons.ConsumableButton).transform.position;
 
         targetTr.DOMove(endPos, 0.5f)
@@ -87,8 +87,8 @@ public class UI_Inventory : UI_Base
 
     void OnClickOthersButton()
     {
-        //GetObject(gameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.OthersButton).transform.position;
-        Transform targetTr = GetObject(gameObjectsType, (int)GameObjects.BarObject).transform;
+        //GetObject(GameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.OthersButton).transform.position;
+        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
         Vector3 endPos = GetButton(ButtonsType, (int)Buttons.OthersButton).transform.position;
 
         targetTr.DOMove(endPos, 0.5f)

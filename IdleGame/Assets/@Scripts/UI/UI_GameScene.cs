@@ -6,8 +6,14 @@ using UnityEngine.UI;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-public class UI_BaseScene : UI_Scene
+public class UI_GameScene : UI_Scene
 {
+    enum GameObjects
+    {
+        LayersObject,
+        JewelObject,
+        CoinObject
+    }
     enum Buttons
     {
         QuestButton,
@@ -77,13 +83,6 @@ public class UI_BaseScene : UI_Scene
         Exp_FillImage,
     }
 
-    RectTransform statButtonRect;
-    RectTransform heroButtonRect;
-    RectTransform relicsButtonRect;
-    RectTransform dungeonButtonRect;
-    RectTransform enforceButtonRect;
-    RectTransform shopButtonRect;
-
 
     Button selectedButton = null;
     Button clickedButton = null;
@@ -94,19 +93,51 @@ public class UI_BaseScene : UI_Scene
     Button enforceBtn;
     Button shopBtn;
 
+    #region 코인, 쥬얼리, 아이템 애니메이션 관련
+    //TODO : UI_Scene에서 관리하는거임
+    public override Transform WorldCoinParent
+    {
+        get
+        {
+            return GetLayer((int)Define.UILayerIndex.Coin);
+        }
+    }
+    public override Transform WorldJewelParent
+    {
+        get
+        {
+            return GetLayer((int)Define.UILayerIndex.Coin);
+        }
+    }
 
+    public override Transform WorldFontParent
+    {
+        get
+        {
+            return GetLayer((int)Define.UILayerIndex.DamageFont);
+        }
+    }
 
+   
+    #endregion
 
     public override bool Init()
     {
         if (!base.Init()) return false;
+        GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
         TextsType = typeof(Texts);
         ImagesType = typeof(Images);
 
+        BindObject(GameObjectsType);
         BindButton(ButtonsType);
         BindText(TextsType);
         BindImage(ImagesType);
+
+
+        coinDirectingTr = GetObject(GameObjectsType, (int)GameObjects.CoinObject).GetComponent<RectTransform>();
+        jewelDirectingTr = GetObject(GameObjectsType, (int)GameObjects.JewelObject).GetComponent<RectTransform>();
+        layers = GetObject(GameObjectsType, (int)GameObjects.LayersObject).GetComponent<Transform>();
 
         foreach (Buttons buttonType in Enum.GetValues(typeof(Buttons)))
         {

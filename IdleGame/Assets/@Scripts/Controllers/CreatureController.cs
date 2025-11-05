@@ -105,6 +105,6 @@ public class CreatureController : BaseController
 
     public virtual void GetDamage(double _dmg)
     {
-
+        Managers.ObjectM.ShowDamageFont(transform.position, _dmg, transform);
     }
 }

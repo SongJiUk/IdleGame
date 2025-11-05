@@ -299,4 +299,12 @@ public static class Utils
         }
     }
     #endregion
+
+    public static Color HexToColor(string _color)
+    {
+        Color parsedColor;
+        ColorUtility.TryParseHtmlString("#" + _color, out parsedColor);
+
+        return parsedColor;
+    }
 }

@@ -56,4 +56,9 @@ public static class Define
         TitleScene,
         GameScene
     }
+    public enum UILayerIndex
+    {
+        Coin,
+        DamageFont,
+    }
 }
