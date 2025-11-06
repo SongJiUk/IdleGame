@@ -65,16 +65,26 @@
     <Compile Include="Assets\@Resources\Temp\FantasyIconsPackFree\Demo\IconViewer.cs" />
     <Compile Include="Assets\@Scripts\Manager\ObjectManager.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_GameScene.cs" />
+    <Compile Include="Assets\ARPG Effects\Demo\Scripts\ARPGFXLoopScript.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_TitleScene.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_EventHandler.cs" />
+    <Compile Include="Assets\ARPG Effects\Scripts\ARPGFXLightFade.cs" />
+    <Compile Include="Assets\@Scripts\Controllers\DropItemController.cs" />
+    <Compile Include="Assets\@Scripts\Scenes\TitleScene.cs" />
     <Compile Include="Assets\@Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\@Scripts\Manager\ResourceManager.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Item.cs" />
+    <Compile Include="Assets\ARPG Effects\Demo\Scripts\ARPGSceneSelect.cs" />
     <Compile Include="Assets\@Scripts\Controllers\ProjectileController.cs" />
     <Compile Include="Assets\@Scripts\Controllers\CreatureController.cs" />
+    <Compile Include="Assets\ARPG Effects\Demo\Scripts\ARPGFXCycler.cs" />
     <Compile Include="Assets\@Scripts\Manager\Managers.cs" />
     <Compile Include="Assets\@Scripts\StageDesign.cs" />
+    <Compile Include="Assets\@Scripts\Scenes\GameScene.cs" />
+    <Compile Include="Assets\@Scripts\Scenes\BaseScene.cs" />
+    <Compile Include="Assets\ARPG Effects\Scripts\ARPGFXRotation.cs" />
     <Compile Include="Assets\@Scripts\Manager\UpdateManager.cs" />
+    <Compile Include="Assets\@Scripts\UI\UIDirecting\DamageFont.cs" />
     <Compile Include="Assets\@Scripts\Data\Data.cs" />
     <Compile Include="Assets\@Scripts\Manager\SpawnManager.cs" />
     <Compile Include="Assets\@Resources\Package\Scripts\CSVReader.cs" />
@@ -85,10 +95,12 @@
     <Compile Include="Assets\@Scripts\UI\BaseSceneUIController.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Inventory.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_ItemInfo.cs" />
+    <Compile Include="Assets\ARPG Effects\Scripts\ARPGFXLightFlicker.cs" />
     <Compile Include="Assets\_ExternalModule\Favorites\Common\Scripts\FG_GameObjectGUIDs.cs" />
     <Compile Include="Assets\@Scripts\Manager\UIManager.cs" />
     <Compile Include="Assets\@Resources\Package\Scripts\StringMethod.cs" />
     <Compile Include="Assets\GenerateGoogleSheet\Datas.cs" />
+    <Compile Include="Assets\ARPG Effects\Scripts\ARPGFXPortalScript.cs" />
     <Compile Include="Assets\@Scripts\Manager\GoogleSheetManager.cs" />
     <Compile Include="Assets\@Scripts\Controllers\ObjectController.cs" />
     <Compile Include="Assets\@Scripts\Manager\PoolManager.cs" />
@@ -96,12 +108,8 @@
     <Compile Include="Assets\@Scripts\Controllers\MonsterController.cs" />
     <Compile Include="Assets\@Scripts\Controllers\BaseController.cs" />
     <Compile Include="Assets\@Scripts\Utils\Utils.cs" />
-    <Compile Include="Assets\@Scripts\LevelDesign.cs" />
-    <Compile Include="Assets\@Scripts\UI\UIDirecting\DamageFont.cs" />
-    <Compile Include="Assets\@Scripts\Scenes\GameScene.cs" />
-    <Compile Include="Assets\@Scripts\Scenes\BaseScene.cs" />
-    <Compile Include="Assets\@Scripts\Scenes\TitleScene.cs" />
     <Compile Include="Assets\@Scripts\UI\UIDirecting\CoinDirecting.cs" />
+    <Compile Include="Assets\@Scripts\LevelDesign.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -112,6 +120,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\@Resources\Temp\3D Game Kit - Character Pack\Shaders\EyeLash.shader" />
     <None Include="Assets\@Resources\Package\Shader\Lightning.shader" />
+    <None Include="Assets\ARPG Effects\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />

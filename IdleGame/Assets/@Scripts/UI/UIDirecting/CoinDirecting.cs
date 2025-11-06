@@ -5,7 +5,7 @@ using DG.Tweening;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 
-public class CoinDirecting : MonoBehaviour
+public class CoinDirecting : BaseController
 {
     Vector3 targetPos;
     Camera cam;
@@ -37,6 +37,7 @@ public class CoinDirecting : MonoBehaviour
         cts = null;
     }
     #endregion
+
     //TODO: 데이터 추가하기
     public void Init(Vector3 _pos)
     {

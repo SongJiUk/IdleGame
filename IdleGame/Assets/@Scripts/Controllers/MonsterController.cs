@@ -111,6 +111,17 @@ public class MonsterController : CreatureController
             GameObject go = Managers.ResourceM.Instantiate("CoinDirecting", _pooling: true);
             CoinDirecting coinDriecting = go.GetComponent<CoinDirecting>();
             coinDriecting.Init(transform.position);
+
+            //TODO : 몬스터마다 아이템 개수 다르게
+            for(int i =0; i<3; i++)
+            {
+                GameObject obj = Managers.ResourceM.Instantiate("DropItem", _pooling: true);
+                DropItemController dc = obj.GetComponent<DropItemController>();
+                dc.Init();
+                dc.SetInfo(transform.position);
+                
+            }
+            
             return;
         }
     }

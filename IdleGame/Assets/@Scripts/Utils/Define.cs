@@ -41,10 +41,10 @@ public static class Define
         Projectile
     }
 
-    public enum WeaponAbilityType
+    public enum ItemGrade
     {
-        None,
-        Good,
+        Common,
+        UnCommon,
         Rare,
         Unique,
         Legendary
@@ -60,5 +60,6 @@ public static class Define
     {
         Coin,
         DamageFont,
+        ItemRect,
     }
 }

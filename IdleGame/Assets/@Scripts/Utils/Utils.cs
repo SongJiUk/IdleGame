@@ -300,6 +300,7 @@ public static class Utils
     }
     #endregion
 
+    #region Color
     public static Color HexToColor(string _color)
     {
         Color parsedColor;
@@ -307,4 +308,36 @@ public static class Utils
 
         return parsedColor;
     }
+
+    #endregion
+
+    public static string StringToColorGrade(Define.ItemGrade _grade)
+    {
+        switch (_grade)
+        {
+            case Define.ItemGrade.Common: return "<color=#FFFFFF>";
+            case Define.ItemGrade.UnCommon: return "<color=#00FF00>";
+            case Define.ItemGrade.Rare: return "<color=#0000FF>";
+            case Define.ItemGrade.Unique: return "<color=#BB45FF>";
+            case Define.ItemGrade.Legendary: return "<color=#FF9A45>";
+        }
+
+        return "<color=#FFFFFF>";
+    }
+
+    public static void Shuffle<T>(this List<T> _list)
+    {
+        int count = _list.Count;
+
+        while(count > 1)
+        {
+            count--;
+            int randNum = UnityEngine.Random.Range(0, count + 1);
+            T value = _list[randNum];
+            _list[randNum] = _list[count];
+            _list[count] = value;
+        }
+    }
+
+
 }

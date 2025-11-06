@@ -4,19 +4,19 @@
       "DataID": 1,
       "Name": "gun",
       "Damage": 5,
-      "Type": "Good"
+      "Type": "Common"
     },
     {
       "DataID": 2,
       "Name": "bow",
       "Damage": 4,
-      "Type": "Good"
+      "Type": "UnCommon"
     },
     {
       "DataID": 3,
       "Name": "crossbow",
       "Damage": 2,
-      "Type": "Good"
+      "Type": "Rare"
     },
     {
       "DataID": 4,
@@ -28,13 +28,13 @@
       "DataID": 5,
       "Name": "sword",
       "Damage": 5,
-      "Type": "Rare"
+      "Type": "Unique"
     },
     {
       "DataID": 6,
       "Name": "spear",
       "Damage": 1,
-      "Type": "Unique"
+      "Type": "Legendary"
     }
   ],
   "CreatureData": [
@@ -117,7 +117,7 @@
       "Name": "Projectile",
       "NameKR": "에너지볼트",
       "Description": "에너지볼트이다",
-      "prefabName": "Projectile",
+      "prefabName": "EnergyBolt",
       "Type": "Projectile"
     }
   ],

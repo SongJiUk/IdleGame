@@ -41,7 +41,7 @@ namespace Data
         public int DataID;
         public string Name;
         public float Damage;
-        public Define.WeaponAbilityType Type;
+        public Define.ItemGrade Type;
     }
 
     public class WeaponDataLoader : ILoader<int, WeaponData>

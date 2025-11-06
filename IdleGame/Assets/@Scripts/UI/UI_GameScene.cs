@@ -117,8 +117,15 @@ public class UI_GameScene : UI_Scene
             return GetLayer((int)Define.UILayerIndex.DamageFont);
         }
     }
+    public override Transform WorldItemParent
+    {
+        get
+        {
+            return GetLayer((int)Define.UILayerIndex.ItemRect);
+        }
+    }
 
-   
+
     #endregion
 
     public override bool Init()

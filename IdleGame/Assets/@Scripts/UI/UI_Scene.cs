@@ -7,6 +7,7 @@ public abstract class UI_Scene : UI_Base
     public abstract Transform WorldFontParent { get; }
     public abstract Transform WorldCoinParent { get; }
     public abstract Transform WorldJewelParent { get; }
+    public abstract Transform WorldItemParent { get; }
 
     protected RectTransform coinDirectingTr;
     protected RectTransform jewelDirectingTr;

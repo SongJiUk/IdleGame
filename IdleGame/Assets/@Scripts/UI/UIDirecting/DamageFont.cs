@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 
-public class DamageFont : MonoBehaviour
+public class DamageFont : BaseController
 {
     [SerializeField]
     TextMeshProUGUI damageText;

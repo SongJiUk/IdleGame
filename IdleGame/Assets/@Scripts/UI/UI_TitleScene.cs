@@ -20,6 +20,10 @@ public class UI_TitleScene : UI_Scene
         get { return null; }
     }
 
+    public override Transform WorldItemParent
+    {
+        get { return null; }
+    }
     public enum Buttons
     {
         StartButton,
