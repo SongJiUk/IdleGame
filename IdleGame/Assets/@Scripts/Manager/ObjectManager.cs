@@ -18,13 +18,16 @@ public class ObjectManager
         //TODO : 화이팅..
         if (type == typeof(PlayerController))
         {
-            GameObject go = Managers.ResourceM.Instantiate(Managers.DataM.CreatureDataDic[1].prefabName, _pooling: true);
+            Managers.DataM.CreatureDataDic.TryGetValue(_tempId, out var data);
+
+            GameObject go = Managers.ResourceM.Instantiate(data.prefabName, _pooling: true);
             go.transform.position = _pos;
             T pc = go.GetOrAddComponent<T>();
-            
-            if(pc is PlayerController player)
+
+            if (pc is PlayerController player)
             {
                 player.Init();
+                player.SetInfo(data);
                 pcSet.Add(pc as PlayerController);
             }
             return pc as T;
@@ -44,16 +47,16 @@ public class ObjectManager
             return mc as T;
         }
 
-        if(type == typeof(ProjectileController))
+        if (type == typeof(RangeAttackController))
         {
             GameObject go = Managers.ResourceM.Instantiate(Managers.DataM.ProjectileDataDic[_tempId].prefabName, _pooling: true);
             go.transform.position = _pos;
             T pj = go.GetOrAddComponent<T>();
 
 
-            if(pj is ProjectileController projectile)
+            if (pj is RangeAttackController projectile)
             {
-                projectile.Init(_target as MonsterController, 10, _ownerName);
+                projectile.AttackInit(_target as MonsterController, 10, _ownerName);
                 pjSet.Add(projectile);
             }
 
@@ -61,13 +64,13 @@ public class ObjectManager
         }
 
         //TODO : 맞을때 이펙트 나오는거 고치기
-        if(type == typeof(ObjectController))
+        if (type == typeof(ObjectController))
         {
             GameObject go = Managers.ResourceM.Instantiate("Smoke", _pooling: true);
             go.transform.position = _pos;
             T oc = go.GetOrAddComponent<T>();
 
-            if(oc is ObjectController objects)
+            if (oc is ObjectController objects)
             {
                 objects.Init();
                 ocSet.Add(objects);
@@ -86,22 +89,29 @@ public class ObjectManager
 
         Type type = typeof(T);
 
-        if (type == typeof(MonsterController))
+        if (_obj is PlayerController pc)
         {
-            mcSet.Remove(_obj as MonsterController);
-            Managers.ResourceM.Destory(_obj.gameObject);
+            pcSet.Remove(pc);
+            Managers.ResourceM.Destory(pc.gameObject);
             return;
         }
 
-        if(type == typeof(ProjectileController))
+        if (_obj is MonsterController mc)
         {
-            Managers.ResourceM.Destory(_obj.gameObject);
+            mcSet.Remove(mc);
+            Managers.ResourceM.Destory(mc.gameObject);
             return;
         }
 
-        if(type == typeof(ObjectController))
+        if (_obj is MeleeAttackController mac)
         {
-            Managers.ResourceM.Destory(_obj.gameObject);
+            Managers.ResourceM.Destory(mac.gameObject);
+            return;
+        }
+
+        if (_obj is ObjectController oc)
+        {
+            Managers.ResourceM.Destory(oc.gameObject);
             return;
         }
     }
@@ -113,6 +123,6 @@ public class ObjectManager
         GameObject go = Managers.ResourceM.Instantiate(prefabName, _pooling: true);
         DamageFont damageFont = go.GetOrAddComponent<DamageFont>();
         damageFont.Init(_pos, _dmg, true);
-        
+
     }
 }

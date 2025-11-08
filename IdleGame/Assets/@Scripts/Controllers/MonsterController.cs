@@ -14,15 +14,15 @@ public class MonsterController : CreatureController
     float knockBackTime;
     float knockBackElapsed;
 
-    float lifeTime = 8f;
     #endregion
 
 
     public override bool Init()
     {
         if (!base.Init()) return false;
+        attackrange = 0.5f;
         SetInfo();
-       
+
         //TODO : 몬스터 처음나올때 초기화해주기
         //sAttack = Utils.Datas.levelData.Base_Attack;
         return true;
@@ -36,14 +36,18 @@ public class MonsterController : CreatureController
     }
     void OnDisable() => Managers.UpdateM.UnRegister(this);
 
-    public override void SetInfo()
+    public void SetInfo()
     {
         isDead = false;
         isKnockBack = false;
-        Hp = 10;
+        Hp = 1000;
 
     }
 
+    public override void Attack()
+    {
+
+    }
     public void KnockBack(Vector3 _dir, float _power = 3f, float _duration = 0.3f)
     {
         isKnockBack = true;
@@ -70,34 +74,41 @@ public class MonsterController : CreatureController
     public override void Tick(float _deltaTime)
     {
         if (isDead) return;
-        
-        FindClosetTarget(Managers.ObjectM.pcSet);
-        transform.LookAt(target.transform);
 
 
-        if (isKnockBack)
+        if (target == null)
         {
-            UpdateKnockBack(_deltaTime);
-            return;
-        }
+            FindClosetTarget(Managers.ObjectM.pcSet);
 
-        if (target.gameObject != null)
-        {
-            float targetPos = Vector3.Distance(transform.position, target.transform.position);
-            transform.LookAt(target.transform);
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
-        }
-        else
-        {
-            if (target.IsDead)
-                FindClosetTarget(Managers.ObjectM.pcSet);
+            if (target != null)
+            {
+                if (target.IsDead)
+                {
+                    FindClosetTarget(Managers.ObjectM.pcSet);
+                }
+
+                float targetDist = Vector3.Distance(transform.position, target.transform.position);
+
+                if (targetDist > attackrange && !isAttack)
+                {
+                    AnimatorChange(Define.CreatureState.Move);
+                    transform.LookAt(target.transform.position);
+                    transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
+                }
+                else if (targetDist <= attackrange && !isAttack)
+                {
+                    isAttack = true;
+                    AnimatorChange(Define.CreatureState.Attack);
+                    InitAttack().Forget();
+                }
+            }
         }
     }
 
 
     public override void GetDamage(double _dmg)
     {
-        
+
         Hp -= _dmg;
         Managers.ObjectM.Spawn<ObjectController>(transform.position, 20000);
         base.GetDamage(_dmg);
@@ -113,15 +124,15 @@ public class MonsterController : CreatureController
             coinDriecting.Init(transform.position);
 
             //TODO : 몬스터마다 아이템 개수 다르게
-            for(int i =0; i<3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 GameObject obj = Managers.ResourceM.Instantiate("DropItem", _pooling: true);
                 DropItemController dc = obj.GetComponent<DropItemController>();
                 dc.Init();
                 dc.SetInfo(transform.position);
-                
+
             }
-            
+
             return;
         }
     }

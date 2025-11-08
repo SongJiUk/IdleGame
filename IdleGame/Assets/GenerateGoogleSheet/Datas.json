@@ -44,7 +44,8 @@
       "NameKR": "클레릭",
       "Description": "클레릭이다",
       "prefabName": "Cleric",
-      "Type": "Player"
+      "Type": "Player",
+      "AttackRange": 2
     },
     {
       "DataID": 2,
@@ -52,7 +53,8 @@
       "NameKR": "바바리안",
       "Description": "바바리안이다",
       "prefabName": "Barbarian",
-      "Type": "Player"
+      "Type": "Player",
+      "AttackRange": 1
     },
     {
       "DataID": 3,
@@ -60,7 +62,8 @@
       "NameKR": "버서커",
       "Description": "버서커이다",
       "prefabName": "Berserker",
-      "Type": "Player"
+      "Type": "Player",
+      "AttackRange": 1
     },
     {
       "DataID": 4,
@@ -68,7 +71,8 @@
       "NameKR": "원소술사",
       "Description": "원소술사이다",
       "prefabName": "Elementalist_B",
-      "Type": "Player"
+      "Type": "Player",
+      "AttackRange": 2
     },
     {
       "DataID": 5,
@@ -76,7 +80,8 @@
       "NameKR": "원소술사",
       "Description": "원소술사이다",
       "prefabName": "Elementalist_W",
-      "Type": "Player"
+      "Type": "Player",
+      "AttackRange": 2
     },
     {
       "DataID": 6,
@@ -84,7 +89,8 @@
       "NameKR": "헌터",
       "Description": "헌터이다",
       "prefabName": "Hunter",
-      "Type": "Player"
+      "Type": "Player",
+      "AttackRange": 2
     },
     {
       "DataID": 7,
@@ -92,7 +98,8 @@
       "NameKR": "스피어맨",
       "Description": "스피어맨이다",
       "prefabName": "Spearman",
-      "Type": "Player"
+      "Type": "Player",
+      "AttackRange": 1
     },
     {
       "DataID": 10000,
@@ -100,7 +107,8 @@
       "NameKR": "몬스터",
       "Description": "몬스터이다",
       "prefabName": "Monster",
-      "Type": "Monster"
+      "Type": "Monster",
+      "AttackRange": 1
     },
     {
       "DataID": 10001,
@@ -108,7 +116,8 @@
       "NameKR": "보스몬스터",
       "Description": "보스몬스터이다",
       "prefabName": "Boss",
-      "Type": "Boss"
+      "Type": "Boss",
+      "AttackRange": 1
     }
   ],
   "ProjectileData": [
@@ -118,7 +127,15 @@
       "NameKR": "에너지볼트",
       "Description": "에너지볼트이다",
       "prefabName": "EnergyBolt",
-      "Type": "Projectile"
+      "AttackType": "Range"
+    },
+    {
+      "DataID": 20001,
+      "Name": "MeleeAttack",
+      "NameKR": "근접공격",
+      "Description": "근접공격이다",
+      "prefabName": "MeleeAttack",
+      "AttackType": "Melee"
     }
   ],
   "MissionData": [],

@@ -16,15 +16,15 @@ MonoBehaviour:
   - DataID: 1
     Name: gun
     Damage: 5
-    Type: Good
+    Type: Common
   - DataID: 2
     Name: bow
     Damage: 4
-    Type: Good
+    Type: UnCommon
   - DataID: 3
     Name: crossbow
     Damage: 2
-    Type: Good
+    Type: Rare
   - DataID: 4
     Name: nife
     Damage: 4
@@ -32,11 +32,11 @@ MonoBehaviour:
   - DataID: 5
     Name: sword
     Damage: 5
-    Type: Rare
+    Type: Unique
   - DataID: 6
     Name: spear
     Damage: 1
-    Type: Unique
+    Type: Legendary
   CreatureDataList:
   - DataID: 1
     Name: Cleric
@@ -44,58 +44,73 @@ MonoBehaviour:
     Description: "\uD074\uB808\uB9AD\uC774\uB2E4"
     prefabName: Cleric
     Type: Player
+    AttackRange: 2
   - DataID: 2
     Name: Barbarian
     NameKR: "\uBC14\uBC14\uB9AC\uC548"
     Description: "\uBC14\uBC14\uB9AC\uC548\uC774\uB2E4"
     prefabName: Barbarian
     Type: Player
+    AttackRange: 1
   - DataID: 3
     Name: Berserker
     NameKR: "\uBC84\uC11C\uCEE4"
     Description: "\uBC84\uC11C\uCEE4\uC774\uB2E4"
     prefabName: Berserker
     Type: Player
+    AttackRange: 1
   - DataID: 4
     Name: Elementalist_B
     NameKR: "\uC6D0\uC18C\uC220\uC0AC"
     Description: "\uC6D0\uC18C\uC220\uC0AC\uC774\uB2E4"
     prefabName: Elementalist_B
     Type: Player
+    AttackRange: 2
   - DataID: 5
     Name: Elementalist_W
     NameKR: "\uC6D0\uC18C\uC220\uC0AC"
     Description: "\uC6D0\uC18C\uC220\uC0AC\uC774\uB2E4"
     prefabName: Elementalist_W
     Type: Player
+    AttackRange: 2
   - DataID: 6
     Name: Hunter
     NameKR: "\uD5CC\uD130"
     Description: "\uD5CC\uD130\uC774\uB2E4"
     prefabName: Hunter
     Type: Player
+    AttackRange: 2
   - DataID: 7
     Name: Spearman
     NameKR: "\uC2A4\uD53C\uC5B4\uB9E8"
     Description: "\uC2A4\uD53C\uC5B4\uB9E8\uC774\uB2E4"
     prefabName: Spearman
     Type: Player
+    AttackRange: 1
   - DataID: 10000
     Name: Monster
     NameKR: "\uBAAC\uC2A4\uD130"
     Description: "\uBAAC\uC2A4\uD130\uC774\uB2E4"
     prefabName: Monster
     Type: Monster
+    AttackRange: 1
   - DataID: 10001
     Name: Boss
     NameKR: "\uBCF4\uC2A4\uBAAC\uC2A4\uD130"
     Description: "\uBCF4\uC2A4\uBAAC\uC2A4\uD130\uC774\uB2E4"
     prefabName: Boss
     Type: Boss
+    AttackRange: 1
   ProjectileDataList:
   - DataID: 20000
     Name: Projectile
     NameKR: "\uC5D0\uB108\uC9C0\uBCFC\uD2B8"
     Description: "\uC5D0\uB108\uC9C0\uBCFC\uD2B8\uC774\uB2E4"
-    prefabName: Projectile
-    Type: Projectile
+    prefabName: EnergyBolt
+    AttackType: Range
+  - DataID: 20001
+    Name: MeleeAttack
+    NameKR: "\uADFC\uC811\uACF5\uACA9"
+    Description: "\uADFC\uC811\uACF5\uACA9\uC774\uB2E4"
+    prefabName: MeleeAttack
+    AttackType: Melee

@@ -6,6 +6,16 @@ public static class Define
 {
     public static string AnimState = "State";
 
+    public enum CharacterType
+    {
+        Cleric = 1,
+        Barbarian,
+        Berserker,
+        Elementalist_B,
+        Elementalist_W,
+        Hunter,
+        Spearman,
+    }
     public enum UIEvent
     {
         None,
@@ -38,7 +48,6 @@ public static class Define
         Player,
         Monster,
         Boss,
-        Projectile
     }
 
     public enum ItemGrade
@@ -61,5 +70,11 @@ public static class Define
         Coin,
         DamageFont,
         ItemRect,
+    }
+
+    public enum AttackType
+    {
+        Melee,
+        Range
     }
 }

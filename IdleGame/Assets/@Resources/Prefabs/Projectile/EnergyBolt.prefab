@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1119560007300585530}
-  - component: {fileID: 1119560007300585529}
+  - component: {fileID: 8647811062012732913}
   m_Layer: 0
   m_Name: EnergyBolt
   m_TagString: Untagged
@@ -66,7 +66,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1119560007300585529
+--- !u!114 &8647811062012732913
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1119560007300585531}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 429845d066f43cf4d9ad9854ac75f0be, type: 3}
+  m_Script: {fileID: 11500000, guid: ac5874d9f4a2b409f9b24cf2a1de7914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1119560008415308663

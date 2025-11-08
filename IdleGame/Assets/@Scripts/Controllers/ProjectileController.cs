@@ -2,89 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using System.Threading; // OperationCanceledExceptionÀ» À§ÇØ ÇÊ¿ä
+using System.Threading;
+using Unity.VisualScripting; // OperationCanceledExceptionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
 
-public class ProjectileController : ObjectController
+public class ProjectileController : BaseController
 {
-    Dictionary<string, GameObject> Projectiles = new Dictionary<string, GameObject>();
-    Dictionary<string, ParticleSystem> Muzzles = new Dictionary<string, ParticleSystem>();
-    string characterName;
-    MonsterController target;
-    Vector3 targetPos;
-    bool isHit = false;
-    double damage;
-    
+
+    protected string characterName;
+    protected MonsterController target;
+    protected Vector3 targetPos;
+    protected bool isHit = false;
+    protected double damage;
+
 
     private void Awake()
     {
-        Transform projectiles = transform.GetChild(0);
-        Transform muzzles = transform.GetChild(1);
 
-        for(int i = 0; i<projectiles.childCount; i++)
-            Projectiles.Add(projectiles.GetChild(i).name, projectiles.GetChild(i).gameObject);
-        
-
-        for(int i =0; i<muzzles.childCount; i++)
-            Muzzles.Add(muzzles.GetChild(i).name , muzzles.GetChild(i).GetComponent< ParticleSystem>());
     }
 
-    public void Init(MonsterController _mc, double _dmg, string _characterName)
+
+    public override bool Init()
+    {
+        if (!base.Init()) return false;
+
+        return true;
+    }
+    //TODO: 
+    public virtual void AttackInit(MonsterController _mc, double _dmg, string _characterName = "")
     {
         Managers.UpdateM.Register(this);
-
         target = _mc;
-        transform.LookAt(target.transform);
-        isHit = false;
-        targetPos = target.transform.position;
 
+        isHit = false;
         damage = _dmg;
         characterName = _characterName;
-        Projectiles[characterName].SetActive(true);
     }
 
     public override void Tick(float _deltaTime)
     {
-        if (isHit) return;
 
-        //TODO : ÆÄÆ¼Å¬ ³ôÀÌ ¹®Á¦
-        targetPos.y = 0.5f;
-
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, _deltaTime* 5f);
-
-        if(Vector3.Distance(transform.position, targetPos) <= 0.1f)
-        {
-            if(target != null)
-            {
-                isHit = true;
-                target.GetDamage(damage);
-
-
-                //TODO : ´ê¾ÒÀ»¶§
-                Projectiles[characterName].SetActive(false);
-                Muzzles[characterName].Play();
-
-                ReturnObject(Muzzles[characterName].duration).Forget();
-            }
-        }
     }
 
 
-    public override async UniTask ReturnObject(float _time)
+    public virtual async UniTask ReturnObject(float _time)
     {
-        //NOTE: °´Ã¼°¡ ÆÄ±«µÇ°Å³ª, ¼öµ¿Ãë¼Ò½Ã »ç¿ëÇÏ´Â ÄÚµå¶ó´Âµ¥
+        //NOTE: ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ä±ï¿½ï¿½Ç°Å³ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµï¿½ï¿½Âµï¿½
         CancellationToken token = this.GetCancellationTokenOnDestroy();
         try
         {
-            await UniTask.Delay(System.TimeSpan.FromSeconds(_time), cancellationToken : token);
+            await UniTask.Delay(System.TimeSpan.FromSeconds(_time), cancellationToken: token);
             Managers.UpdateM.UnRegister(this);
             Managers.ObjectM.DeSpawn(this);
 
         }
-        catch(System.OperationCanceledException){}
-        catch(System.Exception e)
+        catch (System.OperationCanceledException) { }
+        catch (System.Exception e)
         {
             Managers.UpdateM.UnRegister(this);
-            Debug.LogError($"Projectile ¹ÝÈ¯Áß ¿¡·¯ ¹ß»ý {e.Message}");
+            Debug.LogError($"Projectile ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ {e.Message}");
         }
     }
 }

@@ -28,6 +28,7 @@ public class CreatureData
 	public string Description;
 	public string prefabName;
 	public string Type;
+	public int AttackRange;
 }
 
 [Serializable]
@@ -38,6 +39,6 @@ public class ProjectileData
 	public string NameKR;
 	public string Description;
 	public string prefabName;
-	public string Type;
+	public string AttackType;
 }
 

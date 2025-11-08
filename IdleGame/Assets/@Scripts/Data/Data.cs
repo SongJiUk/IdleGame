@@ -15,6 +15,7 @@ namespace Data
         public string Description;
         public string prefabName;
         public Define.ObjectType Type;
+        public float AttackRange;
     }
 
     public class CreatureDataLoader : ILoader<int, CreatureData>
@@ -70,7 +71,7 @@ namespace Data
         public string NameKR;
         public string Description;
         public string prefabName;
-        public Define.ObjectType Type;
+        public Define.AttackType AttackType;
     }
 
     public class ProjectileDataLoader : ILoader<int, ProjectileData>
@@ -80,7 +81,7 @@ namespace Data
         public Dictionary<int, ProjectileData> MakeDict()
         {
             Dictionary<int, ProjectileData> dic = new Dictionary<int, ProjectileData>();
-            foreach(ProjectileData data in dataList)
+            foreach (ProjectileData data in dataList)
             {
                 dic.Add(data.DataID, data);
             }

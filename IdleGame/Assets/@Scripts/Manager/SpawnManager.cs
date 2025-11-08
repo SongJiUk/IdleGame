@@ -15,9 +15,16 @@ public class SpawnManager : MonoBehaviour, ITickable
 
     public void StartSpawn()
     {   //TODO : 이거 여기서 생성할지 생각해보자
-        for (int i = 1; i <= 1; i++)
+        for (int i = 1; i <= 2; i++)
         {
-            Managers.ObjectM.Spawn<PlayerController>(Vector3.zero, i);
+            Vector3 spawnPos = Vector3.zero;
+            if (i != 1)
+            {
+                spawnPos = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0f, UnityEngine.Random.Range(-1f, 1f));
+            }
+
+
+            Managers.ObjectM.Spawn<PlayerController>(spawnPos, i);
         }
 
         Managers.UpdateM.Register(this);
@@ -30,7 +37,7 @@ public class SpawnManager : MonoBehaviour, ITickable
     void SpawnMonster()
     {
         //TODO : 몬스터 몇마리 생성할지 정하고 하드코딩 없애기(데이터도 어떻게불러올지 생각해보고 하드코딩 수정)
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             Managers.ObjectM.Spawn<MonsterController>(Utils.CreateMonsterSpawnPoint(), 10000);
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 public class CreatureController : BaseController
 {
-    
+
     protected Animator animator;
     protected virtual bool isDead { get; set; }
     protected virtual bool isTargetLocked { get; set; }
@@ -15,8 +15,8 @@ public class CreatureController : BaseController
     protected virtual double Hp { get; set; }
     protected virtual double MaxHp { get; set; }
     protected virtual float Damage { get; set; }
-    protected virtual float attack_range { get; set; }
-    protected virtual float detect_range { get; set; }
+    protected virtual float attackrange { get; set; }
+    protected virtual float detectrange { get; set; }
 
     protected CreatureController target;
 
@@ -27,11 +27,6 @@ public class CreatureController : BaseController
 
 
         return true;
-    }
-
-    public virtual void SetInfo()
-    {
-
     }
 
     public virtual void InitStat()
@@ -49,6 +44,17 @@ public class CreatureController : BaseController
 
     }
 
+    public virtual void Projectile()
+    {
+        if (target == null) return;
+    }
+    public virtual void Attack()
+    {
+        if (target == null) return;
+
+
+
+    }
 
     public override void Tick(float _deltaTime)
     {
@@ -62,7 +68,7 @@ public class CreatureController : BaseController
         {
             await UniTask.Delay(TimeSpan.FromSeconds(1f));
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.LogError($"InitAttack Error {e.Message}");
         }
@@ -71,7 +77,7 @@ public class CreatureController : BaseController
             isAttack = false;
             isTargetLocked = false;
         }
-        
+
     }
 
     protected virtual void AnimatorChange(Define.CreatureState _state)
