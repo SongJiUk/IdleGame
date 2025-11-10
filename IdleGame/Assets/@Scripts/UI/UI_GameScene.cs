@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 
 public class UI_GameScene : UI_Scene
 {
+    #region Enum
     enum GameObjects
     {
         LayersObject,
@@ -59,7 +60,6 @@ public class UI_GameScene : UI_Scene
         RewardItemImage,
         TutorialHandImage,
         MainSkillButton,
-
         Character1_Lock,
         Character1_Plus,
         Character1_Icon,
@@ -83,6 +83,7 @@ public class UI_GameScene : UI_Scene
         Exp_FillImage,
     }
 
+    #endregion
 
     Button selectedButton = null;
     Button clickedButton = null;
@@ -92,7 +93,6 @@ public class UI_GameScene : UI_Scene
     Button dungeonBtn;
     Button enforceBtn;
     Button shopBtn;
-
     #region 코인, 쥬얼리, 아이템 애니메이션 관련
     //TODO : UI_Scene에서 관리하는거임
     public override Transform WorldCoinParent
@@ -127,6 +127,10 @@ public class UI_GameScene : UI_Scene
 
 
     #endregion
+
+    UI_HeroPopup ui_HeroPopup;
+
+    public UI_HeroPopup Ui_HeroPopup { get { return ui_HeroPopup; } }
 
     public override bool Init()
     {
@@ -165,11 +169,15 @@ public class UI_GameScene : UI_Scene
         enforceBtn = GetButton(ButtonsType, (int)Buttons.EnforceButton);
         shopBtn = GetButton(ButtonsType, (int)Buttons.ShopButton);
 
+        ui_HeroPopup = Managers.UIM.ShowPopup<UI_HeroPopup>();
+        ui_HeroPopup.Init();
 
-
+        AllOff();
         UpdateUIState();
         //UI_Toast ui_Toast = Managers.UIM.ShowPopup<UI_Toast>();
         StartSpawnAfterDelay().Forget();
+
+
         return true;
     }
 
@@ -195,6 +203,12 @@ public class UI_GameScene : UI_Scene
         GetImage(ImagesType, (int)Images.Character4_CoolTimeImage).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.Character5_CoolTimeImage).gameObject.SetActive(false);
     }
+    void AllOff()
+    {
+        ui_HeroPopup.isOpen = false;
+
+        ui_HeroPopup.gameObject.SetActive(false);
+    }
 
     void OnClickAnyButtons(Buttons _clickButtonType)
     {
@@ -212,6 +226,13 @@ public class UI_GameScene : UI_Scene
             case Buttons.HeroButton:
                 Debug.Log("Click Hero Button");
                 clickedButton = heroBtn;
+                if(!ui_HeroPopup.isOpen)
+                {
+                    ui_HeroPopup.isOpen = true;
+                    ui_HeroPopup.gameObject.SetActive(true);
+                    ui_HeroPopup.SetInfo();
+                }
+                
                 break;
 
             case Buttons.RelicsButton:

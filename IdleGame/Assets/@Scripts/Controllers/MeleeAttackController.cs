@@ -7,13 +7,13 @@ using UnityEngine;
 public class MeleeAttackController : ProjectileController
 {
     ParticleSystem particle;
-    public override void AttackInit(MonsterController _mc, double _dmg, string _characterName = "")
+    public override void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner = null)
     {
-        base.AttackInit(_mc, _dmg, _characterName);
-        target = _mc;
+        base.AttackInit(_cc, _dmg, _owner);
+        target = _cc;
         if (target != null && !target.IsDead)
         {
-            target.GetDamage(_dmg);
+            target.GetDamage(_dmg, _owner);
 
             isHit = true;
 

@@ -6,6 +6,7 @@ public class RangeAttackController : ProjectileController
 {
     Dictionary<string, GameObject> Projectiles = new Dictionary<string, GameObject>();
     Dictionary<string, ParticleSystem> Muzzles = new Dictionary<string, ParticleSystem>();
+    CreatureController owner;
 
     private void Awake()
     {
@@ -20,9 +21,10 @@ public class RangeAttackController : ProjectileController
             Muzzles.Add(muzzles.GetChild(i).name, muzzles.GetChild(i).GetComponent<ParticleSystem>());
     }
 
-    public override void AttackInit(MonsterController _mc, double _dmg, string _characterName = "")
+    public override void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner)
     {
-        base.AttackInit(_mc, _dmg, _characterName);
+        owner = _owner;
+        base.AttackInit(_cc, _dmg, owner);
         transform.LookAt(target.transform);
         targetPos = target.transform.position;
         Projectiles[characterName].SetActive(true);
@@ -42,7 +44,7 @@ public class RangeAttackController : ProjectileController
             if (target != null)
             {
                 isHit = true;
-                target.GetDamage(damage);
+                target.GetDamage(damage, owner);
 
 
                 //TODO : �������

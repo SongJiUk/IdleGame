@@ -21,6 +21,8 @@ public class MonsterController : CreatureController
     {
         if (!base.Init()) return false;
         attackrange = 0.5f;
+        detectrange = Mathf.Infinity;
+        CriticalRate = 0f;
         SetInfo();
 
         //TODO : 몬스터 처음나올때 초기화해주기
@@ -40,14 +42,18 @@ public class MonsterController : CreatureController
     {
         isDead = false;
         isKnockBack = false;
-        Hp = 1000;
+        hp = 20;
 
     }
 
     public override void Attack()
     {
+        if (target == null || target.IsDead) return;
 
+        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, 20001, this, target);
     }
+
+
     public void KnockBack(Vector3 _dir, float _power = 3f, float _duration = 0.3f)
     {
         isKnockBack = true;
@@ -75,50 +81,94 @@ public class MonsterController : CreatureController
     {
         if (isDead) return;
 
+        if (!isAttack && !isTargetLocked)
+            FindClosetTarget(Managers.ObjectM.pcSet);
 
         if (target == null)
         {
-            FindClosetTarget(Managers.ObjectM.pcSet);
-
-            if (target != null)
-            {
-                if (target.IsDead)
-                {
-                    FindClosetTarget(Managers.ObjectM.pcSet);
-                }
-
-                float targetDist = Vector3.Distance(transform.position, target.transform.position);
-
-                if (targetDist > attackrange && !isAttack)
-                {
-                    AnimatorChange(Define.CreatureState.Move);
-                    transform.LookAt(target.transform.position);
-                    transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
-                }
-                else if (targetDist <= attackrange && !isAttack)
-                {
-                    isAttack = true;
-                    AnimatorChange(Define.CreatureState.Attack);
-                    InitAttack().Forget();
-                }
-            }
+            isTargetLocked = false;
+            AnimatorChange(Define.CreatureState.Idle);
+            return;
         }
+        if(target.IsDead)
+        {
+            ResetTarget();
+            AnimatorChange(Define.CreatureState.Idle);
+            return;
+        }
+
+        float targetDist = Vector3.Distance(transform.position, target.transform.position);
+
+        if (targetDist < detectrange && !isAttack)
+        {
+            AnimatorChange(Define.CreatureState.Move);
+            transform.LookAt(target.transform.position);
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
+            return;
+        }
+
+
+        if (targetDist <= attackrange && !isAttack)
+        {
+            isAttack = true;
+            isTargetLocked = true;
+            AnimatorChange(Define.CreatureState.Attack);
+            transform.LookAt(target.transform);
+            WaitForAttackDelay().Forget();
+        }
+            
+        //if (isDead) return;
+        //if (!isTargetLocked)
+        //    FindClosetTarget(Managers.ObjectM.pcSet);
+
+        //if (target == null)
+        //{
+        //    isTargetLocked = false;
+        //    return;
+        //}        
+        //else
+        //{
+        //    if (target.IsDead)
+        //    {
+        //        target = null;
+        //        isTargetLocked = false;
+        //        return;
+        //    }
+
+        //    float targetDist = Vector3.Distance(transform.position, target.transform.position);
+
+        //    if (targetDist > attackrange && !isAttack)
+        //    {
+        //        AnimatorChange(Define.CreatureState.Move);
+        //        transform.LookAt(target.transform.position);
+        //        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
+        //    }
+        //    else if (targetDist <= attackrange && !isAttack)
+        //    {
+        //        isAttack = true;
+        //        isTargetLocked = true;
+        //        AnimatorChange(Define.CreatureState.Attack);
+        //        WaitForAttackDelay().Forget();
+        //    }
+
+        //}
     }
 
 
-    public override void GetDamage(double _dmg)
+    public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCiriticla = false)
     {
-
-        Hp -= _dmg;
+        base.GetDamage(_dmg, _attacker, _attacker.GetCritical());
         Managers.ObjectM.Spawn<ObjectController>(transform.position, 20000);
-        base.GetDamage(_dmg);
-
-        if (Hp <= 0)
+        
+        if (hp <= 0)
         {
-            Hp = 0;
+            hp = 0;
             isDead = true;
             Managers.ObjectM.DeSpawn(this);
+
+
             //TODO : 이것도 바꿔야됌
+            //Managers.ObjectM.Spawn<CoinDirecting>(transform.position, );
             GameObject go = Managers.ResourceM.Instantiate("CoinDirecting", _pooling: true);
             CoinDirecting coinDriecting = go.GetComponent<CoinDirecting>();
             coinDriecting.Init(transform.position);
@@ -130,10 +180,7 @@ public class MonsterController : CreatureController
                 DropItemController dc = obj.GetComponent<DropItemController>();
                 dc.Init();
                 dc.SetInfo(transform.position);
-
             }
-
-            return;
         }
     }
 

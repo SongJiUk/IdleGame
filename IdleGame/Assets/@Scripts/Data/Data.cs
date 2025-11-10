@@ -16,6 +16,7 @@ namespace Data
         public string prefabName;
         public Define.ObjectType Type;
         public float AttackRange;
+        public Define.CharacterGrade CharacterGrade;
     }
 
     public class CreatureDataLoader : ILoader<int, CreatureData>

@@ -29,6 +29,7 @@ public class CreatureData
 	public string prefabName;
 	public string Type;
 	public int AttackRange;
+	public string CharacterGrade;
 }
 
 [Serializable]

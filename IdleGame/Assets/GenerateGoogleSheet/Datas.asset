@@ -45,6 +45,7 @@ MonoBehaviour:
     prefabName: Cleric
     Type: Player
     AttackRange: 2
+    CharacterGrade: Common
   - DataID: 2
     Name: Barbarian
     NameKR: "\uBC14\uBC14\uB9AC\uC548"
@@ -52,6 +53,7 @@ MonoBehaviour:
     prefabName: Barbarian
     Type: Player
     AttackRange: 1
+    CharacterGrade: UnCommon
   - DataID: 3
     Name: Berserker
     NameKR: "\uBC84\uC11C\uCEE4"
@@ -59,6 +61,7 @@ MonoBehaviour:
     prefabName: Berserker
     Type: Player
     AttackRange: 1
+    CharacterGrade: Rare
   - DataID: 4
     Name: Elementalist_B
     NameKR: "\uC6D0\uC18C\uC220\uC0AC"
@@ -66,6 +69,7 @@ MonoBehaviour:
     prefabName: Elementalist_B
     Type: Player
     AttackRange: 2
+    CharacterGrade: Unique
   - DataID: 5
     Name: Elementalist_W
     NameKR: "\uC6D0\uC18C\uC220\uC0AC"
@@ -73,6 +77,7 @@ MonoBehaviour:
     prefabName: Elementalist_W
     Type: Player
     AttackRange: 2
+    CharacterGrade: Unique
   - DataID: 6
     Name: Hunter
     NameKR: "\uD5CC\uD130"
@@ -80,6 +85,7 @@ MonoBehaviour:
     prefabName: Hunter
     Type: Player
     AttackRange: 2
+    CharacterGrade: Legendary
   - DataID: 7
     Name: Spearman
     NameKR: "\uC2A4\uD53C\uC5B4\uB9E8"
@@ -87,6 +93,7 @@ MonoBehaviour:
     prefabName: Spearman
     Type: Player
     AttackRange: 1
+    CharacterGrade: Legendary
   - DataID: 10000
     Name: Monster
     NameKR: "\uBAAC\uC2A4\uD130"
@@ -94,6 +101,7 @@ MonoBehaviour:
     prefabName: Monster
     Type: Monster
     AttackRange: 1
+    CharacterGrade: Common
   - DataID: 10001
     Name: Boss
     NameKR: "\uBCF4\uC2A4\uBAAC\uC2A4\uD130"
@@ -101,6 +109,7 @@ MonoBehaviour:
     prefabName: Boss
     Type: Boss
     AttackRange: 1
+    CharacterGrade: Rare
   ProjectileDataList:
   - DataID: 20000
     Name: Projectile

@@ -9,7 +9,7 @@ public class ProjectileController : BaseController
 {
 
     protected string characterName;
-    protected MonsterController target;
+    protected CreatureController target;
     protected Vector3 targetPos;
     protected bool isHit = false;
     protected double damage;
@@ -28,14 +28,14 @@ public class ProjectileController : BaseController
         return true;
     }
     //TODO: 
-    public virtual void AttackInit(MonsterController _mc, double _dmg, string _characterName = "")
+    public virtual void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner)
     {
         Managers.UpdateM.Register(this);
-        target = _mc;
+        target = _cc;
 
         isHit = false;
         damage = _dmg;
-        characterName = _characterName;
+        characterName = _owner.name;
     }
 
     public override void Tick(float _deltaTime)

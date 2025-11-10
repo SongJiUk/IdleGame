@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class GameManager
 {
+    public PlayerController mPlayer { get { return Managers.ObjectM?.mPlayer; } }
 
 }

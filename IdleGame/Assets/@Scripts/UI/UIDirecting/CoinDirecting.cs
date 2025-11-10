@@ -39,6 +39,7 @@ public class CoinDirecting : BaseController
     #endregion
 
     //TODO: 데이터 추가하기
+    
     public void Init(Vector3 _pos)
     {
         targetPos = _pos;

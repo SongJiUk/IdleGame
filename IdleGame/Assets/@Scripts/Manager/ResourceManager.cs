@@ -10,20 +10,21 @@ using System.ComponentModel.Composition.Hosting;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using System.Linq;
+using UnityEngine.U2D;
 
 public class ResourceManager
 {
+
     Dictionary<string, Object> resourceDic = new();
     Dictionary<string, string> keyToLabelDic = new();
-    //TODO : 지울거
-    public Dictionary<string, Object> ResourcDic
-    {
-        get
-        {
-            return resourceDic;
-        }
-    }
 
+
+    public SpriteAtlas atlas;
+    public Sprite GetAtlas(string _temp)
+    {
+        if (atlas == null) atlas = Managers.ResourceM.Load<SpriteAtlas>("Atlas");
+        return atlas.GetSprite(_temp);
+    }
     public T Load<T>(string _key) where T : Object
     {
         if (resourceDic.TryGetValue(_key, out Object resource))

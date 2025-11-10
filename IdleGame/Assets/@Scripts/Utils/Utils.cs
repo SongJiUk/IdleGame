@@ -10,6 +10,10 @@ using UnityEngine.EventSystems;
 public static class Utils
 {
 
+
+
+
+
     //public static LevelDesign Datas = Managers.ResourceM.ResourcDic["LevelDesign"] as LevelDesign;
     public static T GetOrAddComponent<T>(this GameObject _go) where T : Component
     {

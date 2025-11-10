@@ -25,7 +25,7 @@ public class DropItemController : BaseController
         if (!base.Init()) return false;
         if (itemRect == null  || text ==null || grades == null || loot == null)
         {
-            Debug.LogError("컴포넌트가 없습니다.");
+            Debug.LogError("[DropItemController] 컴포넌트가 없습니다. 인스펙터 확인하기");
             return false;
         }
 
@@ -111,6 +111,7 @@ public class DropItemController : BaseController
         }
     }
 
+    //이거 이거이거
     void ItemCheck()
     {
         transform.rotation = Quaternion.identity;

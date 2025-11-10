@@ -85,6 +85,7 @@ public class UI_TitleScene : UI_Scene
 
                     //TODO : 초기화 작업
                     Managers.DataM.Init();
+                    Managers.ObjectM.Init();
                 }
             });
         }

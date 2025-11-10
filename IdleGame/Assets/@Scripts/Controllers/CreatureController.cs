@@ -10,15 +10,19 @@ public class CreatureController : BaseController
     protected virtual bool isDead { get; set; }
     protected virtual bool isTargetLocked { get; set; }
     protected virtual bool isAttack { get; set; }
+    protected virtual bool isCritical { get; set; }
     public bool IsDead { get { return isDead; } }
 
-    protected virtual double Hp { get; set; }
-    protected virtual double MaxHp { get; set; }
-    protected virtual float Damage { get; set; }
+    protected virtual double hp { get; set; }
+    protected virtual double maxHp { get; set; }
+    protected virtual double damage { get; set; }
     protected virtual float attackrange { get; set; }
     protected virtual float detectrange { get; set; }
 
     protected CreatureController target;
+    protected Vector3 SpawnPos;
+    //TODO : TEMP;
+    protected float CriticalRate = 0;
 
     public override bool Init()
     {
@@ -44,28 +48,14 @@ public class CreatureController : BaseController
 
     }
 
-    public virtual void Projectile()
+    public virtual void Projectile() { }
+    public virtual void Attack() { }
+
+    protected async UniTask WaitForAttackDelay()
     {
-        if (target == null) return;
-    }
-    public virtual void Attack()
-    {
-        if (target == null) return;
-
-
-
-    }
-
-    public override void Tick(float _deltaTime)
-    {
-        base.Tick(_deltaTime);
-    }
-
-    protected async UniTask InitAttack()
-    {
-        // TODO : 이거도 캐릭터에 맞게 설정해야됌(공격 딜레이)
         try
         {
+            // TODO : 이거도 캐릭터에 맞게 설정해야됌(공격 딜레이)
             await UniTask.Delay(TimeSpan.FromSeconds(1f));
         }
         catch (Exception e)
@@ -75,7 +65,6 @@ public class CreatureController : BaseController
         finally
         {
             isAttack = false;
-            isTargetLocked = false;
         }
 
     }
@@ -86,31 +75,90 @@ public class CreatureController : BaseController
         animator.SetInteger(Define.AnimState, stateIndex);
     }
 
+    public void GoBackToSpawn(float _deltaTime)
+    {
+        float dist = Vector3.Distance(transform.position, SpawnPos);
+
+        if (dist > 0.1f)
+        {
+            AnimatorChange(Define.CreatureState.Move);
+            transform.LookAt(SpawnPos);
+            transform.position = Vector3.MoveTowards(transform.position, SpawnPos, _deltaTime);
+        }
+        else
+            AnimatorChange(Define.CreatureState.Idle);
+    }
+
+    public void MoveToTarget(float _deltaTime)
+    {
+        AnimatorChange(Define.CreatureState.Move);
+        transform.LookAt(target.transform);
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
+    }
+
+    public void StartAttack()
+    {
+        isAttack = true;
+        AnimatorChange(Define.CreatureState.Attack);
+        transform.LookAt(target.transform);
+
+        WaitForAttackDelay().Forget();
+    }
+
+    public void ResetTarget()
+    {
+        target = null;
+        isAttack = false;
+        isTargetLocked = false;
+    }
+
 
     protected void FindClosetTarget<T>(HashSet<T> _targets) where T : Component
     {
-        var targets = _targets;
-        T closetTarget = null;
-        //TODO : 찾는범위 알아서
-        float maxDistance = 100f;
+        CreatureController closetTarget = null;
+        float minDistance = float.MaxValue;
 
-        foreach (var t in targets)
+        foreach (var t in _targets)
         {
+            if (t == null) continue;
+
+            CreatureController cc = t as CreatureController;
+            if (cc != null && cc.isDead) continue;
+
             float targetDistance = Vector3.Distance(this.transform.position, t.transform.position);
 
-            if (targetDistance < maxDistance)
+            if (targetDistance <= detectrange && targetDistance < minDistance)
             {
-                closetTarget = t;
-                maxDistance = targetDistance;
+                closetTarget = cc;
+                minDistance = targetDistance;
             }
-
-            target = closetTarget as CreatureController;
-            if (target != null) transform.LookAt(target.transform.position);
         }
+
+        target = closetTarget;
     }
 
-    public virtual void GetDamage(double _dmg)
+    public virtual void GetDamage(double _dmg, CreatureController _attacker,  bool _isCritical = false)
     {
-        Managers.ObjectM.ShowDamageFont(transform.position, _dmg, transform);
+        damage = _dmg;
+        isCritical = _isCritical;
+        if (isCritical)
+        {
+            //TODO : 수정 
+            damage = _dmg * 1.5f;
+        }
+
+        hp -= damage;
+        bool isMonster = false;
+        if (_attacker as MonsterController) isMonster = true;
+
+        Managers.ObjectM.ShowDamageFont(transform.position, damage, isMonster, isCritical);
+
+    }
+
+    public virtual bool GetCritical()
+    {
+        if (UnityEngine.Random.value <= this.CriticalRate) return true;
+
+        return false;
     }
 }

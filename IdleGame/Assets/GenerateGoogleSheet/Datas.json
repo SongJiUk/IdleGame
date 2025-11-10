@@ -45,7 +45,8 @@
       "Description": "클레릭이다",
       "prefabName": "Cleric",
       "Type": "Player",
-      "AttackRange": 2
+      "AttackRange": 2,
+      "CharacterGrade": "Common"
     },
     {
       "DataID": 2,
@@ -54,7 +55,8 @@
       "Description": "바바리안이다",
       "prefabName": "Barbarian",
       "Type": "Player",
-      "AttackRange": 1
+      "AttackRange": 1,
+      "CharacterGrade": "UnCommon"
     },
     {
       "DataID": 3,
@@ -63,7 +65,8 @@
       "Description": "버서커이다",
       "prefabName": "Berserker",
       "Type": "Player",
-      "AttackRange": 1
+      "AttackRange": 1,
+      "CharacterGrade": "Rare"
     },
     {
       "DataID": 4,
@@ -72,7 +75,8 @@
       "Description": "원소술사이다",
       "prefabName": "Elementalist_B",
       "Type": "Player",
-      "AttackRange": 2
+      "AttackRange": 2,
+      "CharacterGrade": "Unique"
     },
     {
       "DataID": 5,
@@ -81,7 +85,8 @@
       "Description": "원소술사이다",
       "prefabName": "Elementalist_W",
       "Type": "Player",
-      "AttackRange": 2
+      "AttackRange": 2,
+      "CharacterGrade": "Unique"
     },
     {
       "DataID": 6,
@@ -90,7 +95,8 @@
       "Description": "헌터이다",
       "prefabName": "Hunter",
       "Type": "Player",
-      "AttackRange": 2
+      "AttackRange": 2,
+      "CharacterGrade": "Legendary"
     },
     {
       "DataID": 7,
@@ -99,7 +105,8 @@
       "Description": "스피어맨이다",
       "prefabName": "Spearman",
       "Type": "Player",
-      "AttackRange": 1
+      "AttackRange": 1,
+      "CharacterGrade": "Legendary"
     },
     {
       "DataID": 10000,
@@ -108,7 +115,8 @@
       "Description": "몬스터이다",
       "prefabName": "Monster",
       "Type": "Monster",
-      "AttackRange": 1
+      "AttackRange": 1,
+      "CharacterGrade": "Common"
     },
     {
       "DataID": 10001,
@@ -117,7 +125,8 @@
       "Description": "보스몬스터이다",
       "prefabName": "Boss",
       "Type": "Boss",
-      "AttackRange": 1
+      "AttackRange": 1,
+      "CharacterGrade": "Rare"
     }
   ],
   "ProjectileData": [

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UI_Popup : UI_Base
 {
-
+    public bool isOpen = false;
     public override bool Init()
     {
         if (!base.Init()) return false;

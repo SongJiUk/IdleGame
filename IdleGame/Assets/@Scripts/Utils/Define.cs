@@ -59,6 +59,15 @@ public static class Define
         Legendary
     }
 
+    public enum CharacterGrade
+    {
+        Common,
+        UnCommon,
+        Rare,
+        Unique,
+        Legendary
+    }
+
     public enum SceneType
     {
         None,

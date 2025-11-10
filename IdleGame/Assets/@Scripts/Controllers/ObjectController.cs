@@ -12,7 +12,9 @@ public class ObjectController : BaseController
 
         if (!base.Init()) return false;
 
-        particle = GetComponent<ParticleSystem>();
+        if(particle == null)
+            particle = GetComponent<ParticleSystem>();
+
         Play(particle.duration);
         return true;
     }
