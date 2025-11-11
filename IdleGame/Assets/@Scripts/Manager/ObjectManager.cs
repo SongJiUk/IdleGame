@@ -193,11 +193,6 @@ public class ObjectManager
 
         return uiController;
     }
-    public void DeSpawnUI<T>(T _obj) where T : UI_Base
-    {
-        if (_obj == null || !_obj.IsValid()) return;
-        Managers.ResourceM.Destroy(_obj.gameObject);
-    }
 
     public void DeSpawn<T>(T _obj) where T : BaseController
     {
@@ -208,6 +203,13 @@ public class ObjectManager
             removeAction(_obj);
         }
 
+        Managers.ResourceM.Destroy(_obj.gameObject);
+    }
+
+
+    public void DeSpawnUI<T>(T _obj) where T : UI_Base
+    {
+        if (_obj == null || !_obj.IsValid()) return;
         Managers.ResourceM.Destroy(_obj.gameObject);
     }
 

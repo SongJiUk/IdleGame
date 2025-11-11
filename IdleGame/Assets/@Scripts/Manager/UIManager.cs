@@ -89,44 +89,35 @@ public class UIManager
 
     public async UniTask ClosePopup<T>(T _popup, bool _isFade = false) where T : UI_Base
     {
+        if (_popup == null || !popupStack.Contains(_popup))
+        {
+            Debug.LogError("[UIManager] : 창 닫기 실패. 닫으려는 팝업이 스택에 없거나 유효하지 않습니다.");
+            return;
+        }
+
+        if (popupStack.Peek() != _popup)
+        {
+            Debug.LogError("[UIManager] : 창 닫기 실패. 최상위 팝업만 닫을 수 있습니다.");
+            return;
+        }
+        UI_GameScene scene = (sceneUI as UI_GameScene);
+
         if (_isFade)
         {
-            UI_GameScene scene = (sceneUI as UI_GameScene);
             await scene.AsyncFadeInOut(false, true);
         }
 
-        if (popupStack.Contains(_popup))
-        {
-            ClosePopup();
-            // }
-            // if (popupStack.Count == 0) return;
-            // if (popupStack.Peek() != _popup)
-            // {
-            //     Debug.Log("창 닫기 실패. 팝업이 맞지 않음");
-            //     return;
-            // }
+        ClosePopup();
 
-
-            // //사운드 넣기
-
-
-            // ClosePopup();
-        }
         if (_isFade)
         {
-
-            UI_GameScene scene = (sceneUI as UI_GameScene);
             await scene.AsyncFadeInOut(true, true);
         }
     }
     public void ClosePopup()
     {
-        if (popupStack.Count == 0) return;
-
         UI_Base popup = popupStack.Pop();
         Managers.ResourceM.Destroy(popup.gameObject);
-        popup = null;
-
 
     }
 
