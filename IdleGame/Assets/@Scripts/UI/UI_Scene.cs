@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public abstract class UI_Scene : UI_Base
@@ -27,9 +28,9 @@ public abstract class UI_Scene : UI_Base
         get { return jewelDirectingTr; }
     }
 
-    public override bool Init()
+    public override async UniTask<bool> Init()
     {
-        if (!base.Init()) return false;
+        if (!await base.Init()) return false;
 
         return true;
     }
@@ -38,7 +39,7 @@ public abstract class UI_Scene : UI_Base
     {
         if (layers == null)
         {
-            Debug.LogError("·¹ÀÌ¾î°¡ ¾øÀ½!!");
+            Debug.LogError("ï¿½ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½!!");
             return null;
         }
 

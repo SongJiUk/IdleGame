@@ -52,7 +52,7 @@ public class ResourceManager
         return go;
     }
 
-    public void Destory(GameObject _go)
+    public void Destroy(GameObject _go)
     {
         if (_go == null) return;
 

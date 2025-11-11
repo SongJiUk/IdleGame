@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 
 public class UI_GameScene : UI_Scene, ITickable
 {
@@ -81,6 +82,8 @@ public class UI_GameScene : UI_Scene, ITickable
         Character5_Icon,
         Character5_CoolTimeImage,
         Exp_FillImage,
+        FadeImage,
+
     }
 
     #endregion
@@ -129,13 +132,9 @@ public class UI_GameScene : UI_Scene, ITickable
 
     #endregion
 
-    UI_HeroPopup ui_HeroPopup;
-
-    public UI_HeroPopup Ui_HeroPopup { get { return ui_HeroPopup; } }
- 
-    public override bool Init()
+    public override async UniTask<bool> Init()
     {
-        if (!base.Init()) return false;
+        if (!await base.Init()) return false;
         Managers.UpdateM.Register(this);
 
         GameObjectsType = typeof(GameObjects);
@@ -176,10 +175,7 @@ public class UI_GameScene : UI_Scene, ITickable
         shopBtn = GetButton(ButtonsType, (int)Buttons.ShopButton);
         levelUpBtn = GetButton(ButtonsType, (int)Buttons.LevelUpButton);
 
-        ui_HeroPopup = Managers.UIM.ShowPopup<UI_HeroPopup>();
-        ui_HeroPopup.Init();
 
-        AllOff();
         UpdateUIState();
         //UI_Toast ui_Toast = Managers.UIM.ShowPopup<UI_Toast>();
 
@@ -215,14 +211,8 @@ public class UI_GameScene : UI_Scene, ITickable
         GetImage(ImagesType, (int)Images.Character4_CoolTimeImage).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.Character5_CoolTimeImage).gameObject.SetActive(false);
     }
-    void AllOff()
-    {
-        ui_HeroPopup.isOpen = false;
 
-        ui_HeroPopup.gameObject.SetActive(false);
-    }
-
-    void OnClickAnyButtons(Buttons _clickButtonType)
+    async UniTaskVoid OnClickAnyButtons(Buttons _clickButtonType)
     {
         clickedButton = null;
         switch (_clickButtonType)
@@ -238,12 +228,12 @@ public class UI_GameScene : UI_Scene, ITickable
             case Buttons.HeroButton:
                 Debug.Log("Click Hero Button");
                 clickedButton = heroBtn;
-                if (!ui_HeroPopup.isOpen)
-                {
-                    ui_HeroPopup.isOpen = true;
-                    ui_HeroPopup.gameObject.SetActive(true);
-                    ui_HeroPopup.SetInfo();
-                }
+
+                UI_HeroPopup popup = await Managers.UIM.ShowPopup<UI_HeroPopup>(_isFade: true);
+                popup.OnThisPopupClosed = ScaleDownSelectButton;
+                // ui_HeroPopup.gameObject.SetActive(true);
+                // ui_HeroPopup.SetInfo();
+                // ui_HeroPopup.OnThisPopupClosed = ScaleDownSelectButton;
 
                 break;
 
@@ -288,7 +278,14 @@ public class UI_GameScene : UI_Scene, ITickable
     }
 
 
-    
+    private void ScaleDownSelectButton()
+    {
+        if (selectedButton != null)
+        {
+            selectedButton.transform.DOScale(Vector3.one, 0.2f);
+            selectedButton = null;
+        }
+    }
 
 
     void CheckCharacter()
@@ -318,7 +315,7 @@ public class UI_GameScene : UI_Scene, ITickable
     void ClickUp()
     {
         isLevelUpButtonPush = false;
-        if(coroutine != null)
+        if (coroutine != null)
         {
             StopCoroutine(coroutine);
         }
@@ -328,7 +325,6 @@ public class UI_GameScene : UI_Scene, ITickable
 
     void CheckLevelupButton()
     {
-
         //버튼
         GetImage(ImagesType, (int)Images.Exp_FillImage).fillAmount = Managers.PlayerM.ExpPercent();
         GetText(TextsType, (int)Texts.ExpText).text = (Managers.PlayerM.ExpPercent() * 100.0f) + "%";
@@ -336,7 +332,7 @@ public class UI_GameScene : UI_Scene, ITickable
         GetText(TextsType, (int)Texts.HpText).text = $"+ {Utils.ToCurrencyString(Managers.PlayerM.NextHp())}";
         GetText(TextsType, (int)Texts.NeedLevelUpText).text = "";
         GetText(TextsType, (int)Texts.GetExpText).text = "";
-        
+
     }
 
     IEnumerator coPush()
@@ -351,17 +347,17 @@ public class UI_GameScene : UI_Scene, ITickable
         Managers.SpawnM.StartSpawn();
     }
 
-  
+
     #endregion
     #region LevelUpButton
     float timer = 0f;
     bool isLevelUpButtonPush = false;
     public void Tick(float _deltaTime)
     {
-        if(isLevelUpButtonPush)
+        if (isLevelUpButtonPush)
         {
             timer += _deltaTime;
-            if(timer >= 0.01f)
+            if (timer >= 0.01f)
             {
                 timer = 0.0f;
                 ExpUPAnim();
@@ -370,4 +366,50 @@ public class UI_GameScene : UI_Scene, ITickable
         }
     }
     #endregion
+
+
+    float fadeDuration = 1;
+    public async UniTask AsyncFadeInOut(bool _isFadeIn, bool _isSibling = false)
+    {
+        Image fadeImage = GetImage(ImagesType, (int)Images.FadeImage);
+
+        if (_isSibling)
+        {
+
+            fadeImage.transform.parent = Managers.UIM.Root.transform;
+            fadeImage.transform.SetAsLastSibling();
+        }
+        else
+        {
+
+            fadeImage.transform.parent = this.transform;
+            fadeImage.transform.SetSiblingIndex(0);
+        }
+
+        await CoFadeInOutAsync(_isFadeIn);
+
+    }
+
+    private async UniTask CoFadeInOutAsync(bool _isFadeIn)
+    {
+        Image fadeImage = GetImage(ImagesType, (int)Images.FadeImage);
+
+        float current = 0.0f;
+        float percent = 0.0f;
+        float start = _isFadeIn ? 1.0f : 0.0f;
+        float end = _isFadeIn ? 0.0f : 1.0f;
+        fadeImage.raycastTarget = true;
+
+        while (percent < 1.0f)
+        {
+            current += Time.deltaTime;
+            percent = current / fadeDuration;
+            float LerpPos = Mathf.Lerp(start, end, percent);
+            fadeImage.color = new Color(0, 0, 0, LerpPos);
+
+            await UniTask.Yield();
+        }
+
+        fadeImage.raycastTarget = false;
+    }
 }

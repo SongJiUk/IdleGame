@@ -23,9 +23,9 @@ public class DropItemController : BaseController
     public override bool Init()
     {
         if (!base.Init()) return false;
-        if (itemRect == null  || text ==null || grades == null || loot == null)
+        if (itemRect == null || text == null || grades == null || loot == null)
         {
-            Debug.LogError("[DropItemController] ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù. ÀÎ½ºÆåÅÍ È®ÀÎÇÏ±â");
+            Debug.LogError("[DropItemController] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ï¿½Î½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï±ï¿½");
             return false;
         }
 
@@ -52,16 +52,16 @@ public class DropItemController : BaseController
         float angleRad = firingAngle * Mathf.Deg2Rad;
 
         float V0_squared = (range * gravity) / Mathf.Sin(2 * angleRad);
-        if (V0_squared <= 0 || Mathf.Abs(Mathf.Sin(2* angleRad)) < 0.001f)
+        if (V0_squared <= 0 || Mathf.Abs(Mathf.Sin(2 * angleRad)) < 0.001f)
         {
-            Debug.LogError("¹ß»çÃ¼ °¢µµ°¡ 0µµ°Å³ª 90µµÀÓ");
+            Debug.LogError("ï¿½ß»ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½Å³ï¿½ 90ï¿½ï¿½ï¿½ï¿½");
             return;
         }
 
-        float V0 = Mathf.Sqrt(V0_squared); //ÃÊ±â¼Ó·Â 
-        float Vx = V0 * Mathf.Cos(angleRad); //¼öÆò ¼Óµµ
-        float Vy = V0 * Mathf.Sin(angleRad); // ¼öÁ÷ ÃÊ±â ¼Óµµ
-        float flightDuration = range / Vx; // ºñÇà½Ã°£ ( ½Ã°£ = °Å¸® / ¼Óµµ)
+        float V0 = Mathf.Sqrt(V0_squared); //ï¿½Ê±ï¿½Ó·ï¿½ 
+        float Vx = V0 * Mathf.Cos(angleRad); //ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½
+        float Vy = V0 * Mathf.Sin(angleRad); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½Óµï¿½
+        float flightDuration = range / Vx; // ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ ( ï¿½Ã°ï¿½ = ï¿½Å¸ï¿½ / ï¿½Óµï¿½)
 
         Vector3 horizontalDirection = displacementXZ.normalized;
         Vector3 startPos = transform.position;
@@ -95,12 +95,12 @@ public class DropItemController : BaseController
             ItemCheck();
 
 
-            
+
         }
         catch (System.OperationCanceledException) { }
         catch (System.Exception e)
         {
-            Debug.LogError("µå¶ø¾ÆÀÌÅÛ ½Ã¹Ä·¹ÀÌ¼Ç Áß ¿À·ù ¹ß»ý : " + e.Message);
+            Debug.LogError("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¹Ä·ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ : " + e.Message);
         }
         finally
         {
@@ -111,7 +111,7 @@ public class DropItemController : BaseController
         }
     }
 
-    //ÀÌ°Å ÀÌ°ÅÀÌ°Å
+    //ï¿½Ì°ï¿½ ï¿½Ì°ï¿½ï¿½Ì°ï¿½
     void ItemCheck()
     {
         transform.rotation = Quaternion.identity;
@@ -120,9 +120,9 @@ public class DropItemController : BaseController
 
         itemRect.gameObject.SetActive(true);
         itemRect.parent = Managers.UIM.SceneUI.WorldItemParent;
-        //TODO : ¾ÆÀÌÅÛ Á¤º¸ ¹Þ¾Æ¿Í¼­ ÀÛ¼º
+        //TODO : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Í¼ï¿½ ï¿½Û¼ï¿½
         text.text = Utils.StringToColorGrade(grade) + "TESET ITEM" + "</color>";
-         
+
 
         itemRect.position = Camera.main.WorldToScreenPoint(transform.position);
 
@@ -142,11 +142,11 @@ public class DropItemController : BaseController
             loot.Play();
             await UniTask.WaitForSeconds(0.5f);
 
-            Managers.ResourceM.Destory(gameObject);
+            Managers.ResourceM.Destroy(gameObject);
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
-            Debug.LogError("¾ÆÀÌÅÛ È¹µæ ¿¡·¯ : " + e.Message);
+            Debug.LogError("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : " + e.Message);
         }
 
     }

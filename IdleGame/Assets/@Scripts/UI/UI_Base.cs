@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine.EventSystems;
+using Cysharp.Threading.Tasks;
 
 public class UI_Base : MonoBehaviour
 {
@@ -22,10 +23,10 @@ public class UI_Base : MonoBehaviour
 
     private void Start()
     {
-        Init();
+        Init().Forget();
     }
 
-    public virtual bool Init()
+    public virtual async UniTask<bool> Init()
     {
         if (isInit) return false;
 

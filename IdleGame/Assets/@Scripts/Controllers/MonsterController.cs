@@ -155,7 +155,7 @@ public class MonsterController : CreatureController
     }
 
 
-    public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCiriticla = false)
+    public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCiritical = false)
     {
         base.GetDamage(_dmg, _attacker, _attacker.GetCritical());
         Managers.ObjectM.Spawn<ObjectController>(transform.position, 20000);

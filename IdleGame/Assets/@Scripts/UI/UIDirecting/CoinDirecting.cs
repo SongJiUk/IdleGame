@@ -12,8 +12,8 @@ public class CoinDirecting : BaseController
     RectTransform[] childs = new RectTransform[5];
     float distanceRange;
 
-    
-    //DoTween »ó¼ö
+
+    //DoTween ï¿½ï¿½ï¿½
     const float SCATTER_DURATION = 0.3f;
     const float COLLECT_DURATION = 0.3f;
     private void Awake()
@@ -21,10 +21,10 @@ public class CoinDirecting : BaseController
         cam = Camera.main;
         for (int i = 0; i < childs.Length; i++) childs[i] = transform.GetChild(i).GetComponent<RectTransform>();
         distanceRange = 300f;
-       
+
     }
 
-    #region ÀÌ°Å Unitaskµ¹¾Æ°¥¶§ °ÔÀÓÁ¾·áÇÏ¸é ³ª´Â ¿À·ù¶§¹®¿¡ ÀÛ¼ºÇØ³õÀº°Å
+    #region ï¿½Ì°ï¿½ Unitaskï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½Ø³ï¿½ï¿½ï¿½ï¿½ï¿½
     private CancellationTokenSource cts;
     private void OnEnable()
     {
@@ -38,8 +38,8 @@ public class CoinDirecting : BaseController
     }
     #endregion
 
-    //TODO: µ¥ÀÌÅÍ Ãß°¡ÇÏ±â
-    
+    //TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï±ï¿½
+
     public void Init(Vector3 _pos)
     {
         targetPos = _pos;
@@ -58,21 +58,21 @@ public class CoinDirecting : BaseController
     {
         try
         {
-            for(int i = 0; i <childs.Length; i++)
+            for (int i = 0; i < childs.Length; i++)
             {
                 RectTransform rect = childs[i];
                 Vector2 randOffset = (Vector2)targetPos + Random.insideUnitCircle * Random.Range(-distanceRange, distanceRange);
 
                 rect.DOAnchorPos(randOffset, SCATTER_DURATION)
                     .SetEase(Ease.OutBack)
-                    .SetUpdate(true) // ÀÌ°Å ¾²¸é ÀÏ½ÃÁ¤ÁöµÇ¾îµµ °è¼Ó ÁøÇà‰Î
+                    .SetUpdate(true) // ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾îµµ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     .SetDelay(Random.Range(0f, 0.05f))
                     .ToUniTask(cancellationToken: _token)
                     .Forget();
             }
 
-            //¹Ì¸®ÃÊ
-            await UniTask.Delay(500, cancellationToken: _token); 
+            //ï¿½Ì¸ï¿½ï¿½ï¿½
+            await UniTask.Delay(500, cancellationToken: _token);
 
             var tasks = new UniTask[childs.Length];
             for (int i = 0; i < childs.Length; i++)
@@ -86,21 +86,21 @@ public class CoinDirecting : BaseController
 
             await UniTask.WhenAll(tasks);
 
-            if(this != null && gameObject != null)
-               Managers.ResourceM.Destory(gameObject);
+            if (this != null && gameObject != null)
+                Managers.ResourceM.Destroy(gameObject);
         }
-        catch(System.OperationCanceledException)
+        catch (System.OperationCanceledException)
         {
             if (this != null && gameObject != null)
-                Managers.ResourceM.Destory(gameObject);
+                Managers.ResourceM.Destroy(gameObject);
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
-            Debug.Log("ÄÚÀÎ ÀÌÆåÆ® Ãë¼Ò :" + e.Message);
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ :" + e.Message);
             if (this != null && gameObject != null)
-                Managers.ResourceM.Destory(gameObject);
+                Managers.ResourceM.Destroy(gameObject);
         }
     }
 
-    
+
 }

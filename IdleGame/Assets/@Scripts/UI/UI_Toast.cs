@@ -6,9 +6,9 @@ using System;
 
 public class UI_Toast : UI_Base
 {
-    public override bool Init()
+    public override async UniTask<bool> Init()
     {
-        if (!base.Init()) return false;
+        if (!await base.Init()) return false;
 
         return true;
     }

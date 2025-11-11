@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ObjectManager
@@ -11,11 +12,11 @@ public class ObjectManager
     public HashSet<ProjectileController> pjSet { get; } = new HashSet<ProjectileController>();
     public HashSet<ObjectController> ocSet { get; } = new HashSet<ObjectController>();
 
-    private Dictionary<Type, Action<BaseController, Vector3,int, CreatureController, CreatureController>> initActions;
+    private Dictionary<Type, Action<BaseController, Vector3, int, CreatureController, CreatureController>> initActions;
     private Dictionary<Type, Action<BaseController>> removeActions;
     private string GetPrefabNames<T>(int _tempID) where T : BaseController
     {
-        if(typeof(T).IsSubclassOf(typeof(CreatureController)) || typeof(T) == typeof(CreatureController))
+        if (typeof(T).IsSubclassOf(typeof(CreatureController)) || typeof(T) == typeof(CreatureController))
         {
             Managers.DataM.CreatureDataDic.TryGetValue(_tempID, out var data);
             return data?.prefabName;
@@ -135,14 +136,14 @@ public class ObjectManager
     {
 
         string prefabName = GetPrefabNames<T>(_tempId);
-        if(string.IsNullOrEmpty(prefabName))
+        if (string.IsNullOrEmpty(prefabName))
         {
             Debug.LogError("[ObjectManager] ID에 맞는 오브젝트가 없음");
             return null;
         }
         GameObject go = Managers.ResourceM.Instantiate(prefabName, _pooling: true);
 
-        if(go == null)
+        if (go == null)
         {
             Debug.LogError("[ObjectManager] Instantiate 실패");
             return null;
@@ -150,14 +151,14 @@ public class ObjectManager
         go.transform.position = _pos;
 
         T controller = go.GetOrAddComponent<T>();
-        if(controller == null)
+        if (controller == null)
         {
             Debug.LogError($"[ObjectManager] Controller 불러오기 실패 {typeof(T).Name}");
             return null;
         }
 
         Type type = controller.GetType();
-        if(initActions.TryGetValue(type, out var initAction))
+        if (initActions.TryGetValue(type, out var initAction))
         {
             initAction(controller, _pos, _tempId, _owner, _target);
         }
@@ -169,17 +170,45 @@ public class ObjectManager
         return controller;
     }
 
-  
+    public T SpawnUI<T>(string _prefabName) where T : UI_Base
+    {
+        if (string.IsNullOrEmpty(_prefabName))
+        {
+            Debug.LogError("[ObjectManager] UI 프리팹 이름이 비어있음 ");
+            return null;
+        }
+        GameObject go = Managers.ResourceM.Instantiate(_prefabName, _pooling: true);
+        if (go == null)
+        {
+            Debug.LogError("[ObjectManager] : UI Instantiate 실패! " + _prefabName);
+            return null;
+        }
+
+        T uiController = go.GetOrAddComponent<T>();
+        if (uiController == null)
+        {
+            Debug.LogError("[ObjectManager] : UI Controller호출 실패");
+            return null;
+        }
+
+        return uiController;
+    }
+    public void DeSpawnUI<T>(T _obj) where T : UI_Base
+    {
+        if (_obj == null || !_obj.IsValid()) return;
+        Managers.ResourceM.Destroy(_obj.gameObject);
+    }
+
     public void DeSpawn<T>(T _obj) where T : BaseController
     {
         if (_obj == null || !_obj.IsValid()) return;
 
-        if(removeActions.TryGetValue(typeof(T), out var removeAction))
+        if (removeActions.TryGetValue(typeof(T), out var removeAction))
         {
             removeAction(_obj);
         }
 
-        Managers.Destroy(_obj.gameObject);
+        Managers.ResourceM.Destroy(_obj.gameObject);
     }
 
     public void ShowDamageFont(Vector3 _pos, double _dmg, bool _isMonster = false, bool _isCritical = false)
@@ -190,7 +219,7 @@ public class ObjectManager
 
         GameObject go = Managers.ResourceM.Instantiate(prefabName, _pooling: true);
         DamageFont damageFont = go.GetOrAddComponent<DamageFont>();
-        damageFont.Init(_pos, _dmg, _isMonster,_isCritical);
+        damageFont.Init(_pos, _dmg, _isMonster, _isCritical);
 
     }
 }

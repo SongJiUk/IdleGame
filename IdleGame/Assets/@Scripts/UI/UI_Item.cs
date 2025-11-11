@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class UI_Item : UI_Base
@@ -23,9 +24,9 @@ public class UI_Item : UI_Base
         ItemCountText
     }
 
-    public override bool Init()
+    public override async UniTask<bool> Init()
     {
-        if (!base.Init()) return false;
+        if (!await base.Init()) return false;
 
         ImagesType = typeof(Images);
         TextsType = typeof(Texts);

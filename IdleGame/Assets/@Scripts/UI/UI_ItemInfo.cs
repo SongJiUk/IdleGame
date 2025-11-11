@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,16 +9,16 @@ public class UI_ItemInfo : UI_Popup
 {
 
     RectTransform rect;
-    public override bool Init()
+    public override async UniTask<bool> Init()
     {
-        if (!base.Init()) return false;
+        if (!await base.Init()) return false;
 
         rect = GetComponent<RectTransform>();
         return true;
     }
 
 
-    //TODO : ¿©±â¼­ À§Ä¡ ÃÊ±âÈ­ ½ÃÅ°±â (µ¥ÀÌÅÍ°ªµµ ¹Þ¾Æ¿Í¾ßÇÔ)
+    //TODO : ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½Ä¡ ï¿½Ê±ï¿½È­ ï¿½ï¿½Å°ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Í¾ï¿½ï¿½ï¿½)
     public void SetInfo(Vector2 _pos)
     {
         if (rect == null)
@@ -30,5 +31,5 @@ public class UI_ItemInfo : UI_Popup
 
     }
 
-  
+
 }

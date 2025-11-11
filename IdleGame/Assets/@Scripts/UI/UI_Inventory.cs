@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 public class UI_Inventory : UI_Base
 {
     enum GameObjects
@@ -10,7 +11,7 @@ public class UI_Inventory : UI_Base
         BarObject
     }
 
-   enum Buttons
+    enum Buttons
     {
         AllButton,
         EquipmentButton,
@@ -27,9 +28,9 @@ public class UI_Inventory : UI_Base
         OthersText,
     }
 
-    public override bool Init()
+    public override async UniTask<bool> Init()
     {
-        if (!base.Init()) return false;
+        if (!await base.Init()) return false;
         GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
         TextsType = typeof(Texts);
@@ -49,7 +50,7 @@ public class UI_Inventory : UI_Base
 
     public void SetInfo()
     {
-        //³ôÀº µî±Þ ¸ÕÀú Linq
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Linq
         //ex) Managers.ResourceM.ResourcDic.OrderByDescending(x => x.Value.name);
     }
 
@@ -62,7 +63,7 @@ public class UI_Inventory : UI_Base
         targetTr.DOMove(endPos, 0.5f)
             .SetEase(Ease.OutQuad);
 
-        // TODO : ¿©±â¿¡ Á¤·Ä ÄÚµå ½áÁÖ¸éµÉµí. ¾ÆÀÌÅÛ¿¡ Æ¯¼º¿¡µû¶ó¼­
+        // TODO : ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½Ö¸ï¿½Éµï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ Æ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 
     void OnClickEquipmentButton()

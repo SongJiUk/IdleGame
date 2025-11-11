@@ -13,7 +13,7 @@ public class DamageFont : BaseController
     Camera cam;
     Vector3 target;
 
-  
+
 
     public void Init(Vector3 _pos, double _dmg, bool _isMonster = false, bool _isCritical = false)
     {
@@ -44,9 +44,9 @@ public class DamageFont : BaseController
                 damageText.text = Utils.ToCurrencyString(_dmg);
             }
         }
-            
 
-        
+
+
 
         damageText.alpha = 1;
 
@@ -59,7 +59,7 @@ public class DamageFont : BaseController
         var tr = transform;
         Vector3 targetPos = new Vector3(target.x, target.y + 0.5f, target.z);
         transform.position = cam.WorldToScreenPoint(targetPos);
-        
+
         Sequence sq = DOTween.Sequence();
         transform.localScale = Vector3.zero;
 
@@ -69,7 +69,7 @@ public class DamageFont : BaseController
             .Join(damageText.DOFade(0, 0.3f).SetEase(Ease.InQuint))
             .OnComplete(() =>
             {
-                Managers.ResourceM.Destory(gameObject);
+                Managers.ResourceM.Destroy(gameObject);
             });
     }
 }

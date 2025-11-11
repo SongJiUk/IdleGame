@@ -10,10 +10,6 @@ using UnityEngine.EventSystems;
 public static class Utils
 {
 
-
-
-
-
     //public static LevelDesign Datas = Managers.ResourceM.ResourcDic["LevelDesign"] as LevelDesign;
     public static T GetOrAddComponent<T>(this GameObject _go) where T : Component
     {
@@ -73,6 +69,10 @@ public static class Utils
     public static bool IsValid(this BaseController _cc)
     {
         return _cc != null && _cc.isActiveAndEnabled;
+    }
+    public static bool IsValid(this UI_Base _ui)
+    {
+        return _ui != null && _ui.isActiveAndEnabled;
     }
 
     //몬스터 소환 위치
@@ -333,7 +333,7 @@ public static class Utils
     {
         int count = _list.Count;
 
-        while(count > 1)
+        while (count > 1)
         {
             count--;
             int randNum = UnityEngine.Random.Range(0, count + 1);

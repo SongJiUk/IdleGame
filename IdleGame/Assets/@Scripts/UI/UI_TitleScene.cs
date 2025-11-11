@@ -42,9 +42,9 @@ public class UI_TitleScene : UI_Scene
     }
 
     bool isLoadEnd = false;
-    public override bool Init()
+    public override async UniTask<bool> Init()
     {
-        if (!base.Init()) return false;
+        if (!await base.Init()) return false;
 
         ButtonsType = typeof(Buttons);
         SlidersType = typeof(Sliders);
