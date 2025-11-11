@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-public class UI_GameScene : UI_Scene
+public class UI_GameScene : UI_Scene, ITickable
 {
     #region Enum
     enum GameObjects
@@ -93,6 +93,7 @@ public class UI_GameScene : UI_Scene
     Button dungeonBtn;
     Button enforceBtn;
     Button shopBtn;
+    Button levelUpBtn;
     #region 코인, 쥬얼리, 아이템 애니메이션 관련
     //TODO : UI_Scene에서 관리하는거임
     public override Transform WorldCoinParent
@@ -131,10 +132,12 @@ public class UI_GameScene : UI_Scene
     UI_HeroPopup ui_HeroPopup;
 
     public UI_HeroPopup Ui_HeroPopup { get { return ui_HeroPopup; } }
-
+ 
     public override bool Init()
     {
         if (!base.Init()) return false;
+        Managers.UpdateM.Register(this);
+
         GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
         TextsType = typeof(Texts);
@@ -162,12 +165,16 @@ public class UI_GameScene : UI_Scene
         // GetButton(ButtonsType, (int)Buttons.EnforceButton).gameObject.BindEvent(OnClickEnforceButton);
         // GetButton(ButtonsType, (int)Buttons.ShopButton).gameObject.BindEvent(OnClickShopButton);
 
+        GetButton(ButtonsType, (int)Buttons.LevelUpButton).gameObject.BindEvent(ClickDown, _type: Define.UIEvent.PointerDown);
+        GetButton(ButtonsType, (int)Buttons.LevelUpButton).gameObject.BindEvent(ClickUp, _type: Define.UIEvent.PointerUp);
+
         statBtn = GetButton(ButtonsType, (int)Buttons.StatButton);
         heroBtn = GetButton(ButtonsType, (int)Buttons.HeroButton);
         relicsBtn = GetButton(ButtonsType, (int)Buttons.RelicsButton);
         dungeonBtn = GetButton(ButtonsType, (int)Buttons.DungeonButton);
         enforceBtn = GetButton(ButtonsType, (int)Buttons.EnforceButton);
         shopBtn = GetButton(ButtonsType, (int)Buttons.ShopButton);
+        levelUpBtn = GetButton(ButtonsType, (int)Buttons.LevelUpButton);
 
         ui_HeroPopup = Managers.UIM.ShowPopup<UI_HeroPopup>();
         ui_HeroPopup.Init();
@@ -175,6 +182,11 @@ public class UI_GameScene : UI_Scene
         AllOff();
         UpdateUIState();
         //UI_Toast ui_Toast = Managers.UIM.ShowPopup<UI_Toast>();
+
+        CheckLevelupButton();
+        CheckCharacter();
+        CheckPlayerPower();
+
         StartSpawnAfterDelay().Forget();
 
 
@@ -226,13 +238,13 @@ public class UI_GameScene : UI_Scene
             case Buttons.HeroButton:
                 Debug.Log("Click Hero Button");
                 clickedButton = heroBtn;
-                if(!ui_HeroPopup.isOpen)
+                if (!ui_HeroPopup.isOpen)
                 {
                     ui_HeroPopup.isOpen = true;
                     ui_HeroPopup.gameObject.SetActive(true);
                     ui_HeroPopup.SetInfo();
                 }
-                
+
                 break;
 
             case Buttons.RelicsButton:
@@ -256,6 +268,11 @@ public class UI_GameScene : UI_Scene
                 Debug.Log("Click Shop Button");
                 clickedButton = shopBtn;
                 break;
+
+            case Buttons.LevelUpButton:
+                CheckLevelupButton();
+                clickedButton = levelUpBtn;
+                break;
         }
 
         if (clickedButton == null) return;
@@ -271,6 +288,62 @@ public class UI_GameScene : UI_Scene
     }
 
 
+    
+
+
+    void CheckCharacter()
+    {
+        //GetImage(ImagesType, (int)Images.CharacterImage).sprite = "";
+        //GetText(TextsType, (int)Texts.CharacterLevelText).text = "";
+    }
+
+    void CheckPlayerPower()
+    {
+
+    }
+
+    #region LevelUPButton
+    Coroutine coroutine;
+    void ExpUPAnim()
+    {
+        GetButton(ButtonsType, (int)Buttons.LevelUpButton).transform.DORewind();
+        GetButton(ButtonsType, (int)Buttons.LevelUpButton).transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.25f);
+    }
+    void ClickDown()
+    {
+        ExpUPAnim();
+        coroutine = StartCoroutine(coPush());
+    }
+
+    void ClickUp()
+    {
+        isLevelUpButtonPush = false;
+        if(coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
+        timer = 0.0f;
+    }
+
+
+    void CheckLevelupButton()
+    {
+
+        //버튼
+        GetImage(ImagesType, (int)Images.Exp_FillImage).fillAmount = Managers.PlayerM.ExpPercent();
+        GetText(TextsType, (int)Texts.ExpText).text = (Managers.PlayerM.ExpPercent() * 100.0f) + "%";
+        GetText(TextsType, (int)Texts.AttackText).text = $"+ {Utils.ToCurrencyString(Managers.PlayerM.NextAttack())}";
+        GetText(TextsType, (int)Texts.HpText).text = $"+ {Utils.ToCurrencyString(Managers.PlayerM.NextHp())}";
+        GetText(TextsType, (int)Texts.NeedLevelUpText).text = "";
+        GetText(TextsType, (int)Texts.GetExpText).text = "";
+        
+    }
+
+    IEnumerator coPush()
+    {
+        yield return new WaitForSeconds(1f);
+        isLevelUpButtonPush = true;
+    }
     async UniTaskVoid StartSpawnAfterDelay()
     {
         await UniTask.Yield();
@@ -278,4 +351,23 @@ public class UI_GameScene : UI_Scene
         Managers.SpawnM.StartSpawn();
     }
 
+  
+    #endregion
+    #region LevelUpButton
+    float timer = 0f;
+    bool isLevelUpButtonPush = false;
+    public void Tick(float _deltaTime)
+    {
+        if(isLevelUpButtonPush)
+        {
+            timer += _deltaTime;
+            if(timer >= 0.01f)
+            {
+                timer = 0.0f;
+                ExpUPAnim();
+            }
+
+        }
+    }
+    #endregion
 }

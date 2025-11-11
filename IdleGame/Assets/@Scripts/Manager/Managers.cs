@@ -17,7 +17,7 @@ public class Managers : MonoBehaviour
     readonly GameManager gameManager = new();
     readonly DataManager dataManager = new();
     readonly CustomSceneManager customSceneManager = new();
-
+    readonly PlayerManager playerManager = new();
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
     public static ResourceManager ResourceM { get { return Instance?.resourceManager; } }
@@ -28,6 +28,8 @@ public class Managers : MonoBehaviour
     public static GameManager GameM { get { return Instance?.gameManager; } }
     public static DataManager DataM { get { return Instance?.dataManager; } }
     public static CustomSceneManager SceneM { get { return Instance?.customSceneManager; } }
+
+    public static PlayerManager PlayerM { get { return Instance?.playerManager; } }
 
 
 
