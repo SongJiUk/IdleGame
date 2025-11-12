@@ -74,11 +74,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
-  - m_GUID: 30db57c76ec074574b116261653b61b2
-    m_Address: Boss
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
   - m_GUID: 91cd657fb0dcd94458bdafd0354d29e9
     m_Address: EnergyBolt
     m_ReadOnly: 0
@@ -131,6 +126,16 @@ MonoBehaviour:
     - PrevLoad
   - m_GUID: 5e96f877de2ac8745886d3a1ce93ba2c
     m_Address: UI_CharacterIcon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 30db57c76ec074574b116261653b61b2
+    m_Address: Boss
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 786a6fef06b0fc34e8dfc6be21db857b
+    m_Address: BossAttack
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad

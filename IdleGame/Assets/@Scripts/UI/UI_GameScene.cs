@@ -14,7 +14,10 @@ public class UI_GameScene : UI_Scene, ITickable
     {
         LayersObject,
         JewelObject,
-        CoinObject
+        CoinObject,
+        StageMonsterCountObject,
+        BossBoardObject,
+        
     }
     enum Buttons
     {
@@ -52,7 +55,10 @@ public class UI_GameScene : UI_Scene, ITickable
         HpText,
         NeedLevelUpText,
         GetExpText,
-
+        StageMonsterCountText,
+        BossHPText,
+        BossText,
+        BossBoardStageText,
     }
 
     enum Images
@@ -83,6 +89,11 @@ public class UI_GameScene : UI_Scene, ITickable
         Character5_CoolTimeImage,
         Exp_FillImage,
         FadeImage,
+        StageMonsterCountImage,
+    }
+
+    enum Sliders
+    {
 
     }
 
@@ -135,17 +146,22 @@ public class UI_GameScene : UI_Scene, ITickable
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
+
+        Managers.StageM.readyEvent += () => AsyncFadeInOut(true).Forget();
+        Managers.StageM.bossEvent += OnBoss;
         Managers.UpdateM.Register(this);
 
         GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
         TextsType = typeof(Texts);
         ImagesType = typeof(Images);
+        SlidersType = typeof(Sliders);
 
         BindObject(GameObjectsType);
         BindButton(ButtonsType);
         BindText(TextsType);
         BindImage(ImagesType);
+        BindSlider(SlidersType);
 
 
         coinDirectingTr = GetObject(GameObjectsType, (int)GameObjects.CoinObject).GetComponent<RectTransform>();
@@ -175,7 +191,7 @@ public class UI_GameScene : UI_Scene, ITickable
         shopBtn = GetButton(ButtonsType, (int)Buttons.ShopButton);
         levelUpBtn = GetButton(ButtonsType, (int)Buttons.LevelUpButton);
 
-
+        
         UpdateUIState();
         //UI_Toast ui_Toast = Managers.UIM.ShowPopup<UI_Toast>();
 
@@ -183,12 +199,20 @@ public class UI_GameScene : UI_Scene, ITickable
         CheckCharacter();
         CheckPlayerPower();
 
-        StartSpawnAfterDelay().Forget();
+        AllOff();
+        StartSpawn();
 
+
+        Managers.GameM.mPlayer.OnPlayerDataUpdate = CheckStageMonsterCount;
 
         return true;
     }
 
+    void AllOff()
+    {
+        GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
+        GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
+    }
     void UpdateUIState()
     {
         //TODO : 여기서 이제 플레이어 상황 받아와서 bool값으로 처리해 주거나 더 좋은 방법생각해보자.
@@ -228,6 +252,7 @@ public class UI_GameScene : UI_Scene, ITickable
             case Buttons.HeroButton:
                 Debug.Log("Click Hero Button");
                 clickedButton = heroBtn;
+                ScaleUpSelectButton();
 
                 UI_HeroPopup popup = await Managers.UIM.ShowPopup<UI_HeroPopup>(_isFade: true);
                 popup.OnThisPopupClosed = ScaleDownSelectButton;
@@ -265,7 +290,12 @@ public class UI_GameScene : UI_Scene, ITickable
                 break;
         }
 
-        if (clickedButton == null) return;
+       
+    }
+
+    private void ScaleUpSelectButton()
+    {
+         if (clickedButton == null) return;
 
         if (selectedButton != null && selectedButton != clickedButton)
         {
@@ -277,7 +307,6 @@ public class UI_GameScene : UI_Scene, ITickable
         selectedButton = clickedButton;
     }
 
-
     private void ScaleDownSelectButton()
     {
         if (selectedButton != null)
@@ -287,7 +316,39 @@ public class UI_GameScene : UI_Scene, ITickable
         }
     }
 
+    void CheckStageMonsterCount()
+    {
+        float value = (float)Managers.StageM.count / (float)Managers.StageM.maxCount;
+        if (value >= 1.0f)
+        {
+            value = 1.0f;
+            if(Managers.StageM.stageState != Define.StageState.Boss)
+            {
+                Managers.StageM.StateChange(Define.StageState.Boss);
+            }
+                
+        }
+        GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = value;
+        GetText(TextsType, (int)Texts.StageMonsterCountText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
+    }
 
+    public void UpdateBossInfo(MonsterController _cc)
+    {
+        float value = (float)_cc.HP / (float)_cc.MaxHP;
+
+        if (value <= 0.0f)
+        {
+            value = 0f;
+        }
+        GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = (float)value;
+        GetText(TextsType, (int)Texts.BossHPText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
+    }
+
+    public void OnBoss()
+    {
+        GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
+        GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(true);
+    }
     void CheckCharacter()
     {
         //GetImage(ImagesType, (int)Images.CharacterImage).sprite = "";
@@ -299,13 +360,7 @@ public class UI_GameScene : UI_Scene, ITickable
 
     }
 
-    #region LevelUPButton
-    Coroutine coroutine;
-    void ExpUPAnim()
-    {
-        GetButton(ButtonsType, (int)Buttons.LevelUpButton).transform.DORewind();
-        GetButton(ButtonsType, (int)Buttons.LevelUpButton).transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.25f);
-    }
+    #region 레벨업 버튼 애니메이션 관련
     void ClickDown()
     {
         ExpUPAnim();
@@ -340,15 +395,22 @@ public class UI_GameScene : UI_Scene, ITickable
         yield return new WaitForSeconds(1f);
         isLevelUpButtonPush = true;
     }
-    async UniTaskVoid StartSpawnAfterDelay()
+    void StartSpawn()
     {
-        await UniTask.Yield();
-
-        Managers.SpawnM.StartSpawn();
+        Managers.StageM.StateChange(Define.StageState.Ready);
+        Managers.SpawnM.Init();
+        GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(true);
+    }
+    
+    Coroutine coroutine;
+    void ExpUPAnim()
+    {
+        GetButton(ButtonsType, (int)Buttons.LevelUpButton).transform.DORewind();
+        GetButton(ButtonsType, (int)Buttons.LevelUpButton).transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.25f);
     }
 
-
     #endregion
+
     #region LevelUpButton
     float timer = 0f;
     bool isLevelUpButtonPush = false;
@@ -367,7 +429,8 @@ public class UI_GameScene : UI_Scene, ITickable
     }
     #endregion
 
-
+    #region FadeInOut
+    //TODO : 그냥 const로 만들어버릴까
     float fadeDuration = 1;
     public async UniTask AsyncFadeInOut(bool _isFadeIn, bool _isSibling = false)
     {
@@ -412,4 +475,5 @@ public class UI_GameScene : UI_Scene, ITickable
 
         fadeImage.raycastTarget = false;
     }
+    #endregion
 }

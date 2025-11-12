@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using static Define;
+
 public class CreatureController : BaseController
 {
 
@@ -14,7 +16,9 @@ public class CreatureController : BaseController
     public bool IsDead { get { return isDead; } }
 
     protected virtual double hp { get; set; }
+    public double HP { get { return hp; } }
     protected virtual double maxHp { get; set; }
+    public double MaxHP { get { return maxHp; } }
     protected virtual double damage { get; set; }
     protected virtual float attackrange { get; set; }
     protected virtual float detectrange { get; set; }

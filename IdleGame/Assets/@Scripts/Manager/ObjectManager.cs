@@ -56,13 +56,14 @@ public class ObjectManager
             var monster = baseController as MonsterController;
 
             monster.Init();
+            monster.SetInfo(tempId);
             mcSet.Add(monster);
         });
 
         initActions.Add(typeof(RangeAttackController), (baseController, pos, tempId, owner, target) =>
         {
             var rangeAttack = baseController as RangeAttackController;
-            rangeAttack.AttackInit(target as MonsterController, 10, owner);
+            rangeAttack.AttackInit(target, 10, owner);
         });
 
         initActions.Add(typeof(MeleeAttackController), (baseController, pos, tempId, owner, target) =>

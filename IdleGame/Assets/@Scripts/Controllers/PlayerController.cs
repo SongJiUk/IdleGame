@@ -1,14 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Data.Common;
+using static Define;
+
 
 public class PlayerController : CreatureController
 {
     [SerializeField]
     GameObject trail;
+    public ParticleSystem provocation;
+
+    #region Action
+    public Action OnPlayerDataUpdate;
+    #endregion
+
+    int killCount;
+    public int KillCount
+    {
+        get => killCount;
+        set
+        {
+            killCount = value;
+            OnPlayerDataUpdate?.Invoke();
+        }
+    }
+
 
     Data.CreatureData data;
     void OnEnable() => Managers.UpdateM.Register(this);
@@ -21,11 +41,12 @@ public class PlayerController : CreatureController
     public override bool Init()
     {
         if (!base.Init()) return false;
+        Managers.StageM.readyEvent += OnReady;
+        Managers.StageM.bossEvent += OnBoss;
         return true;
     }
     public void SetInfo(Data.CreatureData _data)
-    {
-        data = _data;
+    {        data = _data;
         isAttack = false;
         SpawnPos = transform.position;
         hp = 100000;
@@ -76,118 +97,70 @@ public class PlayerController : CreatureController
         base.AnimatorChange(_state);
     }
     
+    private void OnReady()
+    {
+        transform.position = SpawnPos;
+    }
+    private void OnBoss()
+    {
+        base.AnimatorChange(Define.CreatureState.Idle);
+        provocation.Play();
+    }
+
+    public async UniTask KnockBack(float _power, float _durtaion)
+    {
+        float t = _durtaion;
+        Vector3 force = transform.forward * -_power;
+        force.y = 0f;
+
+        while(t > 0f)
+        {
+            t -= Time.deltaTime;
+            transform.position += force * Time.deltaTime;
+            await UniTask.Yield();
+        }
+    }
+
     public override void Tick(float _deltaTime)
     {
-        if (isDead) return;
-
-        if(!isAttack)
-            FindClosetTarget(Managers.ObjectM.mcSet);
-
-        if(target == null || target.IsDead)
+        if (Managers.StageM.stageState == StageState.Play || Managers.StageM.stageState == StageState.BossPlay)
         {
-            ResetTarget();
-            GoBackToSpawn(_deltaTime);
-            return;
-        }
+            if (isDead) return;
 
-        float targetDist = Vector3.Distance(transform.position, target.transform.position);
-
-        if(targetDist > detectrange)
-        {
-            ResetTarget();
-            GoBackToSpawn(_deltaTime);
-            return;
-        }
-
-        if(targetDist > attackrange)
-        {
             if (!isAttack)
-                MoveToTarget(_deltaTime);
+                FindClosetTarget(Managers.ObjectM.mcSet);
 
-            return;
+            if (target == null || target.IsDead)
+            {
+                ResetTarget();
+                GoBackToSpawn(_deltaTime);
+                return;
+            }
+
+            float targetDist = Vector3.Distance(transform.position, target.transform.position);
+
+            if (targetDist > detectrange)
+            {
+                ResetTarget();
+                GoBackToSpawn(_deltaTime);
+                return;
+            }
+
+            if (targetDist > attackrange)
+            {
+                if (!isAttack)
+                    MoveToTarget(_deltaTime);
+
+                return;
+            }
+
+            if (!isAttack)
+                StartAttack();
+
         }
 
-        if (!isAttack)
-            StartAttack();
 
 
-        //if (!isTargetLocked)
-        //{
-        //    FindClosetTarget(Managers.ObjectM.mcSet);
-            
-        //    if(target != null)
-        //    {
-        //        float dist = Vector3.Distance(transform.position, target.transform.position);
-
-        //        if (dist <= attackrange)
-        //            isTargetLocked = true;
-        //        else
-        //            return;
-        //    }
-        //}
-           
-
-        //if (target == null)
-        //{
-        //    float targetPos = Vector3.Distance(transform.position, SpawnPos);
-        //    if (targetPos > 0.1f)
-        //    {
-        //        transform.position = Vector3.MoveTowards(transform.position, SpawnPos, _deltaTime);
-        //        transform.LookAt(SpawnPos);
-        //        AnimatorChange(Define.CreatureState.Move);
-        //    }
-        //    else
-        //    {
-        //        AnimatorChange(Define.CreatureState.Idle);
-        //    }
-        //}
-        //else
-        //{
-        //    if (target.IsDead)
-        //    {
-        //        target = null;
-        //        isTargetLocked = false;
-        //        isAttack = false;
-        //        return;
-        //    }
-
-        //    float targetDist = Vector3.Distance(transform.position, target.transform.position);
-        //    if(targetDist> detectrange)
-        //    {
-        //        target = null;
-        //        isTargetLocked = false;
-        //        isAttack = false;
-
-        //        AnimatorChange(Define.CreatureState.Idle);
-        //        transform.LookAt(SpawnPos);
-        //        transform.position = Vector3.MoveTowards(transform.position, SpawnPos, _deltaTime);
-        //        return;
-        //    }
-            
-        //    if (targetDist <= detectrange && targetDist > attackrange && !isAttack)
-        //    {
-        //        AnimatorChange(Define.CreatureState.Move);
-        //        transform.LookAt(target.transform);
-        //        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
-        //    }
-        //    else if (targetDist <= attackrange && !isAttack)
-        //    {
-        //        if(target == null || target.IsDead)
-        //        {
-        //            target = null;
-        //            isTargetLocked = false;
-        //            isAttack = false;
-        //            return;
-        //        }
-
-        //        isAttack = true;
-        //        isTargetLocked = true;
-        //        AnimatorChange(Define.CreatureState.Attack);
-        //        transform.LookAt(target.transform);
-
-        //        WaitForAttackDelay().Forget();
-        //    }
-        //}
     }
 
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)

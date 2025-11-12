@@ -8,6 +8,8 @@ public class RangeAttackController : ProjectileController
     Dictionary<string, ParticleSystem> Muzzles = new Dictionary<string, ParticleSystem>();
     CreatureController owner;
 
+
+    //TODO: 이렇게 하는게 맞는건가 싶긴한데 나중에 리펙토링할때 수정하자.
     private void Awake()
     {
         Transform projectiles = transform.GetChild(0);

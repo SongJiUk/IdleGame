@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,17 +8,20 @@ public class Managers : MonoBehaviour
     static Managers instance;
     static bool init = false;
 
+
+    UpdateManager updateManager = null;
+    SpawnManager spawnManager = null;
+
+
     readonly PoolManager poolManager = new();
     readonly ResourceManager resourceManager = new();
-
     readonly UIManager uIManager = new();
-    UpdateManager updateManager = null;
     readonly ObjectManager objectManager = new();
-    SpawnManager spawnManager = null;
     readonly GameManager gameManager = new();
     readonly DataManager dataManager = new();
     readonly CustomSceneManager customSceneManager = new();
     readonly PlayerManager playerManager = new();
+    readonly StageManager stageManager = new();
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
     public static ResourceManager ResourceM { get { return Instance?.resourceManager; } }
@@ -28,8 +32,8 @@ public class Managers : MonoBehaviour
     public static GameManager GameM { get { return Instance?.gameManager; } }
     public static DataManager DataM { get { return Instance?.dataManager; } }
     public static CustomSceneManager SceneM { get { return Instance?.customSceneManager; } }
-
     public static PlayerManager PlayerM { get { return Instance?.playerManager; } }
+    public static StageManager StageM { get { return Instance?.stageManager; } }
 
 
 
@@ -59,10 +63,9 @@ public class Managers : MonoBehaviour
         }
     }
 
-
-
     public static void Clear()
     {
         PoolM.Clear();
     }
+
 }

@@ -17,6 +17,8 @@ namespace Data
         public Define.ObjectType Type;
         public float AttackRange;
         public Define.CharacterGrade CharacterGrade;
+        public double BaseHp;
+        public double BaseDamage;
     }
 
     public class CreatureDataLoader : ILoader<int, CreatureData>

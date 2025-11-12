@@ -86,4 +86,14 @@ public static class Define
         Melee,
         Range
     }
+
+    public enum StageState
+    {
+        Ready,
+        Play,
+        Boss,
+        BossPlay,
+        Clear,
+        Dead
+    }
 }

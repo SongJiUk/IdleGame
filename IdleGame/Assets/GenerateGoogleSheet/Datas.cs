@@ -30,6 +30,8 @@ public class CreatureData
 	public string Type;
 	public int AttackRange;
 	public string CharacterGrade;
+	public int BaseHp;
+	public int BaseDamage;
 }
 
 [Serializable]

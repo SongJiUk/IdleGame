@@ -46,6 +46,8 @@ MonoBehaviour:
     Type: Player
     AttackRange: 2
     CharacterGrade: Common
+    BaseHp: 50
+    BaseDamage: 10
   - DataID: 2
     Name: Barbarian
     NameKR: "\uBC14\uBC14\uB9AC\uC548"
@@ -54,6 +56,8 @@ MonoBehaviour:
     Type: Player
     AttackRange: 1
     CharacterGrade: UnCommon
+    BaseHp: 60
+    BaseDamage: 12
   - DataID: 3
     Name: Berserker
     NameKR: "\uBC84\uC11C\uCEE4"
@@ -62,6 +66,8 @@ MonoBehaviour:
     Type: Player
     AttackRange: 1
     CharacterGrade: Rare
+    BaseHp: 70
+    BaseDamage: 15
   - DataID: 4
     Name: Elementalist_B
     NameKR: "\uC6D0\uC18C\uC220\uC0AC"
@@ -70,6 +76,8 @@ MonoBehaviour:
     Type: Player
     AttackRange: 2
     CharacterGrade: Unique
+    BaseHp: 80
+    BaseDamage: 17
   - DataID: 5
     Name: Elementalist_W
     NameKR: "\uC6D0\uC18C\uC220\uC0AC"
@@ -78,6 +86,8 @@ MonoBehaviour:
     Type: Player
     AttackRange: 2
     CharacterGrade: Unique
+    BaseHp: 80
+    BaseDamage: 17
   - DataID: 6
     Name: Hunter
     NameKR: "\uD5CC\uD130"
@@ -86,6 +96,8 @@ MonoBehaviour:
     Type: Player
     AttackRange: 2
     CharacterGrade: Legendary
+    BaseHp: 100
+    BaseDamage: 20
   - DataID: 7
     Name: Spearman
     NameKR: "\uC2A4\uD53C\uC5B4\uB9E8"
@@ -94,6 +106,8 @@ MonoBehaviour:
     Type: Player
     AttackRange: 1
     CharacterGrade: Legendary
+    BaseHp: 100
+    BaseDamage: 20
   - DataID: 10000
     Name: Monster
     NameKR: "\uBAAC\uC2A4\uD130"
@@ -102,6 +116,8 @@ MonoBehaviour:
     Type: Monster
     AttackRange: 1
     CharacterGrade: Common
+    BaseHp: 10
+    BaseDamage: 10
   - DataID: 10001
     Name: Boss
     NameKR: "\uBCF4\uC2A4\uBAAC\uC2A4\uD130"
@@ -110,6 +126,8 @@ MonoBehaviour:
     Type: Boss
     AttackRange: 1
     CharacterGrade: Rare
+    BaseHp: 500
+    BaseDamage: 20
   ProjectileDataList:
   - DataID: 20000
     Name: Projectile
@@ -123,3 +141,9 @@ MonoBehaviour:
     Description: "\uADFC\uC811\uACF5\uACA9\uC774\uB2E4"
     prefabName: MeleeAttack
     AttackType: Melee
+  - DataID: 20002
+    Name: Projectile
+    NameKR: "\uBCF4\uC2A4 \uACF5\uACA9"
+    Description: "\uBCF4\uC2A4\uACF5\uACA9\uC774\uB2E4"
+    prefabName: BossAttack
+    AttackType: Range

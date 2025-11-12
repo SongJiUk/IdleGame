@@ -46,7 +46,9 @@
       "prefabName": "Cleric",
       "Type": "Player",
       "AttackRange": 2,
-      "CharacterGrade": "Common"
+      "CharacterGrade": "Common",
+      "BaseHp": 50,
+      "BaseDamage": 10
     },
     {
       "DataID": 2,
@@ -56,7 +58,9 @@
       "prefabName": "Barbarian",
       "Type": "Player",
       "AttackRange": 1,
-      "CharacterGrade": "UnCommon"
+      "CharacterGrade": "UnCommon",
+      "BaseHp": 60,
+      "BaseDamage": 12
     },
     {
       "DataID": 3,
@@ -66,7 +70,9 @@
       "prefabName": "Berserker",
       "Type": "Player",
       "AttackRange": 1,
-      "CharacterGrade": "Rare"
+      "CharacterGrade": "Rare",
+      "BaseHp": 70,
+      "BaseDamage": 15
     },
     {
       "DataID": 4,
@@ -76,7 +82,9 @@
       "prefabName": "Elementalist_B",
       "Type": "Player",
       "AttackRange": 2,
-      "CharacterGrade": "Unique"
+      "CharacterGrade": "Unique",
+      "BaseHp": 80,
+      "BaseDamage": 17
     },
     {
       "DataID": 5,
@@ -86,7 +94,9 @@
       "prefabName": "Elementalist_W",
       "Type": "Player",
       "AttackRange": 2,
-      "CharacterGrade": "Unique"
+      "CharacterGrade": "Unique",
+      "BaseHp": 80,
+      "BaseDamage": 17
     },
     {
       "DataID": 6,
@@ -96,7 +106,9 @@
       "prefabName": "Hunter",
       "Type": "Player",
       "AttackRange": 2,
-      "CharacterGrade": "Legendary"
+      "CharacterGrade": "Legendary",
+      "BaseHp": 100,
+      "BaseDamage": 20
     },
     {
       "DataID": 7,
@@ -106,7 +118,9 @@
       "prefabName": "Spearman",
       "Type": "Player",
       "AttackRange": 1,
-      "CharacterGrade": "Legendary"
+      "CharacterGrade": "Legendary",
+      "BaseHp": 100,
+      "BaseDamage": 20
     },
     {
       "DataID": 10000,
@@ -116,7 +130,9 @@
       "prefabName": "Monster",
       "Type": "Monster",
       "AttackRange": 1,
-      "CharacterGrade": "Common"
+      "CharacterGrade": "Common",
+      "BaseHp": 10,
+      "BaseDamage": 10
     },
     {
       "DataID": 10001,
@@ -126,7 +142,9 @@
       "prefabName": "Boss",
       "Type": "Boss",
       "AttackRange": 1,
-      "CharacterGrade": "Rare"
+      "CharacterGrade": "Rare",
+      "BaseHp": 500,
+      "BaseDamage": 20
     }
   ],
   "ProjectileData": [
@@ -145,6 +163,14 @@
       "Description": "근접공격이다",
       "prefabName": "MeleeAttack",
       "AttackType": "Melee"
+    },
+    {
+      "DataID": 20002,
+      "Name": "Projectile",
+      "NameKR": "보스 공격",
+      "Description": "보스공격이다",
+      "prefabName": "BossAttack",
+      "AttackType": "Range"
     }
   ],
   "MissionData": [],

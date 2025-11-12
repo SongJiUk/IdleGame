@@ -49,8 +49,8 @@ public class UIManager
         GameObject go = Managers.ResourceM.Instantiate(_name);
         T ui = go.GetOrAddComponent<T>();
         sceneUI = ui;
-
         go.transform.SetParent(Root.transform);
+
 
         return ui;
     }
