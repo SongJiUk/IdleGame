@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour, ITickable
 
         boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero,10001);
         scene = Managers.UIM.SceneUI as UI_GameScene;
-        boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
+        boss.OnMonsterInfoUpdate = scene.UpdateBossInfo;
 
         List<PlayerController> players = Managers.ObjectM.pcSet.ToList();
 
@@ -66,14 +66,15 @@ public class SpawnManager : MonoBehaviour, ITickable
         Managers.StageM.StateChange(Define.StageState.BossPlay);
     }
 
+    //TODO : 사용하지 않으면 지우기
     public void OnClear()
     {
-        if(boss != null && scene!= null)
-        {
-            boss.OnMonsterInfoUpdate -= scene.UpdateBossInfo;
-            boss = null;
-            scene = null;
-        }
+        //if(boss != null && scene!= null)
+        //{
+        //    boss.OnMonsterInfoUpdate -= scene.UpdateBossInfo;
+        //    boss = null;
+        //    scene = null;
+        //}
         
     }
     public void PlayerSpawn()

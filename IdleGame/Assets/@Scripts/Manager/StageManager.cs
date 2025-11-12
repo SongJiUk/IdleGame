@@ -35,7 +35,7 @@ public class StageManager
         {
             case StageState.Ready:
                 readyEvent?.Invoke();
-                CoAction(() => StateChange(StageState.Play), 2.0f).Forget();
+                AsyncAction(() => StateChange(StageState.Play), 2.0f).Forget();
 
                 break;
             case StageState.Play:
@@ -58,7 +58,7 @@ public class StageManager
     }
 
 
-    async UniTask CoAction(Action _action, float _timer)
+    async UniTask AsyncAction(Action _action, float _timer)
     {
         await UniTask.WaitForSeconds(_timer);
         _action?.Invoke();
