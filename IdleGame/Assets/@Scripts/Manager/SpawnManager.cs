@@ -14,21 +14,27 @@ public class SpawnManager : MonoBehaviour, ITickable
     float spawnTimer = 0f;
 
     public bool isStop { get; set; } = false;
+    MonsterController boss = null;
+    public List<PlayerController> players;
+    List<MonsterController> monsters;
+    UI_GameScene scene = null;
+
 
     //TODO : 처음 시작할땐 플레이어 스폰이 되있어야될거같긴함
     public void Init()
     {
-        PlayerSpawn();
         Managers.StageM.playEvent += StartSpawn;
         Managers.StageM.bossEvent += OnBoss;
         Managers.StageM.clearEvent += OnClear;
+        Managers.StageM.deadEvent += OnDead;
     }
 
     public void OnBoss()
     {
         StopSpawn();
-        
-        List<MonsterController> monsetrs = Managers.ObjectM.mcSet.ToList();
+
+        //보스전 잔몹들 삭제
+        List<MonsterController> monsetrs = Managers.ObjectM.mcList.ToList();
         foreach (var monster in monsetrs)
         {
             Managers.ObjectM.DeSpawn(monster);
@@ -38,22 +44,22 @@ public class SpawnManager : MonoBehaviour, ITickable
         BossSet().Forget();
     }
 
-    MonsterController boss = null;
-    UI_GameScene scene = null;
     public async UniTask BossSet()
     {
         await UniTask.WaitForSeconds(2f);
 
-        boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero,10001);
+        boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero, 10001);
         scene = Managers.UIM.SceneUI as UI_GameScene;
         boss.OnMonsterInfoUpdate = scene.UpdateBossInfo;
 
-        List<PlayerController> players = Managers.ObjectM.pcSet.ToList();
+        players = Managers.ObjectM.pcList.ToList();
 
         Vector3 Pos = boss.transform.position;
-        foreach(var player in players)
+        foreach (var player in players)
         {
-            if(Vector3.Distance(Pos, player.transform.position) <= 2.0f)
+            if (player.IsDead) continue;
+
+            if (Vector3.Distance(Pos, player.transform.position) <= 2.0f)
             {
                 player.transform.LookAt(Pos);
                 player.KnockBack(3.0f, 0.3f).Forget();
@@ -62,7 +68,7 @@ public class SpawnManager : MonoBehaviour, ITickable
 
         await UniTask.WaitForSeconds(1.5f);
 
-        
+
         Managers.StageM.StateChange(Define.StageState.BossPlay);
     }
 
@@ -75,7 +81,12 @@ public class SpawnManager : MonoBehaviour, ITickable
         //    boss = null;
         //    scene = null;
         //}
-        
+
+    }
+
+    public void OnDead()
+    {
+
     }
     public void PlayerSpawn()
     {
@@ -91,7 +102,9 @@ public class SpawnManager : MonoBehaviour, ITickable
     }
 
     public void StartSpawn()
-    { 
+    {
+        PlayerSpawn();
+        players = Managers.ObjectM.pcList.ToList();
         Managers.UpdateM.Register(this);
     }
 
@@ -103,7 +116,7 @@ public class SpawnManager : MonoBehaviour, ITickable
     void SpawnMonster()
     {
         //TODO : 몬스터 몇마리 생성할지 정하고 하드코딩 없애기(데이터도 어떻게불러올지 생각해보고 하드코딩 수정)
-        for (int i = 0; i <5; i++)
+        for (int i = 0; i < 5; i++)
         {
             Managers.ObjectM.Spawn<MonsterController>(Utils.CreateMonsterSpawnPoint(), 10000);
         }

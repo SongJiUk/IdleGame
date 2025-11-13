@@ -17,15 +17,30 @@ public class Boss_Electric : SkillBase
 
     async UniTask Skills()
     {
-        for(int i =0; i<5; i++)
+        players = Managers.SpawnM.players.ToList();
+        if (players.Count == 0) return;
+        for (int i = 0; i < 5; i++)
         {
+            if (players.Count == 0)
+            {
+                Debug.Log("[Boss_Electric]모든 플레이어 사망, 스킬 루프 종료");
+                break;
+            }
+
             PlayerController player = players[Random.Range(0, players.Count)];
-            var go = Managers.ResourceM.Instantiate("Boss_Electric",_pooling: true);
+
+            if (player == null || player.IsDead) continue;
+
+            var go = Managers.ResourceM.Instantiate("Boss_Electric", _pooling: true);
             go.transform.position = player.transform.position;
+
+            await Managers.CameraM.CameraShake();
+
+            if (player == null || player.IsDead) continue;
 
             player.GetDamage(10, cc);
             await UniTask.WaitForSeconds(0.2f);
-            
+
         }
     }
 }

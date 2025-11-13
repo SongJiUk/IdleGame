@@ -7,10 +7,10 @@ using UnityEngine;
 public class ObjectManager
 {
     public PlayerController mPlayer { get; private set; }
-    public HashSet<PlayerController> pcSet { get; } = new HashSet<PlayerController>();
-    public HashSet<MonsterController> mcSet { get; } = new HashSet<MonsterController>();
-    public HashSet<ProjectileController> pjSet { get; } = new HashSet<ProjectileController>();
-    public HashSet<ObjectController> ocSet { get; } = new HashSet<ObjectController>();
+    public List<PlayerController> pcList { get; } = new List<PlayerController>();
+    public List<MonsterController> mcList { get; } = new List<MonsterController>();
+    public List<ProjectileController> pjList { get; } = new List<ProjectileController>();
+    public List<ObjectController> ocList { get; } = new List<ObjectController>();
 
     private Dictionary<Type, Action<BaseController, Vector3, int, CreatureController, CreatureController>> initActions;
     private Dictionary<Type, Action<BaseController>> removeActions;
@@ -47,7 +47,7 @@ public class ObjectManager
 
             if (tempId == 1) mPlayer = player;
             player.Init();
-            pcSet.Add(player);
+            pcList.Add(player);
             if (data != null) player.SetInfo(data);
         });
 
@@ -57,7 +57,7 @@ public class ObjectManager
 
             monster.Init();
             monster.SetInfo(tempId);
-            mcSet.Add(monster);
+            mcList.Add(monster);
         });
 
         initActions.Add(typeof(RangeAttackController), (baseController, pos, tempId, owner, target) =>
@@ -104,13 +104,13 @@ public class ObjectManager
         removeActions.Add(typeof(PlayerController), (baseController) =>
         {
             var pc = baseController as PlayerController;
-            pcSet.Remove(pc);
+            pcList.Remove(pc);
         });
 
         removeActions.Add(typeof(MonsterController), (baseController) =>
         {
             var mc = baseController as MonsterController;
-            mcSet.Remove(mc);
+            mcList.Remove(mc);
         });
         #endregion
         //TODO : 오브젝트들은 찾을 일이 없으니까 hashset에 안넣어도 될거같긴함

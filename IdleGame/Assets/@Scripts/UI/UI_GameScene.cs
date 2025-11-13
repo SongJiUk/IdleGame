@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 
 public class UI_GameScene : UI_Scene, ITickable
 {
@@ -17,7 +18,7 @@ public class UI_GameScene : UI_Scene, ITickable
         CoinObject,
         StageMonsterCountObject,
         BossBoardObject,
-        
+
     }
     enum Buttons
     {
@@ -152,6 +153,8 @@ public class UI_GameScene : UI_Scene, ITickable
         Managers.StageM.playEvent += OnPlay;
         Managers.StageM.bossEvent += OnBoss;
         Managers.StageM.clearEvent += OnClear;
+        Managers.StageM.deadEvent += OnDead;
+
         Managers.UpdateM.Register(this);
 
         GameObjectsType = typeof(GameObjects);
@@ -194,7 +197,7 @@ public class UI_GameScene : UI_Scene, ITickable
         shopBtn = GetButton(ButtonsType, (int)Buttons.ShopButton);
         levelUpBtn = GetButton(ButtonsType, (int)Buttons.LevelUpButton);
 
-        
+
         UpdateUIState();
         //UI_Toast ui_Toast = Managers.UIM.ShowPopup<UI_Toast>();
 
@@ -204,9 +207,6 @@ public class UI_GameScene : UI_Scene, ITickable
 
         AllOff();
         StartSpawn();
-
-
-        Managers.GameM.mPlayer.OnPlayerDataUpdate = CheckStageMonsterCount;
 
         return true;
     }
@@ -293,12 +293,12 @@ public class UI_GameScene : UI_Scene, ITickable
                 break;
         }
 
-       
+
     }
 
     private void ScaleUpSelectButton()
     {
-         if (clickedButton == null) return;
+        if (clickedButton == null) return;
 
         if (selectedButton != null && selectedButton != clickedButton)
         {
@@ -325,11 +325,11 @@ public class UI_GameScene : UI_Scene, ITickable
         if (value >= 1.0f)
         {
             value = 1.0f;
-            if(Managers.StageM.stageState != Define.StageState.Boss)
+            if (Managers.StageM.stageState != Define.StageState.Boss)
             {
                 Managers.StageM.StateChange(Define.StageState.Boss);
             }
-                
+
         }
         GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = value;
         GetText(TextsType, (int)Texts.StageMonsterCountText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
@@ -361,6 +361,9 @@ public class UI_GameScene : UI_Scene, ITickable
 
     public void OnPlay()
     {
+        //TODO : 이거 mPlayer가 null이라 안되는듯(확인해보기)
+        Managers.GameM.mPlayer.OnPlayerDataUpdate = CheckStageMonsterCount;
+
         GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(true);
         ResetStageBoard();
     }
@@ -377,6 +380,29 @@ public class UI_GameScene : UI_Scene, ITickable
     {
         GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
         ClearDelay().Forget();
+    }
+
+    public void OnDead()
+    {
+        GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
+        GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
+        ClearDelay().Forget();
+
+        for (int i = 0; i < Managers.ObjectM.mcList.Count; i++)
+        {
+            if (Managers.ObjectM.mcList[i].isBoss)
+            {
+                Managers.ObjectM.DeSpawn(Managers.ObjectM.mcList[i]);
+            }
+            //TODO : 여기는 풀로 돌려주는것
+            else
+            {
+
+            }
+        }
+
+        Managers.SpawnM.players.Clear();
+        Managers.ObjectM.mcList.Clear();
     }
 
     async UniTask ClearDelay()
@@ -439,7 +465,7 @@ public class UI_GameScene : UI_Scene, ITickable
         Managers.SpawnM.Init();
         GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(true);
     }
-    
+
     Coroutine coroutine;
     void ExpUPAnim()
     {

@@ -21,14 +21,14 @@ public class StageManager
     public int maxCount = 5;
     public int count = 0;
     public int stage;
-
+    public bool isDead = false;
     public OnReadyEvent readyEvent;
     public OnPlayEvent playEvent;
     public OnBossEvent bossEvent;
     public OnBossPlayEvent bossPlayEvent;
     public OnClearEvent clearEvent;
     public OnDeadEvent deadEvent;
-    
+
     public void StateChange(StageState _state)
     {
         stageState = _state;
@@ -55,6 +55,7 @@ public class StageManager
                 break;
             case StageState.Dead:
                 deadEvent?.Invoke();
+                isDead = true;
                 break;
         }
     }

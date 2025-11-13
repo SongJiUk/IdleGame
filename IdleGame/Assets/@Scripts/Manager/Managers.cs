@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Managers : MonoBehaviour
@@ -22,6 +23,7 @@ public class Managers : MonoBehaviour
     readonly CustomSceneManager customSceneManager = new();
     readonly PlayerManager playerManager = new();
     readonly StageManager stageManager = new();
+    readonly CameraManager cameraManager = new();
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
     public static ResourceManager ResourceM { get { return Instance?.resourceManager; } }
@@ -34,6 +36,7 @@ public class Managers : MonoBehaviour
     public static CustomSceneManager SceneM { get { return Instance?.customSceneManager; } }
     public static PlayerManager PlayerM { get { return Instance?.playerManager; } }
     public static StageManager StageM { get { return Instance?.stageManager; } }
+    public static CameraManager CameraM { get { return Instance?.cameraManager; } }
 
 
 

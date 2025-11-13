@@ -118,7 +118,7 @@ public class CreatureController : BaseController
     }
 
 
-    protected void FindClosetTarget<T>(HashSet<T> _targets) where T : Component
+    protected void FindClosetTarget<T>(List<T> _targets) where T : Component
     {
         CreatureController closetTarget = null;
         float minDistance = float.MaxValue;
@@ -142,8 +142,10 @@ public class CreatureController : BaseController
         target = closetTarget;
     }
 
-    public virtual void GetDamage(double _dmg, CreatureController _attacker,  bool _isCritical = false)
+    public virtual void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)
     {
+        if (isDead) return;
+
         double finaldamage = _dmg;
         isCritical = _isCritical;
         if (isCritical)
@@ -157,7 +159,6 @@ public class CreatureController : BaseController
         if (_attacker as MonsterController) isMonster = true;
 
         Managers.ObjectM.ShowDamageFont(transform.position, finaldamage, isMonster, isCritical);
-
     }
 
     public virtual bool GetCritical()

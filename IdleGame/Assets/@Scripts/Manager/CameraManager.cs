@@ -1,40 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
-public class CameraManager : MonoBehaviour,ITickable
+public class CameraManager
 {
-    float dist = 4.0f;
-    [Range(0.0f, 10.0f)]
-    [SerializeField] float standard_Distance = 4f;
+    CameraController cc;
 
-    Camera cam;
-    private void OnDisable() => Managers.UpdateM.UnRegister(this);
-
-    private void Start()
+    public void SetController(CameraController _cc)
     {
-        Managers.UpdateM.Register(this);
-        cam = GetComponent<Camera>();
+        if (_cc != null) cc = _cc;
     }
-    public void Tick(float _deltaTime)
+    public async UniTask CameraShake()
     {
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, Distance(), _deltaTime * 2f);
-    }
+        if (cc == null || cc.isCameraShake) return;
+        cc.isCameraShake = true;
 
-    float Distance()
-    {
-        var players = Managers.ObjectM.pcSet;
-        float maxDist = dist;
-        foreach(var player in players)
+
+        CancellationToken ct = cc.cancellationToken;
+        if (ct.IsCancellationRequested) return;
+
+        float timer = 0f;
+        while (timer < cc.Duration)
         {
-            float targetDist = Vector3.Distance(Vector3.zero, player.transform.position) + standard_Distance;
+            if (ct.IsCancellationRequested) return;
 
-            if(targetDist > maxDist)
-            {
-                maxDist = targetDist;
-            }
-        }   
+            cc.transform.localPosition = Random.insideUnitSphere * cc.Power + cc.OriginPos;
 
-        return maxDist;
+            timer += Time.deltaTime;
+            await UniTask.Yield(ct);
+        }
+
+
+        if (!ct.IsCancellationRequested)
+            cc.transform.localPosition = cc.OriginPos;
+
+        cc.isCameraShake = false;
     }
+
 }

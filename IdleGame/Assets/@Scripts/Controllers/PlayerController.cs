@@ -35,9 +35,9 @@ public class PlayerController : CreatureController
     void OnDisable() => Managers.UpdateM.UnRegister(this);
 
     Vector3 startPos = Vector3.zero;
-    
+
     string ownerName;
-     
+
     public override bool Init()
     {
         if (!base.Init()) return false;
@@ -47,10 +47,11 @@ public class PlayerController : CreatureController
         return true;
     }
     public void SetInfo(Data.CreatureData _data)
-    {   data = _data;
+    {
+        data = _data;
         isAttack = false;
         SpawnPos = transform.position;
-        hp = 100000;
+        hp = data.BaseHp;
         damage = 20;
         attackrange = data.AttackRange;
         detectrange = 5f;
@@ -68,16 +69,11 @@ public class PlayerController : CreatureController
 
     }
 
-    public override void OnDead()
-    {
-
-    }
-
     public override void Projectile()
     {
         if (target == null || target.IsDead) return;
         Managers.ObjectM.Spawn<RangeAttackController>(transform.position, 20000, this, target);
-   
+
     }
 
     public override void Attack()
@@ -98,20 +94,25 @@ public class PlayerController : CreatureController
     {
         base.AnimatorChange(_state);
     }
-    
+
     private void OnReady()
     {
+        base.AnimatorChange(CreatureState.Idle);
+        isDead = false;
         transform.position = SpawnPos;
         transform.rotation = Quaternion.identity;
     }
     private void OnBoss()
     {
+        if (isDead) return;
+
         base.AnimatorChange(Define.CreatureState.Idle);
         provocation.Play();
     }
 
     private void OnClear()
     {
+        if (isDead) return;
         AnimatorChange(CreatureState.Idle);
     }
 
@@ -121,7 +122,7 @@ public class PlayerController : CreatureController
         Vector3 force = transform.forward * -_power;
         force.y = 0f;
 
-        while(t > 0f)
+        while (t > 0f)
         {
             t -= Time.deltaTime;
             transform.position += force * Time.deltaTime;
@@ -136,7 +137,7 @@ public class PlayerController : CreatureController
             if (isDead) return;
 
             if (!isAttack)
-                FindClosetTarget(Managers.ObjectM.mcSet);
+                FindClosetTarget(Managers.ObjectM.mcList);
 
             if (target == null || target.IsDead)
             {
@@ -173,16 +174,22 @@ public class PlayerController : CreatureController
 
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)
     {
-        
+        if (isDead) return;
+
         base.GetDamage(_dmg, _attacker, _attacker.GetCritical());
-        Debug.Log($"Hit Damage : {_dmg}");
-        if(hp <= 0)
+        if (hp <= 0)
         {
             hp = 0;
             isDead = true;
-            Managers.ObjectM.DeSpawn(this);
+            OnDead();
         }
     }
 
-    
+    public override void OnDead()
+    {
+        AnimatorChange(CreatureState.Dead);
+        Managers.SpawnM.players.Remove(this);
+        if (Managers.SpawnM.players.Count <= 0)
+            Managers.StageM.StateChange(StageState.Dead);
+    }
 }

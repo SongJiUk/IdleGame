@@ -34,7 +34,7 @@ public class MonsterController : CreatureController
         return true;
     }
 
-    
+
 
     void OnEnable()
     {
@@ -59,21 +59,20 @@ public class MonsterController : CreatureController
             skillbase = GetComponent<SkillBase>();
             SkillStart().Forget();
         }
-
     }
     async UniTask SkillStart()
     {
         while (true)
         {
-            if (isDead) break;
             await UniTask.WaitForSeconds(3.0f);
+
             if (isDead) break;
+            //TODO : 이거 플레이어가 보스전에서 부활할 수 있으면 이렇게 하면 안됌(SetInfo에서 한번 호출해주는거라 continue를 하던가 해야됌)
+            if (target == null) break;
 
             if (skillbase != null) skillbase.SetSkill(this);
             else break;
         }
-        
-        
     }
 
     public override void Attack()
@@ -122,7 +121,7 @@ public class MonsterController : CreatureController
 
 
             if (!isAttack && !isTargetLocked)
-                FindClosetTarget(Managers.ObjectM.pcSet);
+                FindClosetTarget(Managers.SpawnM.players);
 
             if (target == null || target.IsDead)
             {
@@ -132,7 +131,7 @@ public class MonsterController : CreatureController
             }
 
             float targetDist = Vector3.Distance(transform.position, target.transform.position);
-            
+
             if (targetDist > attackrange)
             {
                 AnimatorChange(Define.CreatureState.Move);
@@ -155,6 +154,8 @@ public class MonsterController : CreatureController
 
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCiritical = false)
     {
+        if (isDead) return;
+
         base.GetDamage(_dmg, _attacker, _attacker.GetCritical());
         Managers.ObjectM.Spawn<ObjectController>(transform.position, 20000);
         OnMonsterInfoUpdate?.Invoke(this);
@@ -192,14 +193,14 @@ public class MonsterController : CreatureController
                     dc.SetInfo(transform.position);
                 }
             }
-            
+
         }
     }
 
-    async UniTask WaitForTime(float _time)
-    {
+    // async UniTask WaitForTime(float _time)
+    // {
 
-    }
+    // }
 
     //TODO : 필요하면 사용 
     public override UniTask ReturnObject(float _time)
