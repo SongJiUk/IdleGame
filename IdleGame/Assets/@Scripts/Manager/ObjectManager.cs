@@ -63,13 +63,13 @@ public class ObjectManager
         initActions.Add(typeof(RangeAttackController), (baseController, pos, tempId, owner, target) =>
         {
             var rangeAttack = baseController as RangeAttackController;
-            rangeAttack.AttackInit(target, 10, owner);
+            rangeAttack.AttackInit(target, owner.Damage, owner);
         });
 
         initActions.Add(typeof(MeleeAttackController), (baseController, pos, tempId, owner, target) =>
         {
             var meleeAttack = baseController as MeleeAttackController;
-            meleeAttack.AttackInit(target, 10, owner);
+            meleeAttack.AttackInit(target, owner.Damage, owner);
         });
 
         initActions.Add(typeof(ObjectController), (baseController, pos, tempId, owner, target) =>

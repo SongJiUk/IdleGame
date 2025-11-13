@@ -90,6 +90,7 @@ public class UI_GameScene : UI_Scene, ITickable
         Exp_FillImage,
         FadeImage,
         StageMonsterCountImage,
+        BossHpImage,
     }
 
     enum Sliders
@@ -148,7 +149,9 @@ public class UI_GameScene : UI_Scene, ITickable
         if (!await base.Init()) return false;
 
         Managers.StageM.readyEvent += () => AsyncFadeInOut(true).Forget();
+        Managers.StageM.playEvent += OnPlay;
         Managers.StageM.bossEvent += OnBoss;
+        Managers.StageM.clearEvent += OnClear;
         Managers.UpdateM.Register(this);
 
         GameObjectsType = typeof(GameObjects);
@@ -340,14 +343,49 @@ public class UI_GameScene : UI_Scene, ITickable
         {
             value = 0f;
         }
-        GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = (float)value;
+        GetImage(ImagesType, (int)Images.BossHpImage).fillAmount = (float)value;
         GetText(TextsType, (int)Texts.BossHPText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
+    }
+
+    public void ResetStageBoard()
+    {
+        GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = 0;
+        GetText(TextsType, (int)Texts.StageMonsterCountText).text = "0%";
+    }
+
+    public void ResetBossBoard()
+    {
+        GetImage(ImagesType, (int)Images.BossHpImage).fillAmount = 1f;
+        GetText(TextsType, (int)Texts.BossHPText).text = "100%";
+    }
+
+    public void OnPlay()
+    {
+        GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(true);
+        ResetStageBoard();
     }
 
     public void OnBoss()
     {
         GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(true);
+        ResetBossBoard();
+
+    }
+
+    public void OnClear()
+    {
+        GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
+        ClearDelay().Forget();
+    }
+
+    async UniTask ClearDelay()
+    {
+        await UniTask.WaitForSeconds(2.0f);
+        await AsyncFadeInOut(false);
+
+        await UniTask.WaitForSeconds(1.0f);
+        Managers.StageM.StateChange(Define.StageState.Ready);
     }
     void CheckCharacter()
     {

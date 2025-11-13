@@ -20,6 +20,7 @@ public class MonsterController : CreatureController
     #endregion
     public Action<MonsterController> OnMonsterInfoUpdate;
     public bool isBoss = false;
+    SkillBase skillbase;
     public override bool Init()
     {
         if (!base.Init()) return false;
@@ -29,8 +30,11 @@ public class MonsterController : CreatureController
 
         //TODO : 몬스터 처음나올때 초기화해주기
         //sAttack = Utils.Datas.levelData.Base_Attack;
+
         return true;
     }
+
+    
 
     void OnEnable()
     {
@@ -50,6 +54,26 @@ public class MonsterController : CreatureController
         damage = data.BaseDamage;
         if (data.Type == ObjectType.Boss) isBoss = true;
 
+        if (isBoss)
+        {
+            skillbase = GetComponent<SkillBase>();
+            SkillStart().Forget();
+        }
+
+    }
+    async UniTask SkillStart()
+    {
+        while (true)
+        {
+            if (isDead) break;
+            await UniTask.WaitForSeconds(3.0f);
+            if (isDead) break;
+
+            if (skillbase != null) skillbase.SetSkill(this);
+            else break;
+        }
+        
+        
     }
 
     public override void Attack()
@@ -170,6 +194,11 @@ public class MonsterController : CreatureController
             }
             
         }
+    }
+
+    async UniTask WaitForTime(float _time)
+    {
+
     }
 
     //TODO : 필요하면 사용 

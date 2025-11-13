@@ -5554,6 +5554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5665768140473120047}
   - component: {fileID: 8358906387141465070}
+  - component: {fileID: 6803649866756010132}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -5600,6 +5601,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6803649866756010132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5038132386723819413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0281ccf049af51e47be1d18f1f0afb3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5167464067901120103
 GameObject:
   m_ObjectHideFlags: 0

@@ -43,13 +43,15 @@ public class PlayerController : CreatureController
         if (!base.Init()) return false;
         Managers.StageM.readyEvent += OnReady;
         Managers.StageM.bossEvent += OnBoss;
+        Managers.StageM.clearEvent += OnClear;
         return true;
     }
     public void SetInfo(Data.CreatureData _data)
-    {        data = _data;
+    {   data = _data;
         isAttack = false;
         SpawnPos = transform.position;
         hp = 100000;
+        damage = 20;
         attackrange = data.AttackRange;
         detectrange = 5f;
         ownerName = this.name;
@@ -100,11 +102,17 @@ public class PlayerController : CreatureController
     private void OnReady()
     {
         transform.position = SpawnPos;
+        transform.rotation = Quaternion.identity;
     }
     private void OnBoss()
     {
         base.AnimatorChange(Define.CreatureState.Idle);
         provocation.Play();
+    }
+
+    private void OnClear()
+    {
+        AnimatorChange(CreatureState.Idle);
     }
 
     public async UniTask KnockBack(float _power, float _durtaion)

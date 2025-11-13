@@ -20,6 +20,7 @@ public class CreatureController : BaseController
     protected virtual double maxHp { get; set; }
     public double MaxHP { get { return maxHp; } }
     protected virtual double damage { get; set; }
+    public double Damage { get { return damage; } }
     protected virtual float attackrange { get; set; }
     protected virtual float detectrange { get; set; }
 
@@ -143,19 +144,19 @@ public class CreatureController : BaseController
 
     public virtual void GetDamage(double _dmg, CreatureController _attacker,  bool _isCritical = false)
     {
-        damage = _dmg;
+        double finaldamage = _dmg;
         isCritical = _isCritical;
         if (isCritical)
         {
             //TODO : 수정 
-            damage = _dmg * 1.5f;
+            finaldamage = _dmg * 1.5f;
         }
 
-        hp -= damage;
+        hp -= finaldamage;
         bool isMonster = false;
         if (_attacker as MonsterController) isMonster = true;
 
-        Managers.ObjectM.ShowDamageFont(transform.position, damage, isMonster, isCritical);
+        Managers.ObjectM.ShowDamageFont(transform.position, finaldamage, isMonster, isCritical);
 
     }
 

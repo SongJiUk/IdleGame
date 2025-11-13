@@ -20,6 +20,7 @@ public class StageManager
 
     public int maxCount = 5;
     public int count = 0;
+    public int stage;
 
     public OnReadyEvent readyEvent;
     public OnPlayEvent playEvent;
@@ -50,6 +51,7 @@ public class StageManager
                 break;
             case StageState.Clear:
                 clearEvent?.Invoke();
+                stage++;
                 break;
             case StageState.Dead:
                 deadEvent?.Invoke();
