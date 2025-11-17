@@ -21,6 +21,7 @@ public class Boss_Electric : SkillBase
         if (players.Count == 0) return;
         for (int i = 0; i < 5; i++)
         {
+            players = Managers.SpawnM.players.ToList();
             if (players.Count == 0)
             {
                 Debug.Log("[Boss_Electric]모든 플레이어 사망, 스킬 루프 종료");

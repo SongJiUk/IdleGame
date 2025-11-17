@@ -18,7 +18,8 @@ public class StageManager
 {
     public StageState stageState;
 
-    public int maxCount = 5;
+    //TODO: 계속 10개? 20개? 고민해보자
+    public int maxCount = 20;
     public int count = 0;
     public int stage;
     public bool isDead = false;
@@ -36,7 +37,7 @@ public class StageManager
         {
             case StageState.Ready:
                 readyEvent?.Invoke();
-                AsyncAction(() => StateChange(StageState.Play), 2.0f).Forget();
+                AsyncAction(() => StateChange(StageState.Play), 1f).Forget();
 
                 break;
             case StageState.Play:
@@ -50,10 +51,12 @@ public class StageManager
                 bossPlayEvent?.Invoke();
                 break;
             case StageState.Clear:
+                count = 0;
                 clearEvent?.Invoke();
                 stage++;
                 break;
             case StageState.Dead:
+                count = 0;
                 deadEvent?.Invoke();
                 isDead = true;
                 break;

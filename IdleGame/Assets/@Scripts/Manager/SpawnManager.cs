@@ -10,7 +10,7 @@ using Cysharp.Threading.Tasks;
 public class SpawnManager : MonoBehaviour, ITickable
 {
 
-    float spawnInterval = 3f;
+    float spawnInterval = 2f;
     float spawnTimer = 0f;
 
     public bool isStop { get; set; } = false;
@@ -23,10 +23,43 @@ public class SpawnManager : MonoBehaviour, ITickable
     //TODO : 처음 시작할땐 플레이어 스폰이 되있어야될거같긴함
     public void Init()
     {
-        Managers.StageM.playEvent += StartSpawn;
+        Managers.StageM.readyEvent += OnReady;
+        Managers.StageM.playEvent += OnPlay;
         Managers.StageM.bossEvent += OnBoss;
         Managers.StageM.clearEvent += OnClear;
         Managers.StageM.deadEvent += OnDead;
+
+        scene = Managers.UIM.SceneUI as UI_GameScene;
+    }
+
+   
+
+   
+    public void PlayerSpawn()
+    {
+        for (int i = 1; i <= 2; i++)
+        {
+            Vector3 spawnPos = Vector3.zero;
+            if (i != 1)
+            {
+                spawnPos = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0f, UnityEngine.Random.Range(-1f, 1f));
+            }
+            Managers.ObjectM.Spawn<PlayerController>(spawnPos, i);
+
+        }
+    }
+
+    #region 이벤트
+    public void OnReady()
+    {
+        PlayerSpawn();
+    }
+
+    public void OnPlay()
+    {
+        players = Managers.ObjectM.pcList.ToList();
+        spawnTimer = 0f;
+        Managers.UpdateM.Register(this);
     }
 
     public void OnBoss()
@@ -48,11 +81,12 @@ public class SpawnManager : MonoBehaviour, ITickable
     {
         await UniTask.WaitForSeconds(2f);
 
+        //TODO : 하드코딩 삭제
         boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero, 10001);
-        scene = Managers.UIM.SceneUI as UI_GameScene;
-        boss.OnMonsterInfoUpdate = scene.UpdateBossInfo;
+        if(scene == null) scene = Managers.UIM.SceneUI as UI_GameScene;
+        boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
 
-        players = Managers.ObjectM.pcList.ToList();
+        //players = Managers.ObjectM.pcList.ToList();
 
         Vector3 Pos = boss.transform.position;
         foreach (var player in players)
@@ -75,39 +109,58 @@ public class SpawnManager : MonoBehaviour, ITickable
     //TODO : 사용하지 않으면 지우기
     public void OnClear()
     {
-        //if(boss != null && scene!= null)
-        //{
-        //    boss.OnMonsterInfoUpdate -= scene.UpdateBossInfo;
-        //    boss = null;
-        //    scene = null;
-        //}
-
+        ClearDelay().Forget();
+        if (boss != null)
+        {
+            boss.OnMonsterInfoUpdate -= scene.UpdateBossInfo;
+            boss = null;
+        }
     }
 
     public void OnDead()
     {
+        ClearDelay().Forget();
 
-    }
-    public void PlayerSpawn()
-    {
-        for (int i = 1; i <= 2; i++)
+        if (boss != null)
         {
-            Vector3 spawnPos = Vector3.zero;
-            if (i != 1)
-            {
-                spawnPos = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0f, UnityEngine.Random.Range(-1f, 1f));
-            }
-            Managers.ObjectM.Spawn<PlayerController>(spawnPos, i);
+            boss.AnimatorChange(Define.CreatureState.Idle);
+            boss.OnMonsterInfoUpdate -= scene.UpdateBossInfo;
+            boss = null;
         }
     }
 
-    public void StartSpawn()
+    async UniTask ClearDelay()
     {
-        PlayerSpawn();
-        players = Managers.ObjectM.pcList.ToList();
-        Managers.UpdateM.Register(this);
+        StopSpawn();
+        await UniTask.WaitForSeconds(2.0f);
+
+        await scene.AsyncFadeInOut(false);
+
+        //List<MonsterController> monsetrs = Managers.ObjectM.mcList.ToList();
+        //foreach (var monster in monsetrs)
+        //{
+        //    Managers.ObjectM.DeSpawn(monster);
+        //}
+
+        for (int i = Managers.ObjectM.mcList.Count -1; i >= 0; i--)
+        {
+            Managers.ObjectM.DeSpawn(Managers.ObjectM.mcList[i]);
+        }
+
+        for (int i = Managers.ObjectM.pcList.Count - 1; i >= 0; i--)
+        {
+            Managers.ObjectM.DeSpawn(Managers.ObjectM.pcList[i]);
+        }
+
+        players.Clear();
+        Managers.ObjectM.mcList.Clear();
+        await UniTask.WaitForSeconds(1.0f);
+
+        Managers.StageM.StateChange(Define.StageState.Ready);
     }
 
+
+    #endregion
     public void StopSpawn()
     {
         Managers.UpdateM.UnRegister(this);

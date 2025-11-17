@@ -151,7 +151,7 @@ public class UI_GameScene : UI_Scene, ITickable
 
         Managers.StageM.readyEvent += () => AsyncFadeInOut(true).Forget();
         Managers.StageM.playEvent += OnPlay;
-        Managers.StageM.bossEvent += OnBoss;
+        Managers.StageM.bossPlayEvent += OnBossPlay;
         Managers.StageM.clearEvent += OnClear;
         Managers.StageM.deadEvent += OnDead;
 
@@ -363,12 +363,11 @@ public class UI_GameScene : UI_Scene, ITickable
     {
         //TODO : 이거 mPlayer가 null이라 안되는듯(확인해보기)
         Managers.GameM.mPlayer.OnPlayerDataUpdate = CheckStageMonsterCount;
-
         GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(true);
         ResetStageBoard();
     }
 
-    public void OnBoss()
+    public void OnBossPlay()
     {
         GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(true);
@@ -379,40 +378,14 @@ public class UI_GameScene : UI_Scene, ITickable
     public void OnClear()
     {
         GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
-        ClearDelay().Forget();
     }
 
     public void OnDead()
     {
         GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
-        ClearDelay().Forget();
-
-        for (int i = 0; i < Managers.ObjectM.mcList.Count; i++)
-        {
-            if (Managers.ObjectM.mcList[i].isBoss)
-            {
-                Managers.ObjectM.DeSpawn(Managers.ObjectM.mcList[i]);
-            }
-            //TODO : 여기는 풀로 돌려주는것
-            else
-            {
-
-            }
-        }
-
-        Managers.SpawnM.players.Clear();
-        Managers.ObjectM.mcList.Clear();
     }
 
-    async UniTask ClearDelay()
-    {
-        await UniTask.WaitForSeconds(2.0f);
-        await AsyncFadeInOut(false);
-
-        await UniTask.WaitForSeconds(1.0f);
-        Managers.StageM.StateChange(Define.StageState.Ready);
-    }
     void CheckCharacter()
     {
         //GetImage(ImagesType, (int)Images.CharacterImage).sprite = "";
@@ -461,9 +434,8 @@ public class UI_GameScene : UI_Scene, ITickable
     }
     void StartSpawn()
     {
-        Managers.StageM.StateChange(Define.StageState.Ready);
         Managers.SpawnM.Init();
-        GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(true);
+        Managers.StageM.StateChange(Define.StageState.Ready);
     }
 
     Coroutine coroutine;

@@ -45,8 +45,11 @@ public class ObjectManager
             var player = baseController as PlayerController;
             Managers.DataM.CreatureDataDic.TryGetValue(tempId, out var data);
 
+            //TODO : 이거 수정해야됌 isMainCharacter 이런걸로 
             if (tempId == 1) mPlayer = player;
             player.Init();
+            player.transform.position = pos;
+            player.transform.rotation = Quaternion.identity;
             pcList.Add(player);
             if (data != null) player.SetInfo(data);
         });
@@ -54,9 +57,9 @@ public class ObjectManager
         initActions.Add(typeof(MonsterController), (baseController, pos, tempId, owner, target) =>
         {
             var monster = baseController as MonsterController;
-
+            Managers.DataM.CreatureDataDic.TryGetValue(tempId, out var data);
             monster.Init();
-            monster.SetInfo(tempId);
+            monster.SetInfo(data);
             mcList.Add(monster);
         });
 

@@ -29,26 +29,32 @@ public class PlayerController : CreatureController
         }
     }
 
-
-    Data.CreatureData data;
-    void OnEnable() => Managers.UpdateM.Register(this);
-    void OnDisable() => Managers.UpdateM.UnRegister(this);
-
     Vector3 startPos = Vector3.zero;
-
     string ownerName;
+    Data.CreatureData data;
+    void OnEnable()
+    {
+        Managers.UpdateM.Register(this);
+        ConnectEvent();
+    }
+    protected override void OnDisable()
+    {
+        Managers.UpdateM.UnRegister(this);
+        UnConnectEvent();
+
+        base.OnDisable();
+    }
 
     public override bool Init()
     {
         if (!base.Init()) return false;
-        Managers.StageM.readyEvent += OnReady;
-        Managers.StageM.bossEvent += OnBoss;
-        Managers.StageM.clearEvent += OnClear;
+        
         return true;
     }
     public void SetInfo(Data.CreatureData _data)
     {
         data = _data;
+        isDead = false;
         isAttack = false;
         SpawnPos = transform.position;
         hp = data.BaseHp;
@@ -57,6 +63,7 @@ public class PlayerController : CreatureController
         detectrange = 5f;
         ownerName = this.name;
         CriticalRate = 0.5f;
+        target = null;
     }
 
     public override void InitStat()
@@ -78,6 +85,7 @@ public class PlayerController : CreatureController
 
     public override void Attack()
     {
+        if (!isAttack) return;
         if (target == null || target.IsDead) return;
 
         if (trail != null) trail.SetActive(true);
@@ -90,24 +98,23 @@ public class PlayerController : CreatureController
         await UniTask.WaitForSeconds(1f);
         if (trail != null) trail.SetActive(false);
     }
-    protected override void AnimatorChange(Define.CreatureState _state)
-    {
-        base.AnimatorChange(_state);
-    }
 
-    private void OnReady()
+    private void OnPlay()
     {
         base.AnimatorChange(CreatureState.Idle);
-        isDead = false;
-        transform.position = SpawnPos;
-        transform.rotation = Quaternion.identity;
     }
     private void OnBoss()
     {
         if (isDead) return;
 
         base.AnimatorChange(Define.CreatureState.Idle);
+        target = null;
+        Debug.Log($"{this.name} 플레이어 : 느낌표 파티클 생성");
         provocation.Play();
+    }
+    private void OnDead()
+    {
+        target = null;
     }
 
     private void OnClear()
@@ -115,6 +122,7 @@ public class PlayerController : CreatureController
         if (isDead) return;
         AnimatorChange(CreatureState.Idle);
     }
+
 
     public async UniTask KnockBack(float _power, float _durtaion)
     {
@@ -132,46 +140,58 @@ public class PlayerController : CreatureController
 
     public override void Tick(float _deltaTime)
     {
-        if (Managers.StageM.stageState == StageState.Play || Managers.StageM.stageState == StageState.BossPlay)
+        if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
+        if (isDead) return;
+
+        if (target == null || target.IsDead)
         {
-            if (isDead) return;
+            ResetTarget();
 
-            if (!isAttack)
-                FindClosetTarget(Managers.ObjectM.mcList);
-
-            if (target == null || target.IsDead)
+            FindClosetTarget(Managers.ObjectM.mcList);
+            if(target == null)
             {
-                ResetTarget();
                 GoBackToSpawn(_deltaTime);
                 return;
             }
-
-            float targetDist = Vector3.Distance(transform.position, target.transform.position);
-
-            if (targetDist > detectrange)
-            {
-                ResetTarget();
-                GoBackToSpawn(_deltaTime);
-                return;
-            }
-
-            if (targetDist > attackrange)
-            {
-                if (!isAttack)
-                    MoveToTarget(_deltaTime);
-
-                return;
-            }
-
-            if (!isAttack)
-                StartAttack();
-
         }
 
+        float targetDist = Vector3.Distance(transform.position, target.transform.position);
 
+         if (targetDist > detectrange)
+        {
+            ResetTarget();
+            GoBackToSpawn(_deltaTime);
+            return;
+        }
 
+        if (targetDist > attackrange)
+        {
+            if (!isAttack)
+                MoveToTarget(_deltaTime);
+        }
+        else
+        {
+            if (!isAttack)
+                StartAttack();
+        }
     }
 
+
+    void ConnectEvent()
+    {
+        Managers.StageM.playEvent += OnPlay;
+        Managers.StageM.bossEvent += OnBoss;
+        Managers.StageM.clearEvent += OnClear;
+        Managers.StageM.deadEvent += OnDead;
+    }
+
+    void UnConnectEvent()
+    {
+        Managers.StageM.playEvent -= OnPlay;
+        Managers.StageM.bossEvent -= OnBoss;
+        Managers.StageM.clearEvent -= OnClear;
+        Managers.StageM.deadEvent -= OnDead;
+    }
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)
     {
         if (isDead) return;
@@ -180,16 +200,21 @@ public class PlayerController : CreatureController
         if (hp <= 0)
         {
             hp = 0;
-            isDead = true;
-            OnDead();
+            Dead();
         }
     }
 
-    public override void OnDead()
+    public override void Dead()
     {
+        base.Dead();
+
         AnimatorChange(CreatureState.Dead);
         Managers.SpawnM.players.Remove(this);
+        Debug.Log($"{this.name} : 죽음 , 남은 플레이어 수 : {Managers.SpawnM.players.Count}");
         if (Managers.SpawnM.players.Count <= 0)
+        {
+            Debug.Log("죽음 스테이트로 변환");
             Managers.StageM.StateChange(StageState.Dead);
+        }
     }
 }

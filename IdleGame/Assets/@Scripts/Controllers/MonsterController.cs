@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
@@ -21,13 +22,12 @@ public class MonsterController : CreatureController
     public Action<MonsterController> OnMonsterInfoUpdate;
     public bool isBoss = false;
     SkillBase skillbase;
+    Data.CreatureData data;
+    CancellationTokenSource skillCTS;
     public override bool Init()
     {
         if (!base.Init()) return false;
-        attackrange = 2f;
-        detectrange = Mathf.Infinity;
-        CriticalRate = 0f;
-
+       
         //TODO : 몬스터 처음나올때 초기화해주기
         //sAttack = Utils.Datas.levelData.Base_Attack;
 
@@ -41,38 +41,61 @@ public class MonsterController : CreatureController
         Managers.UpdateM.Register(this);
 
     }
-    void OnDisable() => Managers.UpdateM.UnRegister(this);
+    protected override void OnDisable()
+    {
+        skillCTS?.Cancel();
+        Managers.UpdateM.UnRegister(this);
+
+        base.OnDisable();
+    }
 
     //TODO : 이걸 temp아이디를 넘겨받아서 여기서 하는게 맞을까 싶긴함
-    public void SetInfo(int _tempId)
-    {
+    public void SetInfo(Data.CreatureData _data)
+    { 
+        data = _data;
         isDead = false;
         isKnockBack = false;
-        Managers.DataM.CreatureDataDic.TryGetValue(_tempId, out var data);
         maxHp = data.BaseHp;
         hp = data.BaseHp;
-        damage = data.BaseDamage;
-        if (data.Type == ObjectType.Boss) isBoss = true;
+        damage = 1;
+        attackrange = data.AttackRange;
+        detectrange = Mathf.Infinity;
+        CriticalRate = 0f;
+        isBoss = false;
+        target = null;
 
-        if (isBoss)
+        if (data.Type == ObjectType.Boss)
         {
-            skillbase = GetComponent<SkillBase>();
-            SkillStart().Forget();
+            isBoss = true;
+            skillCTS?.Cancel();
+            skillCTS = new CancellationTokenSource();
+
+            if (skillbase == null) skillbase = GetComponent<SkillBase>();
+            SkillStart(skillCTS.Token).Forget();
         }
     }
-    async UniTask SkillStart()
+    async UniTask SkillStart(CancellationToken _ct)
     {
         while (true)
         {
-            await UniTask.WaitForSeconds(3.0f);
+            try
+            {
+                await UniTask.WaitForSeconds(3.0f, cancellationToken: _ct);
+            }
+            catch (OperationCanceledException)
+            {
+                break;
+            }
 
             if (isDead) break;
-            //TODO : 이거 플레이어가 보스전에서 부활할 수 있으면 이렇게 하면 안됌(SetInfo에서 한번 호출해주는거라 continue를 하던가 해야됌)
+            if (!isBoss) break;
             if (target == null) break;
 
             if (skillbase != null) skillbase.SetSkill(this);
             else break;
         }
+        skillCTS.Dispose();
+        skillCTS = null;
     }
 
     public override void Attack()
@@ -114,36 +137,39 @@ public class MonsterController : CreatureController
 
     public override void Tick(float _deltaTime)
     {
+        if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
+        if (isDead) return;
 
-        if (Managers.StageM.stageState == StageState.Play || Managers.StageM.stageState == StageState.BossPlay)
+        if (target == null || target.IsDead)
         {
-            if (isDead) return;
+            ResetTarget();
 
+            FindClosetTarget(Managers.SpawnM.players);
 
-            if (!isAttack && !isTargetLocked)
-                FindClosetTarget(Managers.SpawnM.players);
-
-            if (target == null || target.IsDead)
+            if(target ==null)
             {
-                ResetTarget();
-                AnimatorChange(Define.CreatureState.Idle);
+                AnimatorChange(CreatureState.Idle);
                 return;
             }
+        }
+        float targetDist = Vector3.Distance(transform.position, target.transform.position);
 
-            float targetDist = Vector3.Distance(transform.position, target.transform.position);
-
-            if (targetDist > attackrange)
+        if(targetDist > attackrange)
+        {
+            if(!isAttack)
             {
                 AnimatorChange(Define.CreatureState.Move);
                 transform.LookAt(target.transform.position);
                 transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
             }
-
-
-            if (targetDist <= attackrange && !isAttack)
+        }
+        else
+        {
+            if(!isAttack)
             {
                 isAttack = true;
                 isTargetLocked = true;
+
                 AnimatorChange(Define.CreatureState.Attack);
                 transform.LookAt(target.transform);
                 WaitForAttackDelay().Forget();
@@ -162,41 +188,43 @@ public class MonsterController : CreatureController
         if (hp <= 0)
         {
             hp = 0;
-
-            if (isBoss)
-            {
-                isDead = true;
-                Managers.ObjectM.DeSpawn(this);
-                Managers.StageM.StateChange(StageState.Clear);
-            }
-            else
-            {
-
-                isDead = true;
-                Managers.StageM.count++;
-                Managers.GameM.mPlayer.KillCount++;
-                Managers.ObjectM.DeSpawn(this);
-
-
-                //TODO : 이것도 바꿔야됌
-                //Managers.ObjectM.Spawn<CoinDirecting>(transform.position, );
-                GameObject go = Managers.ResourceM.Instantiate("CoinDirecting", _pooling: true);
-                CoinDirecting coinDriecting = go.GetComponent<CoinDirecting>();
-                coinDriecting.Init(transform.position);
-
-                //TODO : 몬스터마다 아이템 개수 다르게
-                for (int i = 0; i < 3; i++)
-                {
-                    GameObject obj = Managers.ResourceM.Instantiate("DropItem", _pooling: true);
-                    DropItemController dc = obj.GetComponent<DropItemController>();
-                    dc.Init();
-                    dc.SetInfo(transform.position);
-                }
-            }
-
+            
+            Dead();
         }
     }
 
+
+    public override void Dead()
+    {
+        base.Dead();
+        if (isBoss)
+        {
+            Managers.ObjectM.DeSpawn(this);
+            Managers.StageM.StateChange(StageState.Clear);
+        }
+        else
+        {
+            Managers.StageM.count++;
+            Managers.GameM.mPlayer.KillCount++;
+            Managers.ObjectM.DeSpawn(this);
+
+
+            //TODO : 이것도 바꿔야됌
+            //Managers.ObjectM.Spawn<CoinDirecting>(transform.position, );
+            GameObject go = Managers.ResourceM.Instantiate("CoinDirecting", _pooling: true);
+            CoinDirecting coinDriecting = go.GetComponent<CoinDirecting>();
+            coinDriecting.Init(transform.position);
+
+            //TODO : 몬스터마다 아이템 개수 다르게
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject obj = Managers.ResourceM.Instantiate("DropItem", _pooling: true);
+                DropItemController dc = obj.GetComponent<DropItemController>();
+                dc.Init();
+                dc.SetInfo(transform.position);
+            }
+        }
+    }
     // async UniTask WaitForTime(float _time)
     // {
 

@@ -28,7 +28,7 @@ public class CreatureController : BaseController
     protected Vector3 SpawnPos;
     //TODO : TEMP;
     protected float CriticalRate = 0;
-
+    public Action OnTargetDead;
     public override bool Init()
     {
         if (!base.Init()) return false;
@@ -38,6 +38,10 @@ public class CreatureController : BaseController
         return true;
     }
 
+    protected virtual void OnDisable()
+    {
+        if(target != null) target.OnTargetDead -= OnTargetDeadCallBack;
+    }
     public virtual void InitStat()
     {
 
@@ -48,9 +52,10 @@ public class CreatureController : BaseController
 
     }
 
-    public virtual void OnDead()
+    public virtual void Dead()
     {
-
+        isDead = true;
+        OnTargetDead?.Invoke();
     }
 
     public virtual void Projectile() { }
@@ -70,11 +75,12 @@ public class CreatureController : BaseController
         finally
         {
             isAttack = false;
+            isTargetLocked = false;
         }
 
     }
 
-    protected virtual void AnimatorChange(Define.CreatureState _state)
+    public virtual void AnimatorChange(Define.CreatureState _state)
     {
         int stateIndex = (int)_state;
         animator.SetInteger(Define.AnimState, stateIndex);
@@ -103,6 +109,11 @@ public class CreatureController : BaseController
 
     public void StartAttack()
     {
+
+        if (target == null || !target.IsValid()) return;
+        float dist = Vector3.Distance(transform.position, target.transform.position);
+        if (dist > attackrange) return;
+
         isAttack = true;
         AnimatorChange(Define.CreatureState.Attack);
         transform.LookAt(target.transform);
@@ -120,27 +131,47 @@ public class CreatureController : BaseController
 
     protected void FindClosetTarget<T>(List<T> _targets) where T : Component
     {
-        CreatureController closetTarget = null;
+        
         float minDistance = float.MaxValue;
+
+        if(target != null)
+            target.OnTargetDead -= OnTargetDeadCallBack;
+
+        CreatureController closetTarget = null;
 
         foreach (var t in _targets)
         {
             if (t == null) continue;
 
             CreatureController cc = t as CreatureController;
-            if (cc != null && cc.isDead) continue;
+            if (cc == null || cc.isDead) continue;
 
-            float targetDistance = Vector3.Distance(this.transform.position, t.transform.position);
+            float dist = Vector3.Distance(this.transform.position, t.transform.position);
 
-            if (targetDistance <= detectrange && targetDistance < minDistance)
+            if (dist > detectrange) continue;
+
+            if (dist < minDistance)
             {
+                minDistance = dist;
                 closetTarget = cc;
-                minDistance = targetDistance;
             }
         }
 
         target = closetTarget;
+
+        if (target != null)
+        {
+            target.OnTargetDead += OnTargetDeadCallBack;
+            isTargetLocked = true;
+        }
+        else isTargetLocked = false;
     }
+    protected void OnTargetDeadCallBack()
+    {
+        ResetTarget();
+        isAttack = false;
+    }
+
 
     public virtual void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)
     {
