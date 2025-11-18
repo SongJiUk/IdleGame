@@ -48,19 +48,23 @@ public class PlayerController : CreatureController
     public override bool Init()
     {
         if (!base.Init()) return false;
-        
         return true;
     }
     public void SetInfo(Data.CreatureData _data)
     {
         data = _data;
+        baseHp = _data.BaseHp;
+        baseDamage = _data.BaseDamage;
+
+
         isDead = false;
         isAttack = false;
         SpawnPos = transform.position;
-        hp = data.BaseHp;
-        damage = 20;
+        hp = Utils.Datas.levelData.HP((float)baseHp);
+        damage = Utils.Datas.levelData.Damage((float)baseDamage);
         attackrange = data.AttackRange;
         detectrange = 5f;
+
         ownerName = this.name;
         CriticalRate = 0.5f;
         target = null;
@@ -68,7 +72,8 @@ public class PlayerController : CreatureController
 
     public override void InitStat()
     {
-
+        damage = Utils.Datas.levelData.Damage((float)baseDamage);
+        hp = Utils.Datas.levelData.HP((float)BaseHp);
     }
 
     public override void OnDamage()
@@ -195,6 +200,8 @@ public class PlayerController : CreatureController
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)
     {
         if (isDead) return;
+
+        if (Managers.StageM.isDead) return;
 
         base.GetDamage(_dmg, _attacker, _attacker.GetCritical());
         if (hp <= 0)

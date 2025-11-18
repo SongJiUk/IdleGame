@@ -12,18 +12,5 @@ public class StageDesign : ScriptableObject
     {
         return _baseValue * Mathf.Pow(_level, _value);
     }
-}
+}   
 
-[Serializable]
-public class StageData
-{
-    public int currentStage;
-    [Range(0f, 10.0f)]
-    public float Monster_Attack, Monster_Hp, Monster_Gold;
-
-    [Space(20f)]
-    [Header("Base Value")]
-    public float Base_Attack;
-    public float Base_Hp;
-    public float Base_Gold;
-}

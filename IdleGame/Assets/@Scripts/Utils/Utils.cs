@@ -9,8 +9,27 @@ using UnityEngine.EventSystems;
 
 public static class Utils
 {
+    //NOTE: 레벨 데이터 값
+    private static LevelDesign datas;
+    public static LevelDesign Datas
+    {
+        get
+        {
+            if(datas == null)
+            {
+                if(Managers.ResourceM != null)
+                {
+                    datas = Managers.ResourceM.Load<LevelDesign>("LevelDesignData");
+                }
+                else
+                {
+                    Debug.LogError("[Utils] 아직 매니저 초기화 전이라 안됌");
+                }
+            }
+            return datas;
+        }
+    }
 
-    //public static LevelDesign Datas = Managers.ResourceM.ResourcDic["LevelDesign"] as LevelDesign;
     public static T GetOrAddComponent<T>(this GameObject _go) where T : Component
     {
         if (_go == null) return null;
@@ -86,9 +105,14 @@ public static class Utils
     }
 
     //지수증가 공식(레벨, 스테이지데이터)
-    public static float CalculatedValue(float _baseValue, int _level, float _value)
+    public static double CalculatedValue(float _baseValue, int _level, float _value)
     {
-        return _baseValue * Mathf.Pow(_level, _value);
+        return _baseValue * Mathf.Pow(_level + 1, _value);
+    }
+    public static bool CoinCheck(double _gold)
+    {
+        if (Managers.GameM.Gold >= _gold) return true;
+        else return false;
     }
 
     #region UI관련

@@ -7,29 +7,29 @@ using System.Globalization;
 [CustomEditor(typeof(LevelDesign))]
 public class LevelDesignEditor : Editor
 {
-    LevelDesign levelDesign = null;
+    LevelDesign design = null;
     public override void OnInspectorGUI()
     {
-        levelDesign = (LevelDesign)target;
+        design = (LevelDesign)target;
 
         EditorGUILayout.LabelField("Level Design", EditorStyles.boldLabel);
-        LevelData data = levelDesign.levelData;
-
+        LevelData data = design.levelData;
+        StageData stageData = design.stageData;
         EditorGUILayout.LabelField("캐릭터 레벨 그래프", EditorStyles.boldLabel);
 
-        DrawGraph(data);
+        DrawGraph(data, stageData);
         EditorGUILayout.Space();
 
         DrawDefaultInspector();
     }
 
 
-    private void DrawGraph(LevelData _data)
+    private void DrawGraph(LevelData _data, StageData _stageData)
     {
         Rect rect = GUILayoutUtility.GetRect(200, 100);
         Handles.DrawSolidRectangleWithOutline(rect, Color.black, Color.white);
 
-        Vector3[] curvePoint_Attack = GraphDisign(rect, _data.Player_Attack);
+        Vector3[] curvePoint_Attack = GraphDisign(rect, _data.Player_Damage);
         Handles.color = Color.green;
         Handles.DrawAAPolyLine(3, curvePoint_Attack);
 
@@ -41,17 +41,24 @@ public class LevelDesignEditor : Editor
         Handles.color = Color.blue;
         Handles.DrawAAPolyLine(3, curvePoint_MaxExp);
 
-        Vector3[] curvePoint_Money = GraphDisign(rect, _data.Player_Money);
+        Vector3[] curvePoint_Money = GraphDisign(rect, _data.Player_Gold);
         Handles.color = Color.yellow;
         Handles.DrawAAPolyLine(3, curvePoint_Money);
 
         EditorGUILayout.Space(20);
+        EditorGUILayout.LabelField("레벨 데이터", EditorStyles.boldLabel);
 
-        GetColorGUI("Attack", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_Attack, _data.currentLevel, _data.Player_Attack)), Color.green);
-        EditorGUILayout.LabelField("HP : " + Utils.CalculatedValue(_data.Base_Hp, _data.currentLevel, _data.Player_Hp));
-        GetColorGUI("HP", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_Hp, _data.currentLevel, _data.Player_Hp)), Color.red);
-        GetColorGUI("MaxExp", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_MaxExp, _data.currentLevel, _data.Player_MaxExp)), Color.blue);
-        GetColorGUI("Gold", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_Money, _data.currentLevel, _data.Player_Money)), Color.yellow);
+        GetColorGUI("Attack", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_Damage, design.currentLevel, _data.Player_Damage)), Color.green);
+        EditorGUILayout.LabelField("HP : " + Utils.CalculatedValue(_data.Base_Hp, design.currentLevel, _data.Player_Hp));
+        GetColorGUI("HP", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_Hp, design.currentLevel, _data.Player_Hp)), Color.red);
+        GetColorGUI("MaxExp", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_MaxExp, design.currentLevel, _data.Player_MaxExp)), Color.blue);
+        GetColorGUI("Gold", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_Gold, design.currentLevel, _data.Player_Gold)), Color.yellow);
+        EditorGUILayout.Space(20);
+
+        EditorGUILayout.LabelField("스테이지 데이터", EditorStyles.boldLabel);
+        GetColorGUI("Monster Attack : ", Utils.ToCurrencyString(Utils.CalculatedValue(_stageData.Base_Damage, design.currentStage, _stageData.Monster_Damage)), Color.green);
+        GetColorGUI("Monster HP : ", Utils.ToCurrencyString(Utils.CalculatedValue(_stageData.Base_Hp, design.currentStage, _stageData.Monster_Hp)), Color.green);
+        GetColorGUI("Monster Gold : ", Utils.ToCurrencyString(Utils.CalculatedValue(_stageData.Base_Gold, design.currentStage, _stageData.Monster_Gold)), Color.green);
     }
 
 

@@ -55,9 +55,15 @@ public class MonsterController : CreatureController
         data = _data;
         isDead = false;
         isKnockBack = false;
-        maxHp = data.BaseHp;
-        hp = data.BaseHp;
-        damage = 1;
+        baseHp = _data.BaseHp;
+        baseDamage = _data.BaseDamage;
+        maxHp = Utils.Datas.stageData.HP((float)baseHp);
+        hp = Utils.Datas.stageData.HP((float)baseHp);
+        damage = Utils.Datas.stageData.Damage((float)baseDamage);
+
+        Debug.Log($"HP : {hp}");
+        Debug.Log($"Damage : {damage}");
+
         attackrange = data.AttackRange;
         detectrange = Mathf.Infinity;
         CriticalRate = 0f;
@@ -204,25 +210,28 @@ public class MonsterController : CreatureController
         }
         else
         {
-            Managers.StageM.count++;
-            Managers.GameM.mPlayer.KillCount++;
-            Managers.ObjectM.DeSpawn(this);
-
-
-            //TODO : 이것도 바꿔야됌
-            //Managers.ObjectM.Spawn<CoinDirecting>(transform.position, );
-            GameObject go = Managers.ResourceM.Instantiate("CoinDirecting", _pooling: true);
-            CoinDirecting coinDriecting = go.GetComponent<CoinDirecting>();
-            coinDriecting.Init(transform.position);
-
-            //TODO : 몬스터마다 아이템 개수 다르게
-            for (int i = 0; i < 3; i++)
+            if(!Managers.StageM.isDead)
             {
-                GameObject obj = Managers.ResourceM.Instantiate("DropItem", _pooling: true);
-                DropItemController dc = obj.GetComponent<DropItemController>();
-                dc.Init();
-                dc.SetInfo(transform.position);
+                Managers.StageM.count++;
+                Managers.GameM.mPlayer.KillCount++;
             }
+            
+            Managers.ObjectM.DeSpawn(this);
+        }
+
+        //TODO : 이것도 바꿔야됌
+        //Managers.ObjectM.Spawn<CoinDirecting>(transform.position, );
+        GameObject go = Managers.ResourceM.Instantiate("CoinDirecting", _pooling: true);
+        CoinDirecting coinDriecting = go.GetComponent<CoinDirecting>();
+        coinDriecting.Init(transform.position);
+
+        //TODO : 몬스터마다 아이템 개수 다르게
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject obj = Managers.ResourceM.Instantiate("DropItem", _pooling: true);
+            DropItemController dc = obj.GetComponent<DropItemController>();
+            dc.Init();
+            dc.SetInfo(transform.position);
         }
     }
     // async UniTask WaitForTime(float _time)

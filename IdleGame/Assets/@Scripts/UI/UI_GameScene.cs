@@ -18,6 +18,7 @@ public class UI_GameScene : UI_Scene, ITickable
         CoinObject,
         StageMonsterCountObject,
         BossBoardObject,
+        DeadFrameHandObject,
 
     }
     enum Buttons
@@ -36,7 +37,7 @@ public class UI_GameScene : UI_Scene, ITickable
         Character4_Button,
         Character5_Button,
         LevelUpButton,
-
+        DeadFrameButton,
     }
 
     enum Texts
@@ -110,6 +111,7 @@ public class UI_GameScene : UI_Scene, ITickable
     Button enforceBtn;
     Button shopBtn;
     Button levelUpBtn;
+    Button deadFrameBtn;
     #region 코인, 쥬얼리, 아이템 애니메이션 관련
     //TODO : UI_Scene에서 관리하는거임
     public override Transform WorldCoinParent
@@ -149,11 +151,13 @@ public class UI_GameScene : UI_Scene, ITickable
     {
         if (!await base.Init()) return false;
 
-        Managers.StageM.readyEvent += () => AsyncFadeInOut(true).Forget();
+        Managers.StageM.readyEvent += OnReady;
         Managers.StageM.playEvent += OnPlay;
         Managers.StageM.bossPlayEvent += OnBossPlay;
         Managers.StageM.clearEvent += OnClear;
         Managers.StageM.deadEvent += OnDead;
+
+        Managers.GameM.OnGoodsChanged += RefreshGoods;
 
         Managers.UpdateM.Register(this);
 
@@ -176,15 +180,8 @@ public class UI_GameScene : UI_Scene, ITickable
 
         foreach (Buttons buttonType in Enum.GetValues(typeof(Buttons)))
         {
-            GetButton(ButtonsType, (int)buttonType).gameObject.BindEvent(() => OnClickAnyButtons(buttonType));
+            GetButton(ButtonsType, (int)buttonType).gameObject.BindEvent(() => OnClickAnyButtons(buttonType).Forget());
         }
-        // GetButton(ButtonsType, (int)Buttons.QuestButton).gameObject.BindEvent(OnClickQuestButton);
-        // GetButton(ButtonsType, (int)Buttons.StatButton).gameObject.BindEvent(OnClickStatButton);
-        // GetButton(ButtonsType, (int)Buttons.HeroButton).gameObject.BindEvent(OnClickHeroButton);
-        // GetButton(ButtonsType, (int)Buttons.RelicsButton).gameObject.BindEvent(OnClickRelicsButton);
-        // GetButton(ButtonsType, (int)Buttons.DungeonButton).gameObject.BindEvent(OnClickDungeonButton);
-        // GetButton(ButtonsType, (int)Buttons.EnforceButton).gameObject.BindEvent(OnClickEnforceButton);
-        // GetButton(ButtonsType, (int)Buttons.ShopButton).gameObject.BindEvent(OnClickShopButton);
 
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).gameObject.BindEvent(ClickDown, _type: Define.UIEvent.PointerDown);
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).gameObject.BindEvent(ClickUp, _type: Define.UIEvent.PointerUp);
@@ -199,25 +196,33 @@ public class UI_GameScene : UI_Scene, ITickable
 
 
         UpdateUIState();
-        //UI_Toast ui_Toast = Managers.UIM.ShowPopup<UI_Toast>();
-
-        CheckLevelupButton();
-        CheckCharacter();
-        CheckPlayerPower();
 
         AllOff();
         StartSpawn();
 
         return true;
     }
+    void OnDestroy()
+    {
+        Managers.StageM.readyEvent -= OnReady;
+        Managers.StageM.playEvent -= OnPlay;
+        Managers.StageM.bossPlayEvent -= OnBossPlay;
+        Managers.StageM.clearEvent -= OnClear;
+        Managers.StageM.deadEvent -= OnDead;
+
+        Managers.GameM.OnGoodsChanged -= RefreshGoods;
+    }
 
     void AllOff()
     {
         GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
+        GetButton(ButtonsType, (int)Buttons.DeadFrameButton).gameObject.SetActive(false);
     }
     void UpdateUIState()
     {
+        
+       
         //TODO : 여기서 이제 플레이어 상황 받아와서 bool값으로 처리해 주거나 더 좋은 방법생각해보자.
         GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.Character1_Plus).gameObject.SetActive(false);
@@ -238,7 +243,13 @@ public class UI_GameScene : UI_Scene, ITickable
         GetImage(ImagesType, (int)Images.Character4_CoolTimeImage).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.Character5_CoolTimeImage).gameObject.SetActive(false);
     }
-
+    //TODO :  코인, 쥬얼리 텍스트
+    public void RefreshGoods()
+    {
+        GetText(TextsType, (int)Texts.CoinText).text = Utils.ToCurrencyString(Managers.GameM.Gold);
+        GetText(TextsType, (int)Texts.JewelText).text = "0";
+        CheckTexts();
+    }
     async UniTaskVoid OnClickAnyButtons(Buttons _clickButtonType)
     {
         clickedButton = null;
@@ -288,8 +299,12 @@ public class UI_GameScene : UI_Scene, ITickable
                 break;
 
             case Buttons.LevelUpButton:
-                CheckLevelupButton();
-                clickedButton = levelUpBtn;
+                OnClickLevelupButton();
+                break;
+
+            case Buttons.DeadFrameButton:
+                Managers.StageM.isDead = false;
+                Managers.StageM.StateChange(Define.StageState.Boss);
                 break;
         }
 
@@ -359,17 +374,30 @@ public class UI_GameScene : UI_Scene, ITickable
         GetText(TextsType, (int)Texts.BossHPText).text = "100%";
     }
 
+    #region Event
+    public void OnReady()
+    {
+        AsyncFadeInOut(true).Forget();
+    }
     public void OnPlay()
     {
-        //TODO : 이거 mPlayer가 null이라 안되는듯(확인해보기)
-        Managers.GameM.mPlayer.OnPlayerDataUpdate = CheckStageMonsterCount;
-        GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(true);
-        ResetStageBoard();
+        AllOff();
+        if (Managers.StageM.isDead)
+        {
+            GetButton(ButtonsType, (int)Buttons.DeadFrameButton).gameObject.SetActive(true);
+        }
+        else
+        {
+            Managers.GameM.mPlayer.OnPlayerDataUpdate = CheckStageMonsterCount;
+            GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(true);
+            ResetStageBoard();
+        }
+        
     }
 
     public void OnBossPlay()
     {
-        GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
+        AllOff();
         GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(true);
         ResetBossBoard();
 
@@ -377,31 +405,25 @@ public class UI_GameScene : UI_Scene, ITickable
 
     public void OnClear()
     {
-        GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
+        AllOff();
     }
-
+     
     public void OnDead()
     {
-        GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
-        GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
-    }
-
-    void CheckCharacter()
-    {
-        //GetImage(ImagesType, (int)Images.CharacterImage).sprite = "";
-        //GetText(TextsType, (int)Texts.CharacterLevelText).text = "";
-    }
-
-    void CheckPlayerPower()
-    {
+        AllOff();
 
     }
+
+    #endregion
+    
+
 
     #region 레벨업 버튼 애니메이션 관련
     void ClickDown()
     {
         ExpUPAnim();
         coroutine = StartCoroutine(coPush());
+
     }
 
     void ClickUp()
@@ -414,17 +436,42 @@ public class UI_GameScene : UI_Scene, ITickable
         timer = 0.0f;
     }
 
-
-    void CheckLevelupButton()
+    double needGold;
+    public void OnClickLevelupButton()
     {
-        //버튼
-        GetImage(ImagesType, (int)Images.Exp_FillImage).fillAmount = Managers.PlayerM.ExpPercent();
-        GetText(TextsType, (int)Texts.ExpText).text = (Managers.PlayerM.ExpPercent() * 100.0f) + "%";
-        GetText(TextsType, (int)Texts.AttackText).text = $"+ {Utils.ToCurrencyString(Managers.PlayerM.NextAttack())}";
-        GetText(TextsType, (int)Texts.HpText).text = $"+ {Utils.ToCurrencyString(Managers.PlayerM.NextHp())}";
-        GetText(TextsType, (int)Texts.NeedLevelUpText).text = "";
-        GetText(TextsType, (int)Texts.GetExpText).text = "";
+        needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.level, Utils.Datas.levelData.Player_Gold);
+        if (Managers.GameM.Gold >= needGold)
+        {
+            Managers.GameM.Gold -= needGold;
+            Managers.PlayerM.ExpUp();
+            CheckTexts();
+        }
 
+        
+    }
+
+    public void CheckTexts()
+    {
+        needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.level, Utils.Datas.levelData.Player_Gold);
+
+        GetImage(ImagesType, (int)Images.Exp_FillImage).fillAmount = Managers.PlayerM.ExpPercent();
+        GetText(TextsType, (int)Texts.ExpText).text = string.Format("{0:0.00}", Managers.PlayerM.ExpPercent() * 100.0f) + "%";
+        GetText(TextsType, (int)Texts.AttackText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.Damage(Managers.GameM.mPlayer.BaseDamage))}";
+        GetText(TextsType, (int)Texts.HpText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.HP(Managers.GameM.mPlayer.BaseHp))}";
+        GetText(TextsType, (int)Texts.NeedLevelUpText).text = Utils.ToCurrencyString(needGold);
+        GetText(TextsType, (int)Texts.NeedLevelUpText).color = Utils.CoinCheck(needGold) ? Color.green : Color.red;
+        GetText(TextsType, (int)Texts.GetExpText).text = $"<color=#00FF00>EXP</color> + {string.Format("{0:0.00}", Managers.PlayerM.NextExp())}%";
+
+        GetText(TextsType, (int)Texts.CoinText).text = Utils.ToCurrencyString(Managers.GameM.Gold);
+
+        CheckPlayer();
+    }
+    void CheckPlayer()
+    {
+        //GetImage(ImagesType, (int)Images.CharacterImage).sprite = "";
+        GetText(TextsType, (int)Texts.CharacterLevelText).text = $"LV : {Managers.GameM.level}";
+        GetText(TextsType, (int)Texts.UserCombatPowerText).text = 
+            $"+ {Utils.Datas.levelData.Damage(Managers.GameM.mPlayer.BaseDamage) + Utils.Datas.levelData.HP(Managers.GameM.mPlayer.BaseHp)}";
     }
 
     IEnumerator coPush()
@@ -443,6 +490,7 @@ public class UI_GameScene : UI_Scene, ITickable
     {
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).transform.DORewind();
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.25f);
+        OnClickLevelupButton();
     }
 
     #endregion

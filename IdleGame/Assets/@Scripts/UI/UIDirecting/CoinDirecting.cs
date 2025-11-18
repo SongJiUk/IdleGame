@@ -48,6 +48,12 @@ public class CoinDirecting : BaseController
         for (int i = 0; i < childs.Length; i++) childs[i].anchoredPosition = Vector2.zero;
         transform.parent = Managers.UIM.SceneUI.WorldCoinParent;
 
+        Managers.GameM.Gold += Utils.CalculatedValue(
+            Utils.Datas.stageData.Base_Gold,
+            Managers.GameM.stage,
+            Utils.Datas.stageData.Monster_Gold);
+
+
         Coin_Effect_DoTween(cts.Token).Forget();
         //Coin_Effect_DoTween(this.GetCancellationTokenOnDestroy()).Forget();
 

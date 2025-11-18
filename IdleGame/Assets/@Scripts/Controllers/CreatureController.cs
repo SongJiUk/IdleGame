@@ -15,6 +15,11 @@ public class CreatureController : BaseController
     protected virtual bool isCritical { get; set; }
     public bool IsDead { get { return isDead; } }
 
+    protected virtual double baseHp { get; set; }
+    public double BaseHp { get { return baseHp; } }
+    protected virtual double baseDamage { get; set; }
+    public double BaseDamage { get { return baseDamage; } }
+
     protected virtual double hp { get; set; }
     public double HP { get { return hp; } }
     protected virtual double maxHp { get; set; }

@@ -4,37 +4,40 @@ using UnityEngine;
 
 public class PlayerManager 
 {
-    public int Level;
-    public double Exp;
-    public double BaseAttack = 10;
-    public double BaseHP = 50;
+    
+    public double Damage;
+    public double Hp;
 
     public void ExpUp()
     {
-        
+        Managers.GameM.exp += Utils.Datas.levelData.Exp();
+        Damage += Utils.Datas.levelData.Damage((float)Managers.GameM.mPlayer.BaseDamage);
+        Hp += Utils.Datas.levelData.HP((float)Managers.GameM.mPlayer.BaseHp);
+
+        if(Managers.GameM.exp >= Utils.Datas.levelData.MaxExp())
+        {
+            Managers.GameM.level++;
+            Managers.GameM.exp = 0;
+        }
+
+        for (int i = 0; i < Managers.SpawnM.players.Count; i++) Managers.SpawnM.players[i].InitStat();
     }
 
     public float ExpPercent()
     {
-        //Managers.GameM.gameData.exp;
-        return 1;
+        float exp = (float)Utils.Datas.levelData.MaxExp();
+        double myExp = Managers.GameM.exp;
 
-    }
-
-    public double NextAttack()
-    {
-        return BaseAttack * Mathf.Pow(1.08f, Level - 1);
-    }
-
-    public double NextHp()
-    {
-        return BaseHP * Mathf.Pow(1.10f, Level - 1);
+        return (float)myExp / exp;
     }
 
     public float NextExp()
     {
-        //float exp = 
-        //float myexp;
-        return 1;
+        float exp = (float)Utils.Datas.levelData.MaxExp();
+        float myExp = (float)Utils.Datas.levelData.Exp();
+
+        return (myExp / exp) * 100.0f;
     }
+  
+
 }

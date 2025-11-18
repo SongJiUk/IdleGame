@@ -12,15 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac7c22a74c5264487965f5829efe506a, type: 3}
   m_Name: LevelDesignData
   m_EditorClassIdentifier: 
+  currentLevel: 1
+  currentStage: 2
   levelData:
-    currentLevel: 0
-    Player_Attack: 5
-    Player_Hp: 5
-    Player_Exp: 5
-    Player_MaxExp: 5
-    Player_Money: 5
-    Base_Attack: 10
+    Player_Attack: 1.5
+    Player_Hp: 1.52
+    Player_Exp: 2
+    Player_MaxExp: 2.5
+    Player_Gold: 2
+    Base_Damage: 10
     Base_Hp: 50
-    Base_Exp: 0
+    Base_Exp: 5
     Base_MaxExp: 15
-    Base_Money: 10
+    Base_Gold: 10
+  stageData:
+    Monster_Attack: 1.6
+    Monster_Hp: 1.6
+    Monster_Gold: 1.6
+    Base_Damage: 0
+    Base_Hp: 30
+    Base_Gold: 5

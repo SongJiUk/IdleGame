@@ -45,19 +45,21 @@ public class SpawnManager : MonoBehaviour, ITickable
                 spawnPos = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0f, UnityEngine.Random.Range(-1f, 1f));
             }
             Managers.ObjectM.Spawn<PlayerController>(spawnPos, i);
-
         }
+
+        players = Managers.ObjectM.pcList.ToList();
     }
 
     #region 이벤트
     public void OnReady()
     {
         PlayerSpawn();
+        if(scene !=null) scene.CheckTexts();
     }
 
     public void OnPlay()
     {
-        players = Managers.ObjectM.pcList.ToList();
+        
         spawnTimer = 0f;
         Managers.UpdateM.Register(this);
     }

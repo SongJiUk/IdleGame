@@ -19,9 +19,10 @@ public class StageManager
     public StageState stageState;
 
     //TODO: 계속 10개? 20개? 고민해보자
-    public int maxCount = 20;
+    public int maxCount = 5;
     public int count = 0;
-    public int stage;
+    
+    //TODO : 사망시 보스 도전 x
     public bool isDead = false;
     public OnReadyEvent readyEvent;
     public OnPlayEvent playEvent;
@@ -53,7 +54,8 @@ public class StageManager
             case StageState.Clear:
                 count = 0;
                 clearEvent?.Invoke();
-                stage++;
+                Managers.GameM.stage++;
+                isDead = false;
                 break;
             case StageState.Dead:
                 count = 0;
