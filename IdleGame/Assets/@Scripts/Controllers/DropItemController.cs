@@ -20,6 +20,7 @@ public class DropItemController : BaseController
     ParticleSystem loot;
 
     Define.ItemGrade grade;
+    Data.ItemData itemData;
     public override bool Init()
     {
         if (!base.Init()) return false;
@@ -33,10 +34,10 @@ public class DropItemController : BaseController
         return true;
     }
 
-    public void SetInfo(Vector3 _pos)
+    public void SetInfo(Vector3 _pos, Data.ItemData _itemData)
     {
-
-        grade = (Define.ItemGrade)Random.Range(0, 5);
+        itemData = _itemData;
+        grade = itemData.ItemGrade;
         transform.position = _pos;
         Vector3 targetPos = new Vector3(_pos.x + (Random.insideUnitSphere.x * 2f)
             , 0.5f, _pos.z + (Random.insideUnitSphere.z * 2f));
@@ -121,7 +122,7 @@ public class DropItemController : BaseController
         itemRect.gameObject.SetActive(true);
         itemRect.parent = Managers.UIM.SceneUI.WorldItemParent;
         //TODO : ������ ���� �޾ƿͼ� �ۼ�
-        text.text = Utils.StringToColorGrade(grade) + "TESET ITEM" + "</color>";
+        text.text = Utils.StringToColorGrade(grade) + itemData.NameKR + "</color>";
 
 
         itemRect.position = Camera.main.WorldToScreenPoint(transform.position);

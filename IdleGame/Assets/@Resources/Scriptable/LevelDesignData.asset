@@ -15,7 +15,7 @@ MonoBehaviour:
   currentLevel: 1
   currentStage: 2
   levelData:
-    Player_Attack: 1.5
+    Player_Damage: 1.5
     Player_Hp: 1.52
     Player_Exp: 2
     Player_MaxExp: 2.5
@@ -26,9 +26,9 @@ MonoBehaviour:
     Base_MaxExp: 15
     Base_Gold: 10
   stageData:
-    Monster_Attack: 1.6
+    Monster_Damage: 1.6
     Monster_Hp: 1.6
     Monster_Gold: 1.6
-    Base_Damage: 0
+    Base_Damage: 10
     Base_Hp: 30
     Base_Gold: 5

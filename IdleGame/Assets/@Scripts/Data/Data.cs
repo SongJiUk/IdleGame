@@ -94,4 +94,33 @@ namespace Data
     }
 
     #endregion
+
+    #region
+    [Serializable]
+    public class ItemData
+    {
+        public int DataID;
+        public string Name;
+        public string NameKR;
+        public string Description;
+        public Define.ItemGrade ItemGrade;
+        public int Probability;
+    }
+
+    public class ItemDataLoader: ILoader<int, ItemData>
+    {
+        public List<ItemData> dataList = new List<ItemData>();
+
+        public Dictionary<int, ItemData> MakeDict()
+        {
+            Dictionary<int, ItemData> dic = new Dictionary<int, ItemData>();
+            foreach(var data in dataList)
+            {
+                dic.Add(data.DataID, data);
+            }
+
+            return dic;
+        }
+    }
+    #endregion
 }

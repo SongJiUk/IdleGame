@@ -8,6 +8,7 @@ public class Datas : ScriptableObject
 	public List<WeaponData> WeaponDataList;
 	public List<CreatureData> CreatureDataList;
 	public List<ProjectileData> ProjectileDataList;
+	public List<ItemData> ItemDataList;
 }
 
 [Serializable]
@@ -43,5 +44,16 @@ public class ProjectileData
 	public string Description;
 	public string prefabName;
 	public string AttackType;
+}
+
+[Serializable]
+public class ItemData
+{
+	public int DataID;
+	public string Name;
+	public string NameKR;
+	public string Description;
+	public string ItemGrade;
+	public int Probability;
 }
 

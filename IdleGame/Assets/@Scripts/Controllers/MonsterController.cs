@@ -225,13 +225,15 @@ public class MonsterController : CreatureController
         CoinDirecting coinDriecting = go.GetComponent<CoinDirecting>();
         coinDriecting.Init(transform.position);
 
+        var items = Managers.ItemM.GetDropItem();
+
         //TODO : 몬스터마다 아이템 개수 다르게
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < items.Count; i++)
         {
             GameObject obj = Managers.ResourceM.Instantiate("DropItem", _pooling: true);
             DropItemController dc = obj.GetComponent<DropItemController>();
             dc.Init();
-            dc.SetInfo(transform.position);
+            dc.SetInfo(transform.position, items[i]);
         }
     }
     // async UniTask WaitForTime(float _time)

@@ -19,7 +19,7 @@ public class StageManager
     public StageState stageState;
 
     //TODO: 계속 10개? 20개? 고민해보자
-    public int maxCount = 5;
+    public int maxCount = 20;
     public int count = 0;
     
     //TODO : 사망시 보스 도전 x

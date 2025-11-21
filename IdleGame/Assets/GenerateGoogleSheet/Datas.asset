@@ -124,7 +124,7 @@ MonoBehaviour:
     Description: "\uBCF4\uC2A4\uBAAC\uC2A4\uD130\uC774\uB2E4"
     prefabName: Boss
     Type: Boss
-    AttackRange: 1
+    AttackRange: 2
     CharacterGrade: Rare
     BaseHp: 500
     BaseDamage: 20
@@ -147,3 +147,40 @@ MonoBehaviour:
     Description: "\uBCF4\uC2A4\uACF5\uACA9\uC774\uB2E4"
     prefabName: BossAttack
     AttackType: Range
+  ItemDataList:
+  - DataID: 30001
+    Name: Crystal
+    NameKR: "\uD06C\uB9AC\uC2A4\uD0C8"
+    Description: "\uD06C\uB9AC\uC2A4\uD0C8"
+    ItemGrade: Legendary
+    Probability: 5
+  - DataID: 30002
+    Name: Feather
+    NameKR: "\uAE43\uD138"
+    Description: "\uAE43\uD138"
+    ItemGrade: UnCommon
+    Probability: 15
+  - DataID: 30003
+    Name: Leather
+    NameKR: "\uAC00\uC8FD"
+    Description: "\uAC00\uC8FD"
+    ItemGrade: UnCommon
+    Probability: 15
+  - DataID: 30004
+    Name: Monster_Energy
+    NameKR: "\uBAAC\uC2A4\uD130\uC5D0\uB108\uC9C0"
+    Description: "\uBAAC\uC2A4\uD130\uC5D0\uB108\uC9C0"
+    ItemGrade: Hero
+    Probability: 10
+  - DataID: 30005
+    Name: Piece_Of_Scroll
+    NameKR: "\uC2A4\uD06C\uB864"
+    Description: "\uC2A4\uD06C\uB864"
+    ItemGrade: Common
+    Probability: 20
+  - DataID: 30006
+    Name: Piece_Of_Stone
+    NameKR: "\uB3CC"
+    Description: "\uB3CC"
+    ItemGrade: Common
+    Probability: 20
