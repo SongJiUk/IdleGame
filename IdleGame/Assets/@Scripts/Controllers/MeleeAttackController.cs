@@ -17,6 +17,14 @@ public class MeleeAttackController : ProjectileController
 
             isHit = true;
 
+            //TODO : 보스에서 사망했거나 스테이지를 못깨서 사망했을때, 몬스터가 플레이어 못때리게 설정해뒀으니까 이것도 안되게
+            if(Managers.StageM.isDead && !_owner.IsPlayer)
+            {
+                Managers.ObjectM.DeSpawn(this);
+                return;
+            }
+
+
             //TODO : 수정
             if (particle == null)
             {

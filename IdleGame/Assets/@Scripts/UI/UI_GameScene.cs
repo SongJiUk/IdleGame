@@ -5,11 +5,14 @@ using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
+using TMPro;
 
 public class UI_GameScene : UI_Scene, ITickable
 {
+    //TODO : 이거 UI다 나누는게 편할거같긴함.(UI_TOP, Bottom으로 크개 두개로 나눠서 하던가, 아니면 그냥 연관있는것끼리 모아서 하던가)
     #region Enum
     enum GameObjects
     {
@@ -19,6 +22,8 @@ public class UI_GameScene : UI_Scene, ITickable
         StageMonsterCountObject,
         BossBoardObject,
         DeadFrameHandObject,
+        ItemPopupObject,
+        ItemTextPopupObject,
 
     }
     enum Buttons
@@ -61,6 +66,13 @@ public class UI_GameScene : UI_Scene, ITickable
         BossHPText,
         BossText,
         BossBoardStageText,
+        ItemPopupText,
+        ItemText1,
+        ItemText2,
+        ItemText3,
+        ItemText4,
+        ItemText5
+
     }
 
     enum Images
@@ -93,6 +105,9 @@ public class UI_GameScene : UI_Scene, ITickable
         FadeImage,
         StageMonsterCountImage,
         BossHpImage,
+        ItemPopupFrameImage,
+        ItemPopupItemImage,
+
     }
 
     enum Sliders
@@ -147,6 +162,13 @@ public class UI_GameScene : UI_Scene, ITickable
 
     #endregion
 
+    #region 아이템 획득 애니메이션 관련
+    RectTransform ItemPopupObjectRect;
+    RectTransform ItemPopupFrameObjectRect;
+
+    List<TextMeshProUGUI> itemTexts = new List<TextMeshProUGUI>();
+    #endregion
+
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -176,6 +198,16 @@ public class UI_GameScene : UI_Scene, ITickable
 
         coinDirectingTr = GetObject(GameObjectsType, (int)GameObjects.CoinObject).GetComponent<RectTransform>();
         jewelDirectingTr = GetObject(GameObjectsType, (int)GameObjects.JewelObject).GetComponent<RectTransform>();
+        ItemPopupObjectRect = GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).GetComponent<RectTransform>();
+        ItemPopupFrameObjectRect = GetImage(ImagesType, (int)Images.ItemPopupFrameImage).GetComponent<RectTransform>();
+
+        GameObject obj = GetObject(GameObjectsType, (int)GameObjects.ItemTextPopupObject);
+        for (int i =0; i<obj.transform.childCount; i++)
+        {
+            itemTexts.Add(GetText(TextsType, (int)Texts.ItemText1 + i));
+            itemTexts[i].gameObject.SetActive(false);
+        }
+
         layers = GetObject(GameObjectsType, (int)GameObjects.LayersObject).GetComponent<Transform>();
 
         foreach (Buttons buttonType in Enum.GetValues(typeof(Buttons)))
@@ -218,6 +250,8 @@ public class UI_GameScene : UI_Scene, ITickable
         GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
         GetButton(ButtonsType, (int)Buttons.DeadFrameButton).gameObject.SetActive(false);
+
+        GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).SetActive(false);
     }
     void UpdateUIState()
     {
@@ -416,8 +450,6 @@ public class UI_GameScene : UI_Scene, ITickable
 
     #endregion
     
-
-
     #region 레벨업 버튼 애니메이션 관련
     void ClickDown()
     {
@@ -470,8 +502,8 @@ public class UI_GameScene : UI_Scene, ITickable
     {
         //GetImage(ImagesType, (int)Images.CharacterImage).sprite = "";
         GetText(TextsType, (int)Texts.CharacterLevelText).text = $"LV : {Managers.GameM.level}";
-        GetText(TextsType, (int)Texts.UserCombatPowerText).text = 
-            $"+ {Utils.Datas.levelData.Damage(Managers.GameM.mPlayer.BaseDamage) + Utils.Datas.levelData.HP(Managers.GameM.mPlayer.BaseHp)}";
+        //TODO :이거 소수점 끝까지 안나오게 수정하기
+        GetText(TextsType, (int)Texts.UserCombatPowerText).text = Utils.ToCurrencyString(Utils.Datas.levelData.Damage(Managers.GameM.mPlayer.BaseDamage) + Utils.Datas.levelData.HP(Managers.GameM.mPlayer.BaseHp));
     }
 
     IEnumerator coPush()
@@ -491,6 +523,260 @@ public class UI_GameScene : UI_Scene, ITickable
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).transform.DORewind();
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.25f);
         OnClickLevelupButton();
+    }
+
+    #endregion
+
+    #region ItemPopup(TOP)
+
+    public void SetHighGradeItem(Data.ItemData _data)
+    {
+        GetImage(ImagesType, (int)Images.ItemPopupFrameImage).sprite = Managers.ResourceM.GetAtlas(_data.ItemGrade.ToString());
+        GetImage(ImagesType, (int)Images.ItemPopupItemImage).sprite = Managers.ResourceM.GetAtlas(_data.Name);
+        GetText(TextsType, (int)Texts.ItemPopupText).text = Utils.StringToColorGrade(_data.ItemGrade) + _data.Description + "</color>을 획득하였습니다";
+
+        PlayLegendaryPopupAnim();
+    }
+    public void PlayLegendaryPopupAnim()
+    {
+
+        GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).SetActive(true);
+
+
+        ItemPopupObjectRect.localScale = new Vector3(0f, 1f, 1f);
+        ItemPopupFrameObjectRect.localScale = Vector3.zero;
+
+        var seq = DOTween.Sequence();
+        seq.Append(ItemPopupObjectRect.DOScaleX(1.1f, 0.1f));
+        seq.Append(ItemPopupObjectRect.DOScaleX(1.0f, 0.05f));
+
+        seq.Append(ItemPopupFrameObjectRect.DOScale(new Vector3(1.1f, 0.9f, 1.0f), 0.1f));
+        seq.Append(ItemPopupFrameObjectRect.DOScale(new Vector3(1f, 1.1f, 1f), 0.1f));
+        seq.Append(ItemPopupFrameObjectRect.DOScale(Vector3.one, 0.05f));
+
+        float startTime = 0.2f;
+
+        seq.Insert(startTime, ItemPopupFrameObjectRect.DOScale(new Vector3(1.1f, 0.9f, 1f), 0.1f));
+        seq.Insert(startTime + 0.1f, ItemPopupFrameObjectRect.DOScale(new Vector3(1f, 1.1f, 1f), 0.05f));
+        seq.Insert(startTime + 0.15f, ItemPopupFrameObjectRect.DOScale(Vector3.one, 0.05f));
+
+        float displayTime = 2f;
+        seq.AppendInterval(displayTime);
+        seq.OnComplete(() =>
+        {
+            PlayLegendaryPopupCloseAnim();
+        });
+
+        seq.Play();
+
+
+    }
+    public void PlayLegendaryPopupCloseAnim()
+    {
+        var seq = DOTween.Sequence();
+
+
+        seq.Append(ItemPopupFrameObjectRect.DOScale(new Vector3(1f, 1.1f, 1f), 0.05f));
+        seq.Append(ItemPopupFrameObjectRect.DOScale(new Vector3(1.1f, 0.9f, 1f), 0.1f));
+        seq.Append(ItemPopupFrameObjectRect.DOScale(Vector3.zero, 0.1f));
+
+        seq.Append(ItemPopupObjectRect.DOScaleX(1.1f, 0.1f));
+        seq.Append(ItemPopupObjectRect.DOScaleX(0f, 0.15f));
+
+        seq.OnComplete(() =>
+                {
+                    GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).SetActive(false);
+                });
+
+        seq.Play();
+    }
+    #endregion
+
+    #region ItemPopup(Bottom)
+    private Dictionary<TextMeshProUGUI, CancellationTokenSource> cancellationSources =
+    new Dictionary<TextMeshProUGUI, CancellationTokenSource>();
+    public void GetItem(Data.ItemData _data)
+    {
+        //TextMeshProUGUI newItemText = FindOldSlot();
+        //if (newItemText == null)
+        //{
+        //    Debug.LogWarning("아이템 메시지 슬롯이 모두 꽉 찼습니다.");
+        //    return;
+        //}
+
+        //foreach (var text in itemTexts)
+        //{
+        //    if (text.gameObject.activeSelf && text != newItemText)
+        //    {
+        //        RectTransform rects = text.GetComponent<RectTransform>();
+        //        float targetY = rects.anchoredPosition.y + 50.0f;
+        //        rects.DOKill();
+        //        rects.anchoredPosition = new Vector2(0f, targetY);
+        //    }
+        //}
+
+
+        //RectTransform rect = newItemText.GetComponent<RectTransform>();
+
+        //rect.anchoredPosition = Vector2.zero;
+        //newItemText.gameObject.SetActive(true);
+
+        //newItemText.text = "아이템을 획득하였습니다 : " + Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>";
+        //PlayTextFadeOut(newItemText).Forget();
+
+
+
+        //if ((int)_data.ItemGrade >= (int)Define.ItemGrade.Rare)
+        //{
+        //    SetHighGradeItem(_data);
+
+        //}
+
+        //TODO : 이거 합쳐서 수정하기.
+        bool AllActive = true;
+
+        for (int i = 0; i < itemTexts.Count; i++)
+        {
+            if (itemTexts[i].gameObject.activeSelf == false)
+            {
+                itemTexts[i].gameObject.SetActive(true);
+                itemTexts[i].text = "아이템을 획득하였습니다 : " + Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>";
+
+                for (int j = 0; j < i; j++)
+                {
+                    RectTransform rect = itemTexts[j].GetComponent<RectTransform>();
+                    rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y + 50.0f);
+                }
+
+                AllActive = false;
+                break;
+            }
+        }
+
+        if (AllActive)
+        {
+            GameObject BaseRect = null;
+            float yCount = 0.0f;
+            for (int i = 0; i < itemTexts.Count; i++)
+            {
+                RectTransform rect = itemTexts[i].GetComponent<RectTransform>();
+                if (rect.anchoredPosition.y > yCount)
+                {
+                    BaseRect = rect.gameObject;
+                    yCount = rect.anchoredPosition.y;
+                }
+            }
+
+            for (int i = 0; i < itemTexts.Count; i++)
+            {
+                if (BaseRect == itemTexts[i].gameObject)
+                {
+                    itemTexts[i].gameObject.SetActive(false);
+                    itemTexts[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, 0.0f);
+
+                    itemTexts[i].gameObject.SetActive(true);
+                    itemTexts[i].text = "아이템을 획득하였습니다 : " + Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>";
+
+                    
+                }
+                else
+                {
+                    RectTransform rect = itemTexts[i].GetComponent<RectTransform>();
+                    rect.anchoredPosition = new Vector2(0.0f, rect.anchoredPosition.y + 50.0f);
+                }
+            }
+        }
+
+        if ((int)_data.ItemGrade >= (int)Define.ItemGrade.Rare)
+        {
+            SetHighGradeItem(_data);
+
+        }
+    }
+
+    public TextMeshProUGUI FindOldSlot()
+    {
+        foreach(var text in itemTexts)
+        {
+            if (!text.gameObject.activeSelf) return text;
+        }
+
+        TextMeshProUGUI oldestText = null;
+        float maxY = float.MinValue;
+
+        foreach (var text in itemTexts)
+        {
+            if (!text.gameObject.activeSelf) continue;
+            
+            RectTransform rect = text.GetComponent<RectTransform>();
+            if(rect.anchoredPosition.y > maxY)
+            {
+                maxY = rect.anchoredPosition.y;
+                oldestText = text;
+            }
+        }
+        
+        if(oldestText != null)
+        {
+            CancellationTokenSource ctsToCancel = null;
+            if(cancellationSources.TryGetValue(oldestText, out ctsToCancel))
+            {
+                cancellationSources.Remove(oldestText);
+            }
+            if(ctsToCancel != null)
+            {
+                ctsToCancel.Cancel();
+                ctsToCancel.Dispose();
+            }
+
+            oldestText.DOKill(true);
+            RectTransform rect = oldestText.GetComponent<RectTransform>();
+            
+            rect.anchoredPosition = Vector2.zero;
+            rect.gameObject.SetActive(false);
+            
+
+            return oldestText;
+        }
+
+        return null;
+    }
+    public async UniTask PlayTextFadeOut(TextMeshProUGUI _text)
+    {
+        CancellationTokenSource cts = new CancellationTokenSource();
+        CancellationToken token = cts.Token;
+        cancellationSources[_text] = cts;
+
+        RectTransform rect = _text.GetComponent<RectTransform>();
+        Color startColor = _text.color;
+        startColor.a = 1f;
+        _text.color = startColor;
+
+        try
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(1f), ignoreTimeScale: false, cancellationToken: token);
+            await _text.DOFade(0f, 0.5f).ToUniTask(cancellationToken: token);
+        }
+        catch(OperationCanceledException)
+        {
+            Color cancelColor = _text.color;
+            cancelColor.a = 0;
+            _text.color = cancelColor;
+        }
+        finally
+        {
+            if (cancellationSources.ContainsKey(_text))
+            {
+                cancellationSources.Remove(_text);
+                cts.Dispose(); // 중요!
+            }
+
+            if (rect != null)
+            {
+                rect.gameObject.SetActive(false);
+                rect.anchoredPosition = Vector2.zero;
+            }
+        }
     }
 
     #endregion

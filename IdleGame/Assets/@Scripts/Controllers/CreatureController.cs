@@ -31,6 +31,11 @@ public class CreatureController : BaseController
 
     protected CreatureController target;
     protected Vector3 SpawnPos;
+    protected bool isPlayer = false;
+    public bool IsPlayer
+    {
+        get { return isPlayer; }
+    }
     //TODO : TEMP;
     protected float CriticalRate = 0;
     public Action OnTargetDead;

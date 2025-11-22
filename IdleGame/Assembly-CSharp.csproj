@@ -103,6 +103,7 @@
     <Compile Include="Assets\@Scripts\UI\BaseSceneUIController.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Inventory.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_ItemInfo.cs" />
+    <Compile Include="Assets\@Scripts\Manager\ItemManager.cs" />
     <Compile Include="Assets\ARPG Effects\Scripts\ARPGFXLightFlicker.cs" />
     <Compile Include="Assets\_ExternalModule\Favorites\Common\Scripts\FG_GameObjectGUIDs.cs" />
     <Compile Include="Assets\@Scripts\Manager\UIManager.cs" />
@@ -120,7 +121,6 @@
     <Compile Include="Assets\@Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\@Scripts\UI\UIDirecting\CoinDirecting.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign.cs" />
-    <Compile Include="Assets\@Scripts\Manager\ItemManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -965,6 +965,9 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
+    </Reference>
+    <Reference Include="Coffee.UIParticle">
+      <HintPath>Library\ScriptAssemblies\Coffee.UIParticle.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

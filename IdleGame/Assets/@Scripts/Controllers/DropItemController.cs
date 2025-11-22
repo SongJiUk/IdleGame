@@ -124,7 +124,6 @@ public class DropItemController : BaseController
         //TODO : ������ ���� �޾ƿͼ� �ۼ�
         text.text = Utils.StringToColorGrade(grade) + itemData.NameKR + "</color>";
 
-
         itemRect.position = Camera.main.WorldToScreenPoint(transform.position);
 
         LootItem().Forget();
@@ -134,9 +133,11 @@ public class DropItemController : BaseController
     {
         try
         {
-            await UniTask.WaitForSeconds(Random.Range(1.0f, 1.5f));
+            await UniTask.WaitForSeconds(1f);
 
             for (int i = 0; i < grades.Count; i++) grades[i].SetActive(false);
+
+            (Managers.UIM.SceneUI as UI_GameScene).GetItem(itemData);
 
             itemRect.transform.parent = this.transform;
             itemRect.gameObject.SetActive(false);

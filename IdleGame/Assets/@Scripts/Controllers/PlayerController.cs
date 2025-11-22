@@ -56,7 +56,7 @@ public class PlayerController : CreatureController
         baseHp = _data.BaseHp;
         baseDamage = _data.BaseDamage;
 
-
+        isPlayer = true;
         isDead = false;
         isAttack = false;
         SpawnPos = transform.position;
@@ -200,7 +200,6 @@ public class PlayerController : CreatureController
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)
     {
         if (isDead) return;
-
         if (Managers.StageM.isDead) return;
 
         base.GetDamage(_dmg, _attacker, _attacker.GetCritical());

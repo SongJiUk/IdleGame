@@ -146,6 +146,7 @@ public class MonsterController : CreatureController
         if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
         if (isDead) return;
 
+        //TODO: 몬스터 플레이어 죽으면 Idle상태로 돌아가기.
         if (target == null || target.IsDead)
         {
             ResetTarget();
