@@ -133,7 +133,7 @@ public class DropItemController : BaseController
     {
         try
         {
-            await UniTask.WaitForSeconds(1f);
+            await UniTask.WaitForSeconds(Random.Range(1.0f, 1.5f));
 
             for (int i = 0; i < grades.Count; i++) grades[i].SetActive(false);
 

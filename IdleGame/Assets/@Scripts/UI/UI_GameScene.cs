@@ -332,9 +332,6 @@ public class UI_GameScene : UI_Scene, ITickable
                 clickedButton = shopBtn;
                 break;
 
-            case Buttons.LevelUpButton:
-                OnClickLevelupButton();
-                break;
 
             case Buttons.DeadFrameButton:
                 Managers.StageM.isDead = false;
@@ -453,6 +450,7 @@ public class UI_GameScene : UI_Scene, ITickable
     #region 레벨업 버튼 애니메이션 관련
     void ClickDown()
     {
+        Debug.Log("[ClickDown] 여기 들어옴 ");
         ExpUPAnim();
         coroutine = StartCoroutine(coPush());
 
@@ -597,95 +595,59 @@ public class UI_GameScene : UI_Scene, ITickable
     new Dictionary<TextMeshProUGUI, CancellationTokenSource>();
     public void GetItem(Data.ItemData _data)
     {
-        //TextMeshProUGUI newItemText = FindOldSlot();
-        //if (newItemText == null)
-        //{
-        //    Debug.LogWarning("아이템 메시지 슬롯이 모두 꽉 찼습니다.");
-        //    return;
-        //}
-
-        //foreach (var text in itemTexts)
-        //{
-        //    if (text.gameObject.activeSelf && text != newItemText)
-        //    {
-        //        RectTransform rects = text.GetComponent<RectTransform>();
-        //        float targetY = rects.anchoredPosition.y + 50.0f;
-        //        rects.DOKill();
-        //        rects.anchoredPosition = new Vector2(0f, targetY);
-        //    }
-        //}
-
-
-        //RectTransform rect = newItemText.GetComponent<RectTransform>();
-
-        //rect.anchoredPosition = Vector2.zero;
-        //newItemText.gameObject.SetActive(true);
-
-        //newItemText.text = "아이템을 획득하였습니다 : " + Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>";
-        //PlayTextFadeOut(newItemText).Forget();
-
-
-
-        //if ((int)_data.ItemGrade >= (int)Define.ItemGrade.Rare)
-        //{
-        //    SetHighGradeItem(_data);
-
-        //}
-
-        //TODO : 이거 합쳐서 수정하기.
+        TextMeshProUGUI slotToUse = null;
         bool AllActive = true;
+
 
         for (int i = 0; i < itemTexts.Count; i++)
         {
-            if (itemTexts[i].gameObject.activeSelf == false)
+
+            if (!itemTexts[i].gameObject.activeSelf)
             {
-                itemTexts[i].gameObject.SetActive(true);
-                itemTexts[i].text = "아이템을 획득하였습니다 : " + Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>";
-
-                for (int j = 0; j < i; j++)
-                {
-                    RectTransform rect = itemTexts[j].GetComponent<RectTransform>();
-                    rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y + 50.0f);
-                }
-
+                slotToUse = itemTexts[i];
                 AllActive = false;
                 break;
             }
         }
 
+
         if (AllActive)
         {
-            GameObject BaseRect = null;
-            float yCount = 0.0f;
-            for (int i = 0; i < itemTexts.Count; i++)
+            slotToUse = FindOldSlot();
+            if (slotToUse == null)
             {
-                RectTransform rect = itemTexts[i].GetComponent<RectTransform>();
-                if (rect.anchoredPosition.y > yCount)
-                {
-                    BaseRect = rect.gameObject;
-                    yCount = rect.anchoredPosition.y;
-                }
-            }
-
-            for (int i = 0; i < itemTexts.Count; i++)
-            {
-                if (BaseRect == itemTexts[i].gameObject)
-                {
-                    itemTexts[i].gameObject.SetActive(false);
-                    itemTexts[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0.0f, 0.0f);
-
-                    itemTexts[i].gameObject.SetActive(true);
-                    itemTexts[i].text = "아이템을 획득하였습니다 : " + Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>";
-
-                    
-                }
-                else
-                {
-                    RectTransform rect = itemTexts[i].GetComponent<RectTransform>();
-                    rect.anchoredPosition = new Vector2(0.0f, rect.anchoredPosition.y + 50.0f);
-                }
+                Debug.LogWarning("아이템 메시지 슬롯이 모두 꽉 찼습니다.");
+                return;
             }
         }
+        else
+        {
+            CleanUpSlot(slotToUse);
+        }
+
+        foreach (var text in itemTexts)
+        {
+            if (text.gameObject.activeSelf && text != slotToUse)
+            {
+                RectTransform rect = text.GetComponent<RectTransform>();
+                rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y + 50f);
+            }
+        }
+
+        RectTransform newRect = slotToUse.GetComponent<RectTransform>();
+        newRect.anchoredPosition = Vector2.zero;
+        slotToUse.gameObject.SetActive(true);
+
+        Color currentSlotColor = slotToUse.color;
+        if (currentSlotColor.a < 1f)
+        {
+            currentSlotColor.a = 1f;
+            slotToUse.color = currentSlotColor;
+        }
+
+        slotToUse.text = "아이템을 획득하였습니다 : " + Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>";
+        PlayTextFadeOut(slotToUse).Forget();
+
 
         if ((int)_data.ItemGrade >= (int)Define.ItemGrade.Rare)
         {
@@ -694,53 +656,7 @@ public class UI_GameScene : UI_Scene, ITickable
         }
     }
 
-    public TextMeshProUGUI FindOldSlot()
-    {
-        foreach(var text in itemTexts)
-        {
-            if (!text.gameObject.activeSelf) return text;
-        }
 
-        TextMeshProUGUI oldestText = null;
-        float maxY = float.MinValue;
-
-        foreach (var text in itemTexts)
-        {
-            if (!text.gameObject.activeSelf) continue;
-            
-            RectTransform rect = text.GetComponent<RectTransform>();
-            if(rect.anchoredPosition.y > maxY)
-            {
-                maxY = rect.anchoredPosition.y;
-                oldestText = text;
-            }
-        }
-        
-        if(oldestText != null)
-        {
-            CancellationTokenSource ctsToCancel = null;
-            if(cancellationSources.TryGetValue(oldestText, out ctsToCancel))
-            {
-                cancellationSources.Remove(oldestText);
-            }
-            if(ctsToCancel != null)
-            {
-                ctsToCancel.Cancel();
-                ctsToCancel.Dispose();
-            }
-
-            oldestText.DOKill(true);
-            RectTransform rect = oldestText.GetComponent<RectTransform>();
-            
-            rect.anchoredPosition = Vector2.zero;
-            rect.gameObject.SetActive(false);
-            
-
-            return oldestText;
-        }
-
-        return null;
-    }
     public async UniTask PlayTextFadeOut(TextMeshProUGUI _text)
     {
         CancellationTokenSource cts = new CancellationTokenSource();
@@ -757,12 +673,8 @@ public class UI_GameScene : UI_Scene, ITickable
             await UniTask.Delay(TimeSpan.FromSeconds(1f), ignoreTimeScale: false, cancellationToken: token);
             await _text.DOFade(0f, 0.5f).ToUniTask(cancellationToken: token);
         }
-        catch(OperationCanceledException)
-        {
-            Color cancelColor = _text.color;
-            cancelColor.a = 0;
-            _text.color = cancelColor;
-        }
+        catch (OperationCanceledException)
+        { }
         finally
         {
             if (cancellationSources.ContainsKey(_text))
@@ -773,9 +685,67 @@ public class UI_GameScene : UI_Scene, ITickable
 
             if (rect != null)
             {
-                rect.gameObject.SetActive(false);
                 rect.anchoredPosition = Vector2.zero;
+                //rect.gameObject.SetActive(false);
             }
+        }
+    }
+    public TextMeshProUGUI FindOldSlot()
+    {
+        //foreach(var text in itemTexts)
+        //{
+        //    if (!text.gameObject.activeSelf) return text;
+        //}
+
+        TextMeshProUGUI oldestText = null;
+        float maxY = float.MinValue;
+
+        foreach (var text in itemTexts)
+        {
+            if (text.gameObject.activeSelf)
+            {
+                RectTransform rect = text.GetComponent<RectTransform>();
+                if (rect.anchoredPosition.y > maxY)
+                {
+                    maxY = rect.anchoredPosition.y;
+                    oldestText = text;
+                }
+            }
+            
+            
+        }
+        
+        if(oldestText != null)
+        {
+            CleanUpSlot(oldestText);
+
+            oldestText.DOKill(true);
+            oldestText.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            oldestText.gameObject.SetActive(false);
+            
+            return oldestText;
+        }
+
+        return null;
+    }
+    
+    void CleanUpSlot(TextMeshProUGUI _slot)
+    {
+        _slot.DOKill(true);
+
+        Color cancelColor = _slot.color;
+        cancelColor.a = 0;
+        _slot.color = cancelColor;
+
+        CancellationTokenSource ctsToCancel = null;
+        if (cancellationSources.TryGetValue(_slot, out ctsToCancel))
+        {
+            cancellationSources.Remove(_slot);
+        }
+        if (ctsToCancel != null)
+        {
+            ctsToCancel.Cancel();
+            ctsToCancel.Dispose();
         }
     }
 
