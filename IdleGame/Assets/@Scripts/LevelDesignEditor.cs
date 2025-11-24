@@ -49,7 +49,6 @@ public class LevelDesignEditor : Editor
         EditorGUILayout.LabelField("레벨 데이터", EditorStyles.boldLabel);
 
         GetColorGUI("Attack", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_Damage, design.currentLevel, _data.Player_Damage)), Color.green);
-        EditorGUILayout.LabelField("HP : " + Utils.CalculatedValue(_data.Base_Hp, design.currentLevel, _data.Player_Hp));
         GetColorGUI("HP", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_Hp, design.currentLevel, _data.Player_Hp)), Color.red);
         GetColorGUI("MaxExp", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_MaxExp, design.currentLevel, _data.Player_MaxExp)), Color.blue);
         GetColorGUI("Gold", Utils.ToCurrencyString(Utils.CalculatedValue(_data.Base_Gold, design.currentLevel, _data.Player_Gold)), Color.yellow);

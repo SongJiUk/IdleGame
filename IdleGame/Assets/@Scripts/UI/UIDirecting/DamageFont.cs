@@ -34,7 +34,7 @@ public class DamageFont : BaseController
             if (_isCritical)
             {
                 criticalObject.SetActive(true);
-                damageText.color = Utils.HexToColor("FF0000");
+                damageText.color = Utils.HexToColor("FFFFFF");
                 damageText.text = Utils.ToCurrencyString(_dmg);
             }
             else

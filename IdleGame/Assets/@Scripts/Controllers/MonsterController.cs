@@ -61,9 +61,6 @@ public class MonsterController : CreatureController
         hp = Utils.Datas.stageData.HP((float)baseHp);
         damage = Utils.Datas.stageData.Damage((float)baseDamage);
 
-        Debug.Log($"HP : {hp}");
-        Debug.Log($"Damage : {damage}");
-
         attackrange = data.AttackRange;
         detectrange = Mathf.Infinity;
         CriticalRate = 0f;

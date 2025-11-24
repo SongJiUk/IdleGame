@@ -123,4 +123,31 @@ namespace Data
         }
     }
     #endregion
+
+    #region StageSpawnData
+    [Serializable]
+    public class StageSpawnData
+    {
+        public int Level;
+        public int SpawnMaxCount;
+        public float SpawnTimer;
+        public int StageClearMaxCount;
+    }
+
+    public class StageSpawnDataLoader : ILoader<int, StageSpawnData>
+    {
+        public List<StageSpawnData> dataList = new List<StageSpawnData>();
+
+        public Dictionary<int, StageSpawnData> MakeDict()
+        {
+            Dictionary<int, StageSpawnData> dic = new Dictionary<int, StageSpawnData>();
+            foreach(var data in dataList)
+            {
+                dic.Add(data.Level, data);
+            }
+
+            return dic;
+        }
+    }
+    #endregion
 }

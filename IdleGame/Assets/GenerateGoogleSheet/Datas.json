@@ -143,7 +143,7 @@
       "Type": "Boss",
       "AttackRange": 2,
       "CharacterGrade": "Rare",
-      "BaseHp": 500,
+      "BaseHp": 200,
       "BaseDamage": 20
     }
   ],
@@ -221,6 +221,182 @@
       "Description": "돌",
       "ItemGrade": "Common",
       "Probability": 50
+    }
+  ],
+  "StageSpawnData": [
+    {
+      "Level": 1,
+      "SpawnMaxCount": 3,
+      "SpawnTimer": 3,
+      "StageClearMaxCount": 5
+    },
+    {
+      "Level": 2,
+      "SpawnMaxCount": 5,
+      "SpawnTimer": 3,
+      "StageClearMaxCount": 7
+    },
+    {
+      "Level": 3,
+      "SpawnMaxCount": 7,
+      "SpawnTimer": 3,
+      "StageClearMaxCount": 9
+    },
+    {
+      "Level": 4,
+      "SpawnMaxCount": 9,
+      "SpawnTimer": 3,
+      "StageClearMaxCount": 10
+    },
+    {
+      "Level": 5,
+      "SpawnMaxCount": 10,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 13
+    },
+    {
+      "Level": 6,
+      "SpawnMaxCount": 10,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 15
+    },
+    {
+      "Level": 7,
+      "SpawnMaxCount": 10,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 18
+    },
+    {
+      "Level": 8,
+      "SpawnMaxCount": 10,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 20
+    },
+    {
+      "Level": 9,
+      "SpawnMaxCount": 10,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 25
+    },
+    {
+      "Level": 10,
+      "SpawnMaxCount": 15,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 30
+    },
+    {
+      "Level": 11,
+      "SpawnMaxCount": 15,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 30
+    },
+    {
+      "Level": 12,
+      "SpawnMaxCount": 15,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 30
+    },
+    {
+      "Level": 13,
+      "SpawnMaxCount": 15,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 30
+    },
+    {
+      "Level": 14,
+      "SpawnMaxCount": 15,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 30
+    },
+    {
+      "Level": 15,
+      "SpawnMaxCount": 20,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 35
+    },
+    {
+      "Level": 16,
+      "SpawnMaxCount": 20,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 35
+    },
+    {
+      "Level": 17,
+      "SpawnMaxCount": 20,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 35
+    },
+    {
+      "Level": 18,
+      "SpawnMaxCount": 20,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 35
+    },
+    {
+      "Level": 19,
+      "SpawnMaxCount": 20,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 35
+    },
+    {
+      "Level": 20,
+      "SpawnMaxCount": 25,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 40
+    },
+    {
+      "Level": 21,
+      "SpawnMaxCount": 25,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 40
+    },
+    {
+      "Level": 22,
+      "SpawnMaxCount": 25,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 40
+    },
+    {
+      "Level": 23,
+      "SpawnMaxCount": 25,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 40
+    },
+    {
+      "Level": 24,
+      "SpawnMaxCount": 25,
+      "SpawnTimer": 2,
+      "StageClearMaxCount": 40
+    },
+    {
+      "Level": 25,
+      "SpawnMaxCount": 30,
+      "SpawnTimer": 1,
+      "StageClearMaxCount": 45
+    },
+    {
+      "Level": 26,
+      "SpawnMaxCount": 30,
+      "SpawnTimer": 1,
+      "StageClearMaxCount": 45
+    },
+    {
+      "Level": 27,
+      "SpawnMaxCount": 30,
+      "SpawnTimer": 1,
+      "StageClearMaxCount": 45
+    },
+    {
+      "Level": 28,
+      "SpawnMaxCount": 30,
+      "SpawnTimer": 1,
+      "StageClearMaxCount": 45
+    },
+    {
+      "Level": 29,
+      "SpawnMaxCount": 30,
+      "SpawnTimer": 1,
+      "StageClearMaxCount": 50
     }
   ],
   "MissionData": [],

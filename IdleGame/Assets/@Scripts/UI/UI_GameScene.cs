@@ -50,6 +50,7 @@ public class UI_GameScene : UI_Scene, ITickable
         JewelText,
         CoinText,
         StageText,
+        StageStateText,
         CharacterLevelText,
         UserNameText,
         UserCombatPowerText,
@@ -483,6 +484,17 @@ public class UI_GameScene : UI_Scene, ITickable
     public void CheckTexts()
     {
         needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.level, Utils.Datas.levelData.Player_Gold);
+
+        //TODO : 스테이지 수정방식
+        
+        GetText(TextsType, (int)Texts.StageStateText).text = Managers.StageM.isDead ? "반복중..." : "진행중...";
+        GetText(TextsType, (int)Texts.StageStateText).color = Managers.StageM.isDead ? Color.yellow : Color.blue;
+
+        int stageValue = Managers.GameM.stage;
+        int stageForward = (stageValue / 20) + 1 ;
+        int stageBack = stageValue % 20;
+        GetText(TextsType, (int)Texts.StageText).text = stageForward.ToString() + " - " + stageBack.ToString();
+
 
         GetImage(ImagesType, (int)Images.Exp_FillImage).fillAmount = Managers.PlayerM.ExpPercent();
         GetText(TextsType, (int)Texts.ExpText).text = string.Format("{0:0.00}", Managers.PlayerM.ExpPercent() * 100.0f) + "%";

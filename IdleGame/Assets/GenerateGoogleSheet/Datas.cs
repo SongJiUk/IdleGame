@@ -9,6 +9,7 @@ public class Datas : ScriptableObject
 	public List<CreatureData> CreatureDataList;
 	public List<ProjectileData> ProjectileDataList;
 	public List<ItemData> ItemDataList;
+	public List<StageSpawnData> StageSpawnDataList;
 }
 
 [Serializable]
@@ -55,5 +56,14 @@ public class ItemData
 	public string Description;
 	public string ItemGrade;
 	public int Probability;
+}
+
+[Serializable]
+public class StageSpawnData
+{
+	public int Level;
+	public int SpawnMaxCount;
+	public int SpawnTimer;
+	public int StageClearMaxCount;
 }
 

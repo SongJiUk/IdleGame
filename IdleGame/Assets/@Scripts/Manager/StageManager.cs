@@ -19,7 +19,7 @@ public class StageManager
     public StageState stageState;
 
     //TODO: 계속 10개? 20개? 고민해보자
-    public int maxCount = 20;
+    public int maxCount;
     public int count = 0;
     
     //TODO : 사망시 보스 도전 x
@@ -37,6 +37,7 @@ public class StageManager
         switch (stageState)
         {
             case StageState.Ready:
+                maxCount = Managers.DataM.StageDataDic[Managers.GameM.stage].StageClearMaxCount;
                 readyEvent?.Invoke();
                 AsyncAction(() => StateChange(StageState.Play), 1f).Forget();
 

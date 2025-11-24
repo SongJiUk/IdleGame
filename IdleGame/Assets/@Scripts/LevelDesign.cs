@@ -23,7 +23,6 @@ public class LevelData
 
     [Space(20f)]
     [Header("Base Value")]
-    //TODO : 이거 데미지랑 ,HP는 지워도 될거같긴함 
     public int Base_Damage;
     public int Base_Hp;
     public int Base_Exp;
@@ -50,7 +49,7 @@ public class StageData
     public int Base_Hp;
     public int Base_Gold;
 
-    public double Damage(double _baseDamage) => Utils.CalculatedValue((float)_baseDamage, Managers.GameM.level, Monster_Damage);
-    public double HP(double _baseHp) => Utils.CalculatedValue((float)_baseHp, Managers.GameM.level, Monster_Hp);
-    public double Gold() => Utils.CalculatedValue(Base_Gold, Managers.GameM.level, Monster_Gold);
+    public double Damage(double _baseDamage) => Utils.CalculatedValue((float)_baseDamage, Managers.GameM.stage, Monster_Damage);
+    public double HP(double _baseHp) => Utils.CalculatedValue((float)_baseHp, Managers.GameM.stage, Monster_Hp);
+    public double Gold() => Utils.CalculatedValue(Base_Gold, Managers.GameM.stage, Monster_Gold);
 }

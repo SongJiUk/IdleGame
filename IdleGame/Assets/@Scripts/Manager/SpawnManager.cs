@@ -10,8 +10,9 @@ using Cysharp.Threading.Tasks;
 public class SpawnManager : MonoBehaviour, ITickable
 {
 
+    int spawnMaxCount;
     float spawnInterval = 2f;
-    float spawnTimer = 0f;
+    float spawnTime = 0f;
 
     public bool isStop { get; set; } = false;
     MonsterController boss = null;
@@ -53,14 +54,17 @@ public class SpawnManager : MonoBehaviour, ITickable
     #region 이벤트
     public void OnReady()
     {
+        spawnMaxCount = Managers.DataM.StageDataDic[Managers.GameM.stage].SpawnMaxCount;
+        spawnTime = Managers.DataM.StageDataDic[Managers.GameM.stage].SpawnTimer;
+
         PlayerSpawn();
         if(scene !=null) scene.CheckTexts();
     }
 
     public void OnPlay()
     {
-        
-        spawnTimer = 0f;
+
+        spawnTime = 0f;
         Managers.UpdateM.Register(this);
     }
 
@@ -138,12 +142,6 @@ public class SpawnManager : MonoBehaviour, ITickable
 
         await scene.AsyncFadeInOut(false);
 
-        //List<MonsterController> monsetrs = Managers.ObjectM.mcList.ToList();
-        //foreach (var monster in monsetrs)
-        //{
-        //    Managers.ObjectM.DeSpawn(monster);
-        //}
-
         for (int i = Managers.ObjectM.mcList.Count -1; i >= 0; i--)
         {
             Managers.ObjectM.DeSpawn(Managers.ObjectM.mcList[i]);
@@ -170,9 +168,11 @@ public class SpawnManager : MonoBehaviour, ITickable
 
     void SpawnMonster()
     {
-        //TODO : 몬스터 몇마리 생성할지 정하고 하드코딩 없애기(데이터도 어떻게불러올지 생각해보고 하드코딩 수정)
-        for (int i = 0; i < 5; i++)
+
+        int value = spawnMaxCount - Managers.ObjectM.mcList.Count;
+        for (int i = 0; i < value; i++)
         {
+            //TODO: 여기 스테이지 마다 생성되는 몬스터가 달라진다면 하드코딩 없애기(10000) 이거 
             Managers.ObjectM.Spawn<MonsterController>(Utils.CreateMonsterSpawnPoint(), 10000);
         }
     }
@@ -180,11 +180,10 @@ public class SpawnManager : MonoBehaviour, ITickable
 
     public void Tick(float _deltaTime)
     {
-        spawnTimer -= _deltaTime;
-        if (spawnTimer <= 0f)
+        spawnTime -= _deltaTime;
+        if (spawnTime <= 0f)
         {
-            spawnTimer = spawnInterval;
-            //TODO : spawnStart
+            spawnTime = spawnInterval;
             SpawnMonster();
         }
     }

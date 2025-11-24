@@ -21,6 +21,7 @@ public class DataManager
     public Dictionary<int, Data.WeaponData> WeaponDataDic = new Dictionary<int, Data.WeaponData>();
     public Dictionary<int, Data.ProjectileData> ProjectileDataDic = new Dictionary<int, Data.ProjectileData>();
     public Dictionary<int, Data.ItemData> ItemDataDic = new Dictionary<int, Data.ItemData>();
+    public Dictionary<int, Data.StageSpawnData> StageDataDic = new Dictionary<int, Data.StageSpawnData>();
     public void Init()
     {
         TextAsset jsonAsset = Managers.ResourceM.Load<TextAsset>("Datas.json");
@@ -36,6 +37,7 @@ public class DataManager
         WeaponDataDic = LoadJson<Data.WeaponDataLoader, int, Data.WeaponData>(jsonObj, "WeaponData").MakeDict();
         ProjectileDataDic = LoadJson<Data.ProjectileDataLoader, int, Data.ProjectileData>(jsonObj, "ProjectileData").MakeDict();
         ItemDataDic = LoadJson<Data.ItemDataLoader, int, Data.ItemData>(jsonObj, "ItemData").MakeDict();
+        StageDataDic = LoadJson<Data.StageSpawnDataLoader, int, Data.StageSpawnData>(jsonObj, "StageSpawnData").MakeDict();
     }
 
     Loader LoadJson<Loader, Tkey, TValue>(JObject _jsonObj, string _dataName) where Loader : ILoader<Tkey, TValue> where TValue : class

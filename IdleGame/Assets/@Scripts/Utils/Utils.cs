@@ -107,7 +107,7 @@ public static class Utils
     //지수증가 공식(레벨, 스테이지데이터)
     public static double CalculatedValue(float _baseValue, int _level, float _value)
     {
-        return _baseValue * Mathf.Pow(_level + 1, _value);
+        return _baseValue * Mathf.Pow(_level, _value);
     }
     public static bool CoinCheck(double _gold)
     {

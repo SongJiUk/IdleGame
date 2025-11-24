@@ -22,9 +22,9 @@ public class GameManager
             OnGoodsChanged?.Invoke();
         }
     }
-    public int level;
+    public int level = 1;
     public double exp;
-    public int stage;
+    public int stage = 1;
 
 
 
