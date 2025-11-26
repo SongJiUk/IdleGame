@@ -3,12 +3,13 @@ root = true
 
 # C# 파일
 [*.cs]
-charset = utf-8
+
 #### 코어 EditorConfig 옵션 ####
 
 # 들여쓰기 및 간격
 indent_size = 4
 indent_style = space
+charset = utf-8
 tab_width = 4
 
 # 새 줄 기본 설정
