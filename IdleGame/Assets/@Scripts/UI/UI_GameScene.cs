@@ -72,7 +72,13 @@ public class UI_GameScene : UI_Scene, ITickable
         ItemText2,
         ItemText3,
         ItemText4,
-        ItemText5
+        ItemText5,
+        Character1_MPText,
+        Character2_MPText,
+        Character3_MPText,
+        Character4_MPText,
+        Character5_MPText,
+        Character6_MPText
 
     }
 
@@ -85,23 +91,27 @@ public class UI_GameScene : UI_Scene, ITickable
         Character1_Lock,
         Character1_Plus,
         Character1_Icon,
-        Character1_CoolTimeImage,
+        Character1_MpFillImage,
         Character2_Lock,
         Character2_Plus,
         Character2_Icon,
-        Character2_CoolTimeImage,
+        Character2_MpFillImage,
         Character3_Lock,
         Character3_Plus,
         Character3_Icon,
-        Character3_CoolTimeImage,
+        Character3_MpFillImage,
         Character4_Lock,
         Character4_Plus,
         Character4_Icon,
-        Character4_CoolTimeImage,
+        Character4_MpFillImage,
         Character5_Lock,
         Character5_Plus,
         Character5_Icon,
-        Character5_CoolTimeImage,
+        Character5_MpFillImage,
+        Character6_Lock,
+        Character6_Plus,
+        Character6_Icon,
+        Character6_MpFillImage,
         Exp_FillImage,
         FadeImage,
         StageMonsterCountImage,
@@ -265,18 +275,14 @@ public class UI_GameScene : UI_Scene, ITickable
         GetImage(ImagesType, (int)Images.Character3_Plus).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.Character4_Plus).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.Character5_Plus).gameObject.SetActive(false);
+        GetImage(ImagesType, (int)Images.Character6_Plus).gameObject.SetActive(false);
 
         GetImage(ImagesType, (int)Images.Character1_Icon).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.Character2_Icon).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.Character3_Icon).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.Character4_Icon).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.Character5_Icon).gameObject.SetActive(false);
-
-        GetImage(ImagesType, (int)Images.Character1_CoolTimeImage).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character2_CoolTimeImage).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character3_CoolTimeImage).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character4_CoolTimeImage).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character5_CoolTimeImage).gameObject.SetActive(false);
+        GetImage(ImagesType, (int)Images.Character6_Icon).gameObject.SetActive(false);
     }
     //TODO :  코인, 쥬얼리 텍스트
     public void RefreshGoods()

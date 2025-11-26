@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 
 
+
 public interface ILoader<key, value>
 {
     Dictionary<key, value> MakeDict();

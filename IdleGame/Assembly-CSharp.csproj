@@ -70,6 +70,7 @@
     <Compile Include="Assets\ARPG Effects\Demo\Scripts\ARPGFXLoopScript.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_TitleScene.cs" />
     <Compile Include="Assets\@Scripts\Controllers\MeleeAttackController.cs" />
+    <Compile Include="Assets\@Scripts\UI\UIRenderImage\UIRenderCharacter.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_EventHandler.cs" />
     <Compile Include="Assets\@Scripts\Controllers\RangeAttackController.cs" />
     <Compile Include="Assets\ARPG Effects\Scripts\ARPGFXLightFade.cs" />
@@ -106,10 +107,12 @@
     <Compile Include="Assets\@Scripts\Manager\ItemManager.cs" />
     <Compile Include="Assets\ARPG Effects\Scripts\ARPGFXLightFlicker.cs" />
     <Compile Include="Assets\_ExternalModule\Favorites\Common\Scripts\FG_GameObjectGUIDs.cs" />
+    <Compile Include="Assets\@Scripts\Manager\RenderManager.cs" />
     <Compile Include="Assets\@Scripts\Manager\UIManager.cs" />
     <Compile Include="Assets\@Resources\Package\Scripts\StringMethod.cs" />
     <Compile Include="Assets\GenerateGoogleSheet\Datas.cs" />
     <Compile Include="Assets\@Scripts\Manager\PlayerManager.cs" />
+    <Compile Include="Assets\@Scripts\Manager\CharacterManager.cs" />
     <Compile Include="Assets\ARPG Effects\Scripts\ARPGFXPortalScript.cs" />
     <Compile Include="Assets\@Scripts\Manager\GoogleSheetManager.cs" />
     <Compile Include="Assets\@Scripts\Controllers\ObjectController.cs" />
@@ -117,6 +120,7 @@
     <Compile Include="Assets\@Scripts\Utils\Define.cs" />
     <Compile Include="Assets\@Scripts\Controllers\MonsterController.cs" />
     <Compile Include="Assets\@Scripts\Manager\CameraManager.cs" />
+    <Compile Include="Assets\@Scripts\Data\CharacterSpawnPoint.cs" />
     <Compile Include="Assets\@Scripts\Controllers\BaseController.cs" />
     <Compile Include="Assets\@Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\@Scripts\UI\UIDirecting\CoinDirecting.cs" />

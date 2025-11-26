@@ -2,12 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_CharacterIcon : UI_Base
 {
+    #region Enum
+    enum GameObjects
+    {
+        CharacterLockObject,
+        CharacterUseObject
+    }
+    enum Buttons
+    {
+        UI_CharacterIcon
+    }
     enum Images
     {
-        CharacterBGImge,
+        UI_CharacterIcon,
         CharacterImage,
         CountFillImage,
 
@@ -17,23 +28,80 @@ public class UI_CharacterIcon : UI_Base
         CharacterCountText,
         CharacterLevelText
     }
+    #endregion
 
+    Data.CreatureData data;
+    public Data.CreatureData DATA
+    {
+        get { return data; }
+    }
+    UI_HeroPopup parent;
+    bool isUseCharacter = false;
+    
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
+        GameObjectsType = typeof(GameObjects);
         ImagesType = typeof(Images);
         TextsType = typeof(Texts);
+        ButtonsType = typeof(Buttons);
 
+        BindObject(GameObjectsType);
         BindImage(ImagesType);
         BindText(TextsType);
+        BindButton(ButtonsType);
 
+        GetButton(ButtonsType, (int)Buttons.UI_CharacterIcon).gameObject.BindEvent(OnClickCharacter);
+
+        
         return true;
     }
 
-    public void SetInfo(Data.CreatureData _data)
+    public void SetInfo(Data.CreatureData _data, UI_HeroPopup _parent)
     {
-        GetImage(ImagesType, (int)Images.CharacterBGImge).sprite = Managers.ResourceM.GetAtlas(_data.CharacterGrade.ToString());
+        data = _data;
+        parent = _parent;
+        GetImage(ImagesType, (int)Images.UI_CharacterIcon).sprite = Managers.ResourceM.GetAtlas(_data.CharacterGrade.ToString());
         GetImage(ImagesType, (int)Images.CharacterImage).sprite = Managers.ResourceM.GetAtlas(_data.prefabName);
+        GetObject(GameObjectsType, (int)GameObjects.CharacterUseObject).SetActive(false);
         //GetImage(ImagesType, (int)Images.CountFillImage).fillAmount = Utils.GetAtlas("Common");
+        Reset();
     }
+    public void Reset()
+    {
+        this.GetComponent<Outline>().enabled = false;
+        GetObject(GameObjectsType, (int)GameObjects.CharacterLockObject).SetActive(false);
+
+        CheckUseCharacter();
+    }
+    
+    public void CheckUseCharacter()
+    {
+        isUseCharacter = false;
+        for (int i = 0; i < Managers.CharacterM.Characters.Length; i++)
+        {
+            if (Managers.CharacterM.Characters[i] == null) continue;
+
+            if (Managers.CharacterM.Characters[i].data == data)
+            {
+                isUseCharacter = true;
+            }
+        }
+        GetObject(GameObjectsType, (int)GameObjects.CharacterUseObject).SetActive(isUseCharacter);
+        
+    }
+
+    public void OnClickCharacter()
+    {
+        if (isUseCharacter) return;
+
+        parent.SetClick(this);
+        Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(true);
+    }
+
+    public void SetLockImage(bool _isLock)
+    {
+        GetObject(GameObjectsType, (int)GameObjects.CharacterLockObject).SetActive(_isLock);
+    }
+   
 }

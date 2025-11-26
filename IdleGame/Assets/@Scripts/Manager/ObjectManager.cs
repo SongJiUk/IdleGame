@@ -49,7 +49,7 @@ public class ObjectManager
             if (tempId == 1) mPlayer = player;
             player.Init();
             player.transform.position = pos;
-            player.transform.rotation = Quaternion.identity;
+            //player.transform.rotation = Quaternion.identity;
             pcList.Add(player);
             if (data != null) player.SetInfo(data);
         });

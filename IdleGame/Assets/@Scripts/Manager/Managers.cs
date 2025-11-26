@@ -12,7 +12,7 @@ public class Managers : MonoBehaviour
 
     UpdateManager updateManager = null;
     SpawnManager spawnManager = null;
-
+    RenderManager rederManager = null;
 
     readonly PoolManager poolManager = new();
     readonly ResourceManager resourceManager = new();
@@ -25,6 +25,8 @@ public class Managers : MonoBehaviour
     readonly StageManager stageManager = new();
     readonly CameraManager cameraManager = new();
     readonly ItemManager itemManager = new();
+    readonly CharacterManager characterManager = new();
+   
 
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
@@ -40,6 +42,9 @@ public class Managers : MonoBehaviour
     public static StageManager StageM { get { return Instance?.stageManager; } }
     public static CameraManager CameraM { get { return Instance?.cameraManager; } }
     public static ItemManager ItemM { get { return Instance?.itemManager; } }
+    public static RenderManager RenderM { get { return Instance?.rederManager; } }
+    public static CharacterManager CharacterM { get { return Instance?.characterManager; } }
+    
 
 
 
@@ -62,11 +67,18 @@ public class Managers : MonoBehaviour
                 instance = go.GetComponent<Managers>();
                 instance.updateManager = go.AddComponent<UpdateManager>();
                 instance.spawnManager = go.AddComponent<SpawnManager>();
-
             }
 
             return instance;
         }
+    }
+
+    public void SetRenderManager(RenderManager _renderM)
+    {
+        if (this.rederManager == null)
+            this.rederManager = _renderM;
+        else
+            Debug.LogError("RenderManager가 이미 할당되어있음.");
     }
 
     public static void Clear()

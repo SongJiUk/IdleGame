@@ -96,4 +96,14 @@ public static class Define
         Clear,
         Dead
     }
+
+    public enum CircleButtons
+    {
+        Circle1Button,
+        Circle2Button,
+        Circle3Button,
+        Circle4Button,
+        Circle5Button,
+        Circle6Button
+    }
 }

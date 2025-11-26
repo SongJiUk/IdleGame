@@ -36,28 +36,15 @@ public class SpawnManager : MonoBehaviour, ITickable
    
 
    
-    public void PlayerSpawn()
-    {
-        for (int i = 1; i <= 2; i++)
-        {
-            Vector3 spawnPos = Vector3.zero;
-            if (i != 1)
-            {
-                spawnPos = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0f, UnityEngine.Random.Range(-1f, 1f));
-            }
-            Managers.ObjectM.Spawn<PlayerController>(spawnPos, i);
-        }
-
-        players = Managers.ObjectM.pcList.ToList();
-    }
+    
 
     #region 이벤트
     public void OnReady()
     {
         spawnMaxCount = Managers.DataM.StageDataDic[Managers.GameM.stage].SpawnMaxCount;
         spawnTime = Managers.DataM.StageDataDic[Managers.GameM.stage].SpawnTimer;
-
-        PlayerSpawn();
+        Debug.Log("[SpawnManager]");
+        
         if(scene !=null) scene.CheckTexts();
     }
 
