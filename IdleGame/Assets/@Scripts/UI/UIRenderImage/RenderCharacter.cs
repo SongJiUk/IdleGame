@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RenderCharacter : MonoBehaviour
+public class UIRenderCharacter : MonoBehaviour
 {
     public Transform[] circles;
     public GameObject[] particles;

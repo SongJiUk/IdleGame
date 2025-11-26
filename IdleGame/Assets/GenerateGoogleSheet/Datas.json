@@ -48,7 +48,8 @@
       "AttackRange": 2,
       "CharacterGrade": "Common",
       "BaseHp": 50,
-      "BaseDamage": 10
+      "BaseDamage": 10,
+      "MaxMp": 120
     },
     {
       "DataID": 2,
@@ -60,7 +61,8 @@
       "AttackRange": 1,
       "CharacterGrade": "UnCommon",
       "BaseHp": 60,
-      "BaseDamage": 12
+      "BaseDamage": 12,
+      "MaxMp": 70
     },
     {
       "DataID": 3,
@@ -72,7 +74,8 @@
       "AttackRange": 1,
       "CharacterGrade": "Rare",
       "BaseHp": 70,
-      "BaseDamage": 15
+      "BaseDamage": 15,
+      "MaxMp": 80
     },
     {
       "DataID": 4,
@@ -84,7 +87,8 @@
       "AttackRange": 2,
       "CharacterGrade": "Unique",
       "BaseHp": 80,
-      "BaseDamage": 17
+      "BaseDamage": 17,
+      "MaxMp": 110
     },
     {
       "DataID": 5,
@@ -96,7 +100,8 @@
       "AttackRange": 2,
       "CharacterGrade": "Unique",
       "BaseHp": 80,
-      "BaseDamage": 17
+      "BaseDamage": 17,
+      "MaxMp": 120
     },
     {
       "DataID": 6,
@@ -108,7 +113,8 @@
       "AttackRange": 2,
       "CharacterGrade": "Legendary",
       "BaseHp": 100,
-      "BaseDamage": 20
+      "BaseDamage": 20,
+      "MaxMp": 90
     },
     {
       "DataID": 7,
@@ -120,7 +126,8 @@
       "AttackRange": 1,
       "CharacterGrade": "Legendary",
       "BaseHp": 100,
-      "BaseDamage": 20
+      "BaseDamage": 20,
+      "MaxMp": 80
     },
     {
       "DataID": 10000,
@@ -132,7 +139,8 @@
       "AttackRange": 1,
       "CharacterGrade": "Common",
       "BaseHp": 10,
-      "BaseDamage": 10
+      "BaseDamage": 10,
+      "MaxMp": 0
     },
     {
       "DataID": 10001,
@@ -144,7 +152,8 @@
       "AttackRange": 2,
       "CharacterGrade": "Rare",
       "BaseHp": 200,
-      "BaseDamage": 20
+      "BaseDamage": 20,
+      "MaxMp": 0
     }
   ],
   "ProjectileData": [

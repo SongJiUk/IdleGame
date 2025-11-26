@@ -19,6 +19,7 @@ namespace Data
         public Define.CharacterGrade CharacterGrade;
         public double BaseHp;
         public double BaseDamage;
+        public int MaxMp;
     }
 
     public class CreatureDataLoader : ILoader<int, CreatureData>
@@ -107,14 +108,14 @@ namespace Data
         public int Probability;
     }
 
-    public class ItemDataLoader: ILoader<int, ItemData>
+    public class ItemDataLoader : ILoader<int, ItemData>
     {
         public List<ItemData> dataList = new List<ItemData>();
 
         public Dictionary<int, ItemData> MakeDict()
         {
             Dictionary<int, ItemData> dic = new Dictionary<int, ItemData>();
-            foreach(var data in dataList)
+            foreach (var data in dataList)
             {
                 dic.Add(data.DataID, data);
             }
@@ -141,7 +142,7 @@ namespace Data
         public Dictionary<int, StageSpawnData> MakeDict()
         {
             Dictionary<int, StageSpawnData> dic = new Dictionary<int, StageSpawnData>();
-            foreach(var data in dataList)
+            foreach (var data in dataList)
             {
                 dic.Add(data.Level, data);
             }

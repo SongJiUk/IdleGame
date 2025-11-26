@@ -52,7 +52,7 @@ public class UI_HeroPopup : UI_Popup
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
 
 
-        foreach(Buttons buttonType in Enum.GetValues(typeof(Buttons)))
+        foreach (Buttons buttonType in Enum.GetValues(typeof(Buttons)))
         {
             //TODO : 이거 CIrcle0 ~ 6까지만 되어야됌
             GetButton(ButtonsType, (int)buttonType).gameObject.BindEvent(() => OnClickCircleButton(buttonType));
@@ -65,13 +65,13 @@ public class UI_HeroPopup : UI_Popup
     }
 
     //처음에만 사용할것인지? 아이템을 뽑거나 할때는 수정이 되어야함
-    public void SetInfo() 
+    public void SetInfo()
     {
         //TODO : 이거 꺼졌다 켜질떄마다 계속 생성되게 하면 안됨 고쳐야됌
         //TODO : 그리고 가지고있는 데이터에 맞게 호출해야된다.
         var datas = Managers.GameM.gameData.DataCharacter;
 
-        foreach(var data in datas)
+        foreach (var data in datas)
         {
             characterDic.Add(data.Value.data.Name, data.Value.data);
         }
@@ -114,6 +114,9 @@ public class UI_HeroPopup : UI_Popup
         Managers.CharacterM.GetCharacter((int)_clickButton, clickCharacter.DATA.Name);
         Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(false);
         SetClick(null);
+        //TODO : 아직 게임 진행중일때, 대기중 사진 띄우기.
+        (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
+
         Managers.RenderM.renderCharacter.InitCharacter();
         clickCharacter.CheckUseCharacter();
     }
@@ -122,8 +125,8 @@ public class UI_HeroPopup : UI_Popup
 
     public void SetClick(UI_CharacterIcon _clickCharacter)
     {
-        
-        if(_clickCharacter == null)
+
+        if (_clickCharacter == null)
         {
             for (int i = 0; i < characters.Count; i++)
             {
@@ -145,5 +148,5 @@ public class UI_HeroPopup : UI_Popup
         }
     }
 
-    
+
 }

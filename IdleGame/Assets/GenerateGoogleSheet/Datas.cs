@@ -34,6 +34,7 @@ public class CreatureData
 	public string CharacterGrade;
 	public int BaseHp;
 	public int BaseDamage;
+	public int MaxMp;
 }
 
 [Serializable]

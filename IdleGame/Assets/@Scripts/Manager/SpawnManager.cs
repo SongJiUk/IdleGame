@@ -33,19 +33,18 @@ public class SpawnManager : MonoBehaviour, ITickable
         scene = Managers.UIM.SceneUI as UI_GameScene;
     }
 
-   
 
-   
-    
+
+
+
 
     #region 이벤트
     public void OnReady()
     {
         spawnMaxCount = Managers.DataM.StageDataDic[Managers.GameM.stage].SpawnMaxCount;
         spawnTime = Managers.DataM.StageDataDic[Managers.GameM.stage].SpawnTimer;
-        Debug.Log("[SpawnManager]");
-        
-        if(scene !=null) scene.CheckTexts();
+
+        if (scene != null) scene.CheckTexts();
     }
 
     public void OnPlay()
@@ -76,7 +75,7 @@ public class SpawnManager : MonoBehaviour, ITickable
 
         //TODO : 하드코딩 삭제
         boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero, 10001);
-        if(scene == null) scene = Managers.UIM.SceneUI as UI_GameScene;
+        if (scene == null) scene = Managers.UIM.SceneUI as UI_GameScene;
         boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
 
         //players = Managers.ObjectM.pcList.ToList();
@@ -129,7 +128,7 @@ public class SpawnManager : MonoBehaviour, ITickable
 
         await scene.AsyncFadeInOut(false);
 
-        for (int i = Managers.ObjectM.mcList.Count -1; i >= 0; i--)
+        for (int i = Managers.ObjectM.mcList.Count - 1; i >= 0; i--)
         {
             Managers.ObjectM.DeSpawn(Managers.ObjectM.mcList[i]);
         }

@@ -37,7 +37,7 @@ public class UI_CharacterIcon : UI_Base
     }
     UI_HeroPopup parent;
     bool isUseCharacter = false;
-    
+
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -53,7 +53,7 @@ public class UI_CharacterIcon : UI_Base
 
         GetButton(ButtonsType, (int)Buttons.UI_CharacterIcon).gameObject.BindEvent(OnClickCharacter);
 
-        
+
         return true;
     }
 
@@ -74,7 +74,7 @@ public class UI_CharacterIcon : UI_Base
 
         CheckUseCharacter();
     }
-    
+
     public void CheckUseCharacter()
     {
         isUseCharacter = false;
@@ -88,7 +88,7 @@ public class UI_CharacterIcon : UI_Base
             }
         }
         GetObject(GameObjectsType, (int)GameObjects.CharacterUseObject).SetActive(isUseCharacter);
-        
+
     }
 
     public void OnClickCharacter()
@@ -103,5 +103,5 @@ public class UI_CharacterIcon : UI_Base
     {
         GetObject(GameObjectsType, (int)GameObjects.CharacterLockObject).SetActive(_isLock);
     }
-   
+
 }

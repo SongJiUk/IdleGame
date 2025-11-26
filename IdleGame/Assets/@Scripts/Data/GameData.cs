@@ -30,7 +30,7 @@ public class GameData
     private void SetCharacter()
     {
         var datas = Managers.DataM.CreatureDataDic.Values;
-        foreach(var data in datas)
+        foreach (var data in datas)
         {
             if (data.Type != Define.ObjectType.Player) continue;
 

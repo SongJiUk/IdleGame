@@ -48,6 +48,7 @@ MonoBehaviour:
     CharacterGrade: Common
     BaseHp: 50
     BaseDamage: 10
+    MaxMp: 120
   - DataID: 2
     Name: Barbarian
     NameKR: "\uBC14\uBC14\uB9AC\uC548"
@@ -58,6 +59,7 @@ MonoBehaviour:
     CharacterGrade: UnCommon
     BaseHp: 60
     BaseDamage: 12
+    MaxMp: 70
   - DataID: 3
     Name: Berserker
     NameKR: "\uBC84\uC11C\uCEE4"
@@ -68,6 +70,7 @@ MonoBehaviour:
     CharacterGrade: Rare
     BaseHp: 70
     BaseDamage: 15
+    MaxMp: 80
   - DataID: 4
     Name: Elementalist_B
     NameKR: "\uC6D0\uC18C\uC220\uC0AC"
@@ -78,6 +81,7 @@ MonoBehaviour:
     CharacterGrade: Unique
     BaseHp: 80
     BaseDamage: 17
+    MaxMp: 110
   - DataID: 5
     Name: Elementalist_W
     NameKR: "\uC6D0\uC18C\uC220\uC0AC"
@@ -88,6 +92,7 @@ MonoBehaviour:
     CharacterGrade: Unique
     BaseHp: 80
     BaseDamage: 17
+    MaxMp: 120
   - DataID: 6
     Name: Hunter
     NameKR: "\uD5CC\uD130"
@@ -98,6 +103,7 @@ MonoBehaviour:
     CharacterGrade: Legendary
     BaseHp: 100
     BaseDamage: 20
+    MaxMp: 90
   - DataID: 7
     Name: Spearman
     NameKR: "\uC2A4\uD53C\uC5B4\uB9E8"
@@ -108,6 +114,7 @@ MonoBehaviour:
     CharacterGrade: Legendary
     BaseHp: 100
     BaseDamage: 20
+    MaxMp: 80
   - DataID: 10000
     Name: Monster
     NameKR: "\uBAAC\uC2A4\uD130"
@@ -118,6 +125,7 @@ MonoBehaviour:
     CharacterGrade: Common
     BaseHp: 10
     BaseDamage: 10
+    MaxMp: 0
   - DataID: 10001
     Name: Boss
     NameKR: "\uBCF4\uC2A4\uBAAC\uC2A4\uD130"
@@ -128,6 +136,7 @@ MonoBehaviour:
     CharacterGrade: Rare
     BaseHp: 200
     BaseDamage: 20
+    MaxMp: 0
   ProjectileDataList:
   - DataID: 20000
     Name: Projectile

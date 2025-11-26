@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class RenderManager : MonoBehaviour
 {
-    public UIRenderCharacter renderCharacter;
+    public RenderCharacter renderCharacter;
 
     private void Start()
     {
-        if(Managers.Instance!=null)
+        if (Managers.Instance != null)
         {
             Managers.Instance.SetRenderManager(this);
         }

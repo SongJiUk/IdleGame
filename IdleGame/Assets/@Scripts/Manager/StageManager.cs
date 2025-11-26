@@ -17,12 +17,22 @@ public delegate void OnDeadEvent();
 public class StageManager
 {
     public StageState stageState;
+    public event Action OnChangeCount;
 
-    //TODO: °è¼Ó 10°³? 20°³? °í¹ÎÇØº¸ÀÚ
+    //TODO: ï¿½ï¿½ï¿½ 10ï¿½ï¿½? 20ï¿½ï¿½? ï¿½ï¿½ï¿½ï¿½ï¿½Øºï¿½ï¿½ï¿½
     public int maxCount;
-    public int count = 0;
-    
-    //TODO : »ç¸Á½Ã º¸½º µµÀü x
+    int count = 0;
+    public int COUNT
+    {
+        get { return count; }
+        set
+        {
+            count = value;
+            OnChangeCount?.Invoke();
+        }
+    }
+
+    //TODO : ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ x
     public bool isDead = false;
     public OnReadyEvent readyEvent;
     public OnPlayEvent playEvent;

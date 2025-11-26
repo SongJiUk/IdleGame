@@ -24,6 +24,18 @@ public class UI_GameScene : UI_Scene, ITickable
         DeadFrameHandObject,
         ItemPopupObject,
         ItemTextPopupObject,
+        Character1_MpFrameObject,
+        Character2_MpFrameObject,
+        Character3_MpFrameObject,
+        Character4_MpFrameObject,
+        Character5_MpFrameObject,
+        Character6_MpFrameObject,
+        Character1_ReadyObject,
+        Character2_ReadyObject,
+        Character3_ReadyObject,
+        Character4_ReadyObject,
+        Character5_ReadyObject,
+        Character6_ReadyObject,
 
     }
     enum Buttons
@@ -89,28 +101,28 @@ public class UI_GameScene : UI_Scene, ITickable
         TutorialHandImage,
         MainSkillButton,
         Character1_Lock,
-        Character1_Plus,
-        Character1_Icon,
-        Character1_MpFillImage,
         Character2_Lock,
-        Character2_Plus,
-        Character2_Icon,
-        Character2_MpFillImage,
         Character3_Lock,
-        Character3_Plus,
-        Character3_Icon,
-        Character3_MpFillImage,
         Character4_Lock,
-        Character4_Plus,
-        Character4_Icon,
-        Character4_MpFillImage,
         Character5_Lock,
-        Character5_Plus,
-        Character5_Icon,
-        Character5_MpFillImage,
         Character6_Lock,
+        Character1_Plus,
+        Character2_Plus,
+        Character3_Plus,
+        Character4_Plus,
+        Character5_Plus,
         Character6_Plus,
+        Character1_Icon,
+        Character2_Icon,
+        Character3_Icon,
+        Character4_Icon,
+        Character5_Icon,
         Character6_Icon,
+        Character1_MpFillImage,
+        Character2_MpFillImage,
+        Character3_MpFillImage,
+        Character4_MpFillImage,
+        Character5_MpFillImage,
         Character6_MpFillImage,
         Exp_FillImage,
         FadeImage,
@@ -180,6 +192,7 @@ public class UI_GameScene : UI_Scene, ITickable
     List<TextMeshProUGUI> itemTexts = new List<TextMeshProUGUI>();
     #endregion
 
+    public delegate void PlayerStatUpdateHandler(PlayerController _pc);
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -190,8 +203,13 @@ public class UI_GameScene : UI_Scene, ITickable
         Managers.StageM.clearEvent += OnClear;
         Managers.StageM.deadEvent += OnDead;
 
-        Managers.GameM.OnGoodsChanged += RefreshGoods;
+        Managers.GameM.OnGoodsChanged += OnRefreshGoods;
+        Managers.StageM.OnChangeCount += OnCheckStageMonsterCount;
+        Managers.CharacterM.OnCharacterAdd += OnRegisterCharacterEvents;
 
+        //TODO :여기선 mPlayer가 null값이 떠서 사용 x(나중에 메인 플레이어를 알고 있는 상태면 미리 생성해놓고 사용? 어떡할지 고민좀해보자)
+        // Managers.GameM.mPlayer.OnPlayerDataUpdate += OnCheckStageMonsterCount;
+        // Managers.GameM.mPlayer.OnPlayerDataUpdate += OnPlayerStatChange;
         Managers.UpdateM.Register(this);
 
         GameObjectsType = typeof(GameObjects);
@@ -213,7 +231,7 @@ public class UI_GameScene : UI_Scene, ITickable
         ItemPopupFrameObjectRect = GetImage(ImagesType, (int)Images.ItemPopupFrameImage).GetComponent<RectTransform>();
 
         GameObject obj = GetObject(GameObjectsType, (int)GameObjects.ItemTextPopupObject);
-        for (int i =0; i<obj.transform.childCount; i++)
+        for (int i = 0; i < obj.transform.childCount; i++)
         {
             itemTexts.Add(GetText(TextsType, (int)Texts.ItemText1 + i));
             itemTexts[i].gameObject.SetActive(false);
@@ -253,7 +271,14 @@ public class UI_GameScene : UI_Scene, ITickable
         Managers.StageM.clearEvent -= OnClear;
         Managers.StageM.deadEvent -= OnDead;
 
-        Managers.GameM.OnGoodsChanged -= RefreshGoods;
+        Managers.GameM.OnGoodsChanged -= OnRefreshGoods;
+        Managers.StageM.OnChangeCount -= OnCheckStageMonsterCount;
+
+        if (Managers.CharacterM != null)
+        {
+            Managers.CharacterM.OnCharacterAdd -= OnRegisterCharacterEvents;
+        }
+
     }
 
     void AllOff()
@@ -266,26 +291,32 @@ public class UI_GameScene : UI_Scene, ITickable
     }
     void UpdateUIState()
     {
-        
-       
+
+
         //TODO : 여기서 이제 플레이어 상황 받아와서 bool값으로 처리해 주거나 더 좋은 방법생각해보자.
         GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character1_Plus).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character2_Plus).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character3_Plus).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character4_Plus).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character5_Plus).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character6_Plus).gameObject.SetActive(false);
 
-        GetImage(ImagesType, (int)Images.Character1_Icon).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character2_Icon).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character3_Icon).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character4_Icon).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character5_Icon).gameObject.SetActive(false);
-        GetImage(ImagesType, (int)Images.Character6_Icon).gameObject.SetActive(false);
+        // GetImage(ImagesType, (int)Images.Character1_Plus).gameObject.SetActive(false);
+        // GetImage(ImagesType, (int)Images.Character2_Plus).gameObject.SetActive(false);
+        // GetImage(ImagesType, (int)Images.Character3_Plus).gameObject.SetActive(false);
+        // GetImage(ImagesType, (int)Images.Character4_Plus).gameObject.SetActive(false);
+        // GetImage(ImagesType, (int)Images.Character5_Plus).gameObject.SetActive(false);
+        // GetImage(ImagesType, (int)Images.Character6_Plus).gameObject.SetActive(false);
+
+        for (int i = 0; i < 6; i++)
+        {
+            GetImage(ImagesType, (int)Images.Character1_Lock + i).gameObject.SetActive(false);
+            GetImage(ImagesType, (int)Images.Character1_Icon + i).gameObject.SetActive(false);
+            GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i).SetActive(false);
+            GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i).SetActive(false);
+        }
+
+
+
+        CheckCharactersState();
     }
     //TODO :  코인, 쥬얼리 텍스트
-    public void RefreshGoods()
+    public void OnRefreshGoods()
     {
         GetText(TextsType, (int)Texts.CoinText).text = Utils.ToCurrencyString(Managers.GameM.Gold);
         GetText(TextsType, (int)Texts.JewelText).text = "0";
@@ -297,15 +328,12 @@ public class UI_GameScene : UI_Scene, ITickable
         switch (_clickButtonType)
         {
             case Buttons.QuestButton:
-                Debug.Log("Click Quest Button");
                 break;
             case Buttons.StatButton:
-                Debug.Log("Click Stat Button");
                 clickedButton = statBtn;
                 break;
 
             case Buttons.HeroButton:
-                Debug.Log("Click Hero Button");
                 clickedButton = heroBtn;
                 ScaleUpSelectButton();
 
@@ -318,24 +346,20 @@ public class UI_GameScene : UI_Scene, ITickable
                 break;
 
             case Buttons.RelicsButton:
-                Debug.Log("Click Relics Button");
                 clickedButton = relicsBtn;
                 break;
 
             case Buttons.DungeonButton:
-                Debug.Log("Click Dungeon Button");
                 clickedButton = dungeonBtn;
 
                 break;
 
             case Buttons.EnforceButton:
-                Debug.Log("Click Enforce Button");
                 clickedButton = enforceBtn;
 
                 break;
 
             case Buttons.ShopButton:
-                Debug.Log("Click Shop Button");
                 clickedButton = shopBtn;
                 break;
 
@@ -372,9 +396,9 @@ public class UI_GameScene : UI_Scene, ITickable
         }
     }
 
-    void CheckStageMonsterCount()
+    void OnCheckStageMonsterCount()
     {
-        float value = (float)Managers.StageM.count / (float)Managers.StageM.maxCount;
+        float value = (float)Managers.StageM.COUNT / (float)Managers.StageM.maxCount;
         if (value >= 1.0f)
         {
             value = 1.0f;
@@ -388,6 +412,14 @@ public class UI_GameScene : UI_Scene, ITickable
         GetText(TextsType, (int)Texts.StageMonsterCountText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
     }
 
+    void OnRegisterCharacterEvents(PlayerController _pc)
+    {
+        _pc.OnPlayerDataUpdate -= OnPlayerStatChange;
+        _pc.OnPlayerDataUpdate += OnPlayerStatChange;
+
+        CheckCharactersState();
+
+    }
     public void UpdateBossInfo(MonsterController _cc)
     {
         float value = (float)_cc.HP / (float)_cc.MaxHP;
@@ -412,10 +444,45 @@ public class UI_GameScene : UI_Scene, ITickable
         GetText(TextsType, (int)Texts.BossHPText).text = "100%";
     }
 
+    #region 캐릭터들 생성시 하단에 정보 업데이트
+    public void CheckCharactersState()
+    {
+        int index = 1;
+        for (int i = 0; i < Managers.CharacterM.Characters.Length; i++)
+        {
+            if (i == 0) continue;
+            //TODO : 메인캐릭터가 0이기 떄문에, -1
+            if (Managers.CharacterM.Characters[i] != null)
+            {
+
+                GetImage(ImagesType, (int)Images.Character1_Plus + (i - 1)).gameObject.SetActive(false);
+                GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).gameObject.SetActive(true);
+
+                GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).sprite = Managers.ResourceM.GetAtlas(Managers.CharacterM.Characters[i].data.Name);
+                GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + (i - 1)).gameObject.SetActive(true);
+
+                GetButton(ButtonsType, (int)Buttons.Character1_Button + (i - 1)).transform.SetSiblingIndex(index);
+                index++;
+            }
+        }
+    }
+
+    public void OnPlayerStatChange(PlayerController _pc)
+    {
+        //TODO : 여기서 + 값을 해줘야하는데, 이거 _pc안에 index값도 넣어줘야할거같음
+
+        GetImage(ImagesType, (int)Images.Character1_MpFillImage + (_pc.index - 1)).fillAmount = (float)_pc.MP / (float)_pc.MaxMp;
+        GetText(TextsType, (int)Texts.Character1_MPText + (_pc.index - 1)).text = _pc.MP.ToString() + " / " + _pc.MaxMp.ToString();
+    }
+
+    #endregion
+
     #region Event
     public void OnReady()
     {
         AsyncFadeInOut(true).Forget();
+
+        CheckCharactersState();
     }
     public void OnPlay()
     {
@@ -426,11 +493,10 @@ public class UI_GameScene : UI_Scene, ITickable
         }
         else
         {
-            Managers.GameM.mPlayer.OnPlayerDataUpdate = CheckStageMonsterCount;
             GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(true);
             ResetStageBoard();
         }
-        
+
     }
 
     public void OnBossPlay()
@@ -445,7 +511,7 @@ public class UI_GameScene : UI_Scene, ITickable
     {
         AllOff();
     }
-     
+
     public void OnDead()
     {
         AllOff();
@@ -453,11 +519,10 @@ public class UI_GameScene : UI_Scene, ITickable
     }
 
     #endregion
-    
+
     #region 레벨업 버튼 애니메이션 관련
     void ClickDown()
     {
-        Debug.Log("[ClickDown] 여기 들어옴 ");
         ExpUPAnim();
         coroutine = StartCoroutine(coPush());
 
@@ -484,7 +549,7 @@ public class UI_GameScene : UI_Scene, ITickable
             CheckTexts();
         }
 
-        
+
     }
 
     public void CheckTexts()
@@ -492,12 +557,12 @@ public class UI_GameScene : UI_Scene, ITickable
         needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.level, Utils.Datas.levelData.Player_Gold);
 
         //TODO : 스테이지 수정방식
-        
+
         GetText(TextsType, (int)Texts.StageStateText).text = Managers.StageM.isDead ? "반복중..." : "진행중...";
         GetText(TextsType, (int)Texts.StageStateText).color = Managers.StageM.isDead ? Color.yellow : Color.blue;
 
         int stageValue = Managers.GameM.stage;
-        int stageForward = (stageValue / 20) + 1 ;
+        int stageForward = (stageValue / 20) + 1;
         int stageBack = stageValue % 20;
         GetText(TextsType, (int)Texts.StageText).text = stageForward.ToString() + " - " + stageBack.ToString();
 
@@ -729,24 +794,24 @@ public class UI_GameScene : UI_Scene, ITickable
                     oldestText = text;
                 }
             }
-            
-            
+
+
         }
-        
-        if(oldestText != null)
+
+        if (oldestText != null)
         {
             CleanUpSlot(oldestText);
 
             oldestText.DOKill(true);
             oldestText.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             oldestText.gameObject.SetActive(false);
-            
+
             return oldestText;
         }
 
         return null;
     }
-    
+
     void CleanUpSlot(TextMeshProUGUI _slot)
     {
         _slot.DOKill(true);

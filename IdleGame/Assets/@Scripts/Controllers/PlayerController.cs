@@ -15,7 +15,8 @@ public class PlayerController : CreatureController
     public ParticleSystem provocation;
 
     #region Action
-    public Action OnPlayerDataUpdate;
+    public Action<PlayerController> OnPlayerDataUpdate;
+
     #endregion
 
     int killCount;
@@ -25,13 +26,35 @@ public class PlayerController : CreatureController
         set
         {
             killCount = value;
-            OnPlayerDataUpdate?.Invoke();
         }
     }
 
     Vector3 startPos = Vector3.zero;
     string ownerName;
+    public int Level;
     Data.CreatureData data;
+    public int index;
+    public Data.CreatureData DATA
+    {
+        get { return data; }
+        set { data = value; }
+    }
+    int mp;
+    public int MP
+    {
+        get => mp;
+        set
+        {
+            mp = value;
+        }
+    }
+
+    public int maxMp;
+    public int MaxMp
+    {
+        get => maxMp;
+    }
+
     void OnEnable()
     {
         Managers.UpdateM.Register(this);
@@ -62,6 +85,8 @@ public class PlayerController : CreatureController
         SpawnPos = transform.position;
         hp = Utils.Datas.levelData.HP((float)baseHp);
         damage = Utils.Datas.levelData.Damage((float)baseDamage);
+        mp = 0;
+        maxMp = data.MaxMp;
         attackrange = data.AttackRange;
         detectrange = 5f;
 
@@ -114,8 +139,7 @@ public class PlayerController : CreatureController
 
         base.AnimatorChange(Define.CreatureState.Idle);
         target = null;
-        Debug.Log($"{this.name} 플레이어 : 느낌표 파티클 생성");
-        provocation.Play();
+        if (provocation != null) provocation.Play();
     }
     private void OnDead()
     {
@@ -153,7 +177,7 @@ public class PlayerController : CreatureController
             ResetTarget();
 
             FindClosetTarget(Managers.ObjectM.mcList);
-            if(target == null)
+            if (target == null)
             {
                 GoBackToSpawn(_deltaTime);
                 return;
@@ -162,7 +186,7 @@ public class PlayerController : CreatureController
 
         float targetDist = Vector3.Distance(transform.position, target.transform.position);
 
-         if (targetDist > detectrange)
+        if (targetDist > detectrange)
         {
             ResetTarget();
             GoBackToSpawn(_deltaTime);
@@ -177,10 +201,13 @@ public class PlayerController : CreatureController
         else
         {
             if (!isAttack)
+            {
                 StartAttack();
+                GetMp(5);
+            }
+
         }
     }
-
 
     void ConnectEvent()
     {
@@ -197,17 +224,24 @@ public class PlayerController : CreatureController
         Managers.StageM.clearEvent -= OnClear;
         Managers.StageM.deadEvent -= OnDead;
     }
+
+    public void GetMp(int _value)
+    {
+        mp += _value;
+        OnPlayerDataUpdate?.Invoke(this);
+    }
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)
     {
         if (isDead) return;
         if (Managers.StageM.isDead) return;
-
+        GetMp(3);
         base.GetDamage(_dmg, _attacker, _attacker.GetCritical());
         if (hp <= 0)
         {
             hp = 0;
             Dead();
         }
+        OnPlayerDataUpdate?.Invoke(this);
     }
 
     public override void Dead()
@@ -216,10 +250,8 @@ public class PlayerController : CreatureController
 
         AnimatorChange(CreatureState.Dead);
         Managers.SpawnM.players.Remove(this);
-        Debug.Log($"{this.name} : 죽음 , 남은 플레이어 수 : {Managers.SpawnM.players.Count}");
         if (Managers.SpawnM.players.Count <= 0)
         {
-            Debug.Log("죽음 스테이트로 변환");
             Managers.StageM.StateChange(StageState.Dead);
         }
     }

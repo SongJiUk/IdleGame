@@ -22,11 +22,7 @@ public class Boss_Electric : SkillBase
         for (int i = 0; i < 5; i++)
         {
             players = Managers.SpawnM.players.ToList();
-            if (players.Count == 0)
-            {
-                Debug.Log("[Boss_Electric]모든 플레이어 사망, 스킬 루프 종료");
-                break;
-            }
+            if (players.Count == 0) break;
 
             PlayerController player = players[Random.Range(0, players.Count)];
 

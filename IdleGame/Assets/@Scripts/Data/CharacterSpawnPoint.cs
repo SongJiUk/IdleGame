@@ -6,7 +6,7 @@ using System.Linq;
 public class CharacterSpawnPoint : MonoBehaviour
 {
     public List<Transform> SpawnTr = new List<Transform>();
-
+    public PlayerController[] players = new PlayerController[7];
     private void Awake()
     {
         Managers.StageM.readyEvent += OnReady;
@@ -15,10 +15,14 @@ public class CharacterSpawnPoint : MonoBehaviour
     private void Start()
     {
         //TODO : 드래그앤 드랍인데 굳이 이게 필요한가..?
-        for(int i =0; i<transform.childCount; i++)
+        if (SpawnTr == null)
         {
-            SpawnTr[i] = transform.GetChild(i);
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                SpawnTr[i] = transform.GetChild(i);
+            }
         }
+
     }
 
     public void OnReady()
@@ -28,15 +32,24 @@ public class CharacterSpawnPoint : MonoBehaviour
 
     public void PlayerSpawn()
     {
-
-        for (int i = 1; i <= 2; i++)
+        // TODO : 이거 초기값이 이건거고, 데이터 저장 되면 수정해야됌(메인캐릭터 바꾸려고 할거면)
+        Vector3 pos = Vector3.zero;
+        Managers.CharacterM.players[0] = Managers.ObjectM.Spawn<PlayerController>(pos, 1);
+        for (int i = 1; i < Managers.CharacterM.Characters.Length; i++)
         {
-            Vector3 spawnPos = Vector3.zero;
-            if (i != 1)
+
+            if (Managers.CharacterM.Characters[i] == null) continue;
+
+            int dataID = Managers.CharacterM.Characters[i].data.DataID;
+
+            Vector3 spawnPos = SpawnTr[i].position;
+            PlayerController pc = Managers.ObjectM.Spawn<PlayerController>(spawnPos, dataID);
+            pc.index = i;
+            Managers.CharacterM.players[i] = pc;
+            if (pc != null)
             {
-                spawnPos = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0f, UnityEngine.Random.Range(-1f, 1f));
+                Managers.CharacterM.OnNotifyCharacter(pc);
             }
-            Managers.ObjectM.Spawn<PlayerController>(spawnPos, i);
         }
 
         Managers.SpawnM.players = Managers.ObjectM.pcList.ToList();

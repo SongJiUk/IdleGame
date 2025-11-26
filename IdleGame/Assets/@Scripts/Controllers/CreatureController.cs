@@ -50,7 +50,7 @@ public class CreatureController : BaseController
 
     protected virtual void OnDisable()
     {
-        if(target != null) target.OnTargetDead -= OnTargetDeadCallBack;
+        if (target != null) target.OnTargetDead -= OnTargetDeadCallBack;
     }
     public virtual void InitStat()
     {
@@ -141,10 +141,10 @@ public class CreatureController : BaseController
 
     protected void FindClosetTarget<T>(List<T> _targets) where T : Component
     {
-        
+
         float minDistance = float.MaxValue;
 
-        if(target != null)
+        if (target != null)
             target.OnTargetDead -= OnTargetDeadCallBack;
 
         CreatureController closetTarget = null;

@@ -27,7 +27,7 @@ public class MonsterController : CreatureController
     public override bool Init()
     {
         if (!base.Init()) return false;
-       
+
         //TODO : 몬스터 처음나올때 초기화해주기
         //sAttack = Utils.Datas.levelData.Base_Attack;
 
@@ -51,7 +51,7 @@ public class MonsterController : CreatureController
 
     //TODO : 이걸 temp아이디를 넘겨받아서 여기서 하는게 맞을까 싶긴함
     public void SetInfo(Data.CreatureData _data)
-    { 
+    {
         data = _data;
         isDead = false;
         isKnockBack = false;
@@ -150,7 +150,7 @@ public class MonsterController : CreatureController
 
             FindClosetTarget(Managers.SpawnM.players);
 
-            if(target ==null)
+            if (target == null)
             {
                 AnimatorChange(CreatureState.Idle);
                 return;
@@ -158,9 +158,9 @@ public class MonsterController : CreatureController
         }
         float targetDist = Vector3.Distance(transform.position, target.transform.position);
 
-        if(targetDist > attackrange)
+        if (targetDist > attackrange)
         {
-            if(!isAttack)
+            if (!isAttack)
             {
                 AnimatorChange(Define.CreatureState.Move);
                 transform.LookAt(target.transform.position);
@@ -169,7 +169,7 @@ public class MonsterController : CreatureController
         }
         else
         {
-            if(!isAttack)
+            if (!isAttack)
             {
                 isAttack = true;
                 isTargetLocked = true;
@@ -192,7 +192,7 @@ public class MonsterController : CreatureController
         if (hp <= 0)
         {
             hp = 0;
-            
+
             Dead();
         }
     }
@@ -208,12 +208,12 @@ public class MonsterController : CreatureController
         }
         else
         {
-            if(!Managers.StageM.isDead)
+            if (!Managers.StageM.isDead)
             {
-                Managers.StageM.count++;
+                Managers.StageM.COUNT++;
                 Managers.GameM.mPlayer.KillCount++;
             }
-            
+
             Managers.ObjectM.DeSpawn(this);
         }
 
