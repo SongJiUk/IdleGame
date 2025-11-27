@@ -19,12 +19,13 @@ public class UI_Base : MonoBehaviour
     protected Type ButtonsType;
     protected Type TogglesType;
     protected Type SlidersType;
-
+   
 
     private void Start()
     {
         Init().Forget();
     }
+
 
     public virtual async UniTask<bool> Init()
     {

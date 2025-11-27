@@ -84,6 +84,7 @@ public class PlayerController : CreatureController
         isAttack = false;
         SpawnPos = transform.position;
         hp = Utils.Datas.levelData.HP((float)baseHp);
+        maxHp = hp;
         damage = Utils.Datas.levelData.Damage((float)baseDamage);
         mp = 0;
         maxMp = data.MaxMp;
@@ -110,6 +111,7 @@ public class PlayerController : CreatureController
     {
         if (target == null || target.IsDead) return;
         Managers.ObjectM.Spawn<RangeAttackController>(transform.position, 20000, this, target);
+        GetMp(5);
 
     }
 
@@ -120,6 +122,7 @@ public class PlayerController : CreatureController
 
         if (trail != null) trail.SetActive(true);
         Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, 20001, this, target);
+        GetMp(5);
         TrailDisable().Forget();
     }
 
@@ -132,6 +135,7 @@ public class PlayerController : CreatureController
     private void OnPlay()
     {
         base.AnimatorChange(CreatureState.Idle);
+        OnPlayerDataUpdate?.Invoke(this);
     }
     private void OnBoss()
     {
@@ -203,7 +207,6 @@ public class PlayerController : CreatureController
             if (!isAttack)
             {
                 StartAttack();
-                GetMp(5);
             }
 
         }

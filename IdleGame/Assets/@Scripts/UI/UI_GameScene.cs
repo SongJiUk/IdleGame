@@ -24,12 +24,27 @@ public class UI_GameScene : UI_Scene, ITickable
         DeadFrameHandObject,
         ItemPopupObject,
         ItemTextPopupObject,
+        Character1_Object,
+        Character2_Object,
+        Character3_Object,
+        Character4_Object,
+        Character5_Object,
+        Character6_Object,
+
+        Character1_HpFrameObject,
+        Character2_HpFrameObject,
+        Character3_HpFrameObject,
+        Character4_HpFrameObject,
+        Character5_HpFrameObject,
+        Character6_HpFrameObject,
+
         Character1_MpFrameObject,
         Character2_MpFrameObject,
         Character3_MpFrameObject,
         Character4_MpFrameObject,
         Character5_MpFrameObject,
         Character6_MpFrameObject,
+
         Character1_ReadyObject,
         Character2_ReadyObject,
         Character3_ReadyObject,
@@ -48,13 +63,14 @@ public class UI_GameScene : UI_Scene, ITickable
         EnforceButton,
         ShopButton,
         MainSkillButton,
-        Character1_Button,
-        Character2_Button,
-        Character3_Button,
-        Character4_Button,
-        Character5_Button,
         LevelUpButton,
         DeadFrameButton,
+        Character1_PlusButton,
+        Character2_PlusButton,
+        Character3_PlusButton,
+        Character4_PlusButton,
+        Character5_PlusButton,
+        Character6_PlusButton
     }
 
     enum Texts
@@ -85,12 +101,18 @@ public class UI_GameScene : UI_Scene, ITickable
         ItemText3,
         ItemText4,
         ItemText5,
-        Character1_MPText,
-        Character2_MPText,
-        Character3_MPText,
-        Character4_MPText,
-        Character5_MPText,
-        Character6_MPText
+        Character1_HpText,
+        Character2_HpText,
+        Character3_HpText,
+        Character4_HpText,
+        Character5_HpText,
+        Character6_HpText,
+        Character1_MpText,
+        Character2_MpText,
+        Character3_MpText,
+        Character4_MpText,
+        Character5_MpText,
+        Character6_MpText
 
     }
 
@@ -106,18 +128,18 @@ public class UI_GameScene : UI_Scene, ITickable
         Character4_Lock,
         Character5_Lock,
         Character6_Lock,
-        Character1_Plus,
-        Character2_Plus,
-        Character3_Plus,
-        Character4_Plus,
-        Character5_Plus,
-        Character6_Plus,
         Character1_Icon,
         Character2_Icon,
         Character3_Icon,
         Character4_Icon,
         Character5_Icon,
         Character6_Icon,
+        Character1_HpFillImage,
+        Character2_HpFillImage,
+        Character3_HpFillImage,
+        Character4_HpFillImage,
+        Character5_HpFillImage,
+        Character6_HpFillImage,
         Character1_MpFillImage,
         Character2_MpFillImage,
         Character3_MpFillImage,
@@ -193,6 +215,7 @@ public class UI_GameScene : UI_Scene, ITickable
     #endregion
 
     public delegate void PlayerStatUpdateHandler(PlayerController _pc);
+    public bool[] isCharacterReady;
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -211,7 +234,7 @@ public class UI_GameScene : UI_Scene, ITickable
         // Managers.GameM.mPlayer.OnPlayerDataUpdate += OnCheckStageMonsterCount;
         // Managers.GameM.mPlayer.OnPlayerDataUpdate += OnPlayerStatChange;
         Managers.UpdateM.Register(this);
-
+        isCharacterReady = new bool[Managers.CharacterM.Characters.Length];
         GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
         TextsType = typeof(Texts);
@@ -242,6 +265,11 @@ public class UI_GameScene : UI_Scene, ITickable
         foreach (Buttons buttonType in Enum.GetValues(typeof(Buttons)))
         {
             GetButton(ButtonsType, (int)buttonType).gameObject.BindEvent(() => OnClickAnyButtons(buttonType).Forget());
+        }
+
+        for(int i =1; i< Managers.CharacterM.Characters.Length; i++)
+        {
+            GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + (i - 1)).gameObject.BindEvent(() => OnClickCharacterPlus(i-1));
         }
 
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).gameObject.BindEvent(ClickDown, _type: Define.UIEvent.PointerDown);
@@ -303,10 +331,12 @@ public class UI_GameScene : UI_Scene, ITickable
         // GetImage(ImagesType, (int)Images.Character5_Plus).gameObject.SetActive(false);
         // GetImage(ImagesType, (int)Images.Character6_Plus).gameObject.SetActive(false);
 
+        //TODO : 캐릭터 수만큼
         for (int i = 0; i < 6; i++)
         {
             GetImage(ImagesType, (int)Images.Character1_Lock + i).gameObject.SetActive(false);
             GetImage(ImagesType, (int)Images.Character1_Icon + i).gameObject.SetActive(false);
+            GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + i).SetActive(false);
             GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i).SetActive(false);
             GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i).SetActive(false);
         }
@@ -444,24 +474,41 @@ public class UI_GameScene : UI_Scene, ITickable
         GetText(TextsType, (int)Texts.BossHPText).text = "100%";
     }
 
-    #region 캐릭터들 생성시 하단에 정보 업데이트
-    public void CheckCharactersState()
+    #region 하단 캐릭터들 정보 업데이트
+    public async void OnClickCharacterPlus(int _index)
+    {
+        await Managers.UIM.ShowPopup<UI_HeroPopup>(_isFade: true);
+    }
+
+
+    public void CheckCharactersState(bool _isFirstBatch = false)
     {
         int index = 1;
-        for (int i = 0; i < Managers.CharacterM.Characters.Length; i++)
+        for (int i = 1; i < Managers.CharacterM.Characters.Length; i++)
         {
-            if (i == 0) continue;
             //TODO : 메인캐릭터가 0이기 떄문에, -1
             if (Managers.CharacterM.Characters[i] != null)
             {
 
-                GetImage(ImagesType, (int)Images.Character1_Plus + (i - 1)).gameObject.SetActive(false);
+                GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + (i - 1)).gameObject.SetActive(false);
                 GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).gameObject.SetActive(true);
-
                 GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).sprite = Managers.ResourceM.GetAtlas(Managers.CharacterM.Characters[i].data.Name);
-                GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + (i - 1)).gameObject.SetActive(true);
 
-                GetButton(ButtonsType, (int)Buttons.Character1_Button + (i - 1)).transform.SetSiblingIndex(index);
+                //TODO : 바꾸기(대기중 => mp)
+                if (_isFirstBatch)
+                {
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + (i - 1)).gameObject.SetActive(true);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + (i - 1)).gameObject.SetActive(false);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + (i - 1)).gameObject.SetActive(false);
+                }
+                else
+                {
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + (i - 1)).gameObject.SetActive(false);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + (i - 1)).gameObject.SetActive(true);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + (i - 1)).gameObject.SetActive(true);
+                }
+
+                GetObject(GameObjectsType, (int)GameObjects.Character1_Object + (i - 1)).transform.SetSiblingIndex(index);
                 index++;
             }
         }
@@ -469,10 +516,12 @@ public class UI_GameScene : UI_Scene, ITickable
 
     public void OnPlayerStatChange(PlayerController _pc)
     {
-        //TODO : 여기서 + 값을 해줘야하는데, 이거 _pc안에 index값도 넣어줘야할거같음
+        //TODO : HP도 
+        GetImage(ImagesType, (int)Images.Character1_HpFillImage + (_pc.index - 1)).fillAmount = (float)_pc.HP / (float)_pc.MaxHP;
+        GetText(TextsType, (int)Texts.Character1_HpText + (_pc.index - 1)).text = $"{(int)_pc.HP} / {(int)_pc.MaxHP}";
 
         GetImage(ImagesType, (int)Images.Character1_MpFillImage + (_pc.index - 1)).fillAmount = (float)_pc.MP / (float)_pc.MaxMp;
-        GetText(TextsType, (int)Texts.Character1_MPText + (_pc.index - 1)).text = _pc.MP.ToString() + " / " + _pc.MaxMp.ToString();
+        GetText(TextsType, (int)Texts.Character1_MpText + (_pc.index - 1)).text = _pc.MP.ToString() + " / " + _pc.MaxMp.ToString();
     }
 
     #endregion
@@ -482,7 +531,7 @@ public class UI_GameScene : UI_Scene, ITickable
     {
         AsyncFadeInOut(true).Forget();
 
-        CheckCharactersState();
+        CheckCharactersState(false);
     }
     public void OnPlay()
     {

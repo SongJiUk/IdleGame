@@ -33,4 +33,12 @@ public class RenderCharacter : MonoBehaviour
 
         }
     }
+
+    public bool isCheckCharacter(int _index)
+    {
+        if(isGetCharacter[_index]) return true;
+        
+        
+        return false;
+    }
 }
