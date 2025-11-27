@@ -108,9 +108,9 @@ public class UI_HeroPopup : UI_Popup
 
     void OnClickCircleButton(Buttons _clickButton)
     {
-
+        //일단 선택된 캐릭터가 없으면 return
+        if (clickCharacter == null) return;
         if (_clickButton > Buttons.Circle6Button) return;
-        //TODO : 만약 해당 지역에 캐릭터가 있으면?
         if (Managers.RenderM.renderCharacter.isCheckCharacter((int)_clickButton)) return;
 
 
@@ -123,6 +123,8 @@ public class UI_HeroPopup : UI_Popup
 
         Managers.RenderM.renderCharacter.InitCharacter();
         clickCharacter.CheckUseCharacter();
+
+        clickCharacter = null;
     }
 
 

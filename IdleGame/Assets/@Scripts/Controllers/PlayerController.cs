@@ -54,7 +54,7 @@ public class PlayerController : CreatureController
     {
         get => maxMp;
     }
-
+    bool isUsingSkill = false;
     void OnEnable()
     {
         Managers.UpdateM.Register(this);
@@ -230,6 +230,8 @@ public class PlayerController : CreatureController
 
     public void GetMp(int _value)
     {
+        if (isUsingSkill) return;
+
         mp += _value;
         OnPlayerDataUpdate?.Invoke(this);
     }

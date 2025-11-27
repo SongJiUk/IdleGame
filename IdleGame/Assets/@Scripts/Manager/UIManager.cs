@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Cysharp.Threading.Tasks;
+using UnityEngine.UI;
 
 public class UIManager
 {
@@ -22,6 +23,8 @@ public class UIManager
             {
                 root = new GameObject { name = "@UI_Root" };
                 Canvas canvas = root.AddComponent<Canvas>();
+                root.AddComponent<CanvasScaler>();
+                root.AddComponent<GraphicRaycaster>();
                 canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             }
 
@@ -51,6 +54,20 @@ public class UIManager
         sceneUI = ui;
         go.transform.SetParent(Root.transform);
 
+        RectTransform rect = go.gameObject.GetComponent<RectTransform>();
+        if (rect != null)
+        {
+
+            rect.localPosition = Vector3.zero;
+            rect.localRotation = Quaternion.identity;
+            rect.localScale = Vector3.one;
+
+            //앵커 프리셋 효과 적용: Stretch-Stretch (꽉 채우기)
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+        }
 
         return ui;
     }
@@ -82,6 +99,17 @@ public class UIManager
 
         T popup = Managers.ObjectM.SpawnUI<T>(_name);
         popup.gameObject.transform.SetParent(Root.transform);
+
+        RectTransform rect = popup.gameObject.GetComponent<RectTransform>();
+        if (rect != null)
+        {
+            rect.localPosition = Vector3.zero;
+            rect.localRotation = Quaternion.identity;
+            rect.localScale = Vector3.one;
+
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+        }
         popupStack.Push(popup);
         popup.gameObject.transform.SetAsLastSibling();
         return popup;

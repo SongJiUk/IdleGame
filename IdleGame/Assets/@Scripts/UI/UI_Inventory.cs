@@ -98,7 +98,7 @@ public class UI_Inventory : UI_Base
 
     void OnClickCloseButton()
     {
-        Debug.Log("Close Button");
+        Managers.UIM.ClosePopup();
         DOTween.Kill(this);
     }
 

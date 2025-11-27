@@ -9,6 +9,6 @@ public class GameScene : BaseScene
         base.Init();
         Managers.UIM.ShowScene<UI_GameScene>();
 
-        //TODO : ¿©±â¼­ ½ºÆùÀ» ¹Ù·Î ÇØ¾ßÇÏ³ª?
+        //TODO : ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ ï¿½Ø¾ï¿½ï¿½Ï³ï¿½?
     }
 }

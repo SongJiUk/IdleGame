@@ -55,6 +55,7 @@ public class UI_GameScene : UI_Scene, ITickable
     }
     enum Buttons
     {
+        InventoryButton,
         QuestButton,
         StatButton,
         HeroButton,
@@ -275,6 +276,8 @@ public class UI_GameScene : UI_Scene, ITickable
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).gameObject.BindEvent(ClickDown, _type: Define.UIEvent.PointerDown);
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).gameObject.BindEvent(ClickUp, _type: Define.UIEvent.PointerUp);
 
+
+        GetButton(ButtonsType, (int)Buttons.InventoryButton).gameObject.BindEvent(OnClickInventory);
         statBtn = GetButton(ButtonsType, (int)Buttons.StatButton);
         heroBtn = GetButton(ButtonsType, (int)Buttons.HeroButton);
         relicsBtn = GetButton(ButtonsType, (int)Buttons.RelicsButton);
@@ -474,6 +477,10 @@ public class UI_GameScene : UI_Scene, ITickable
         GetText(TextsType, (int)Texts.BossHPText).text = "100%";
     }
 
+    public async void OnClickInventory()
+    {
+        await Managers.UIM.ShowPopup<UI_Inventory>();
+    }
     #region 하단 캐릭터들 정보 업데이트
     public async void OnClickCharacterPlus(int _index)
     {
@@ -923,7 +930,6 @@ public class UI_GameScene : UI_Scene, ITickable
         }
 
         await CoFadeInOutAsync(_isFadeIn);
-
     }
 
     private async UniTask CoFadeInOutAsync(bool _isFadeIn)
