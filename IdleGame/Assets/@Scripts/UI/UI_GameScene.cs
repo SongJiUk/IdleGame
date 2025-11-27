@@ -267,9 +267,9 @@ public class UI_GameScene : UI_Scene, ITickable
             GetButton(ButtonsType, (int)buttonType).gameObject.BindEvent(() => OnClickAnyButtons(buttonType).Forget());
         }
 
-        for(int i =1; i< Managers.CharacterM.Characters.Length; i++)
+        for (int i = 1; i < Managers.CharacterM.Characters.Length; i++)
         {
-            GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + (i - 1)).gameObject.BindEvent(() => OnClickCharacterPlus(i-1));
+            GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + (i - 1)).gameObject.BindEvent(() => OnClickCharacterPlus(i - 1));
         }
 
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).gameObject.BindEvent(ClickDown, _type: Define.UIEvent.PointerDown);
@@ -481,7 +481,7 @@ public class UI_GameScene : UI_Scene, ITickable
     }
 
 
-    public void CheckCharactersState(bool _isFirstBatch = false)
+    public void CheckCharactersState()
     {
         int index = 1;
         for (int i = 1; i < Managers.CharacterM.Characters.Length; i++)
@@ -494,18 +494,19 @@ public class UI_GameScene : UI_Scene, ITickable
                 GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).gameObject.SetActive(true);
                 GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).sprite = Managers.ResourceM.GetAtlas(Managers.CharacterM.Characters[i].data.Name);
 
-                //TODO : 바꾸기(대기중 => mp)
-                if (_isFirstBatch)
+                //지금 스폰 되어있는거랑 아닌거랑 비교하기?
+                if (Managers.CharacterM.players[i] != null)
+                {
+                    //만약 생성되어있다면.
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + (i - 1)).gameObject.SetActive(false);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + (i - 1)).gameObject.SetActive(true);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + (i - 1)).gameObject.SetActive(true);
+                }
+                else
                 {
                     GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + (i - 1)).gameObject.SetActive(true);
                     GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + (i - 1)).gameObject.SetActive(false);
                     GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + (i - 1)).gameObject.SetActive(false);
-                }
-                else
-                {
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + (i - 1)).gameObject.SetActive(false);
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + (i - 1)).gameObject.SetActive(true);
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + (i - 1)).gameObject.SetActive(true);
                 }
 
                 GetObject(GameObjectsType, (int)GameObjects.Character1_Object + (i - 1)).transform.SetSiblingIndex(index);
@@ -531,7 +532,7 @@ public class UI_GameScene : UI_Scene, ITickable
     {
         AsyncFadeInOut(true).Forget();
 
-        CheckCharactersState(false);
+        CheckCharactersState();
     }
     public void OnPlay()
     {

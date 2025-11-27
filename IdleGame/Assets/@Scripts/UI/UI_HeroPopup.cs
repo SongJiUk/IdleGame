@@ -108,7 +108,7 @@ public class UI_HeroPopup : UI_Popup
 
     void OnClickCircleButton(Buttons _clickButton)
     {
-        
+
         if (_clickButton > Buttons.Circle6Button) return;
         //TODO : 만약 해당 지역에 캐릭터가 있으면?
         if (Managers.RenderM.renderCharacter.isCheckCharacter((int)_clickButton)) return;
@@ -119,7 +119,7 @@ public class UI_HeroPopup : UI_Popup
         Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(false);
         SetClick(null);
         //TODO : 아직 게임 진행중일때, 대기중 사진 띄우기.
-        (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState(true);
+        (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
 
         Managers.RenderM.renderCharacter.InitCharacter();
         clickCharacter.CheckUseCharacter();
