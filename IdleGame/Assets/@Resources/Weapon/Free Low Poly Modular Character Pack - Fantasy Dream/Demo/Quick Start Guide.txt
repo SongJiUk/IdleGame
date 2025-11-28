@@ -1,0 +1,31 @@
+Quick Start Guide: FREE Low Poly Modular Character – Fantasy Dream
+Bring your character to life in just a few steps:
+──────────────────────────────────────────────
+🧩 1. Add the Prefab
+Drag and drop the Modular Character prefab from
+Prefabs/Modular Character into your scene.
+
+(By default, the prefab is clean – no scripts attached.)
+
+🧠 2. Add the Character Controller
+Attach the script ModularHeroController.cs
+(from the Scripts folder) to the prefab.
+
+This script enables all customization logic.
+
+🎛️ 3. Set Up the Inspector
+In the Inspector, assign the required GameObjects to the script's fields.
+These include slots for armor pieces, facial parts, and palette references.
+
+Make sure all fields are properly linked as shown in the demo scene.
+
+🎲 4. Generate Variants
+Use the buttons in the Inspector to:
+
+Randomize armor sets
+
+Randomize facial features
+
+Toggle helmet visibility
+
+Explore endless combinations with just a click.
