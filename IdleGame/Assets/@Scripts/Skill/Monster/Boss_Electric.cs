@@ -40,4 +40,9 @@ public class Boss_Electric : SkillBase
 
         }
     }
+
+    protected override void SetUpEffect()
+    {
+        throw new System.NotImplementedException();
+    }
 }

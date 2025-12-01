@@ -3,10 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class SkillBase : BaseController
+public abstract class SkillBase : BaseController
 {
     protected List<PlayerController> players;
     protected List<MonsterController> monsters;
+
+    protected List<ISkillEffect> effects = new List<ISkillEffect>();
+
+    public void UseSkill(CreatureController _caster, CreatureController _target)
+    {
+        //TODO : 쿨타임 / 사용 마나 처리
+
+        foreach (var effect in effects)
+        {
+            effect.Excute(_caster, _target);
+        }
+
+        //TODO : 쿨타임 시작
+    }
+
+    protected abstract void SetUpEffect();
 
     public override bool Init()
     {

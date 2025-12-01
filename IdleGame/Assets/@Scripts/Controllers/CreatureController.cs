@@ -39,11 +39,13 @@ public class CreatureController : BaseController
     //TODO : TEMP;
     protected float CriticalRate = 0;
     public Action OnTargetDead;
+
+    public BuffController buffController;
     public override bool Init()
     {
         if (!base.Init()) return false;
         if (animator == null) animator = GetComponent<Animator>();
-
+        if (buffController == null) buffController = GetComponent<BuffController>();
 
         return true;
     }

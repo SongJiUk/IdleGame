@@ -39,7 +39,9 @@ public static class Define
         Move,
         Attack,
         Hit,
-        Dead
+        Dead,
+        Skill
+
     }
 
     public enum ObjectType

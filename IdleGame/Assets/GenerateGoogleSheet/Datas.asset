@@ -38,67 +38,7 @@ MonoBehaviour:
     Damage: 1
     Type: Legendary
   CreatureDataList:
-  - DataID: 2
-    Name: Barbarian
-    NameKR: "\uBC14\uBC14\uB9AC\uC548"
-    Description: "\uBC14\uBC14\uB9AC\uC548\uC774\uB2E4"
-    prefabName: Barbarian
-    Type: Player
-    AttackRange: 1
-    CharacterGrade: UnCommon
-    BaseHp: 60
-    BaseDamage: 12
-    MaxMp: 70
-    ProjectileDataID: 20002
-  - DataID: 3
-    Name: Berserker
-    NameKR: "\uBC84\uC11C\uCEE4"
-    Description: "\uBC84\uC11C\uCEE4\uC774\uB2E4"
-    prefabName: Berserker
-    Type: Player
-    AttackRange: 1
-    CharacterGrade: Rare
-    BaseHp: 70
-    BaseDamage: 15
-    MaxMp: 80
-    ProjectileDataID: 20002
-  - DataID: 4
-    Name: Elementalist_B
-    NameKR: "\uC6D0\uC18C\uC220\uC0AC"
-    Description: "\uC6D0\uC18C\uC220\uC0AC\uC774\uB2E4"
-    prefabName: Elementalist_B
-    Type: Player
-    AttackRange: 2
-    CharacterGrade: Unique
-    BaseHp: 80
-    BaseDamage: 17
-    MaxMp: 110
-    ProjectileDataID: 20002
-  - DataID: 5
-    Name: Elementalist_W
-    NameKR: "\uC6D0\uC18C\uC220\uC0AC"
-    Description: "\uC6D0\uC18C\uC220\uC0AC\uC774\uB2E4"
-    prefabName: Elementalist_W
-    Type: Player
-    AttackRange: 2
-    CharacterGrade: Unique
-    BaseHp: 80
-    BaseDamage: 17
-    MaxMp: 120
-    ProjectileDataID: 20002
-  - DataID: 6
-    Name: Hunter
-    NameKR: "\uD5CC\uD130"
-    Description: "\uD5CC\uD130\uC774\uB2E4"
-    prefabName: Hunter
-    Type: Player
-    AttackRange: 2
-    CharacterGrade: Legendary
-    BaseHp: 100
-    BaseDamage: 20
-    MaxMp: 90
-    ProjectileDataID: 20002
-  - DataID: 10
+  - DataID: 1
     Name: Cleric
     NameKR: "\uD074\uB808\uB9AD"
     Description: "\uD074\uB808\uB9AD\uC774\uB2E4"
@@ -110,7 +50,7 @@ MonoBehaviour:
     BaseDamage: 10
     MaxMp: 120
     ProjectileDataID: 20000
-  - DataID: 11
+  - DataID: 2
     Name: Archer
     NameKR: "\uAD81\uC218"
     Description: "\uAD81\uC218\uC774\uB2E4"
@@ -122,7 +62,7 @@ MonoBehaviour:
     BaseDamage: 12
     MaxMp: 80
     ProjectileDataID: 20001
-  - DataID: 12
+  - DataID: 3
     Name: Assassin
     NameKR: "\uC554\uC0B4\uC790"
     Description: "\uC554\uC0B4\uC790\uC774\uB2E4"
@@ -134,7 +74,7 @@ MonoBehaviour:
     BaseDamage: 15
     MaxMp: 70
     ProjectileDataID: 20002
-  - DataID: 13
+  - DataID: 4
     Name: Hammer
     NameKR: "\uB9DD\uCE58"
     Description: "\uB9DD\uCE58\uC774\uB2E4"
@@ -146,7 +86,7 @@ MonoBehaviour:
     BaseDamage: 15
     MaxMp: 70
     ProjectileDataID: 20002
-  - DataID: 14
+  - DataID: 5
     Name: Knight
     NameKR: "\uAE30\uC0AC"
     Description: "\uAE30\uC0AC\uC774\uB2E4"
@@ -158,7 +98,7 @@ MonoBehaviour:
     BaseDamage: 17
     MaxMp: 70
     ProjectileDataID: 20002
-  - DataID: 15
+  - DataID: 6
     Name: SpearMan
     NameKR: "\uC2A4\uD53C\uC5B4\uB9E8"
     Description: "\uC2A4\uD53C\uC5B4\uB9E8\uC774\uB2E4"
@@ -170,11 +110,11 @@ MonoBehaviour:
     BaseDamage: 17
     MaxMp: 70
     ProjectileDataID: 20002
-  - DataID: 16
-    Name: TwoHanSword
+  - DataID: 7
+    Name: TwoHandSword
     NameKR: "\uB450\uC190\uAC80"
     Description: "\uB450\uC190\uAC80\uC774\uB2E4"
-    prefabName: TwoHanSword
+    prefabName: TwoHandSword
     Type: Player
     AttackRange: 1
     CharacterGrade: Unique
@@ -182,7 +122,7 @@ MonoBehaviour:
     BaseDamage: 17
     MaxMp: 70
     ProjectileDataID: 20002
-  - DataID: 17
+  - DataID: 8
     Name: Mage_M
     NameKR: "\uB0A8\uC790\uB9C8\uBC95\uC0AC"
     Description: "\uB0A8\uC790\uB9C8\uBC95\uC0AC\uC774\uB2E4"
@@ -194,7 +134,7 @@ MonoBehaviour:
     BaseDamage: 20
     MaxMp: 120
     ProjectileDataID: 20000
-  - DataID: 18
+  - DataID: 9
     Name: Mage_W
     NameKR: "\uC5EC\uC790\uB9C8\uBC95\uC0AC"
     Description: "\uC5EC\uC790\uB9C8\uBC95\uC0AC\uC774\uB2E4"

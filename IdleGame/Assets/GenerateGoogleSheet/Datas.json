@@ -39,77 +39,7 @@
   ],
   "CreatureData": [
     {
-      "DataID": 2,
-      "Name": "Barbarian",
-      "NameKR": "바바리안",
-      "Description": "바바리안이다",
-      "prefabName": "Barbarian",
-      "Type": "Player",
-      "AttackRange": 1,
-      "CharacterGrade": "UnCommon",
-      "BaseHp": 60,
-      "BaseDamage": 12,
-      "MaxMp": 70,
-      "ProjectileDataID": 20002
-    },
-    {
-      "DataID": 3,
-      "Name": "Berserker",
-      "NameKR": "버서커",
-      "Description": "버서커이다",
-      "prefabName": "Berserker",
-      "Type": "Player",
-      "AttackRange": 1,
-      "CharacterGrade": "Rare",
-      "BaseHp": 70,
-      "BaseDamage": 15,
-      "MaxMp": 80,
-      "ProjectileDataID": 20002
-    },
-    {
-      "DataID": 4,
-      "Name": "Elementalist_B",
-      "NameKR": "원소술사",
-      "Description": "원소술사이다",
-      "prefabName": "Elementalist_B",
-      "Type": "Player",
-      "AttackRange": 2,
-      "CharacterGrade": "Unique",
-      "BaseHp": 80,
-      "BaseDamage": 17,
-      "MaxMp": 110,
-      "ProjectileDataID": 20002
-    },
-    {
-      "DataID": 5,
-      "Name": "Elementalist_W",
-      "NameKR": "원소술사",
-      "Description": "원소술사이다",
-      "prefabName": "Elementalist_W",
-      "Type": "Player",
-      "AttackRange": 2,
-      "CharacterGrade": "Unique",
-      "BaseHp": 80,
-      "BaseDamage": 17,
-      "MaxMp": 120,
-      "ProjectileDataID": 20002
-    },
-    {
-      "DataID": 6,
-      "Name": "Hunter",
-      "NameKR": "헌터",
-      "Description": "헌터이다",
-      "prefabName": "Hunter",
-      "Type": "Player",
-      "AttackRange": 2,
-      "CharacterGrade": "Legendary",
-      "BaseHp": 100,
-      "BaseDamage": 20,
-      "MaxMp": 90,
-      "ProjectileDataID": 20002
-    },
-    {
-      "DataID": 10,
+      "DataID": 1,
       "Name": "Cleric",
       "NameKR": "클레릭",
       "Description": "클레릭이다",
@@ -123,7 +53,7 @@
       "ProjectileDataID": 20000
     },
     {
-      "DataID": 11,
+      "DataID": 2,
       "Name": "Archer",
       "NameKR": "궁수",
       "Description": "궁수이다",
@@ -137,7 +67,7 @@
       "ProjectileDataID": 20001
     },
     {
-      "DataID": 12,
+      "DataID": 3,
       "Name": "Assassin",
       "NameKR": "암살자",
       "Description": "암살자이다",
@@ -151,7 +81,7 @@
       "ProjectileDataID": 20002
     },
     {
-      "DataID": 13,
+      "DataID": 4,
       "Name": "Hammer",
       "NameKR": "망치",
       "Description": "망치이다",
@@ -165,7 +95,7 @@
       "ProjectileDataID": 20002
     },
     {
-      "DataID": 14,
+      "DataID": 5,
       "Name": "Knight",
       "NameKR": "기사",
       "Description": "기사이다",
@@ -179,7 +109,7 @@
       "ProjectileDataID": 20002
     },
     {
-      "DataID": 15,
+      "DataID": 6,
       "Name": "SpearMan",
       "NameKR": "스피어맨",
       "Description": "스피어맨이다",
@@ -193,11 +123,11 @@
       "ProjectileDataID": 20002
     },
     {
-      "DataID": 16,
-      "Name": "TwoHanSword",
+      "DataID": 7,
+      "Name": "TwoHandSword",
       "NameKR": "두손검",
       "Description": "두손검이다",
-      "prefabName": "TwoHanSword",
+      "prefabName": "TwoHandSword",
       "Type": "Player",
       "AttackRange": 1,
       "CharacterGrade": "Unique",
@@ -207,7 +137,7 @@
       "ProjectileDataID": 20002
     },
     {
-      "DataID": 17,
+      "DataID": 8,
       "Name": "Mage_M",
       "NameKR": "남자마법사",
       "Description": "남자마법사이다",
@@ -221,7 +151,7 @@
       "ProjectileDataID": 20000
     },
     {
-      "DataID": 18,
+      "DataID": 9,
       "Name": "Mage_W",
       "NameKR": "여자마법사",
       "Description": "여자마법사이다",
