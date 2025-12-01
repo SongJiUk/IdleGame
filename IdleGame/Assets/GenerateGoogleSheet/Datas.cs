@@ -35,6 +35,7 @@ public class CreatureData
 	public int BaseHp;
 	public int BaseDamage;
 	public int MaxMp;
+	public int ProjectileDataID;
 }
 
 [Serializable]

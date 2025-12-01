@@ -20,6 +20,7 @@ namespace Data
         public double BaseHp;
         public double BaseDamage;
         public int MaxMp;
+        public int ProjectileDataID;
     }
 
     public class CreatureDataLoader : ILoader<int, CreatureData>

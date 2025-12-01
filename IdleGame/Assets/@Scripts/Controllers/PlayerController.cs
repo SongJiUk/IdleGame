@@ -11,7 +11,7 @@ using static Define;
 public class PlayerController : CreatureController
 {
     [SerializeField]
-    GameObject trail;
+    List<GameObject> trails;
     public ParticleSystem provocation;
 
     #region Action
@@ -110,7 +110,7 @@ public class PlayerController : CreatureController
     public override void Projectile()
     {
         if (target == null || target.IsDead) return;
-        Managers.ObjectM.Spawn<RangeAttackController>(transform.position, 20000, this, target);
+        Managers.ObjectM.Spawn<RangeAttackController>(transform.position, data.ProjectileDataID, this, target);
         GetMp(5);
 
     }
@@ -120,8 +120,16 @@ public class PlayerController : CreatureController
         if (!isAttack) return;
         if (target == null || target.IsDead) return;
 
-        if (trail != null) trail.SetActive(true);
-        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, 20001, this, target);
+        if (trails != null)
+        {
+            for(int i =0; i<trails.Count; i++)
+            {
+                trails[i].SetActive(true);
+            }
+            
+        }
+
+        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, data.ProjectileDataID, this, target);
         GetMp(5);
         TrailDisable().Forget();
     }
@@ -129,7 +137,13 @@ public class PlayerController : CreatureController
     public async UniTaskVoid TrailDisable()
     {
         await UniTask.WaitForSeconds(1f);
-        if (trail != null) trail.SetActive(false);
+        if (trails != null)
+        {
+            for (int i = 0; i < trails.Count; i++)
+            {
+                trails[i].SetActive(false);
+            }
+        }
     }
 
     private void OnPlay()
@@ -175,6 +189,7 @@ public class PlayerController : CreatureController
     {
         if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
         if (isDead) return;
+        if (isAttack) return;
 
         if (target == null || target.IsDead)
         {

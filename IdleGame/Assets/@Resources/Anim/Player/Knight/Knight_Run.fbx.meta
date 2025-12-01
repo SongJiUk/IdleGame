@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cbfabbbc02ec9884bb219e6acb53b563
+guid: f6d7225860851b94f9826dfee721b5bb
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -46,12 +46,12 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
+      loopBlendOrientation: 1
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
+      keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -526,18 +526,18 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Knight_Run(Clone)
+    - name: HumanCharacterDummy_M@Sword And Shield Run(Clone)
       parentName: 
       position: {x: -0.08910097, y: -0.056198273, z: -0.33306116}
       rotation: {x: 0.17052329, y: 0.0951954, z: -0.026522906, w: 0.9803857}
       scale: {x: 1, y: 1, z: 1}
     - name: mixamo:HumanM_BodyMesh
-      parentName: Knight_Run(Clone)
+      parentName: HumanCharacterDummy_M@Sword And Shield Run(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Rig
-      parentName: Knight_Run(Clone)
+      parentName: HumanCharacterDummy_M@Sword And Shield Run(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}

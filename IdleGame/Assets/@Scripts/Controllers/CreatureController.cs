@@ -71,11 +71,29 @@ public class CreatureController : BaseController
     public virtual void Projectile() { }
     public virtual void Attack() { }
 
+    public float GetCurrentPlayingClipDuration(Animator anim)
+    {
+        // 0번 레이어(Base Layer)의 클립 정보를 가져옵니다.
+        AnimatorClipInfo[] clipInfo = anim.GetCurrentAnimatorClipInfo(0);
+
+        if (clipInfo.Length > 0)
+        {
+            // 현재 가중치(Weight)가 가장 높은 (또는 첫 번째) 클립의 길이를 반환합니다.
+            // 블렌딩 중이라면 정확하지 않을 수 있습니다.
+            return clipInfo[0].clip.length;
+        }
+
+        // 재생 중인 클립이 없을 경우
+        return 0f;
+    }
     protected async UniTask WaitForAttackDelay()
     {
         try
         {
             // TODO : 이거도 캐릭터에 맞게 설정해야됌(공격 딜레이)
+
+            float time = GetCurrentPlayingClipDuration(animator);
+
             await UniTask.Delay(TimeSpan.FromSeconds(1f));
         }
         catch (Exception e)

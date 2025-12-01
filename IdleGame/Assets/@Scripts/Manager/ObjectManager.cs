@@ -46,7 +46,7 @@ public class ObjectManager
             Managers.DataM.CreatureDataDic.TryGetValue(tempId, out var data);
 
             //TODO : 이거 수정해야됌 isMainCharacter 이런걸로 
-            if (tempId == 1) mPlayer = player;
+            if (tempId == 10) mPlayer = player;
             player.Init();
             player.transform.position = pos;
             //player.transform.rotation = Quaternion.identity;

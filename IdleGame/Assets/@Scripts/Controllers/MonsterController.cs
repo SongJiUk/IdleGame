@@ -105,13 +105,13 @@ public class MonsterController : CreatureController
     {
         if (target == null || target.IsDead) return;
 
-        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, 20001, this, target);
+        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, data.ProjectileDataID, this, target);
     }
 
     public override void Projectile()
     {
         if (target == null || target.IsDead) return;
-        Managers.ObjectM.Spawn<RangeAttackController>(transform.position, 20002, this, target);
+        Managers.ObjectM.Spawn<RangeAttackController>(transform.position, data.ProjectileDataID, this, target);
 
     }
 
@@ -142,7 +142,7 @@ public class MonsterController : CreatureController
     {
         if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
         if (isDead) return;
-
+        if (isAttack) return;
         //TODO: 몬스터 플레이어 죽으면 Idle상태로 돌아가기.
         if (target == null || target.IsDead)
         {

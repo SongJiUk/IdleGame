@@ -39,19 +39,6 @@
   ],
   "CreatureData": [
     {
-      "DataID": 1,
-      "Name": "Archer",
-      "NameKR": "클레릭",
-      "Description": "클레릭이다",
-      "prefabName": "Archer",
-      "Type": "Player",
-      "AttackRange": 2,
-      "CharacterGrade": "Common",
-      "BaseHp": 50,
-      "BaseDamage": 10,
-      "MaxMp": 120
-    },
-    {
       "DataID": 2,
       "Name": "Barbarian",
       "NameKR": "바바리안",
@@ -62,7 +49,8 @@
       "CharacterGrade": "UnCommon",
       "BaseHp": 60,
       "BaseDamage": 12,
-      "MaxMp": 70
+      "MaxMp": 70,
+      "ProjectileDataID": 20002
     },
     {
       "DataID": 3,
@@ -75,7 +63,8 @@
       "CharacterGrade": "Rare",
       "BaseHp": 70,
       "BaseDamage": 15,
-      "MaxMp": 80
+      "MaxMp": 80,
+      "ProjectileDataID": 20002
     },
     {
       "DataID": 4,
@@ -88,7 +77,8 @@
       "CharacterGrade": "Unique",
       "BaseHp": 80,
       "BaseDamage": 17,
-      "MaxMp": 110
+      "MaxMp": 110,
+      "ProjectileDataID": 20002
     },
     {
       "DataID": 5,
@@ -101,7 +91,8 @@
       "CharacterGrade": "Unique",
       "BaseHp": 80,
       "BaseDamage": 17,
-      "MaxMp": 120
+      "MaxMp": 120,
+      "ProjectileDataID": 20002
     },
     {
       "DataID": 6,
@@ -114,20 +105,134 @@
       "CharacterGrade": "Legendary",
       "BaseHp": 100,
       "BaseDamage": 20,
-      "MaxMp": 90
+      "MaxMp": 90,
+      "ProjectileDataID": 20002
     },
     {
-      "DataID": 7,
-      "Name": "Spearman",
-      "NameKR": "스피어맨",
-      "Description": "스피어맨이다",
-      "prefabName": "Spearman",
+      "DataID": 10,
+      "Name": "Cleric",
+      "NameKR": "클레릭",
+      "Description": "클레릭이다",
+      "prefabName": "Cleric",
+      "Type": "Player",
+      "AttackRange": 2,
+      "CharacterGrade": "Common",
+      "BaseHp": 50,
+      "BaseDamage": 10,
+      "MaxMp": 120,
+      "ProjectileDataID": 20000
+    },
+    {
+      "DataID": 11,
+      "Name": "Archer",
+      "NameKR": "궁수",
+      "Description": "궁수이다",
+      "prefabName": "Archer",
+      "Type": "Player",
+      "AttackRange": 2,
+      "CharacterGrade": "UnCommon",
+      "BaseHp": 60,
+      "BaseDamage": 12,
+      "MaxMp": 80,
+      "ProjectileDataID": 20001
+    },
+    {
+      "DataID": 12,
+      "Name": "Assassin",
+      "NameKR": "암살자",
+      "Description": "암살자이다",
+      "prefabName": "Assassin",
       "Type": "Player",
       "AttackRange": 1,
+      "CharacterGrade": "Rare",
+      "BaseHp": 70,
+      "BaseDamage": 15,
+      "MaxMp": 70,
+      "ProjectileDataID": 20002
+    },
+    {
+      "DataID": 13,
+      "Name": "Hammer",
+      "NameKR": "망치",
+      "Description": "망치이다",
+      "prefabName": "Hammer",
+      "Type": "Player",
+      "AttackRange": 1,
+      "CharacterGrade": "Rare",
+      "BaseHp": 70,
+      "BaseDamage": 15,
+      "MaxMp": 70,
+      "ProjectileDataID": 20002
+    },
+    {
+      "DataID": 14,
+      "Name": "Knight",
+      "NameKR": "기사",
+      "Description": "기사이다",
+      "prefabName": "Knight",
+      "Type": "Player",
+      "AttackRange": 1,
+      "CharacterGrade": "Unique",
+      "BaseHp": 80,
+      "BaseDamage": 17,
+      "MaxMp": 70,
+      "ProjectileDataID": 20002
+    },
+    {
+      "DataID": 15,
+      "Name": "SpearMan",
+      "NameKR": "스피어맨",
+      "Description": "스피어맨이다",
+      "prefabName": "SpearMan",
+      "Type": "Player",
+      "AttackRange": 1,
+      "CharacterGrade": "Unique",
+      "BaseHp": 80,
+      "BaseDamage": 17,
+      "MaxMp": 70,
+      "ProjectileDataID": 20002
+    },
+    {
+      "DataID": 16,
+      "Name": "TwoHanSword",
+      "NameKR": "두손검",
+      "Description": "두손검이다",
+      "prefabName": "TwoHanSword",
+      "Type": "Player",
+      "AttackRange": 1,
+      "CharacterGrade": "Unique",
+      "BaseHp": 80,
+      "BaseDamage": 17,
+      "MaxMp": 70,
+      "ProjectileDataID": 20002
+    },
+    {
+      "DataID": 17,
+      "Name": "Mage_M",
+      "NameKR": "남자마법사",
+      "Description": "남자마법사이다",
+      "prefabName": "Mage_M",
+      "Type": "Player",
+      "AttackRange": 2,
       "CharacterGrade": "Legendary",
       "BaseHp": 100,
       "BaseDamage": 20,
-      "MaxMp": 80
+      "MaxMp": 120,
+      "ProjectileDataID": 20000
+    },
+    {
+      "DataID": 18,
+      "Name": "Mage_W",
+      "NameKR": "여자마법사",
+      "Description": "여자마법사이다",
+      "prefabName": "Mage_W",
+      "Type": "Player",
+      "AttackRange": 2,
+      "CharacterGrade": "Legendary",
+      "BaseHp": 100,
+      "BaseDamage": 20,
+      "MaxMp": 120,
+      "ProjectileDataID": 20000
     },
     {
       "DataID": 10000,
@@ -140,7 +245,8 @@
       "CharacterGrade": "Common",
       "BaseHp": 10,
       "BaseDamage": 10,
-      "MaxMp": 0
+      "MaxMp": 0,
+      "ProjectileDataID": 20002
     },
     {
       "DataID": 10001,
@@ -153,7 +259,8 @@
       "CharacterGrade": "Rare",
       "BaseHp": 200,
       "BaseDamage": 20,
-      "MaxMp": 0
+      "MaxMp": 0,
+      "ProjectileDataID": 20003
     }
   ],
   "ProjectileData": [
@@ -167,6 +274,14 @@
     },
     {
       "DataID": 20001,
+      "Name": "Projectile",
+      "NameKR": "화살",
+      "Description": "화살이다",
+      "prefabName": "Arrow",
+      "AttackType": "Range"
+    },
+    {
+      "DataID": 20002,
       "Name": "MeleeAttack",
       "NameKR": "근접공격",
       "Description": "근접공격이다",
@@ -174,7 +289,7 @@
       "AttackType": "Melee"
     },
     {
-      "DataID": 20002,
+      "DataID": 20003,
       "Name": "Projectile",
       "NameKR": "보스 공격",
       "Description": "보스공격이다",
