@@ -1,88 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2049739581292539575
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1673636908167574541}
-  - component: {fileID: 2348108733667654568}
-  - component: {fileID: 536736746857058146}
-  m_Layer: 6
-  m_Name: ClericWeapon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1673636908167574541
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2049739581292539575}
-  m_LocalRotation: {x: 0.0021762813, y: 0.8445183, z: -0.5349769, w: 0.02416624}
-  m_LocalPosition: {x: -0.012, y: 0.155, z: 0.461}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4236097606852169854}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 64.649, y: 174.843, z: -2.97}
---- !u!33 &2348108733667654568
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2049739581292539575}
-  m_Mesh: {fileID: -6369921201865322523, guid: 3dac6bc52e1833940b8015b35a8bcf62, type: 3}
---- !u!23 &536736746857058146
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2049739581292539575}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c681da389980e45469889866404b0744, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4236097605264964890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,6 +1203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f54ff00dbde84655be955f2634a8479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buffController: {fileID: 0}
   trails: []
   provocation: {fileID: 7811019403353353649}
   Level: 0
@@ -16837,3 +16755,65 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1001 &7946428193955283383
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4236097606852169854}
+    m_Modifications:
+    - target: {fileID: 8229555487656734464, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_Name
+      value: Cleric_Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.012
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.155
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.461
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.02416624
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0021762813
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.8445183
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5349769
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 64.649
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 174.843
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -2.97
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+--- !u!4 &1673636908167574541 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8754594918130070970, guid: a6cb433ccff8b6548981b60e4d265c1f, type: 3}
+  m_PrefabInstance: {fileID: 7946428193955283383}
+  m_PrefabAsset: {fileID: 0}

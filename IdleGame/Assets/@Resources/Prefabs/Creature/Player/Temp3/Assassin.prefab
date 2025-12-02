@@ -14927,7 +14927,7 @@ GameObject:
   - component: {fileID: 1493093856488484833}
   - component: {fileID: 7656356104274723877}
   m_Layer: 6
-  m_Name: AssassinWeapon
+  m_Name: Assassin_Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15011,7 +15011,7 @@ GameObject:
   - component: {fileID: 6450140930186548037}
   - component: {fileID: 2845112488777365633}
   m_Layer: 6
-  m_Name: AssassinWeapon
+  m_Name: Assassin_Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16404,6 +16404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f54ff00dbde84655be955f2634a8479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buffController: {fileID: 0}
   trails:
   - {fileID: 3952277705880829101}
   - {fileID: 3952277705593527726}

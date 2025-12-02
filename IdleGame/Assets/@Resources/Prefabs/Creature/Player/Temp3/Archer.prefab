@@ -14647,7 +14647,7 @@ GameObject:
   - component: {fileID: 7963082909903992989}
   - component: {fileID: 7559420252547857506}
   m_Layer: 6
-  m_Name: Bow
+  m_Name: Archer_Bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16431,6 +16431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f54ff00dbde84655be955f2634a8479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buffController: {fileID: 0}
   trails: []
   provocation: {fileID: 522459384817349294}
   Level: 0
