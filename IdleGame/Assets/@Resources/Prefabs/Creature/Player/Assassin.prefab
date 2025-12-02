@@ -16346,6 +16346,8 @@ GameObject:
   - component: {fileID: 8580833396643094338}
   - component: {fileID: 8580833396643094339}
   - component: {fileID: 4844317784249200855}
+  - component: {fileID: 2666470684575743422}
+  - component: {fileID: 2661859569625270611}
   m_Layer: 6
   m_Name: Assassin
   m_TagString: Untagged
@@ -16404,6 +16406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f54ff00dbde84655be955f2634a8479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
   buffController: {fileID: 0}
   trails:
   - {fileID: 3952277705880829101}
@@ -16412,6 +16415,30 @@ MonoBehaviour:
   Level: 0
   index: 0
   maxMp: 0
+--- !u!114 &2666470684575743422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8580833396643094336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c215ce7b8f97d4e47b0b0e1cedcddd8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2661859569625270611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8580833396643094336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e666ec3da57045ce94e1a1878bd94d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8580833396673383726
 GameObject:
   m_ObjectHideFlags: 0

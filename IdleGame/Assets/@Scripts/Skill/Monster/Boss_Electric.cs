@@ -8,6 +8,13 @@ public class Boss_Electric : SkillBase
 {
 
     CreatureController cc;
+    List<PlayerController> players = new List<PlayerController>();
+
+    public Boss_Electric()
+    {
+
+    }
+
     public override void SetSkill(CreatureController _cc = null)
     {
         base.SetSkill();
@@ -35,7 +42,7 @@ public class Boss_Electric : SkillBase
 
             if (player == null || player.IsDead) continue;
 
-            player.GetDamage(10, cc);
+            player.GetDamage(cc.Damage * 1.2, cc);
             await UniTask.WaitForSeconds(0.2f);
 
         }

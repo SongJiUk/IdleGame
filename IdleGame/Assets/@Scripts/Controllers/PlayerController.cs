@@ -32,13 +32,8 @@ public class PlayerController : CreatureController
     Vector3 startPos = Vector3.zero;
     string ownerName;
     public int Level;
-    Data.CreatureData data;
     public int index;
-    public Data.CreatureData DATA
-    {
-        get { return data; }
-        set { data = value; }
-    }
+   
     int mp;
     public int MP
     {
@@ -75,9 +70,12 @@ public class PlayerController : CreatureController
     }
     public void SetInfo(Data.CreatureData _data)
     {
-        data = _data;
+        DATA = _data;
         baseHp = _data.BaseHp;
         baseDamage = _data.BaseDamage;
+
+        base.SetSkill();
+       
 
         isPlayer = true;
         isDead = false;
@@ -87,8 +85,8 @@ public class PlayerController : CreatureController
         maxHp = hp;
         damage = Utils.Datas.levelData.Damage((float)baseDamage);
         mp = 0;
-        maxMp = data.MaxMp;
-        attackrange = data.AttackRange;
+        maxMp = DATA.MaxMp;
+        attackrange = DATA.AttackRange;
         detectrange = 5f;
 
         ownerName = this.name;
@@ -110,7 +108,7 @@ public class PlayerController : CreatureController
     public override void Projectile()
     {
         if (target == null || target.IsDead) return;
-        Managers.ObjectM.Spawn<RangeAttackController>(transform.position, data.ProjectileDataID, this, target);
+        Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
         GetMp(5);
 
     }
@@ -129,7 +127,7 @@ public class PlayerController : CreatureController
             
         }
 
-        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, data.ProjectileDataID, this, target);
+        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
         GetMp(5);
         TrailDisable().Forget();
     }
@@ -248,8 +246,21 @@ public class PlayerController : CreatureController
         if (isUsingSkill) return;
 
         mp += _value;
+        if(mp >= MaxMp)
+        {
+            isUsingSkill = true;
+            mp = 0;
+            UsePlayerSkill();
+        }
         OnPlayerDataUpdate?.Invoke(this);
     }
+
+    void UsePlayerSkill()
+    {
+        CreatureController target = this;
+        skillController.UseSKill(0, target);
+    }
+
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)
     {
         if (isDead) return;

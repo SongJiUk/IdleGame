@@ -10,17 +10,24 @@ public class SkillController : MonoBehaviour
 
     private void Awake()
     {
+        //이 객체를 참조로 설정한다.
         owner = GetComponent<CreatureController>();
 
     }
 
-    void Start()
+
+    public void InitSkills(List<SkillBase> _skills)
     {
-        //스킬 초기화(조립해줘야함)
-        Archer_Skill archer_Skill = new Archer_Skill();
-        skills.Add(archer_Skill);
+        skills.Clear();
+        if(_skills != null)
+        {
+            skills.AddRange(_skills);
+        }
+
+        Debug.Log($"{owner.gameObject.name}의 스킬 {skills.Count}개가 초기화되었습니다.");
     }
 
+    //해당 스킬을 사용
     public void UseSKill(int _skillIndex, CreatureController _target)
     {
         if (_skillIndex < 0 || _skillIndex >= skills.Count)
@@ -32,6 +39,5 @@ public class SkillController : MonoBehaviour
         SkillBase useSkill = skills[_skillIndex];
 
         useSkill.UseSkill(owner, _target);
-
     }
 }

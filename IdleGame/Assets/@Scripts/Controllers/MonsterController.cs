@@ -22,7 +22,7 @@ public class MonsterController : CreatureController
     public Action<MonsterController> OnMonsterInfoUpdate;
     public bool isBoss = false;
     SkillBase skillbase;
-    Data.CreatureData data;
+    
     CancellationTokenSource skillCTS;
     public override bool Init()
     {
@@ -52,7 +52,7 @@ public class MonsterController : CreatureController
     //TODO : 이걸 temp아이디를 넘겨받아서 여기서 하는게 맞을까 싶긴함
     public void SetInfo(Data.CreatureData _data)
     {
-        data = _data;
+        DATA = _data;
         isDead = false;
         isKnockBack = false;
         baseHp = _data.BaseHp;
@@ -61,13 +61,13 @@ public class MonsterController : CreatureController
         hp = Utils.Datas.stageData.HP((float)baseHp);
         damage = Utils.Datas.stageData.Damage((float)baseDamage);
 
-        attackrange = data.AttackRange;
+        attackrange = DATA.AttackRange;
         detectrange = Mathf.Infinity;
         CriticalRate = 0f;
         isBoss = false;
         target = null;
 
-        if (data.Type == ObjectType.Boss)
+        if (DATA.Type == ObjectType.Boss)
         {
             isBoss = true;
             skillCTS?.Cancel();
@@ -105,13 +105,13 @@ public class MonsterController : CreatureController
     {
         if (target == null || target.IsDead) return;
 
-        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, data.ProjectileDataID, this, target);
+        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
     }
 
     public override void Projectile()
     {
         if (target == null || target.IsDead) return;
-        Managers.ObjectM.Spawn<RangeAttackController>(transform.position, data.ProjectileDataID, this, target);
+        Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
 
     }
 

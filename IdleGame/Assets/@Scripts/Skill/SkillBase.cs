@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public abstract class SkillBase : BaseController
+public abstract class SkillBase
 {
-    protected List<PlayerController> players;
-    protected List<MonsterController> monsters;
-
+    //해당 스킬이 발동할 효과들
     protected List<ISkillEffect> effects = new List<ISkillEffect>();
 
-    public void UseSkill(CreatureController _caster, CreatureController _target)
+    public virtual void UseSkill(CreatureController _caster, CreatureController _target)
     {
+        //사용 방법임, 해당 스킬에서 사용하면 됌
         //TODO : 쿨타임 / 사용 마나 처리
 
         foreach (var effect in effects)
@@ -22,19 +21,13 @@ public abstract class SkillBase : BaseController
         //TODO : 쿨타임 시작
     }
 
+    //스킬 효과 설정
     protected abstract void SetUpEffect();
-
-    public override bool Init()
-    {
-        if (!base.Init()) return false;
-        return true;
-    }
 
     public virtual void SetSkill(CreatureController _cc = null)
     {
-        //TODO : 이거 플레이어는 스폰매니저에서 하는게 나을거같음, 오브젝트 매니저로하면 애니메이션 안나오고 바로 사라져버림(캐릭터는 상관없을거같긴함)
-        players = Managers.SpawnM.players;
-        monsters = Managers.ObjectM.mcList.ToList();
+        
     }
+
 
 }

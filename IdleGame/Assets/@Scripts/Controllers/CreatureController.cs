@@ -7,6 +7,7 @@ using static Define;
 
 public class CreatureController : BaseController
 {
+    public CreatureType Type = CreatureType.None;
 
     protected Animator animator;
     protected virtual bool isDead { get; set; }
@@ -25,7 +26,26 @@ public class CreatureController : BaseController
     protected virtual double maxHp { get; set; }
     public double MaxHP { get { return maxHp; } }
     protected virtual double damage { get; set; }
-    public double Damage { get { return damage; } }
+    public double Damage
+    {
+        get { return damage; }
+        set { damage = value; }
+    }
+
+    protected virtual double defence { get; set; }
+    public double Defence
+    {
+        get { return defence; }
+        set { defence = value; }
+    }
+
+    protected virtual float speed { get; set; }
+    public float Speed
+    {
+        get { return speed; }
+        set { speed = value; }
+
+    }
     protected virtual float attackrange { get; set; }
     protected virtual float detectrange { get; set; }
 
@@ -41,6 +61,14 @@ public class CreatureController : BaseController
     public Action OnTargetDead;
 
     public BuffController buffController;
+    public SkillController skillController;
+    Data.CreatureData data;
+    public Data.CreatureData DATA
+    {
+        get { return data; }
+        set { data = value; }
+    }
+
     public override bool Init()
     {
         if (!base.Init()) return false;
@@ -70,8 +98,24 @@ public class CreatureController : BaseController
         OnTargetDead?.Invoke();
     }
 
+    public void SetSkill()
+    {
+        this.Type = DATA.CreatureType;
+
+        skillController = GetComponent<SkillController>();
+        if (skillController != null)
+        {
+            List<SkillBase> initialSkills = SkillRegistry.CreateSkillsForCreature(this.Type);
+            skillController.InitSkills(initialSkills);
+        }
+    }
+
     public virtual void Projectile() { }
     public virtual void Attack() { }
+    public void Heal(float _amount)
+    {
+
+    }
 
     public float GetCurrentPlayingClipDuration(Animator anim)
     {

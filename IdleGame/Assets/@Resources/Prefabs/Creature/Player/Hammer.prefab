@@ -1376,6 +1376,8 @@ GameObject:
   - component: {fileID: 8549638018391217892}
   - component: {fileID: 8549638018391217893}
   - component: {fileID: 6852111764349231018}
+  - component: {fileID: 5680186109497052602}
+  - component: {fileID: 8228649819826060841}
   m_Layer: 6
   m_Name: Hammer
   m_TagString: Untagged
@@ -1434,6 +1436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f54ff00dbde84655be955f2634a8479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
   buffController: {fileID: 0}
   trails:
   - {fileID: 8570576385740580406}
@@ -1441,6 +1444,30 @@ MonoBehaviour:
   Level: 0
   index: 0
   maxMp: 0
+--- !u!114 &5680186109497052602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8549638018391217890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c215ce7b8f97d4e47b0b0e1cedcddd8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8228649819826060841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8549638018391217890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e666ec3da57045ce94e1a1878bd94d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8549638018415329408
 GameObject:
   m_ObjectHideFlags: 0

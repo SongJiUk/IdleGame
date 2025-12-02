@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BuffController : MonoBehaviour, ITickable
 {
+    //버프를 소유한 객체
     private CreatureController owner;
-
+    //적용중인 버프 목록
     private List<IBuff> activeBuffs = new List<IBuff>();
 
     private void Awake()
@@ -34,10 +35,13 @@ public class BuffController : MonoBehaviour, ITickable
 
     public void AddBuff(IBuff _newBuff)
     {
-        //TODO : 같은 종류의 버프가 있다면, 중첩? or 시간만 갱신?
-
+        //같은 종류의 버프가 있으면 제거하고 다시시작.
+        IBuff existingBuff = activeBuffs.Find(b => b.GetBuffType() == _newBuff.GetBuffType());
+        if(existingBuff != null)
+        {
+            RemoveBuff(existingBuff);
+        }
         activeBuffs.Add(_newBuff);
-        //TODO : 여기서 버프를 적용해줄 타겟을 찾아야함
         _newBuff.Apply(owner);
     }
 

@@ -15,6 +15,7 @@ namespace Data
         public string Description;
         public string prefabName;
         public Define.ObjectType Type;
+        public Define.CreatureType CreatureType;
         public float AttackRange;
         public Define.CharacterGrade CharacterGrade;
         public double BaseHp;

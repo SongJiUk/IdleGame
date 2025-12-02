@@ -29,6 +29,7 @@ public class CreatureData
 	public string NameKR;
 	public string Description;
 	public string prefabName;
+	public string CreatureType;
 	public string Type;
 	public int AttackRange;
 	public string CharacterGrade;

@@ -20,7 +20,7 @@ public class BaseController : MonoBehaviour, ITickable
 
     }
 
-    //TODO: ÀÌ°É ÀÌ·¸°Ô »ç¿ëÇØµµ µÇ³ª?
+    //TODO: ì´ê±¸ ì´ë ‡ê²Œ ì‚¬ìš©í•´ë„ ë˜ë‚˜?
     public virtual async UniTask ReturnObject(float _time)
     {
         CancellationToken token = this.GetCancellationTokenOnDestroy();
@@ -32,7 +32,7 @@ public class BaseController : MonoBehaviour, ITickable
         catch (System.OperationCanceledException) { }
         catch (System.Exception e)
         {
-            Debug.LogError($"Projectile ¹İÈ¯Áß ¿¡·¯ ¹ß»ı {e.Message}");
+            Debug.LogError($"Projectile ë°˜í™˜ì¤‘ ì—ëŸ¬ ë°œìƒ {e.Message}");
         }
     }
 }

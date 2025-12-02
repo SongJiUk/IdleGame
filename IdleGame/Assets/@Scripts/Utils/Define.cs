@@ -108,4 +108,20 @@ public static class Define
         Circle5Button,
         Circle6Button
     }
+
+    public enum CreatureType
+    {
+        None,
+        Archer,
+        Cleric,
+        Assassin,
+        Hammer,
+        Knight,
+        SpearMan,
+        TwoHandSword,
+        Mage_M,
+        Mage_W,
+        Monster,
+        Boss,
+    }
 }

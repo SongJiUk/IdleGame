@@ -203,6 +203,8 @@ GameObject:
   - component: {fileID: 1252748237798077726}
   - component: {fileID: 1252748237798077721}
   - component: {fileID: 2247179579126023400}
+  - component: {fileID: 3431669846527986880}
+  - component: {fileID: -4225555922960155506}
   m_Layer: 6
   m_Name: TwoHandSword
   m_TagString: Untagged
@@ -261,6 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f54ff00dbde84655be955f2634a8479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 0
   buffController: {fileID: 0}
   trails:
   - {fileID: 6435985864691275530}
@@ -268,6 +271,30 @@ MonoBehaviour:
   Level: 0
   index: 0
   maxMp: 0
+--- !u!114 &3431669846527986880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252748237798077720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c215ce7b8f97d4e47b0b0e1cedcddd8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4225555922960155506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252748237798077720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e666ec3da57045ce94e1a1878bd94d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1252748237825160329
 GameObject:
   m_ObjectHideFlags: 0
