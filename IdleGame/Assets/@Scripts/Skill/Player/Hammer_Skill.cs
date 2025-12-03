@@ -11,7 +11,7 @@ public class Hammer_Skill : SkillBase
     }
     protected override void SetUpEffect() { }
 
-    public override void UseSkill(CreatureController _caster, CreatureController _target)
+    public override void UseSkill(CreatureController _caster, CreatureController _target = null)
     {
 
         //TODO : 하드코딩들 처리
@@ -19,11 +19,11 @@ public class Hammer_Skill : SkillBase
         _caster.buffController.AddBuff(spinBuff);
 
         List<CreatureController> enemiesInArea = Utils.FindEnemyInSphereArea(_caster, attack_Radius);
-        if(enemiesInArea.Count > 0)
+        if (enemiesInArea.Count > 0)
         {
-            foreach(CreatureController enemy in enemiesInArea)
+            foreach (CreatureController enemy in enemiesInArea)
             {
-                foreach(var effect in effects)
+                foreach (var effect in effects)
                 {
                     effect.Excute(_caster, enemy);
                 }

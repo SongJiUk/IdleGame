@@ -47,7 +47,8 @@ public class StageManager
         switch (stageState)
         {
             case StageState.Ready:
-                maxCount = Managers.DataM.StageDataDic[Managers.GameM.stage].StageClearMaxCount;
+                //maxCount = Managers.DataM.StageDataDic[Managers.GameM.stage].StageClearMaxCount;
+                maxCount = 200;
                 readyEvent?.Invoke();
                 AsyncAction(() => StateChange(StageState.Play), 1f).Forget();
 

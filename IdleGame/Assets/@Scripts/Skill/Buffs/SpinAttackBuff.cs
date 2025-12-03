@@ -12,9 +12,9 @@ public class SpinAttackBuff : BuffBase
 
     public SpinAttackBuff(CreatureController _caster, float _duration) : base(_duration) { this.caster = _caster; }
 
-    public override void Apply(CreatureController _target){}
+    public override void Apply(CreatureController _target) { }
 
-    public override void Remove(CreatureController _target){}
+    public override void Remove(CreatureController _target) { }
 
 
     public override void Update(float _deltaTime)
@@ -23,7 +23,7 @@ public class SpinAttackBuff : BuffBase
         base.Update(_deltaTime);
 
         timeSinceLastTick += _deltaTime;
-        if(timeSinceLastTick >= TICK_INTERVAL)
+        if (timeSinceLastTick >= TICK_INTERVAL)
         {
             DealAreaDamage();
             timeSinceLastTick = 0f;
@@ -34,12 +34,12 @@ public class SpinAttackBuff : BuffBase
     {
         List<CreatureController> hitEnemies = Utils.FindEnemyInSphereArea(caster, 2f);
         float tickDamage = (float)caster.Damage * damageMultiplier;
-        foreach(CreatureController enemy in hitEnemies)
+        foreach (CreatureController enemy in hitEnemies)
         {
             enemy.GetDamage(tickDamage, caster);
         }
     }
 
 
-    
+
 }

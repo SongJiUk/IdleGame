@@ -4,17 +4,16 @@ using UnityEngine;
 
 public interface IBuff
 {
-    //ë²„í”„ ì¤‘ë³µ ì²´í¬ / ê´€ë¦¬ìœ„í•´ ë²„í”„ì˜ êµ¬ì²´ì ì¸ íƒ€ì… ë°˜í™˜
+    //¹öÇÁ Áßº¹ Ã¼Å© / °ü¸®À§ÇØ ¹öÇÁÀÇ ±¸Ã¼ÀûÀÎ Å¸ÀÔ ¹İÈ¯
     System.Type GetBuffType();
 
-    //ë²„í”„ê°€ ê°ì²´ì— ì ìš©ë ë•Œ, ìŠ¤íƒ¯ ë³€ê²½ ì‹¤ì œíš¨ê³¼ ë°œìƒ
+    //¹öÇÁ°¡ °´Ã¼¿¡ Àû¿ëµÉ¶§, ½ºÅÈ º¯°æ ½ÇÁ¦È¿°ú ¹ß»ı
     void Apply(CreatureController _target);
-    //ë²„í”„ ë§Œë£Œì‹œ ì œê±°
+    //¹öÇÁ ¸¸·á½Ã Á¦°Å
     void Remove(CreatureController _target);
 
-    //BuffControllerì˜ Tick()ì—ì„œ ëŒì•„ê° ì´ë¦„ë§Œ update
+    //BuffControllerÀÇ Tick()¿¡¼­ µ¹¾Æ°¨ ÀÌ¸§¸¸ update
     void Update(float _deltaTime);
-
-    //ë²„í”„ ë§Œë£Œ í™•ì¸
+    //¹öÇÁ ¸¸·á È®ÀÎ
     bool isExpired();
 }

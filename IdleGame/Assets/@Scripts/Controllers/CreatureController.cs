@@ -156,6 +156,8 @@ public class CreatureController : BaseController
 
     public virtual void AnimatorChange(Define.CreatureState _state)
     {
+        if (animator == null) animator = GetComponent<Animator>();
+
         int stateIndex = (int)_state;
         animator.SetInteger(Define.AnimState, stateIndex);
     }

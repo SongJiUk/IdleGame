@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//공통 스킬 데미지 계산
+//공통 ?��?�� ?��미�?? 계산
 public class DamageEffect : ISkillEffect
 {
-    double damageMultiplier; //피배 비율
-    double splashRadius =0f; //광역 피해 반경(0이면 단일)
-    double splashMultiplier = 0f; //광역피해 비율
+    double damageMultiplier;
+    double splashRadius = 0f;
+    double splashMultiplier = 0f;
 
     public DamageEffect(double _damageMultiplier, double _splashRadius = 0, double _splashMultiplier = 0)
     {
@@ -25,7 +25,7 @@ public class DamageEffect : ISkillEffect
         _target.GetDamage(baseDamage, _caster);
 
 
-        if(splashRadius > 0  && splashMultiplier > 0)
+        if (splashRadius > 0 && splashMultiplier > 0)
         {
             ApplySplashDamage(_caster, _target.transform.position, splashRadius, splashMultiplier);
         }
@@ -37,7 +37,7 @@ public class DamageEffect : ISkillEffect
 
         double splashDamage = _caster.Damage * _multiplier;
 
-        foreach(MonsterController monster in mclist)
+        foreach (MonsterController monster in mclist)
         {
             Vector3 monsterPos = monster.transform.position;
 

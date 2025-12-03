@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefenceBuff : BuffBase
+public class DefenseBuff : BuffBase
 {
-    public DefenceBuff(float _duration) : base(_duration)
+    public DefenseBuff(float _duration) : base(_duration)
     {
     }
 
@@ -18,5 +18,5 @@ public class DefenceBuff : BuffBase
         throw new System.NotImplementedException();
     }
 
-    
+
 }

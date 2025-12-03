@@ -2,32 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//ìŠ¤í‚¬ íš¨ê³¼ì¤‘ í•˜ë‚˜, íƒ€ê²Ÿì—ê²Œ ë²„í”„ ì ìš©í•˜ëŠ” ì—­í• 
+//½ºÅ³ È¿°úÁß ÇÏ³ª, Å¸°Ù¿¡°Ô ¹öÇÁ Àû¿ëÇÏ´Â ¿ªÇÒ
 public class BuffEffect : ISkillEffect
 {
-    //IBuff ì¸ìŠ¤í„´ìŠ¤ ìƒì„±í•˜ëŠ” íŒ©í† ë¦¬í•¨ìˆ˜(ë¦¬í”Œë ‰ì…˜ ëŒ€ì‹  ì‚¬ìš©)
+    //IBuff ÀÎ½ºÅÏ½º »ı¼ºÇÏ´Â ÆÑÅä¸®ÇÔ¼ö(¸®ÇÃ·º¼Ç ´ë½Å »ç¿ë)
     public delegate IBuff BuffFactory(float _duration);
     readonly BuffFactory buffFactory;
 
     private float buffDurtaion;
-    
-    //ë²„í”„ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ìƒì„±í•  íŒ©í† ë¦¬ í•¨ìˆ˜, ì§€ì†ì‹œê°„
+
+    //¹öÇÁ ÀÎ½ºÅÏ½º¸¦ »ı¼ºÇÒ ÆÑÅä¸® ÇÔ¼ö, Áö¼Ó½Ã°£
     public BuffEffect(BuffFactory _factory, float _duration)
     {
         buffFactory = _factory;
         buffDurtaion = _duration;
     }
 
-    //ì‹¤ì œ ë²„í”„ ì ìš© ë¡œì§
     public void Excute(CreatureController _caster, CreatureController _target)
     {
-        //ë²„í”„ ì¸ìŠ¤í„´ìŠ¤ ìƒì„± : íŒ©í† ë¦¬ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ ìƒˆë¡œìš´ Ibuff ê°ì²´ ìƒì„±
+        //¹öÇÁ ÀÎ½ºÅÏ½º »ı¼º : ÆÑÅä¸® ÇÔ¼ö¸¦ È£ÃâÇÏ¿© »õ·Î¿î Ibuff °´Ã¼ »ı¼º
         IBuff newBuff = buffFactory(buffDurtaion);
-        //íƒ€ê²Ÿì— ë²„í”„ ì¶”ê°€, íƒ€ê²Ÿì˜ addfBuffí˜¸ì¶œ
+        //Å¸°Ù¿¡ ¹öÇÁ Ãß°¡, Å¸°ÙÀÇ addfBuffÈ£Ãâ
         _target.buffController.AddBuff(newBuff);
 
 
-        //TDOO: ì§€ìš¸ê±°(ì‚¬ìš©ë°©ë²•)
+        //TDOO: ì§??š¸ê±?(?‚¬?š©ë°©ë²•)
         //effects.Add(new BuffEffect(typeof(AttackBuff), 15f));
     }
 }

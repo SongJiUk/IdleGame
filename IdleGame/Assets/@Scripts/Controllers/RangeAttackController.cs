@@ -9,7 +9,7 @@ public class RangeAttackController : ProjectileController
     CreatureController owner;
 
 
-    //TODO: ì´ë ‡ê²Œ í•˜ëŠ”ê²Œ ë§ëŠ”ê±´ê°€ ì‹¶ê¸´í•œë° ë‚˜ì¤‘ì— ë¦¬í™í† ë§í• ë•Œ ìˆ˜ì •í•˜ì.
+    //TODO: ?´? ‡ê²? ?•˜?Š”ê²? ë§ëŠ”ê±´ê?? ?‹¶ê¸´í•œ?° ?‚˜ì¤‘ì— ë¦¬í™?† ë§í• ?•Œ ?ˆ˜? •?•˜?.
     private void Awake()
     {
         Transform projectiles = transform.GetChild(0);
@@ -36,7 +36,6 @@ public class RangeAttackController : ProjectileController
     {
         if (isHit) return;
 
-        //TODO : ï¿½ï¿½Æ¼Å¬ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         targetPos.y = 0.5f;
 
         transform.position = Vector3.MoveTowards(transform.position, targetPos, _deltaTime * 5f);
@@ -49,7 +48,6 @@ public class RangeAttackController : ProjectileController
                 target.GetDamage(damage, owner);
 
 
-                //TODO : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 Projectiles[characterName].SetActive(false);
                 Muzzles[characterName].Play();
 

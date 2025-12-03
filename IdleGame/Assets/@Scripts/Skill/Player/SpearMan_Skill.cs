@@ -5,8 +5,6 @@ using UnityEngine;
 public class SpearMan_Skill : SkillBase
 {
 
-    float attack_length = 0f;
-    float attack_width = 0f;
     public SpearMan_Skill()
     {
         SetUpEffect();
@@ -17,15 +15,15 @@ public class SpearMan_Skill : SkillBase
         effects.Add(new DamageEffect(1.2));
     }
 
-    public override void UseSkill(CreatureController _caster, CreatureController _target)
+    public override void UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         List<CreatureController> enemiesInArea = Utils.FindEnemyForwardArea(_caster, attack_length, attack_width);
 
         if (enemiesInArea.Count > 0)
         {
-            foreach(CreatureController enemy in enemiesInArea)
+            foreach (CreatureController enemy in enemiesInArea)
             {
-                foreach(var effect in effects)
+                foreach (var effect in effects)
                 {
                     effect.Excute(_caster, enemy);
                 }
@@ -38,5 +36,5 @@ public class SpearMan_Skill : SkillBase
         //TODO : 쿨타임 처리
     }
 
-    
+
 }

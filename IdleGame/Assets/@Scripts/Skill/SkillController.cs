@@ -10,7 +10,6 @@ public class SkillController : MonoBehaviour
 
     private void Awake()
     {
-        //이 객체를 참조로 설정한다.
         owner = GetComponent<CreatureController>();
 
     }
@@ -19,25 +18,35 @@ public class SkillController : MonoBehaviour
     public void InitSkills(List<SkillBase> _skills)
     {
         skills.Clear();
-        if(_skills != null)
+        if (_skills != null)
         {
             skills.AddRange(_skills);
         }
-
-        Debug.Log($"{owner.gameObject.name}의 스킬 {skills.Count}개가 초기화되었습니다.");
     }
 
-    //해당 스킬을 사용
-    public void UseSKill(int _skillIndex, CreatureController _target)
+
+    public void UseSKill(int _skillIndex = 0, CreatureController _target = null)
     {
         if (_skillIndex < 0 || _skillIndex >= skills.Count)
         {
-            Debug.LogError("해당 인덱스에 스킬 없음");
+            Debug.LogError("[SkillController] �ش� ��ų�� �����ϴ�.");
             return;
         }
 
         SkillBase useSkill = skills[_skillIndex];
+        CreatureController caster = owner;
 
+        caster.AnimatorChange(Define.CreatureState.Skill);
+        ShowEffect();
+        //떄리던쪽 때리는게 맞을거같아서 이게 나을듯
         useSkill.UseSkill(owner, _target);
+    }
+
+    public void ShowEffect()
+    {
+        //TODO : ��ų ������ �����ͼ� ������ �̸� �־
+        var effect = Managers.ResourceM.Instantiate("KnightSkill", _pooling: true);
+        effect.transform.position = owner.transform.position;
+
     }
 }

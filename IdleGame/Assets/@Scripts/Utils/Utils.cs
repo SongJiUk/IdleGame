@@ -6,6 +6,7 @@ using System.Globalization;
 using UnityEngine;
 using System.Runtime.InteropServices;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public static class Utils
 {
@@ -15,9 +16,9 @@ public static class Utils
     {
         get
         {
-            if(datas == null)
+            if (datas == null)
             {
-                if(Managers.ResourceM != null)
+                if (Managers.ResourceM != null)
                 {
                     datas = Managers.ResourceM.Load<LevelDesign>("LevelDesignData");
                 }
@@ -95,8 +96,105 @@ public static class Utils
     }
 
     #region 스킬 헬퍼함수들
-    
-    //주변 원형
+    //체력 가장 낮은 아군 찾는 함수
+    public static CreatureController FindLowestHpPlayer()
+    {
+        List<PlayerController> pList = Managers.ObjectM.pcList;
+        CreatureController lowestHpPlayer = null;
+
+        foreach (PlayerController player in pList)
+        {
+            if (lowestHpPlayer == null)
+            {
+                lowestHpPlayer = player;
+            }
+            else
+            {
+                if (lowestHpPlayer.HP > player.HP)
+                {
+                    lowestHpPlayer = player;
+                }
+            }
+        }
+
+        if (lowestHpPlayer != null) return lowestHpPlayer;
+        else return null;
+    }
+
+    //아군 중 랜덤한 캐릭터 찾기(본인 제외)
+    public static CreatureController FindRandomPlayer(CreatureController _caster)
+    {
+        List<PlayerController> pList = Managers.ObjectM.pcList;
+        List<PlayerController> randomPlayer = new List<PlayerController>();
+        CreatureController player = null;
+
+        foreach (PlayerController pc in pList)
+        {
+            if (!pc.gameObject.activeSelf) continue;
+            if (pc.gameObject == _caster.gameObject) continue;
+            randomPlayer.Add(pc);
+        }
+
+        if (randomPlayer.Count > 0)
+        {
+            int randNum = UnityEngine.Random.Range(0, randomPlayer.Count);
+            return randomPlayer[randNum];
+        }
+
+        return null;
+    }
+
+    //가장 가까이 있는 적 찾기
+    public static CreatureController FindNearEnemy(CreatureController _caster)
+    {
+        CreatureController nearEnemy = null;
+        List<MonsterController> mcList = Managers.ObjectM.mcList;
+        float nearRange = float.MaxValue;
+
+        foreach (MonsterController monster in mcList)
+        {
+            if (monster.gameObject.activeSelf == false) continue;
+            float distance = Vector3.Distance(_caster.transform.position, monster.transform.position);
+            if (distance < nearRange)
+            {
+                nearRange = distance;
+                nearEnemy = monster;
+            }
+        }
+
+        if (nearEnemy != null) return nearEnemy;
+        else return null;
+    }
+
+    //주변 사정거리 내에 랜덤한 적 찾기
+    public static CreatureController FindRandomEnemyInRange(CreatureController _casster, float _range)
+    {
+        CreatureController randomEnemy = null;
+        List<MonsterController> mclist = Managers.ObjectM.mcList;
+        List<MonsterController> enemyInRange = new List<MonsterController>();
+
+        foreach (MonsterController monster in mclist)
+        {
+            if (monster.gameObject.activeSelf == false) continue;
+            float distance = Vector3.Distance(_casster.transform.position, monster.transform.position);
+            if (distance < _range)
+            {
+                enemyInRange.Add(monster);
+            }
+        }
+
+        if (enemyInRange.Count > 0)
+        {
+            int randNum = UnityEngine.Random.Range(0, enemyInRange.Count);
+
+            return enemyInRange[randNum];
+        }
+
+        return null;
+    }
+
+
+    //주변 원형적들 찾는 함수
     public static List<CreatureController> FindEnemyInSphereArea(CreatureController _caster, float _radius)
     {
         List<CreatureController> hitEnemies = new List<CreatureController>();
@@ -120,7 +218,7 @@ public static class Utils
     }
 
 
-    //앞에
+    //전방의 적들 찾는 함수
     public static List<CreatureController> FindEnemyForwardArea(CreatureController _caster, float _length, float _width)
     {
         List<CreatureController> hitEnemies = new List<CreatureController>();
@@ -158,7 +256,7 @@ public static class Utils
         return spawnPos;
     }
 
-#region 지수증가 공식(레벨, 스테이지데이터)
+    #region 지수증가 공식(레벨, 스테이지데이터)
     public static double CalculatedValue(float _baseValue, int _level, float _value)
     {
         return _baseValue * Mathf.Pow(_level, _value);

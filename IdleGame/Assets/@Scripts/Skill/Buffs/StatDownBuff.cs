@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StatDownBuff : BuffBase
 {
-    float reductionRate = 0.1f; //감소량 
-    public StatDownBuff(float _duration) : base(_duration) {}
+    float reductionRate = 0.1f;
+    public StatDownBuff(float _duration) : base(_duration) { }
 
     public override void Apply(CreatureController _target)
     {
@@ -20,6 +20,4 @@ public class StatDownBuff : BuffBase
         _target.Defence /= (1 - reductionRate);
         _target.Speed /= (1 - reductionRate);
     }
-
-
 }

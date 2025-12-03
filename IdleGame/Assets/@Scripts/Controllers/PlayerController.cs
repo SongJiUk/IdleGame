@@ -33,7 +33,7 @@ public class PlayerController : CreatureController
     string ownerName;
     public int Level;
     public int index;
-   
+
     int mp;
     public int MP
     {
@@ -75,7 +75,7 @@ public class PlayerController : CreatureController
         baseDamage = _data.BaseDamage;
 
         base.SetSkill();
-       
+
 
         isPlayer = true;
         isDead = false;
@@ -109,7 +109,7 @@ public class PlayerController : CreatureController
     {
         if (target == null || target.IsDead) return;
         Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
-        GetMp(5);
+        GetMp(30);
 
     }
 
@@ -120,16 +120,16 @@ public class PlayerController : CreatureController
 
         if (trails != null)
         {
-            for(int i =0; i<trails.Count; i++)
+            for (int i = 0; i < trails.Count; i++)
             {
                 trails[i].SetActive(true);
             }
-            
+
         }
 
         Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
-        GetMp(5);
         TrailDisable().Forget();
+        GetMp(30);
     }
 
     public async UniTaskVoid TrailDisable()
@@ -186,6 +186,9 @@ public class PlayerController : CreatureController
     public override void Tick(float _deltaTime)
     {
         if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
+
+        //TODO : IsUseSkill시 reutrn;
+        if (isUsingSkill) return;
         if (isDead) return;
         if (isAttack) return;
 
@@ -243,10 +246,11 @@ public class PlayerController : CreatureController
 
     public void GetMp(int _value)
     {
-        if (isUsingSkill) return;
+        //TODO : bool값 체크
+        //if (isUsingSkill) return;
 
         mp += _value;
-        if(mp >= MaxMp)
+        if (mp >= MaxMp)
         {
             isUsingSkill = true;
             mp = 0;
@@ -257,8 +261,15 @@ public class PlayerController : CreatureController
 
     void UsePlayerSkill()
     {
-        CreatureController target = this;
-        skillController.UseSKill(0, target);
+        CreatureController t = null;
+        if (target != null)
+        {
+            t = target;
+            skillController.UseSKill(_target: t);
+        }
+        else
+            skillController.UseSKill();
+
     }
 
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)

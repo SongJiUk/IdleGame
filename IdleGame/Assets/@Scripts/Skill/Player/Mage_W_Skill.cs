@@ -5,7 +5,7 @@ using UnityEngine;
 public class Mage_W_Skill : SkillBase
 {
     BuffEffect attackBuffEffect;
-    BuffEffect defenceBuffEffect;
+    BuffEffect defenseBuffEffect;
     public Mage_W_Skill()
     {
         SetUpEffect();
@@ -16,19 +16,21 @@ public class Mage_W_Skill : SkillBase
         //TODO : 스킬 정보 가져와서 여기에 넣기
         //타겟에게 10초동안 attackBuff적용 효과
         attackBuffEffect = new BuffEffect(duration => new AttackBuff(10f), 10f);
-        defenceBuffEffect = new BuffEffect(duration => new DefenceBuff(10f), 10f);
+        defenseBuffEffect = new BuffEffect(duration => new DefenseBuff(10f), 10f);
 
     }
 
-    public override void UseSkill(CreatureController _caster, CreatureController _target)
+    public override void UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        CreatureController lowHpTeam = _target;
+        CreatureController randPlayer = Utils.FindRandomPlayer(_caster); ;
 
-        if(lowHpTeam != null)
+        if (randPlayer != null)
         {
-            BuffEffect chosenEffect = (Random.Range(0, 2) == 0) ? attackBuffEffect : defenceBuffEffect;
+            BuffEffect chosenEffect = (Random.Range(0, 2) == 0) ? attackBuffEffect : defenseBuffEffect;
 
-            chosenEffect.Excute(_caster, lowHpTeam);
+            chosenEffect.Excute(_caster, randPlayer);
         }
+
+        //TODO : 쿨타임 처리(메인 캐릭터일떄)
     }
 }

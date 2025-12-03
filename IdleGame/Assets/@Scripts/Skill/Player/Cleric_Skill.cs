@@ -14,9 +14,10 @@ public class Cleric_Skill : SkillBase
         effects.Add(new BuffEffect(_duration => new HealBuff(_duration), 0.1f));
     }
 
-    public override void UseSkill(CreatureController _caster, CreatureController _target)
+    public override void UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        CreatureController target = _target;
+        //TODO : ?•„êµ? ìºë¦­?„°ì¤? ì²´ë ¥?´ ê°??¥ ?‚®??? ìºë¦­?„°?—ê²? ? ?š©
+        CreatureController target = Utils.FindLowestHpPlayer();
 
         if (target != null)
         {
@@ -27,9 +28,9 @@ public class Cleric_Skill : SkillBase
         }
         else
         {
-            Debug.Log("[Cleric_Skill] : ìœ íš¨í•œ ì•„êµ°ì´ ì—†ìŠµë‹ˆë‹¤.");
+            Debug.Log("[Cleric_Skill] : ?œ ?š¨?•œ ?•„êµ°ì´ ?—†?Šµ?‹ˆ?‹¤.");
         }
     }
 
-    
+
 }

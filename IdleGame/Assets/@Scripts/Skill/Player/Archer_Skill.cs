@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Archer_Skill : SkillBase
@@ -15,12 +16,11 @@ public class Archer_Skill : SkillBase
         effects.Add(new BuffEffect(_duration => new DotBuff(_duration), 5f));
     }
 
-    public override void UseSkill(CreatureController _caster, CreatureController _target)
+    public override void UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        //TODO : 랜덤 적 하나에게 쏘기
-        CreatureController randTarget= _target;
+        CreatureController randTarget = Utils.FindRandomEnemyInRange(_caster, _caster.DATA.AttackRange);
 
-        if(randTarget != null)
+        if (randTarget != null)
         {
             foreach (var effect in effects)
             {
@@ -29,11 +29,7 @@ public class Archer_Skill : SkillBase
         }
         else
         {
-            Debug.Log("디버프 화살 : 유효한 타겟 없음");
+            Debug.Log("��ó ��ų Ÿ�� ����]");
         }
-
-
-        //TODO : 쿨타임 처리
-
     }
 }

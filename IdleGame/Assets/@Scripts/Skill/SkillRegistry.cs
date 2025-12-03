@@ -59,35 +59,35 @@ public static class SkillRegistry
     {
         List<SkillBase> skills = new List<SkillBase>();
 
-        if(CreatureSkillDic.TryGetValue(_type, out List<Type> skillTypes))
+        if (CreatureSkillDic.TryGetValue(_type, out List<Type> skillTypes))
         {
-            foreach(Type skillType in skillTypes)
+            foreach (Type skillType in skillTypes)
             {
                 try
                 {
                     SkillBase newSkill = (SkillBase)Activator.CreateInstance(skillType);
                     if (newSkill == null)
                     {
-                        Debug.LogError($"[SkillRegistry] ìŠ¤í‚¬ ìƒì„± ì‹¤íŒ¨ : {skillType.Name}");
+                        Debug.LogError($"[SkillRegistry] ½ºÅ³ »ı¼º ½ÇÆĞ : {skillType.Name}");
                         continue;
                     }
 
                     newSkill.SetSkill();
                     skills.Add(newSkill);
                 }
-                catch(MissingMethodException)
+                catch (MissingMethodException)
                 {
-                    Debug.LogError($"[SkillRegistry] {skillType}ì— ë§¤ê°œë³€ìˆ˜ ì—†ëŠ” ìƒì„±ìê°€ ì—†ìŒ");
+                    Debug.LogError($"[SkillRegistry] {skillType}¿¡ ¸Å°³º¯¼ö ¾ø´Â »ı¼ºÀÚ°¡ ¾øÀ½");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    Debug.LogError("ìŠ¤í‚¬ ì¸ìŠ¤í„´ìŠ¤ ìƒì„± ì˜¤ë¥˜");
+                    Debug.LogError("½ºÅ³ ÀÎ½ºÅÏ½º »ı¼º ¿À·ù");
                 }
             }
         }
         else
         {
-            Debug.LogError("Dictinaryì— ì €ì¥ëœ ê°’ì´ ì—†ìŒ.");
+            Debug.LogError("Dictinary¿¡ ÀúÀåµÈ °ªÀÌ ¾øÀ½.");
         }
 
         return skills;

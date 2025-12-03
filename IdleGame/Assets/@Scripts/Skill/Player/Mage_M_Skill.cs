@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Mage_M_Skill : SkillBase
@@ -15,17 +16,21 @@ public class Mage_M_Skill : SkillBase
 
     }
 
-    public override void UseSkill(CreatureController _caster, CreatureController _target)
+    public override void UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        if(_target != null)
+        CreatureController target = Utils.FindRandomEnemyInRange(_caster, 20f);
+        if (target != null)
         {
-            foreach(var effect in effects)
+            foreach (var effect in effects)
             {
-                effect.Excute(_caster, _target);
+                effect.Excute(_caster, target);
             }
         }
+        else
+        {
+            Debug.Log("[Mage_M_Skill] : 유효한 적이 없음");
+        }
 
-        //TODO : 쿨타임 처리
     }
 
 
