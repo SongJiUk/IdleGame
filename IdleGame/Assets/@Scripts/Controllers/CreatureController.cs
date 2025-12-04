@@ -32,11 +32,11 @@ public class CreatureController : BaseController
         set { damage = value; }
     }
 
-    protected virtual double defence { get; set; }
-    public double Defence
+    protected virtual double defense { get; set; }
+    public double Defense
     {
-        get { return defence; }
-        set { defence = value; }
+        get { return defense; }
+        set { defense = value; }
     }
 
     protected virtual float speed { get; set; }
@@ -114,7 +114,7 @@ public class CreatureController : BaseController
     public virtual void Attack() { }
     public void Heal(float _amount)
     {
-
+        //TODO : 힐 효과(현재 체력 or 총체력 퍼센트로 할지 생각)
     }
 
     public float GetCurrentPlayingClipDuration(Animator anim)

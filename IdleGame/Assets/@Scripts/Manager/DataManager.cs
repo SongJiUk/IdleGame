@@ -23,6 +23,10 @@ public class DataManager
     public Dictionary<int, Data.ProjectileData> ProjectileDataDic = new Dictionary<int, Data.ProjectileData>();
     public Dictionary<int, Data.ItemData> ItemDataDic = new Dictionary<int, Data.ItemData>();
     public Dictionary<int, Data.StageSpawnData> StageDataDic = new Dictionary<int, Data.StageSpawnData>();
+    public Dictionary<int, Data.SkillData> SkillDataDic = new Dictionary<int, Data.SkillData>();
+    public Dictionary<int, Data.SkillEffectData> SkillEffectDataDic = new Dictionary<int, Data.SkillEffectData>();
+    public Dictionary<int, Data.BuffTypeData> BuffTypeDataDic = new Dictionary<int, Data.BuffTypeData>();
+    public Dictionary<int, Data.VFXData> VFXDataDic = new Dictionary<int, Data.VFXData>();
     public void Init()
     {
         TextAsset jsonAsset = Managers.ResourceM.Load<TextAsset>("Datas.json");
@@ -39,6 +43,10 @@ public class DataManager
         ProjectileDataDic = LoadJson<Data.ProjectileDataLoader, int, Data.ProjectileData>(jsonObj, "ProjectileData").MakeDict();
         ItemDataDic = LoadJson<Data.ItemDataLoader, int, Data.ItemData>(jsonObj, "ItemData").MakeDict();
         StageDataDic = LoadJson<Data.StageSpawnDataLoader, int, Data.StageSpawnData>(jsonObj, "StageSpawnData").MakeDict();
+        SkillDataDic = LoadJson<Data.SkillDataLoader, int, Data.SkillData>(jsonObj, "SkillData").MakeDict();
+        SkillEffectDataDic = LoadJson<Data.SkillEffectDataLoader, int, Data.SkillEffectData>(jsonObj, "SkillEffectData").MakeDict();
+        BuffTypeDataDic = LoadJson<Data.BuffTypeDataLoader, int, Data.BuffTypeData>(jsonObj, "BuffTypeData").MakeDict();
+        VFXDataDic = LoadJson<Data.VFXDataLoader, int, Data.VFXData>(jsonObj, "VFXData").MakeDict();
     }
 
     Loader LoadJson<Loader, Tkey, TValue>(JObject _jsonObj, string _dataName) where Loader : ILoader<Tkey, TValue> where TValue : class

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,21 +26,32 @@ public class SkillController : MonoBehaviour
     }
 
 
-    public void UseSKill(int _skillIndex = 0, CreatureController _target = null)
+    public bool UseSKill(int _skillIndex = 0, CreatureController _target = null)
     {
         if (_skillIndex < 0 || _skillIndex >= skills.Count)
         {
-            Debug.LogError("[SkillController] �ش� ��ų�� �����ϴ�.");
-            return;
+            Debug.LogError("[SkillController]해당 인덱스의 스킬이 없음.");
+            return false;
         }
 
         SkillBase useSkill = skills[_skillIndex];
         CreatureController caster = owner;
 
-        caster.AnimatorChange(Define.CreatureState.Skill);
-        ShowEffect();
         //떄리던쪽 때리는게 맞을거같아서 이게 나을듯
-        useSkill.UseSkill(owner, _target);
+        bool skillExecuted = useSkill.UseSkill(owner, _target);
+        if (skillExecuted)
+        {
+            caster.AnimatorChange(Define.CreatureState.Skill);
+            ShowEffect();
+        }
+        else
+        {
+            Debug.Log("[SkillController]스킬이 실행되지않음 ");
+            return false;
+        }
+
+        return true;
+
     }
 
     public void ShowEffect()

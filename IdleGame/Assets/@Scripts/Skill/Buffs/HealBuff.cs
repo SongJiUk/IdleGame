@@ -10,7 +10,8 @@ public class HealBuff : BuffBase
     public override void Apply(CreatureController _target)
     {
         _target.Heal(healAmount);
+        //TODO : 여기서 힐 이펙트
     }
 
-    public override void Remove(CreatureController _target) {}
+    public override void Remove(CreatureController _target) { }
 }

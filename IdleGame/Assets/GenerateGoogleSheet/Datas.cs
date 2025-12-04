@@ -10,6 +10,10 @@ public class Datas : ScriptableObject
 	public List<ProjectileData> ProjectileDataList;
 	public List<ItemData> ItemDataList;
 	public List<StageSpawnData> StageSpawnDataList;
+	public List<SkillData> SkillDataList;
+	public List<SkillEffectData> SkillEffectDataList;
+	public List<BuffTypeData> BuffTypeDataList;
+	public List<VFXData> VFXDataList;
 }
 
 [Serializable]
@@ -37,6 +41,7 @@ public class CreatureData
 	public int BaseDamage;
 	public int MaxMp;
 	public int ProjectileDataID;
+	public int SkillDataID;
 }
 
 [Serializable]
@@ -68,5 +73,45 @@ public class StageSpawnData
 	public int SpawnMaxCount;
 	public int SpawnTimer;
 	public int StageClearMaxCount;
+}
+
+[Serializable]
+public class SkillData
+{
+	public int DataID;
+	public string SkillName;
+	public string SkillNameKR;
+	public int CastingVFX_ID;
+	public string TargetVFX_ID;
+	public string BuffList_ID;
+}
+
+[Serializable]
+public class SkillEffectData
+{
+	public int DataID;
+	public string Description;
+	public string ComponentType;
+	public int Duration;
+	public float ValueRatio;
+	public int Radius;
+	public int Length;
+	public int Width;
+	public float Interval;
+	public int BuffTypeID;
+}
+
+[Serializable]
+public class BuffTypeData
+{
+	public int DataID;
+	public string BuffName;
+}
+
+[Serializable]
+public class VFXData
+{
+	public int DataID;
+	public string PrefabName;
 }
 

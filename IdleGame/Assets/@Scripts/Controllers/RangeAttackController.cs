@@ -9,7 +9,7 @@ public class RangeAttackController : ProjectileController
     CreatureController owner;
 
 
-    //TODO: ?´? ‡ê²? ?•˜?Š”ê²? ë§ëŠ”ê±´ê?? ?‹¶ê¸´í•œ?° ?‚˜ì¤‘ì— ë¦¬í™?† ë§í• ?•Œ ?ˆ˜? •?•˜?.
+    //TODO : ì´ê±° í”„ë¦¬íŒ¹ì„ ì—¬ëŸ¬ê°œë¡œ ë‚˜ëˆ ì„œ í•˜ëŠ”ê²Œ ë‚˜ìŒ.
     private void Awake()
     {
         Transform projectiles = transform.GetChild(0);

@@ -22,6 +22,7 @@ namespace Data
         public double BaseDamage;
         public int MaxMp;
         public int ProjectileDataID;
+        public int SkillDataID;
     }
 
     public class CreatureDataLoader : ILoader<int, CreatureData>
@@ -98,7 +99,7 @@ namespace Data
 
     #endregion
 
-    #region
+    #region ItemData
     [Serializable]
     public class ItemData
     {
@@ -149,6 +150,149 @@ namespace Data
                 dic.Add(data.Level, data);
             }
 
+            return dic;
+        }
+    }
+    #endregion
+
+    #region SkillData
+
+    [Serializable]
+    public class SkillData
+    {
+        public int DataID;
+        public string SkillName;
+        public string SkillNameKR;
+        public string CastingVFX_ID_Raw;
+        public string TargetVFX_ID_Raw;
+        public string BuffList_ID_Raw;
+
+        public List<int> CastingVFX_ID { get; private set; } = new List<int>();
+        public List<int> TargetVFX_ID { get; private set; } = new List<int>();
+        public List<int> BuffList_ID { get; private set; } = new List<int>();
+
+        public void ParseRawData()
+        {
+            CastingVFX_ID = ParseIdList(CastingVFX_ID_Raw);
+            TargetVFX_ID = ParseIdList(TargetVFX_ID_Raw);
+            BuffList_ID = ParseIdList(BuffList_ID_Raw);
+        }
+
+        List<int> ParseIdList(string _rawData)
+        {
+            List<int> result = new List<int>();
+            if (string.IsNullOrEmpty(_rawData)) return result;
+            string[] idStrings = _rawData.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string idString in idStrings)
+            {
+                string trimmedId = idString.Trim();
+
+                if (int.TryParse(trimmedId, out int id))
+                {
+                    result.Add(id);
+                }
+                else
+                {
+                    Debug.LogError($"[SkillData {DataID}] ID 파싱 오류: '{trimmedId}'는 유효한 정수가 아닙니다.");
+                }
+            }
+            return result;
+        }
+    }
+
+    public class SkillDataLoader : ILoader<int, SkillData>
+    {
+        public List<SkillData> dataList = new List<SkillData>();
+
+        public Dictionary<int, SkillData> MakeDict()
+        {
+            Dictionary<int, SkillData> dic = new Dictionary<int, SkillData>();
+
+            foreach (var data in dataList)
+            {
+                data.ParseRawData();
+                dic.Add(data.DataID, data);
+            }
+            return dic;
+        }
+    }
+    #endregion
+
+    #region SkillEffectData
+    [Serializable]
+    public class SkillEffectData
+    {
+        public int DataID;
+        public string Description;
+        public string ComponentType;
+        public float Duration;
+        public float ValueRatio;
+        public float Radius;
+        public float Length;
+        public float Width;
+        public float Interval;
+        public int BuffTypeID;
+    }
+
+    public class SkillEffectDataLoader : ILoader<int, SkillEffectData>
+    {
+        public List<SkillEffectData> dataList = new List<SkillEffectData>();
+
+        public Dictionary<int, SkillEffectData> MakeDict()
+        {
+            Dictionary<int, SkillEffectData> dic = new Dictionary<int, SkillEffectData>();
+            foreach (var data in dataList)
+            {
+                dic.Add(data.DataID, data);
+            }
+            return dic;
+        }
+    }
+
+    #endregion
+
+    #region BuffTypeData
+    [Serializable]
+    public class BuffTypeData
+    {
+        public int DataID;
+        public string BuffName;
+    }
+
+    public class BuffTypeDataLoader : ILoader<int, BuffTypeData>
+    {
+        public List<BuffTypeData> dataList = new List<BuffTypeData>();
+        public Dictionary<int, BuffTypeData> MakeDict()
+        {
+            Dictionary<int, BuffTypeData> dic = new Dictionary<int, BuffTypeData>();
+            foreach (var data in dataList)
+            {
+                dic.Add(data.DataID, data);
+            }
+            return dic;
+        }
+    }
+    #endregion
+
+    #region VFXData
+    [Serializable]
+    public class VFXData
+    {
+        public int DataID;
+        public string PrefabName;
+    }
+
+    public class VFXDataLoader : ILoader<int, VFXData>
+    {
+        public List<VFXData> dataList = new List<VFXData>();
+        public Dictionary<int, VFXData> MakeDict()
+        {
+            Dictionary<int, VFXData> dic = new Dictionary<int, VFXData>();
+            foreach (var data in dataList)
+            {
+                dic.Add(data.DataID, data);
+            }
             return dic;
         }
     }

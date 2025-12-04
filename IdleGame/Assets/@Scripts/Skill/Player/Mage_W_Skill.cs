@@ -20,7 +20,7 @@ public class Mage_W_Skill : SkillBase
 
     }
 
-    public override void UseSkill(CreatureController _caster, CreatureController _target = null)
+    public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         CreatureController randPlayer = Utils.FindRandomPlayer(_caster); ;
 
@@ -28,7 +28,13 @@ public class Mage_W_Skill : SkillBase
         {
             BuffEffect chosenEffect = (Random.Range(0, 2) == 0) ? attackBuffEffect : defenseBuffEffect;
 
-            chosenEffect.Excute(_caster, randPlayer);
+            chosenEffect.Execute(_caster, randPlayer);
+            return true;
+        }
+        else
+        {
+            Debug.Log("[Mage_W_Skill] : 유효한 아군이 없음");
+            return false;
         }
 
         //TODO : 쿨타임 처리(메인 캐릭터일떄)

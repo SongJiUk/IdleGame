@@ -10,14 +10,14 @@ public class StatDownBuff : BuffBase
     public override void Apply(CreatureController _target)
     {
         _target.Damage *= (1 - reductionRate);
-        _target.Defence *= (1 - reductionRate);
+        _target.Defense *= (1 - reductionRate);
         _target.Speed *= (1 - reductionRate);
     }
 
     public override void Remove(CreatureController _target)
     {
         _target.Damage /= (1 - reductionRate);
-        _target.Defence /= (1 - reductionRate);
+        _target.Defense /= (1 - reductionRate);
         _target.Speed /= (1 - reductionRate);
     }
 }

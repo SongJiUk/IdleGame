@@ -253,7 +253,6 @@ public class PlayerController : CreatureController
         if (mp >= MaxMp)
         {
             isUsingSkill = true;
-            mp = 0;
             UsePlayerSkill();
         }
         OnPlayerDataUpdate?.Invoke(this);
@@ -265,11 +264,20 @@ public class PlayerController : CreatureController
         if (target != null)
         {
             t = target;
-            skillController.UseSKill(_target: t);
+            if (skillController.UseSKill(_target: t))
+            {
+                mp = 0;
+            }
+            else isUsingSkill = false;
         }
         else
-            skillController.UseSKill();
-
+        {
+            if (skillController.UseSKill())
+            {
+                mp = 0;
+            }
+            else isUsingSkill = false;
+        }
     }
 
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)

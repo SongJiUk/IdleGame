@@ -17,7 +17,7 @@ public class DamageEffect : ISkillEffect
         splashMultiplier = _splashMultiplier;
     }
 
-    public void Excute(CreatureController _caster, CreatureController _target)
+    public void Execute(CreatureController _caster, CreatureController _target)
     {
         if (_target == null) return;
 
@@ -33,11 +33,11 @@ public class DamageEffect : ISkillEffect
 
     public void ApplySplashDamage(CreatureController _caster, Vector3 _center, double _radius, double _multiplier)
     {
-        List<MonsterController> mclist = Managers.ObjectM.mcList;
+        List<MonsterController> mList = Managers.ObjectM.mcList;
 
         double splashDamage = _caster.Damage * _multiplier;
 
-        foreach (MonsterController monster in mclist)
+        foreach (MonsterController monster in mList)
         {
             Vector3 monsterPos = monster.transform.position;
 

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//TODO : 이걸 합쳐버릴까?
 public class SpinAttackBuff : BuffBase
 {
     CreatureController caster;

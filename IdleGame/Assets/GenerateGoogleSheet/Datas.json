@@ -51,7 +51,8 @@
       "BaseHp": 50,
       "BaseDamage": 10,
       "MaxMp": 120,
-      "ProjectileDataID": 20000
+      "ProjectileDataID": 20000,
+      "SkillDataID": 40000
     },
     {
       "DataID": 2,
@@ -66,7 +67,8 @@
       "BaseHp": 60,
       "BaseDamage": 12,
       "MaxMp": 80,
-      "ProjectileDataID": 20001
+      "ProjectileDataID": 20001,
+      "SkillDataID": 40001
     },
     {
       "DataID": 3,
@@ -81,7 +83,8 @@
       "BaseHp": 70,
       "BaseDamage": 15,
       "MaxMp": 70,
-      "ProjectileDataID": 20002
+      "ProjectileDataID": 20002,
+      "SkillDataID": 40002
     },
     {
       "DataID": 4,
@@ -96,7 +99,8 @@
       "BaseHp": 70,
       "BaseDamage": 15,
       "MaxMp": 70,
-      "ProjectileDataID": 20002
+      "ProjectileDataID": 20002,
+      "SkillDataID": 40003
     },
     {
       "DataID": 5,
@@ -111,7 +115,8 @@
       "BaseHp": 80,
       "BaseDamage": 17,
       "MaxMp": 70,
-      "ProjectileDataID": 20002
+      "ProjectileDataID": 20002,
+      "SkillDataID": 40004
     },
     {
       "DataID": 6,
@@ -126,7 +131,8 @@
       "BaseHp": 80,
       "BaseDamage": 17,
       "MaxMp": 70,
-      "ProjectileDataID": 20002
+      "ProjectileDataID": 20002,
+      "SkillDataID": 40005
     },
     {
       "DataID": 7,
@@ -141,7 +147,8 @@
       "BaseHp": 80,
       "BaseDamage": 17,
       "MaxMp": 70,
-      "ProjectileDataID": 20002
+      "ProjectileDataID": 20002,
+      "SkillDataID": 40006
     },
     {
       "DataID": 8,
@@ -156,7 +163,8 @@
       "BaseHp": 100,
       "BaseDamage": 20,
       "MaxMp": 120,
-      "ProjectileDataID": 20000
+      "ProjectileDataID": 20000,
+      "SkillDataID": 40007
     },
     {
       "DataID": 9,
@@ -171,7 +179,8 @@
       "BaseHp": 100,
       "BaseDamage": 20,
       "MaxMp": 120,
-      "ProjectileDataID": 20000
+      "ProjectileDataID": 20000,
+      "SkillDataID": 40008
     },
     {
       "DataID": 10000,
@@ -186,7 +195,8 @@
       "BaseHp": 10,
       "BaseDamage": 10,
       "MaxMp": 0,
-      "ProjectileDataID": 20002
+      "ProjectileDataID": 20002,
+      "SkillDataID": 40009
     },
     {
       "DataID": 10001,
@@ -201,7 +211,8 @@
       "BaseHp": 200,
       "BaseDamage": 20,
       "MaxMp": 0,
-      "ProjectileDataID": 20003
+      "ProjectileDataID": 20003,
+      "SkillDataID": 40010
     }
   ],
   "ProjectileData": [
@@ -462,6 +473,262 @@
       "SpawnMaxCount": 30,
       "SpawnTimer": 1,
       "StageClearMaxCount": 50
+    }
+  ],
+  "SkillData": [
+    {
+      "DataID": 40000,
+      "SkillName": "Heal",
+      "SkillNameKR": "힐",
+      "CastingVFX_ID": 0,
+      "TargetVFX_ID": "60000/60001",
+      "BuffList_ID": 50000
+    },
+    {
+      "DataID": 40001,
+      "SkillName": "PoisonArrow",
+      "SkillNameKR": "독화살",
+      "CastingVFX_ID": 0,
+      "TargetVFX_ID": 0,
+      "BuffList_ID": "50001/50002/50003"
+    },
+    {
+      "DataID": 40002,
+      "SkillName": "AssassiNation",
+      "SkillNameKR": "암살",
+      "CastingVFX_ID": 0,
+      "TargetVFX_ID": 0,
+      "BuffList_ID": 50004
+    },
+    {
+      "DataID": 40003,
+      "SkillName": "SpinAttack",
+      "SkillNameKR": "회전공격",
+      "CastingVFX_ID": 0,
+      "TargetVFX_ID": 0,
+      "BuffList_ID": 50005
+    },
+    {
+      "DataID": 40004,
+      "SkillName": "RightSword",
+      "SkillNameKR": "빛의검",
+      "CastingVFX_ID": 0,
+      "TargetVFX_ID": 0,
+      "BuffList_ID": 50006
+    },
+    {
+      "DataID": 40005,
+      "SkillName": "AttackFront",
+      "SkillNameKR": "전방공격",
+      "CastingVFX_ID": 0,
+      "TargetVFX_ID": 0,
+      "BuffList_ID": 50007
+    },
+    {
+      "DataID": 40006,
+      "SkillName": "CutTwice",
+      "SkillNameKR": "두번베기",
+      "CastingVFX_ID": 0,
+      "TargetVFX_ID": 0,
+      "BuffList_ID": 50008
+    },
+    {
+      "DataID": 40007,
+      "SkillName": "Metor",
+      "SkillNameKR": "메테오",
+      "CastingVFX_ID": 0,
+      "TargetVFX_ID": 0,
+      "BuffList_ID": 50009
+    },
+    {
+      "DataID": 40008,
+      "SkillName": "Buff",
+      "SkillNameKR": "버프",
+      "CastingVFX_ID": 0,
+      "TargetVFX_ID": 0,
+      "BuffList_ID": "50010/50011"
+    }
+  ],
+  "SkillEffectData": [
+    {
+      "DataID": 50000,
+      "Description": "클레릭의 힐",
+      "ComponentType": "BuffEffect",
+      "Duration": 0,
+      "ValueRatio": 0.2,
+      "Radius": 0,
+      "Length": 0,
+      "Width": 0,
+      "Interval": 0,
+      "BuffTypeID": 100
+    },
+    {
+      "DataID": 50001,
+      "Description": "아처의 스킬 공격",
+      "ComponentType": "DamageEffect",
+      "Duration": 0,
+      "ValueRatio": 1.5,
+      "Radius": 0,
+      "Length": 0,
+      "Width": 0,
+      "Interval": 0,
+      "BuffTypeID": 0
+    },
+    {
+      "DataID": 50002,
+      "Description": "아처의 스킬 디버프",
+      "ComponentType": "BuffEffect",
+      "Duration": 10,
+      "ValueRatio": 0.2,
+      "Radius": 0,
+      "Length": 0,
+      "Width": 0,
+      "Interval": 0,
+      "BuffTypeID": 103
+    },
+    {
+      "DataID": 50003,
+      "Description": "아처의 스킬 도트데미지",
+      "ComponentType": "BuffEffect",
+      "Duration": 10,
+      "ValueRatio": 0.5,
+      "Radius": 0,
+      "Length": 0,
+      "Width": 0,
+      "Interval": 1,
+      "BuffTypeID": 104
+    },
+    {
+      "DataID": 50004,
+      "Description": "어쌔신의 스킬 공격",
+      "ComponentType": "DamageEffect",
+      "Duration": 0,
+      "ValueRatio": 3,
+      "Radius": 0,
+      "Length": 0,
+      "Width": 0,
+      "Interval": 0,
+      "BuffTypeID": 0
+    },
+    {
+      "DataID": 50005,
+      "Description": "해머의 스킬 공격",
+      "ComponentType": "BuffEffect",
+      "Duration": 2,
+      "ValueRatio": 0.6,
+      "Radius": 2,
+      "Length": 0,
+      "Width": 0,
+      "Interval": 0.6,
+      "BuffTypeID": 105
+    },
+    {
+      "DataID": 50006,
+      "Description": "기사의 스킬 공격",
+      "ComponentType": "DamageEffect",
+      "Duration": 0,
+      "ValueRatio": 1.5,
+      "Radius": 0,
+      "Length": 2,
+      "Width": 1,
+      "Interval": 0,
+      "BuffTypeID": 0
+    },
+    {
+      "DataID": 50007,
+      "Description": "스피어맨의 스킬 공격",
+      "ComponentType": "DamageEffect",
+      "Duration": 0,
+      "ValueRatio": 1.2,
+      "Radius": 0,
+      "Length": 1,
+      "Width": 2,
+      "Interval": 0,
+      "BuffTypeID": 0
+    },
+    {
+      "DataID": 50008,
+      "Description": "두손검의 스킬 공격",
+      "ComponentType": "DamageEffect",
+      "Duration": 0,
+      "ValueRatio": 1.2,
+      "Radius": 0,
+      "Length": 1,
+      "Width": 2,
+      "Interval": 0,
+      "BuffTypeID": 0
+    },
+    {
+      "DataID": 50009,
+      "Description": "남자 마법사의 스킬 공격",
+      "ComponentType": "DamageEffect",
+      "Duration": 0,
+      "ValueRatio": 1.5,
+      "Radius": 2,
+      "Length": 0,
+      "Width": 0,
+      "Interval": 0,
+      "BuffTypeID": 0
+    },
+    {
+      "DataID": 50010,
+      "Description": "여자 마법사의 공격력 버프",
+      "ComponentType": "BuffEffect",
+      "Duration": 10,
+      "ValueRatio": 1.2,
+      "Radius": 0,
+      "Length": 0,
+      "Width": 0,
+      "Interval": 0,
+      "BuffTypeID": 101
+    },
+    {
+      "DataID": 50011,
+      "Description": "여자 마법사의 방어력 버프",
+      "ComponentType": "BuffEffect",
+      "Duration": 10,
+      "ValueRatio": 1.2,
+      "Radius": 0,
+      "Length": 0,
+      "Width": 0,
+      "Interval": 0,
+      "BuffTypeID": 102
+    }
+  ],
+  "BuffTypeData": [
+    {
+      "DataID": 100,
+      "BuffName": "HealBuff"
+    },
+    {
+      "DataID": 101,
+      "BuffName": "AttackBuff"
+    },
+    {
+      "DataID": 102,
+      "BuffName": "DefenseBuff"
+    },
+    {
+      "DataID": 103,
+      "BuffName": "StatDownBuff"
+    },
+    {
+      "DataID": 104,
+      "BuffName": "DotBuff"
+    },
+    {
+      "DataID": 105,
+      "BuffName": "SpinAttackBuff"
+    }
+  ],
+  "VFXData": [
+    {
+      "DataID": 60000,
+      "PrefabName": "Heal"
+    },
+    {
+      "DataID": 60001,
+      "PrefabName": "HealCircle"
     }
   ],
   "MissionData": [],

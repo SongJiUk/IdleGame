@@ -51,6 +51,7 @@ MonoBehaviour:
     BaseDamage: 10
     MaxMp: 120
     ProjectileDataID: 20000
+    SkillDataID: 40000
   - DataID: 2
     Name: Archer
     NameKR: "\uAD81\uC218"
@@ -64,6 +65,7 @@ MonoBehaviour:
     BaseDamage: 12
     MaxMp: 80
     ProjectileDataID: 20001
+    SkillDataID: 40001
   - DataID: 3
     Name: Assassin
     NameKR: "\uC554\uC0B4\uC790"
@@ -77,6 +79,7 @@ MonoBehaviour:
     BaseDamage: 15
     MaxMp: 70
     ProjectileDataID: 20002
+    SkillDataID: 40002
   - DataID: 4
     Name: Hammer
     NameKR: "\uB9DD\uCE58"
@@ -90,6 +93,7 @@ MonoBehaviour:
     BaseDamage: 15
     MaxMp: 70
     ProjectileDataID: 20002
+    SkillDataID: 40003
   - DataID: 5
     Name: Knight
     NameKR: "\uAE30\uC0AC"
@@ -103,6 +107,7 @@ MonoBehaviour:
     BaseDamage: 17
     MaxMp: 70
     ProjectileDataID: 20002
+    SkillDataID: 40004
   - DataID: 6
     Name: SpearMan
     NameKR: "\uC2A4\uD53C\uC5B4\uB9E8"
@@ -116,6 +121,7 @@ MonoBehaviour:
     BaseDamage: 17
     MaxMp: 70
     ProjectileDataID: 20002
+    SkillDataID: 40005
   - DataID: 7
     Name: TwoHandSword
     NameKR: "\uB450\uC190\uAC80"
@@ -129,6 +135,7 @@ MonoBehaviour:
     BaseDamage: 17
     MaxMp: 70
     ProjectileDataID: 20002
+    SkillDataID: 40006
   - DataID: 8
     Name: Mage_M
     NameKR: "\uB0A8\uC790\uB9C8\uBC95\uC0AC"
@@ -142,6 +149,7 @@ MonoBehaviour:
     BaseDamage: 20
     MaxMp: 120
     ProjectileDataID: 20000
+    SkillDataID: 40007
   - DataID: 9
     Name: Mage_W
     NameKR: "\uC5EC\uC790\uB9C8\uBC95\uC0AC"
@@ -155,6 +163,7 @@ MonoBehaviour:
     BaseDamage: 20
     MaxMp: 120
     ProjectileDataID: 20000
+    SkillDataID: 40008
   - DataID: 10000
     Name: Monster
     NameKR: "\uBAAC\uC2A4\uD130"
@@ -168,6 +177,7 @@ MonoBehaviour:
     BaseDamage: 10
     MaxMp: 0
     ProjectileDataID: 20002
+    SkillDataID: 40009
   - DataID: 10001
     Name: Boss
     NameKR: "\uBCF4\uC2A4\uBAAC\uC2A4\uD130"
@@ -181,6 +191,7 @@ MonoBehaviour:
     BaseDamage: 20
     MaxMp: 0
     ProjectileDataID: 20003
+    SkillDataID: 40010
   ProjectileDataList:
   - DataID: 20000
     Name: Projectile
@@ -360,3 +371,197 @@ MonoBehaviour:
     SpawnMaxCount: 30
     SpawnTimer: 1
     StageClearMaxCount: 50
+  SkillDataList:
+  - DataID: 40000
+    SkillName: Heal
+    SkillNameKR: "\uD790"
+    CastingVFX_ID: 0
+    TargetVFX_ID: 60000/60001
+    BuffList_ID: 50000
+  - DataID: 40001
+    SkillName: PoisonArrow
+    SkillNameKR: "\uB3C5\uD654\uC0B4"
+    CastingVFX_ID: 0
+    TargetVFX_ID: 0
+    BuffList_ID: 50001/50002/50003
+  - DataID: 40002
+    SkillName: AssassiNation
+    SkillNameKR: "\uC554\uC0B4"
+    CastingVFX_ID: 0
+    TargetVFX_ID: 0
+    BuffList_ID: 50004
+  - DataID: 40003
+    SkillName: SpinAttack
+    SkillNameKR: "\uD68C\uC804\uACF5\uACA9"
+    CastingVFX_ID: 0
+    TargetVFX_ID: 0
+    BuffList_ID: 50005
+  - DataID: 40004
+    SkillName: RightSword
+    SkillNameKR: "\uBE5B\uC758\uAC80"
+    CastingVFX_ID: 0
+    TargetVFX_ID: 0
+    BuffList_ID: 50006
+  - DataID: 40005
+    SkillName: AttackFront
+    SkillNameKR: "\uC804\uBC29\uACF5\uACA9"
+    CastingVFX_ID: 0
+    TargetVFX_ID: 0
+    BuffList_ID: 50007
+  - DataID: 40006
+    SkillName: CutTwice
+    SkillNameKR: "\uB450\uBC88\uBCA0\uAE30"
+    CastingVFX_ID: 0
+    TargetVFX_ID: 0
+    BuffList_ID: 50008
+  - DataID: 40007
+    SkillName: Metor
+    SkillNameKR: "\uBA54\uD14C\uC624"
+    CastingVFX_ID: 0
+    TargetVFX_ID: 0
+    BuffList_ID: 50009
+  - DataID: 40008
+    SkillName: Buff
+    SkillNameKR: "\uBC84\uD504"
+    CastingVFX_ID: 0
+    TargetVFX_ID: 0
+    BuffList_ID: 50010/50011
+  SkillEffectDataList:
+  - DataID: 50000
+    Description: "\uD074\uB808\uB9AD\uC758 \uD790"
+    ComponentType: BuffEffect
+    Duration: 0
+    ValueRatio: 0.2
+    Radius: 0
+    Length: 0
+    Width: 0
+    Interval: 0
+    BuffTypeID: 100
+  - DataID: 50001
+    Description: "\uC544\uCC98\uC758 \uC2A4\uD0AC \uACF5\uACA9"
+    ComponentType: DamageEffect
+    Duration: 0
+    ValueRatio: 1.5
+    Radius: 0
+    Length: 0
+    Width: 0
+    Interval: 0
+    BuffTypeID: 0
+  - DataID: 50002
+    Description: "\uC544\uCC98\uC758 \uC2A4\uD0AC \uB514\uBC84\uD504"
+    ComponentType: BuffEffect
+    Duration: 10
+    ValueRatio: 0.2
+    Radius: 0
+    Length: 0
+    Width: 0
+    Interval: 0
+    BuffTypeID: 103
+  - DataID: 50003
+    Description: "\uC544\uCC98\uC758 \uC2A4\uD0AC \uB3C4\uD2B8\uB370\uBBF8\uC9C0"
+    ComponentType: BuffEffect
+    Duration: 10
+    ValueRatio: 0.5
+    Radius: 0
+    Length: 0
+    Width: 0
+    Interval: 1
+    BuffTypeID: 104
+  - DataID: 50004
+    Description: "\uC5B4\uC314\uC2E0\uC758 \uC2A4\uD0AC \uACF5\uACA9"
+    ComponentType: DamageEffect
+    Duration: 0
+    ValueRatio: 3
+    Radius: 0
+    Length: 0
+    Width: 0
+    Interval: 0
+    BuffTypeID: 0
+  - DataID: 50005
+    Description: "\uD574\uBA38\uC758 \uC2A4\uD0AC \uACF5\uACA9"
+    ComponentType: BuffEffect
+    Duration: 2
+    ValueRatio: 0.6
+    Radius: 2
+    Length: 0
+    Width: 0
+    Interval: 0.6
+    BuffTypeID: 105
+  - DataID: 50006
+    Description: "\uAE30\uC0AC\uC758 \uC2A4\uD0AC \uACF5\uACA9"
+    ComponentType: DamageEffect
+    Duration: 0
+    ValueRatio: 1.5
+    Radius: 0
+    Length: 2
+    Width: 1
+    Interval: 0
+    BuffTypeID: 0
+  - DataID: 50007
+    Description: "\uC2A4\uD53C\uC5B4\uB9E8\uC758 \uC2A4\uD0AC \uACF5\uACA9"
+    ComponentType: DamageEffect
+    Duration: 0
+    ValueRatio: 1.2
+    Radius: 0
+    Length: 1
+    Width: 2
+    Interval: 0
+    BuffTypeID: 0
+  - DataID: 50008
+    Description: "\uB450\uC190\uAC80\uC758 \uC2A4\uD0AC \uACF5\uACA9"
+    ComponentType: DamageEffect
+    Duration: 0
+    ValueRatio: 1.2
+    Radius: 0
+    Length: 1
+    Width: 2
+    Interval: 0
+    BuffTypeID: 0
+  - DataID: 50009
+    Description: "\uB0A8\uC790 \uB9C8\uBC95\uC0AC\uC758 \uC2A4\uD0AC \uACF5\uACA9"
+    ComponentType: DamageEffect
+    Duration: 0
+    ValueRatio: 1.5
+    Radius: 2
+    Length: 0
+    Width: 0
+    Interval: 0
+    BuffTypeID: 0
+  - DataID: 50010
+    Description: "\uC5EC\uC790 \uB9C8\uBC95\uC0AC\uC758 \uACF5\uACA9\uB825 \uBC84\uD504"
+    ComponentType: BuffEffect
+    Duration: 10
+    ValueRatio: 1.2
+    Radius: 0
+    Length: 0
+    Width: 0
+    Interval: 0
+    BuffTypeID: 101
+  - DataID: 50011
+    Description: "\uC5EC\uC790 \uB9C8\uBC95\uC0AC\uC758 \uBC29\uC5B4\uB825 \uBC84\uD504"
+    ComponentType: BuffEffect
+    Duration: 10
+    ValueRatio: 1.2
+    Radius: 0
+    Length: 0
+    Width: 0
+    Interval: 0
+    BuffTypeID: 102
+  BuffTypeDataList:
+  - DataID: 100
+    BuffName: HealBuff
+  - DataID: 101
+    BuffName: AttackBuff
+  - DataID: 102
+    BuffName: DefenseBuff
+  - DataID: 103
+    BuffName: StatDownBuff
+  - DataID: 104
+    BuffName: DotBuff
+  - DataID: 105
+    BuffName: SpinAttackBuff
+  VFXDataList:
+  - DataID: 60000
+    PrefabName: Heal
+  - DataID: 60001
+    PrefabName: HealCircle

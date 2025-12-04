@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class Hammer_Skill : SkillBase
 {
-    float attack_Radius;
+
     public Hammer_Skill()
     {
         SetUpEffect();
     }
     protected override void SetUpEffect() { }
 
-    public override void UseSkill(CreatureController _caster, CreatureController _target = null)
+    public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-
         //TODO : 하드코딩들 처리
         SpinAttackBuff spinBuff = new SpinAttackBuff(_caster, 2);
         _caster.buffController.AddBuff(spinBuff);
@@ -25,15 +24,16 @@ public class Hammer_Skill : SkillBase
             {
                 foreach (var effect in effects)
                 {
-                    effect.Excute(_caster, enemy);
+                    effect.Execute(_caster, enemy);
                 }
             }
+            return true;
         }
         else
         {
             Debug.Log("회전 공격 : 주변에 적 없음");
+            return false;
         }
-
         //TODO : 쿨타임 처리 해야함
     }
 }

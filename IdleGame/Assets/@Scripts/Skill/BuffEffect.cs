@@ -18,7 +18,7 @@ public class BuffEffect : ISkillEffect
         buffDurtaion = _duration;
     }
 
-    public void Excute(CreatureController _caster, CreatureController _target)
+    public void Execute(CreatureController _caster, CreatureController _target)
     {
         //버프 인스턴스 생성 : 팩토리 함수를 호출하여 새로운 Ibuff 객체 생성
         IBuff newBuff = buffFactory(buffDurtaion);
