@@ -7,19 +7,13 @@ public class Archer_Skill : SkillBase
 {
     public Archer_Skill()
     {
-        SetUpEffect();
-    }
-
-    protected override void SetUpEffect()
-    {
-        effects.Add(new DamageEffect(1));
-        effects.Add(new BuffEffect(_duration => new StatDownBuff(_duration), 10f));
-        effects.Add(new BuffEffect(_duration => new DotBuff(_duration), 10f));
+        //effects.Add(new DamageEffect(1));
+        //effects.Add(new BuffEffect(_duration => new StatDownBuff(_duration), 10f));
+        //effects.Add(new BuffEffect(_duration => new DotBuff(_duration), 10f));
     }
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        //°ø°ÝÇÏ´ø ¸ó½ºÅÍ¸¦ °ø°ÝÇÏ´Â°Ô ¸ÂÀ½
         CreatureController randTarget = null;
         if (_target != null)
         {
@@ -41,7 +35,7 @@ public class Archer_Skill : SkillBase
         }
         else
         {
-            Debug.Log("¾ÆÃ³ ½ºÅ³ Å¸°Ù ¾øÀ½]");
+            Debug.Log("ï¿½ï¿½Ã³ ï¿½ï¿½Å³ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½]");
             return false;
         }
     }

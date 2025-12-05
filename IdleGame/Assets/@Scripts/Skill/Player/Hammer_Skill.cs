@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class Hammer_Skill : SkillBase
 {
-
     public Hammer_Skill()
     {
-        SetUpEffect();
     }
-    protected override void SetUpEffect() { }
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        //TODO : 하드코딩들 처리
-        SpinAttackBuff spinBuff = new SpinAttackBuff(_caster, 2);
-        _caster.buffController.AddBuff(spinBuff);
+        // //TODO : 하드코딩들 처리
+        // SpinAttackBuff spinBuff = new SpinAttackBuff(_caster, 2);
+        // _caster.buffController.AddBuff(spinBuff);
 
         List<CreatureController> enemiesInArea = Utils.FindEnemyInSphereArea(_caster, attack_Radius);
         if (enemiesInArea.Count > 0)

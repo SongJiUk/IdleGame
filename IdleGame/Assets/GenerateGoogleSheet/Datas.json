@@ -553,7 +553,7 @@
     {
       "DataID": 50000,
       "Description": "클레릭의 힐",
-      "ComponentType": "BuffEffect",
+      "SkillEffectType": "BuffEffect",
       "Duration": 0,
       "ValueRatio": 0.2,
       "Radius": 0,
@@ -565,7 +565,7 @@
     {
       "DataID": 50001,
       "Description": "아처의 스킬 공격",
-      "ComponentType": "DamageEffect",
+      "SkillEffectType": "DamageEffect",
       "Duration": 0,
       "ValueRatio": 1.5,
       "Radius": 0,
@@ -577,7 +577,7 @@
     {
       "DataID": 50002,
       "Description": "아처의 스킬 디버프",
-      "ComponentType": "BuffEffect",
+      "SkillEffectType": "BuffEffect",
       "Duration": 10,
       "ValueRatio": 0.2,
       "Radius": 0,
@@ -589,7 +589,7 @@
     {
       "DataID": 50003,
       "Description": "아처의 스킬 도트데미지",
-      "ComponentType": "BuffEffect",
+      "SkillEffectType": "BuffEffect",
       "Duration": 5,
       "ValueRatio": 0.2,
       "Radius": 0,
@@ -601,7 +601,7 @@
     {
       "DataID": 50004,
       "Description": "어쌔신의 스킬 공격",
-      "ComponentType": "DamageEffect",
+      "SkillEffectType": "DamageEffect",
       "Duration": 0,
       "ValueRatio": 3,
       "Radius": 0,
@@ -613,7 +613,7 @@
     {
       "DataID": 50005,
       "Description": "해머의 스킬 공격",
-      "ComponentType": "BuffEffect",
+      "SkillEffectType": "BuffEffect",
       "Duration": 2,
       "ValueRatio": 0.6,
       "Radius": 2,
@@ -625,7 +625,7 @@
     {
       "DataID": 50006,
       "Description": "기사의 스킬 공격",
-      "ComponentType": "DamageEffect",
+      "SkillEffectType": "DamageEffect",
       "Duration": 0,
       "ValueRatio": 1.5,
       "Radius": 0,
@@ -637,7 +637,7 @@
     {
       "DataID": 50007,
       "Description": "스피어맨의 스킬 공격",
-      "ComponentType": "DamageEffect",
+      "SkillEffectType": "DamageEffect",
       "Duration": 0,
       "ValueRatio": 1.2,
       "Radius": 0,
@@ -649,7 +649,7 @@
     {
       "DataID": 50008,
       "Description": "두손검의 스킬 공격",
-      "ComponentType": "DamageEffect",
+      "SkillEffectType": "DamageEffect",
       "Duration": 0,
       "ValueRatio": 1.2,
       "Radius": 0,
@@ -661,10 +661,10 @@
     {
       "DataID": 50009,
       "Description": "남자 마법사의 스킬 공격",
-      "ComponentType": "DamageEffect",
+      "SkillEffectType": "DamageEffect",
       "Duration": 0,
-      "ValueRatio": 1.5,
-      "Radius": 2,
+      "ValueRatio": 2,
+      "Radius": 0,
       "Length": 0,
       "Width": 0,
       "Interval": 0,
@@ -673,7 +673,7 @@
     {
       "DataID": 50010,
       "Description": "여자 마법사의 공격력 버프",
-      "ComponentType": "BuffEffect",
+      "SkillEffectType": "BuffEffect",
       "Duration": 10,
       "ValueRatio": 1.2,
       "Radius": 0,
@@ -685,7 +685,7 @@
     {
       "DataID": 50011,
       "Description": "여자 마법사의 방어력 버프",
-      "ComponentType": "BuffEffect",
+      "SkillEffectType": "BuffEffect",
       "Duration": 10,
       "ValueRatio": 1.2,
       "Radius": 0,

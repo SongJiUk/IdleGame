@@ -9,10 +9,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{b550a819-0169-4d02-f96f-8ac1f4d8253f}</ProjectGuid>
+    <ProjectGuid>{54e1d73d-557f-47b7-2163-59375cb6644a}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Unity.2D.Common.Runtime</AssemblyName>
+    <AssemblyName>Unity.Searcher.Editor</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -26,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -36,15 +36,20 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Library/PackageCache/com.unity.2d.common@6.0.6/Runtime/UTess2D/Array.cs" />
-     <Compile Include="Library/PackageCache/com.unity.2d.common@6.0.6/Runtime/UTess2D/Refinery.cs" />
-     <Compile Include="Library/PackageCache/com.unity.2d.common@6.0.6/Runtime/UTess2D/Smoothen.cs" />
-     <Compile Include="Library/PackageCache/com.unity.2d.common@6.0.6/Runtime/UTess2D/Tessellator.cs" />
-     <Compile Include="Library/PackageCache/com.unity.2d.common@6.0.6/Runtime/UTess2D/UTess.cs" />
-     <Compile Include="Library/PackageCache/com.unity.2d.common@6.0.6/Runtime/UTess2D/ArraySlice.cs" />
-     <Compile Include="Library/PackageCache/com.unity.2d.common@6.0.6/Runtime/AssemblyInfo.cs" />
-     <Compile Include="Library/PackageCache/com.unity.2d.common@6.0.6/Runtime/UTess2D/PlanarGraph.cs" />
-     <None Include="Library/PackageCache/com.unity.2d.common@6.0.6/Runtime/Unity.2D.Common.Runtime.asmdef" />
+     <Compile Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Searcher/SearcherWindow.cs" />
+     <Compile Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Searcher/SearcherControl.cs" />
+     <Compile Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Searcher/Searcher.cs" />
+     <Compile Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Searcher/SearcherTreeUtility.cs" />
+     <Compile Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/AssemblyInfo.cs" />
+     <Compile Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Searcher/SearcherHighlighter.cs" />
+     <Compile Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Searcher/SearcherItem.cs" />
+     <Compile Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Searcher/SearcherAdapter.cs" />
+     <Compile Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Searcher/SearcherDatabaseBase.cs" />
+     <Compile Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Searcher/SearcherDatabase.cs" />
+     <None Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Unity.Searcher.Editor.asmdef" />
+     <None Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Resources/SearcherItem.uxml" />
+     <None Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Resources/SearcherWindow.uxml" />
+     <None Include="Library/PackageCache/com.unity.searcher@4.9.1/Editor/Resources/Searcher.uss" />
     <Reference Include="UnityEngine">
         <HintPath>/Applications/Unity/Hub/Editor/2021.3.21f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -119,6 +124,9 @@
     </Reference>
     <Reference Include="UnityEngine.LocalizationModule">
         <HintPath>/Applications/Unity/Hub/Editor/2021.3.21f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.LocalizationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.NVIDIAModule">
+        <HintPath>/Applications/Unity/Hub/Editor/2021.3.21f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.NVIDIAModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
         <HintPath>/Applications/Unity/Hub/Editor/2021.3.21f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll</HintPath>
@@ -350,6 +358,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
         <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.nuget.newtonsoft-json@3.2.1/Runtime/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
         <HintPath>/Applications/Unity/Hub/Editor/2021.3.21f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -746,9 +757,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.Mathematics.csproj">
-      <Project>{3e097167-b88c-f62a-6861-8f4e542cd58d}</Project>
-      <Name>Unity.Mathematics</Name>
+    <ProjectReference Include="UnityEditor.TestRunner.csproj">
+      <Project>{5e3dcf1c-e61b-d47c-9f8d-9a051f1a8d1f}</Project>
+      <Name>UnityEditor.TestRunner</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.TestRunner.csproj">
+      <Project>{1cc2f0bd-47ac-bce6-d223-9c4f21f6ab5e}</Project>
+      <Name>UnityEngine.TestRunner</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

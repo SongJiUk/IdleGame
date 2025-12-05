@@ -222,7 +222,7 @@ namespace Data
     {
         public int DataID;
         public string Description;
-        public string ComponentType;
+        public string SkillEffectType;
         public float Duration;
         public float ValueRatio;
         public float Radius;

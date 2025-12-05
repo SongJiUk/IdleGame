@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//ê³µí†µ ?Š¤?‚¬ ?°ë¯¸ì?? ê³„ì‚°
+//ê³µí†µ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ë¯¸ï¿½?? ê³„ì‚°
 public class DamageEffect : ISkillEffect
 {
     double damageMultiplier;
-    double splashRadius = 0f;
-    double splashMultiplier = 0f;
+    double splashRadius;
+    double splashMultiplier;
 
-    public DamageEffect(double _damageMultiplier, double _splashRadius = 0, double _splashMultiplier = 0)
+
+    public DamageEffect(double _damageMultiplier, double _splashRadius = 0)
     {
         damageMultiplier = _damageMultiplier;
         splashRadius = _splashRadius;
-        splashMultiplier = _splashMultiplier;
+        splashMultiplier = _damageMultiplier / 3;
     }
 
     public void Execute(CreatureController _caster, CreatureController _target)

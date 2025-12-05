@@ -6,12 +6,6 @@ public class Knight_Skill : SkillBase
 {
     public Knight_Skill()
     {
-        SetUpEffect();
-    }
-
-    protected override void SetUpEffect()
-    {
-        effects.Add(new DamageEffect(1.5f));
     }
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)

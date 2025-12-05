@@ -6,17 +6,26 @@ using UnityEngine;
 //TODO : 이걸 합쳐버릴까?
 public class SpinAttackBuff : BuffBase
 {
-    CreatureController caster;
     //TODO : 이런것들 다 하드코딩 지우기.
-    const float TICK_INTERVAL = 2f / 3f;
-    float damageMultiplier;
-    float timeSinceLastTick;
+    CreatureController owner;
 
-    public SpinAttackBuff(CreatureController _caster, float _duration) : base(_duration) { this.caster = _caster; }
+    public SpinAttackBuff(float _duration, float _ratio, float _radius, float _interval, CreatureController _owner = null) : base(_duration)
+    {
+        ratio = _ratio;
+        radius = _radius;
+        interval = _interval;
+        owner = _owner;
+    }
 
-    public override void Apply(CreatureController _target) { }
+    public override void Apply(CreatureController _target)
+    {
+        target = _target;
+    }
 
-    public override void Remove(CreatureController _target) { }
+    public override void Remove(CreatureController _target)
+    {
+        target = null;
+    }
 
 
     public override void Update(float _deltaTime)
@@ -25,7 +34,7 @@ public class SpinAttackBuff : BuffBase
         base.Update(_deltaTime);
 
         timeSinceLastTick += _deltaTime;
-        if (timeSinceLastTick >= TICK_INTERVAL)
+        if (timeSinceLastTick >= interval)
         {
             DealAreaDamage();
             timeSinceLastTick = 0f;
@@ -34,12 +43,11 @@ public class SpinAttackBuff : BuffBase
 
     void DealAreaDamage()
     {
-        List<CreatureController> hitEnemies = Utils.FindEnemyInSphereArea(caster, 2f);
-        float tickDamage = (float)caster.Damage * damageMultiplier;
-        foreach (CreatureController enemy in hitEnemies)
-        {
-            enemy.GetDamage(tickDamage, caster);
-        }
+
+        //TODO : 여기서 target은 버프를 받은 사람임(맞은 사람)
+        float tickDamage = (float)owner.Damage * ratio;
+
+        target.GetDamage(tickDamage, target);
     }
 
 

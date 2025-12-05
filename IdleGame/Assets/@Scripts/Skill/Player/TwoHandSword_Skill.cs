@@ -7,12 +7,6 @@ public class TwoHandSword_Skill : SkillBase
 {
     public TwoHandSword_Skill()
     {
-        SetUpEffect();
-    }
-
-    protected override void SetUpEffect()
-    {
-        effects.Add(new DamageEffect(1.3f));
     }
 
     override public bool UseSkill(CreatureController _caster, CreatureController _target = null)

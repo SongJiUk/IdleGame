@@ -91,7 +91,7 @@ public class SkillEffectData
 {
 	public int DataID;
 	public string Description;
-	public string ComponentType;
+	public string SkillEffectType;
 	public int Duration;
 	public float ValueRatio;
 	public int Radius;

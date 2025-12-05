@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BuffController : MonoBehaviour, ITickable
 {
+    //버프를 받는 오브젝트
     private CreatureController owner;
     private List<IBuff> activeBuffs = new List<IBuff>();
 
@@ -12,7 +13,7 @@ public class BuffController : MonoBehaviour, ITickable
         owner = GetComponent<CreatureController>();
         if (owner == null)
         {
-            Debug.LogError("CreatureController ����");
+            Debug.LogError("CreatureController ����");
         }
     }
 

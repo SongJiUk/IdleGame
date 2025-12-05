@@ -2,31 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//½ºÅ³ È¿°úÁß ÇÏ³ª, Å¸°Ù¿¡°Ô ¹öÇÁ Àû¿ëÇÏ´Â ¿ªÇÒ
+//ï¿½ï¿½Å³ È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½, Å¸ï¿½Ù¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
 public class BuffEffect : ISkillEffect
 {
-    //IBuff ÀÎ½ºÅÏ½º »ý¼ºÇÏ´Â ÆÑÅä¸®ÇÔ¼ö(¸®ÇÃ·º¼Ç ´ë½Å »ç¿ë)
-    public delegate IBuff BuffFactory(float _duration);
+    //IBuff ï¿½Î½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ä¸®ï¿½Ô¼ï¿½(ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)
+    public delegate IBuff BuffFactory(float _duration, float _ratio, float _radius = 0, float _interval = 0, CreatureController _owner = null);
     readonly BuffFactory buffFactory;
 
     private float buffDurtaion;
+    float buffRatio;
+    float buffRadius;
+    float buffInterval;
+    CreatureController buffOwner;
 
-    //¹öÇÁ ÀÎ½ºÅÏ½º¸¦ »ý¼ºÇÒ ÆÑÅä¸® ÇÔ¼ö, Áö¼Ó½Ã°£
-    public BuffEffect(BuffFactory _factory, float _duration)
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ä¸® ï¿½Ô¼ï¿½, ï¿½ï¿½ï¿½Ó½Ã°ï¿½
+    public BuffEffect(BuffFactory _factory, float _duration, float _ratio, float _radius = 0, float _interval = 0, CreatureController _owner = null)
     {
         buffFactory = _factory;
         buffDurtaion = _duration;
+        buffRatio = _ratio;
+        buffRadius = _radius;
+        buffInterval = _interval;
+        buffOwner = _owner;
+
     }
 
     public void Execute(CreatureController _caster, CreatureController _target)
     {
-        //¹öÇÁ ÀÎ½ºÅÏ½º »ý¼º : ÆÑÅä¸® ÇÔ¼ö¸¦ È£ÃâÇÏ¿© »õ·Î¿î Ibuff °´Ã¼ »ý¼º
-        IBuff newBuff = buffFactory(buffDurtaion);
-        //Å¸°Ù¿¡ ¹öÇÁ Ãß°¡, Å¸°ÙÀÇ addfBuffÈ£Ãâ
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ä¸® ï¿½Ô¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ Ibuff ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+        IBuff newBuff = buffFactory(buffDurtaion, buffRatio, buffRadius, buffInterval, buffOwner);
+        //Å¸ï¿½Ù¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½, Å¸ï¿½ï¿½ï¿½ï¿½ addfBuffÈ£ï¿½ï¿½
         _target.buffController.AddBuff(newBuff);
 
 
-        //TDOO: ì§??š¸ê±?(?‚¬?š©ë°©ë²•)
+        //TDOO: ï¿½??ï¿½ï¿½ï¿½?(?ï¿½ï¿½?ï¿½ï¿½ë°©ë²•)
         //effects.Add(new BuffEffect(typeof(AttackBuff), 15f));
     }
 }

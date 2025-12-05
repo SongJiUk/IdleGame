@@ -23,6 +23,14 @@ public class SkillController : MonoBehaviour
         {
             skills.AddRange(_skills);
         }
+
+        if (owner != null)
+        {
+            foreach (var skill in skills)
+            {
+                skill.SetSkill(owner);
+            }
+        }
     }
 
 
@@ -39,6 +47,7 @@ public class SkillController : MonoBehaviour
 
         //떄리던쪽 때리는게 맞을거같아서 이게 나을듯
         bool skillExecuted = useSkill.UseSkill(owner, _target);
+
         if (skillExecuted)
         {
             caster.AnimatorChange(Define.CreatureState.Skill);
@@ -53,6 +62,8 @@ public class SkillController : MonoBehaviour
         return true;
 
     }
+
+
 
     public void ShowEffect()
     {

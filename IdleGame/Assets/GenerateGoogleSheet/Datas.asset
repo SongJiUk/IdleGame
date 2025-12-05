@@ -429,7 +429,7 @@ MonoBehaviour:
   SkillEffectDataList:
   - DataID: 50000
     Description: "\uD074\uB808\uB9AD\uC758 \uD790"
-    ComponentType: BuffEffect
+    SkillEffectType: BuffEffect
     Duration: 0
     ValueRatio: 0.2
     Radius: 0
@@ -439,7 +439,7 @@ MonoBehaviour:
     BuffTypeID: 100
   - DataID: 50001
     Description: "\uC544\uCC98\uC758 \uC2A4\uD0AC \uACF5\uACA9"
-    ComponentType: DamageEffect
+    SkillEffectType: DamageEffect
     Duration: 0
     ValueRatio: 1.5
     Radius: 0
@@ -449,7 +449,7 @@ MonoBehaviour:
     BuffTypeID: 0
   - DataID: 50002
     Description: "\uC544\uCC98\uC758 \uC2A4\uD0AC \uB514\uBC84\uD504"
-    ComponentType: BuffEffect
+    SkillEffectType: BuffEffect
     Duration: 10
     ValueRatio: 0.2
     Radius: 0
@@ -459,7 +459,7 @@ MonoBehaviour:
     BuffTypeID: 103
   - DataID: 50003
     Description: "\uC544\uCC98\uC758 \uC2A4\uD0AC \uB3C4\uD2B8\uB370\uBBF8\uC9C0"
-    ComponentType: BuffEffect
+    SkillEffectType: BuffEffect
     Duration: 5
     ValueRatio: 0.2
     Radius: 0
@@ -469,7 +469,7 @@ MonoBehaviour:
     BuffTypeID: 104
   - DataID: 50004
     Description: "\uC5B4\uC314\uC2E0\uC758 \uC2A4\uD0AC \uACF5\uACA9"
-    ComponentType: DamageEffect
+    SkillEffectType: DamageEffect
     Duration: 0
     ValueRatio: 3
     Radius: 0
@@ -479,7 +479,7 @@ MonoBehaviour:
     BuffTypeID: 0
   - DataID: 50005
     Description: "\uD574\uBA38\uC758 \uC2A4\uD0AC \uACF5\uACA9"
-    ComponentType: BuffEffect
+    SkillEffectType: BuffEffect
     Duration: 2
     ValueRatio: 0.6
     Radius: 2
@@ -489,7 +489,7 @@ MonoBehaviour:
     BuffTypeID: 105
   - DataID: 50006
     Description: "\uAE30\uC0AC\uC758 \uC2A4\uD0AC \uACF5\uACA9"
-    ComponentType: DamageEffect
+    SkillEffectType: DamageEffect
     Duration: 0
     ValueRatio: 1.5
     Radius: 0
@@ -499,7 +499,7 @@ MonoBehaviour:
     BuffTypeID: 0
   - DataID: 50007
     Description: "\uC2A4\uD53C\uC5B4\uB9E8\uC758 \uC2A4\uD0AC \uACF5\uACA9"
-    ComponentType: DamageEffect
+    SkillEffectType: DamageEffect
     Duration: 0
     ValueRatio: 1.2
     Radius: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
     BuffTypeID: 0
   - DataID: 50008
     Description: "\uB450\uC190\uAC80\uC758 \uC2A4\uD0AC \uACF5\uACA9"
-    ComponentType: DamageEffect
+    SkillEffectType: DamageEffect
     Duration: 0
     ValueRatio: 1.2
     Radius: 0
@@ -519,17 +519,17 @@ MonoBehaviour:
     BuffTypeID: 0
   - DataID: 50009
     Description: "\uB0A8\uC790 \uB9C8\uBC95\uC0AC\uC758 \uC2A4\uD0AC \uACF5\uACA9"
-    ComponentType: DamageEffect
+    SkillEffectType: DamageEffect
     Duration: 0
-    ValueRatio: 1.5
-    Radius: 2
+    ValueRatio: 2
+    Radius: 0
     Length: 0
     Width: 0
     Interval: 0
     BuffTypeID: 0
   - DataID: 50010
     Description: "\uC5EC\uC790 \uB9C8\uBC95\uC0AC\uC758 \uACF5\uACA9\uB825 \uBC84\uD504"
-    ComponentType: BuffEffect
+    SkillEffectType: BuffEffect
     Duration: 10
     ValueRatio: 1.2
     Radius: 0
@@ -539,7 +539,7 @@ MonoBehaviour:
     BuffTypeID: 101
   - DataID: 50011
     Description: "\uC5EC\uC790 \uB9C8\uBC95\uC0AC\uC758 \uBC29\uC5B4\uB825 \uBC84\uD504"
-    ComponentType: BuffEffect
+    SkillEffectType: BuffEffect
     Duration: 10
     ValueRatio: 1.2
     Radius: 0

@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class SpearMan_Skill : SkillBase
 {
-
     public SpearMan_Skill()
     {
-        SetUpEffect();
-    }
-
-    protected override void SetUpEffect()
-    {
-        effects.Add(new DamageEffect(1.2));
     }
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)

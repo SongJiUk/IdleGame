@@ -68,26 +68,25 @@ public static class SkillRegistry
                     SkillBase newSkill = (SkillBase)Activator.CreateInstance(skillType);
                     if (newSkill == null)
                     {
-                        Debug.LogError($"[SkillRegistry] ½ºÅ³ »ı¼º ½ÇÆĞ : {skillType.Name}");
+                        Debug.LogError($"[SkillRegistry] ìŠ¤í‚¬ ìƒì„± ì‹¤íŒ¨ : {skillType.Name}");
                         continue;
                     }
 
-                    newSkill.SetSkill();
                     skills.Add(newSkill);
                 }
                 catch (MissingMethodException)
                 {
-                    Debug.LogError($"[SkillRegistry] {skillType}¿¡ ¸Å°³º¯¼ö ¾ø´Â »ı¼ºÀÚ°¡ ¾øÀ½");
+                    Debug.LogError($"[SkillRegistry] {skillType}ì— ë§¤ê°œë³€ìˆ˜ ì—†ëŠ” ìƒì„±ìê°€ ì—†ìŒ");
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError("½ºÅ³ ÀÎ½ºÅÏ½º »ı¼º ¿À·ù");
+                    Debug.LogError("ìŠ¤í‚¬ ì¸ìŠ¤í„´ìŠ¤ ìƒì„± ì˜¤ë¥˜");
                 }
             }
         }
         else
         {
-            Debug.LogError("Dictinary¿¡ ÀúÀåµÈ °ªÀÌ ¾øÀ½.");
+            Debug.LogError("Dictinaryì— ì €ì¥ëœ ê°’ì´ ì—†ìŒ.");
         }
 
         return skills;

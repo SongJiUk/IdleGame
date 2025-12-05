@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class StatDownBuff : BuffBase
 {
-    float reductionRate = 0.1f;
-    public StatDownBuff(float _duration) : base(_duration) { }
+    public StatDownBuff(float _duration, float _ratio) : base(_duration)
+    {
+        ratio = _ratio;
+    }
 
     public override void Apply(CreatureController _target)
     {
-        _target.Damage *= (1 - reductionRate);
-        _target.Defense *= (1 - reductionRate);
-        _target.Speed *= (1 - reductionRate);
+        _target.Damage *= (1 - ratio);
+        _target.Defense *= (1 - ratio);
+        _target.Speed *= (1 - ratio);
     }
 
     public override void Remove(CreatureController _target)
     {
-        _target.Damage /= (1 - reductionRate);
-        _target.Defense /= (1 - reductionRate);
-        _target.Speed /= (1 - reductionRate);
+        _target.Damage /= (1 - ratio);
+        _target.Defense /= (1 - ratio);
+        _target.Speed /= (1 - ratio);
     }
 }

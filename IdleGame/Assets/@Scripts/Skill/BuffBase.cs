@@ -8,6 +8,10 @@ public abstract class BuffBase : IBuff
     protected CreatureController target;
     protected float duration;
     protected float leftTime;
+    protected float ratio;
+    protected float radius;
+    protected float interval;
+    protected float timeSinceLastTick = 0;
 
 
     public System.Type GetBuffType()
@@ -17,8 +21,7 @@ public abstract class BuffBase : IBuff
 
     public BuffBase(float _duration)
     {
-        this.duration = _duration;
-        this.leftTime = _duration;
+        leftTime = _duration;
     }
     public virtual void Update(float _deltaTime)
     {
@@ -31,7 +34,7 @@ public abstract class BuffBase : IBuff
     }
 
 
-    //? ?š© ? œê±? ë¡œì§
+    //?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ï¿½? ë¡œì§
     public abstract void Apply(CreatureController _target);
     public abstract void Remove(CreatureController _target);
 

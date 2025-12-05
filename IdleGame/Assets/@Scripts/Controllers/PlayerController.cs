@@ -279,7 +279,10 @@ public class PlayerController : CreatureController
             else isUsingSkill = false;
         }
     }
-
+    public void SkillEnd()
+    {
+        isUsingSkill = false;
+    }
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)
     {
         if (isDead) return;
@@ -297,7 +300,7 @@ public class PlayerController : CreatureController
     public override void Dead()
     {
         base.Dead();
-
+        isUsingSkill = false;
         AnimatorChange(CreatureState.Dead);
         Managers.SpawnM.players.Remove(this);
         if (Managers.SpawnM.players.Count <= 0)

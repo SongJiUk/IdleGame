@@ -6,16 +6,10 @@ public class Assassin_Skill : SkillBase
 {
     public Assassin_Skill()
     {
-        SetUpEffect();
-    }
-    protected override void SetUpEffect()
-    {
-        effects.Add(new DamageEffect(3f));
     }
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        //TODO : 가장 가까이 있는 적을 강하게 공격(300%) => 공격하던 적이면 그적 타격 
         CreatureController target = null;
         if (_target != null)
         {
@@ -25,6 +19,7 @@ public class Assassin_Skill : SkillBase
         {
             target = Utils.FindNearEnemy(_caster);
         }
+
 
 
         if (target != null)

@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class HealBuff : BuffBase
 {
-    float healAmount = 50f;
-    public HealBuff(float _duration) : base(_duration) { }
+    public HealBuff(float _duration, float _ratio) : base(_duration)
+    {
+        this.duration = _duration;
+        this.ratio = _ratio;
+    }
 
     public override void Apply(CreatureController _target)
     {
-        _target.Heal(healAmount);
-        //TODO : 여기서 힐 이펙트
+        _target.Heal(ratio);
     }
 
     public override void Remove(CreatureController _target) { }
