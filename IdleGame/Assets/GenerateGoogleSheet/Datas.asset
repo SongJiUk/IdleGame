@@ -375,57 +375,57 @@ MonoBehaviour:
   - DataID: 40000
     SkillName: Heal
     SkillNameKR: "\uD790"
-    CastingVFX_ID: 0
-    TargetVFX_ID: 60000/60001
-    BuffList_ID: 50000
+    CastingVFX_ID: 60000
+    TargetVFX_ID_Raw: 60001/60002
+    BuffList_ID_Raw: 50000
   - DataID: 40001
     SkillName: PoisonArrow
     SkillNameKR: "\uB3C5\uD654\uC0B4"
-    CastingVFX_ID: 0
-    TargetVFX_ID: 0
-    BuffList_ID: 50001/50002/50003
+    CastingVFX_ID: 60003
+    TargetVFX_ID_Raw: 60004/60005
+    BuffList_ID_Raw: 50001/50002/50003
   - DataID: 40002
     SkillName: AssassiNation
     SkillNameKR: "\uC554\uC0B4"
     CastingVFX_ID: 0
-    TargetVFX_ID: 0
-    BuffList_ID: 50004
+    TargetVFX_ID_Raw: 60006
+    BuffList_ID_Raw: 50004
   - DataID: 40003
     SkillName: SpinAttack
     SkillNameKR: "\uD68C\uC804\uACF5\uACA9"
     CastingVFX_ID: 0
-    TargetVFX_ID: 0
-    BuffList_ID: 50005
+    TargetVFX_ID_Raw: 60007
+    BuffList_ID_Raw: 50005
   - DataID: 40004
     SkillName: RightSword
     SkillNameKR: "\uBE5B\uC758\uAC80"
     CastingVFX_ID: 0
-    TargetVFX_ID: 0
-    BuffList_ID: 50006
+    TargetVFX_ID_Raw: 60008
+    BuffList_ID_Raw: 50006
   - DataID: 40005
     SkillName: AttackFront
     SkillNameKR: "\uC804\uBC29\uACF5\uACA9"
     CastingVFX_ID: 0
-    TargetVFX_ID: 0
-    BuffList_ID: 50007
+    TargetVFX_ID_Raw: 60009
+    BuffList_ID_Raw: 50007
   - DataID: 40006
     SkillName: CutTwice
     SkillNameKR: "\uB450\uBC88\uBCA0\uAE30"
     CastingVFX_ID: 0
-    TargetVFX_ID: 0
-    BuffList_ID: 50008
+    TargetVFX_ID_Raw: 60010
+    BuffList_ID_Raw: 50008
   - DataID: 40007
     SkillName: Metor
     SkillNameKR: "\uBA54\uD14C\uC624"
-    CastingVFX_ID: 0
-    TargetVFX_ID: 0
-    BuffList_ID: 50009
+    CastingVFX_ID: 60011
+    TargetVFX_ID_Raw: 60012
+    BuffList_ID_Raw: 50009
   - DataID: 40008
     SkillName: Buff
     SkillNameKR: "\uBC84\uD504"
-    CastingVFX_ID: 0
-    TargetVFX_ID: 0
-    BuffList_ID: 50010/50011
+    CastingVFX_ID: 60013
+    TargetVFX_ID_Raw: 60014
+    BuffList_ID_Raw: 50010/50011
   SkillEffectDataList:
   - DataID: 50000
     Description: "\uD074\uB808\uB9AD\uC758 \uD790"
@@ -460,8 +460,8 @@ MonoBehaviour:
   - DataID: 50003
     Description: "\uC544\uCC98\uC758 \uC2A4\uD0AC \uB3C4\uD2B8\uB370\uBBF8\uC9C0"
     ComponentType: BuffEffect
-    Duration: 10
-    ValueRatio: 0.5
+    Duration: 5
+    ValueRatio: 0.2
     Radius: 0
     Length: 0
     Width: 0
@@ -562,6 +562,32 @@ MonoBehaviour:
     BuffName: SpinAttackBuff
   VFXDataList:
   - DataID: 60000
-    PrefabName: Heal
+    PrefabName: Cleric_Skill_Caster
   - DataID: 60001
-    PrefabName: HealCircle
+    PrefabName: Cleric_Heal
+  - DataID: 60002
+    PrefabName: Cleric_HealCircle
+  - DataID: 60003
+    PrefabName: Acher_Skill_Caster
+  - DataID: 60004
+    PrefabName: Archer_DeBuff
+  - DataID: 60005
+    PrefabName: Archer_DotDamage
+  - DataID: 60006
+    PrefabName: Assassin_Skill
+  - DataID: 60007
+    PrefabName: Hammer_Skill
+  - DataID: 60008
+    PrefabName: Knight_Skill
+  - DataID: 60009
+    PrefabName: SpearMan_Skill
+  - DataID: 60010
+    PrefabName: TwoHandSword_Skill
+  - DataID: 60011
+    PrefabName: Mage_M_Skill_Caster
+  - DataID: 60012
+    PrefabName: Mage_M_Skill_Target
+  - DataID: 60013
+    PrefabName: Mage_W_Skill_Caster
+  - DataID: 60014
+    PrefabName: Mage_W_Buff

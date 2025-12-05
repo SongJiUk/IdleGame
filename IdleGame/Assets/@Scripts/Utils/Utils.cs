@@ -131,7 +131,7 @@ public static class Utils
         foreach (PlayerController pc in pList)
         {
             if (!pc.gameObject.activeSelf) continue;
-            if (pc.gameObject == _caster.gameObject) continue;
+            //if (pc.gameObject == _caster.gameObject) continue;
             randomPlayer.Add(pc);
         }
 
@@ -246,6 +246,19 @@ public static class Utils
 
     #endregion
 
+
+    #region 이펙트 헬퍼함수
+    public static string GetVfxPrefabName(int _vfxId)
+    {
+        if(Managers.DataM.VFXDataDic.TryGetValue(_vfxId, out var vfxData))
+        {
+            return vfxData.PrefabName;
+        }
+
+        Debug.LogError($"VFX ID {_vfxId}에 해당하는 PrefabName을 찾을 수 없습니다.");
+        return null;
+    }
+    #endregion
     //몬스터 소환 위치
     public static Vector3 CreateMonsterSpawnPoint()
     {

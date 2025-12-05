@@ -56,9 +56,17 @@ public class SkillController : MonoBehaviour
 
     public void ShowEffect()
     {
-        //TODO : ��ų ������ �����ͼ� ������ �̸� �־
-        var effect = Managers.ResourceM.Instantiate("KnightSkill", _pooling: true);
-        effect.transform.position = owner.transform.position;
+        if (!Managers.DataM.SkillDataDic.TryGetValue(owner.DATA.SkillDataID, out var skillData))
+        {
+            Debug.LogError($"스킬 ID {owner.DATA.SkillDataID} 데이터 없음.");
+            return;
+        }
 
+        string vfxName = Utils.GetVfxPrefabName(skillData.CastingVFX_ID);
+        if (!string.IsNullOrEmpty(vfxName))
+        {
+            var effect = Managers.ResourceM.Instantiate(vfxName, _pooling: true);
+            effect.transform.position = owner.transform.position;
+        }
     }
 }

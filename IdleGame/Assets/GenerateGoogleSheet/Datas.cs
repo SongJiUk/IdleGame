@@ -82,8 +82,8 @@ public class SkillData
 	public string SkillName;
 	public string SkillNameKR;
 	public int CastingVFX_ID;
-	public string TargetVFX_ID;
-	public string BuffList_ID;
+	public string TargetVFX_ID_Raw;
+	public string BuffList_ID_Raw;
 }
 
 [Serializable]

@@ -11,12 +11,34 @@ public class Cleric_Skill : SkillBase
 
     protected override void SetUpEffect()
     {
-        effects.Add(new BuffEffect(_duration => new HealBuff(_duration), 0.1f));
+        
+        
     }
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        //ÆÀ¿øÁß hp°¡ °¡Àå ³·Àº ÇÃ·¹ÀÌ¾î¸¦ Ã£¾Æ »ç¿ë
+        Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skilldata);
+
+        //if (skilldata != null)
+        //{
+
+        //    if (skilldata.BuffList_ID.Count > 1)
+        //    {
+        //        for(int i =0; i<skilldata.BuffList_ID.Count; i++)
+        //        {
+        //            Managers.DataM.SkillEffectDataDic.TryGetValue(skilldata.BuffList_ID[i], out var buffData);
+
+
+        //        }
+        //    }
+
+        //}
+        //TODO : ìˆ˜ì •
+        Managers.DataM.SkillEffectDataDic.TryGetValue(skilldata.BuffList_ID[0], out var buffData);
+
+        effects.Add(new BuffEffect(_duration => new HealBuff(_duration), buffData.ValueRatio));
+
+        //íŒ€ì›ì¤‘ hpê°€ ê°€ì¥ ë‚®ì€ í”Œë ˆì´ì–´ë¥¼ ì°¾ì•„ ì‚¬ìš©
         CreatureController target = Utils.FindLowestHpPlayer();
 
         if (target != null)
@@ -30,10 +52,8 @@ public class Cleric_Skill : SkillBase
         }
         else
         {
-            Debug.Log("[Cleric_Skill] : ¾Æ±ºÀÌ ¾øÀ½.");
+            Debug.Log("[Cleric_Skill] : ì•„êµ°ì´ ì—†ìŒ.");
             return false;
         }
     }
-
-
 }
