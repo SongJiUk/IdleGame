@@ -49,6 +49,10 @@ class Pool
 
     void OnGet(GameObject _go)
     {
+        if (_go == null)
+        {
+            return;
+        }
         _go.SetActive(true);
     }
 
@@ -69,7 +73,9 @@ public class PoolManager
 
     public GameObject Pop(GameObject _prefab)
     {
-        if (_prefab.IsValid() == false) return null;
+        //TODO : 여기인거같은데..
+        if (_prefab.IsValid() == false)
+            return null;
 
         if (!pools.ContainsKey(_prefab.name))
             CreatePool(_prefab);

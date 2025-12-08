@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class SpearMan_Skill : SkillBase
 {
@@ -10,6 +11,34 @@ public class SpearMan_Skill : SkillBase
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
+        Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
+
+        foreach (int data in skillData.BuffList_ID)
+        {
+            Managers.DataM.SkillEffectDataDic.TryGetValue(data, out var buffData);
+            skill_Duration = buffData.SkillDuration;
+
+            if (buffData.AnimDuration > 0)
+            {
+                anim_Duration = buffData.AnimDuration;
+            }
+
+            if (buffData.Radius > 0)
+            {
+                attack_Radius = buffData.Radius;
+            }
+            if (buffData.Length > 0)
+            {
+                attack_length = buffData.Length;
+            }
+
+            if (buffData.Width > 0)
+            {
+                attack_width = buffData.Width;
+            }
+        }
+
+
         List<CreatureController> enemiesInArea = Utils.FindEnemyForwardArea(_caster, attack_length, attack_width);
 
         if (enemiesInArea.Count > 0)
@@ -21,6 +50,8 @@ public class SpearMan_Skill : SkillBase
                     effect.Execute(_caster, enemy);
                 }
             }
+            ResetSkillStateAsync(_caster, anim_Duration).Forget();
+
             return true;
         }
         else

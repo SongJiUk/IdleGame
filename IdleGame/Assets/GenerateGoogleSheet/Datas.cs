@@ -81,9 +81,10 @@ public class SkillData
 	public int DataID;
 	public string SkillName;
 	public string SkillNameKR;
-	public int CastingVFX_ID;
+	public int CastingVFX_ID_Raw;
 	public string TargetVFX_ID_Raw;
 	public string BuffList_ID_Raw;
+	public int SkillProjectileID;
 }
 
 [Serializable]
@@ -92,7 +93,7 @@ public class SkillEffectData
 	public int DataID;
 	public string Description;
 	public string SkillEffectType;
-	public int SkillDuration;
+	public float SkillDuration;
 	public float AnimDuration;
 	public float ValueRatio;
 	public int Radius;

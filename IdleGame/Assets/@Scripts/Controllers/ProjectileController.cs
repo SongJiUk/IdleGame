@@ -46,7 +46,6 @@ public class ProjectileController : BaseController
 
     public virtual async UniTask ReturnObject(float _time)
     {
-        //NOTE: ��ü�� �ı��ǰų�, ������ҽ� ����ϴ� �ڵ��µ�
         CancellationToken token = this.GetCancellationTokenOnDestroy();
         try
         {
@@ -59,7 +58,7 @@ public class ProjectileController : BaseController
         catch (System.Exception e)
         {
             Managers.UpdateM.UnRegister(this);
-            Debug.LogError($"Projectile ��ȯ�� ���� �߻� {e.Message}");
+            Debug.LogError($"Projectile Exception :  {e.Message}");
         }
     }
 }

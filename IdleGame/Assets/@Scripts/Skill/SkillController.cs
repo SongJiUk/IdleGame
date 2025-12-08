@@ -45,7 +45,6 @@ public class SkillController : MonoBehaviour
         SkillBase useSkill = skills[_skillIndex];
         CreatureController caster = owner;
 
-        //떄리던쪽 때리는게 맞을거같아서 이게 나을듯
         bool skillExecuted = useSkill.UseSkill(owner, _target);
 
         if (skillExecuted)
@@ -73,11 +72,30 @@ public class SkillController : MonoBehaviour
             return;
         }
 
-        string vfxName = Utils.GetVfxPrefabName(skillData.CastingVFX_ID);
-        if (!string.IsNullOrEmpty(vfxName))
+
+        foreach (var data in skillData.CastingVFX_ID)
         {
-            var effect = Managers.ResourceM.Instantiate(vfxName, _pooling: true);
-            effect.transform.position = owner.transform.position;
+            string vfxName = Utils.GetVfxPrefabName(data);
+            if (!string.IsNullOrEmpty(vfxName))
+            {
+                var effect = Managers.ResourceM.Instantiate(vfxName, _pooling: true);
+
+
+                //TODO : 이거 y값 높여주면 다른 ui보다 위여서 안겹쳐서 보임
+                Vector3 pos = owner.transform.position;
+                pos.y += 0.5f;
+                effect.transform.position = pos;
+                effect.transform.rotation = owner.transform.rotation;
+            }
+        }
+    }
+
+
+    public void ClearAllSkillsVFX()
+    {
+        foreach (var skill in skills)
+        {
+            skill.ClearSkillVFX();
         }
     }
 }

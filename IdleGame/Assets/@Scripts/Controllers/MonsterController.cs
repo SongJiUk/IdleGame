@@ -22,7 +22,7 @@ public class MonsterController : CreatureController
     public Action<MonsterController> OnMonsterInfoUpdate;
     public bool isBoss = false;
     SkillBase skillbase;
-    
+
     CancellationTokenSource skillCTS;
     public override bool Init()
     {
@@ -57,8 +57,8 @@ public class MonsterController : CreatureController
         isKnockBack = false;
         baseHp = _data.BaseHp;
         baseDamage = _data.BaseDamage;
-        maxHp = Utils.Datas.stageData.HP((float)baseHp);
-        hp = Utils.Datas.stageData.HP((float)baseHp);
+        maxHp = Utils.Datas.stageData.HP((float)baseHp) * 10;
+        hp = Utils.Datas.stageData.HP((float)baseHp) * 10;
         damage = Utils.Datas.stageData.Damage((float)baseDamage);
 
         attackrange = DATA.AttackRange;
@@ -186,8 +186,10 @@ public class MonsterController : CreatureController
     {
         if (isDead) return;
 
-        base.GetDamage(_dmg, _attacker, _attacker.GetCritical());
-        Managers.ObjectM.Spawn<ObjectController>(transform.position, 20000);
+        base.GetDamage(_dmg, _attacker, _attacker.GetCritical(), _isSkill);
+
+        //TODO : 스모크 나오는 부분
+        //Managers.ObjectM.Spawn<ObjectController>(transform.position, 20000);
         OnMonsterInfoUpdate?.Invoke(this);
         if (hp <= 0)
         {

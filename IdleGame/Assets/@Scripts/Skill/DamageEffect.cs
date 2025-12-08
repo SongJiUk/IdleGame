@@ -31,7 +31,7 @@ public class DamageEffect : ISkillEffect
         {
             InstantDamage(_caster, _target);
         }
-        
+
     }
 
     public void ApplySplashDamage(CreatureController _caster, CreatureController _target, double _radius, double _multiplier)
@@ -60,7 +60,7 @@ public class DamageEffect : ISkillEffect
         if (_target.IsDead) return;
 
         double baseDamage = _caster.Damage * damageMultiplier;
-        _target.GetDamage(baseDamage, _caster, _isSkill : true);
+        _target.GetDamage(baseDamage, _caster, _isSkill: true);
 
 
         if (splashRadius > 0 && splashMultiplier > 0)

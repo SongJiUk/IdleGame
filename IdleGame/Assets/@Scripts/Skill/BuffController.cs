@@ -20,13 +20,22 @@ public class BuffController : MonoBehaviour, ITickable
     public void Tick(float _deltaTime)
     {
         for (int i = activeBuffs.Count - 1; i >= 0; i--)
-        {
+        {   //TODO : 아오!!!
             IBuff buff = activeBuffs[i];
+            if (i >= activeBuffs.Count) continue;
+
             buff.Update(_deltaTime);
+
+
 
             if (buff.isExpired())
             {
-                RemoveBuff(buff);
+                buff.Remove(owner);
+                activeBuffs.RemoveAt(i);
+                if (activeBuffs.Count == 0)
+                {
+                    Managers.UpdateM.UnRegister(this);
+                }
             }
         }
     }
@@ -50,17 +59,44 @@ public class BuffController : MonoBehaviour, ITickable
 
     public void RemoveBuff(IBuff _buff)
     {
-        if (activeBuffs.Contains(_buff))
+        int index = activeBuffs.IndexOf(_buff);
+
+        if (index != -1)
         {
             _buff.Remove(owner);
-            activeBuffs.Remove(_buff);
-
+            activeBuffs.RemoveAt(index);
 
             if (activeBuffs.Count == 0)
             {
                 Managers.UpdateM.UnRegister(this);
             }
         }
+        // if (activeBuffs.Contains(_buff))
+        // {
+        //     _buff.Remove(owner);
+        //     activeBuffs.Remove(_buff);
+
+
+        //     if (activeBuffs.Count == 0)
+        //     {
+        //         Managers.UpdateM.UnRegister(this);
+        //     }
+        // }
     }
 
+    public void ClearAllBuffs()
+    {
+        if (activeBuffs.Count > 0)
+        {
+            Managers.UpdateM.UnRegister(this);
+        }
+        for (int i = activeBuffs.Count - 1; i >= 0; i--)
+        {
+            IBuff buff = activeBuffs[i];
+            buff.Remove(owner);
+            activeBuffs.RemoveAt(i);
+        }
+
+        activeBuffs.Clear();
+    }
 }

@@ -9,18 +9,17 @@ public class RangeAttackController : ProjectileController
     CreatureController owner;
 
 
-    //TODO : 이거 프리팹을 여러개로 나눠서 하는게 나음.
     private void Awake()
     {
-        //Transform projectiles = transform.GetChild(0);
-        //Transform muzzles = transform.GetChild(1);
+        Transform projectiles = transform.GetChild(0);
+        Transform muzzles = transform.GetChild(1);
 
-        //for (int i = 0; i < projectiles.childCount; i++)
-        //    Projectiles.Add(projectiles.GetChild(i).name, projectiles.GetChild(i).gameObject);
+        for (int i = 0; i < projectiles.childCount; i++)
+            Projectiles.Add(projectiles.GetChild(i).name, projectiles.GetChild(i).gameObject);
 
 
-        //for (int i = 0; i < muzzles.childCount; i++)
-        //    Muzzles.Add(muzzles.GetChild(i).name, muzzles.GetChild(i).GetComponent<ParticleSystem>());
+        for (int i = 0; i < muzzles.childCount; i++)
+            Muzzles.Add(muzzles.GetChild(i).name, muzzles.GetChild(i).GetComponent<ParticleSystem>());
     }
 
     public override void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner)
@@ -28,15 +27,21 @@ public class RangeAttackController : ProjectileController
         owner = _owner;
         base.AttackInit(_cc, _dmg, owner);
         transform.LookAt(target.transform);
+
+
         targetPos = target.transform.position;
-        //Projectiles[characterName].SetActive(true);
+        targetPos.y = 0.5f;
+
+        Vector3 startPos = transform.position;
+        startPos.y = 0.5f;
+        transform.position = startPos;
+
+        if (Projectiles.Count != 0) Projectiles[characterName].SetActive(true);
     }
 
     public override void Tick(float _deltaTime)
     {
         if (isHit) return;
-
-        targetPos.y = 0.5f;
 
         transform.position = Vector3.MoveTowards(transform.position, targetPos, _deltaTime * 5f);
 
@@ -48,10 +53,11 @@ public class RangeAttackController : ProjectileController
                 target.GetDamage(damage, owner);
 
 
-                //Projectiles[characterName].SetActive(false);
-               // Muzzles[characterName].Play();
+                if (Projectiles.Count != 0) Projectiles[characterName].SetActive(false);
+                if (Muzzles.Count != 0) Muzzles[characterName].Play();
 
-                //ReturnObject(Muzzles[characterName].duration).Forget();
+                if (Muzzles.Count != 0) ReturnObject(Muzzles[characterName].duration).Forget();
+                else ReturnObject(0.5f).Forget();
             }
         }
     }

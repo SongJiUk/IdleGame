@@ -64,7 +64,7 @@ MonoBehaviour:
     BaseHp: 60
     BaseDamage: 12
     MaxMp: 80
-    ProjectileDataID: 20001
+    ProjectileDataID: 20003
     SkillDataID: 40001
   - DataID: 3
     Name: Assassin
@@ -78,7 +78,7 @@ MonoBehaviour:
     BaseHp: 70
     BaseDamage: 15
     MaxMp: 70
-    ProjectileDataID: 20002
+    ProjectileDataID: 20005
     SkillDataID: 40002
   - DataID: 4
     Name: Hammer
@@ -92,7 +92,7 @@ MonoBehaviour:
     BaseHp: 70
     BaseDamage: 15
     MaxMp: 70
-    ProjectileDataID: 20002
+    ProjectileDataID: 20005
     SkillDataID: 40003
   - DataID: 5
     Name: Knight
@@ -106,7 +106,7 @@ MonoBehaviour:
     BaseHp: 80
     BaseDamage: 17
     MaxMp: 70
-    ProjectileDataID: 20002
+    ProjectileDataID: 20005
     SkillDataID: 40004
   - DataID: 6
     Name: SpearMan
@@ -120,7 +120,7 @@ MonoBehaviour:
     BaseHp: 80
     BaseDamage: 17
     MaxMp: 70
-    ProjectileDataID: 20002
+    ProjectileDataID: 20005
     SkillDataID: 40005
   - DataID: 7
     Name: TwoHandSword
@@ -134,7 +134,7 @@ MonoBehaviour:
     BaseHp: 80
     BaseDamage: 17
     MaxMp: 70
-    ProjectileDataID: 20002
+    ProjectileDataID: 20005
     SkillDataID: 40006
   - DataID: 8
     Name: Mage_M
@@ -148,7 +148,7 @@ MonoBehaviour:
     BaseHp: 100
     BaseDamage: 20
     MaxMp: 120
-    ProjectileDataID: 20000
+    ProjectileDataID: 20001
     SkillDataID: 40007
   - DataID: 9
     Name: Mage_W
@@ -162,7 +162,7 @@ MonoBehaviour:
     BaseHp: 100
     BaseDamage: 20
     MaxMp: 120
-    ProjectileDataID: 20000
+    ProjectileDataID: 20002
     SkillDataID: 40008
   - DataID: 10000
     Name: Monster
@@ -176,7 +176,7 @@ MonoBehaviour:
     BaseHp: 10
     BaseDamage: 10
     MaxMp: 0
-    ProjectileDataID: 20002
+    ProjectileDataID: 20005
     SkillDataID: 40009
   - DataID: 10001
     Name: Boss
@@ -190,28 +190,46 @@ MonoBehaviour:
     BaseHp: 200
     BaseDamage: 20
     MaxMp: 0
-    ProjectileDataID: 20003
+    ProjectileDataID: 20006
     SkillDataID: 40010
   ProjectileDataList:
   - DataID: 20000
-    Name: Projectile
-    NameKR: "\uC5D0\uB108\uC9C0\uBCFC\uD2B8"
-    Description: "\uC5D0\uB108\uC9C0\uBCFC\uD2B8\uC774\uB2E4"
-    prefabName: EnergyBolt
+    Name: Cleric_Attack
+    NameKR: "\uD074\uB808\uB9AD \uACF5\uACA9"
+    Description: "\uD074\uB808\uB9AD\uC758 \uACF5\uACA9"
+    prefabName: Cleric_EnergyBolt
     AttackType: Range
   - DataID: 20001
+    Name: Mage_M_Attack
+    NameKR: "\uB0A8\uC790\uB9C8\uBC95\uC0AC \uACF5\uACA9"
+    Description: "\uB0A8\uC790 \uB9C8\uBC95\uC0AC\uC758 \uACF5\uACA9"
+    prefabName: Mage_M_EnergyBolt
+    AttackType: Range
+  - DataID: 20002
+    Name: Mage_W_Attack
+    NameKR: "\uC5EC\uC790\uB9C8\uBC95\uC0AC \uACF5\uACA9"
+    Description: "\uC5EC\uC790 \uB9C8\uBC95\uC0AC\uC758 \uACF5\uACA9"
+    prefabName: Mage_W_EnergyBolt
+    AttackType: Range
+  - DataID: 20003
     Name: Projectile
     NameKR: "\uD654\uC0B4"
     Description: "\uD654\uC0B4\uC774\uB2E4"
     prefabName: Arrow
     AttackType: Range
-  - DataID: 20002
+  - DataID: 20004
+    Name: Archer_Skill
+    NameKR: "\uAD81\uC218 \uC2A4\uD0AC"
+    Description: "\uAD81\uC218 \uC2A4\uD0AC \uD654\uC0B4\uC774\uB2E4"
+    prefabName: Archer_Skill_Arrow
+    AttackType: Range
+  - DataID: 20005
     Name: MeleeAttack
     NameKR: "\uADFC\uC811\uACF5\uACA9"
     Description: "\uADFC\uC811\uACF5\uACA9\uC774\uB2E4"
     prefabName: MeleeAttack
     AttackType: Melee
-  - DataID: 20003
+  - DataID: 20006
     Name: Projectile
     NameKR: "\uBCF4\uC2A4 \uACF5\uACA9"
     Description: "\uBCF4\uC2A4\uACF5\uACA9\uC774\uB2E4"
@@ -375,57 +393,66 @@ MonoBehaviour:
   - DataID: 40000
     SkillName: Heal
     SkillNameKR: "\uD790"
-    CastingVFX_ID: 60000
+    CastingVFX_ID_Raw: 60000
     TargetVFX_ID_Raw: 60001/60002
     BuffList_ID_Raw: 50000
+    SkillProjectileID: 0
   - DataID: 40001
     SkillName: PoisonArrow
     SkillNameKR: "\uB3C5\uD654\uC0B4"
-    CastingVFX_ID: 60003
+    CastingVFX_ID_Raw: 60003
     TargetVFX_ID_Raw: 60004/60005
-    BuffList_ID_Raw: 50001/50002/50003
+    BuffList_ID_Raw: 50002/50003
+    SkillProjectileID: 20004
   - DataID: 40002
     SkillName: AssassiNation
     SkillNameKR: "\uC554\uC0B4"
-    CastingVFX_ID: 60006
+    CastingVFX_ID_Raw: 60006
     TargetVFX_ID_Raw: 0
     BuffList_ID_Raw: 50004
+    SkillProjectileID: 0
   - DataID: 40003
     SkillName: SpinAttack
     SkillNameKR: "\uD68C\uC804\uACF5\uACA9"
-    CastingVFX_ID: 60007
+    CastingVFX_ID_Raw: 60007
     TargetVFX_ID_Raw: 0
     BuffList_ID_Raw: 50005
+    SkillProjectileID: 0
   - DataID: 40004
     SkillName: RightSword
     SkillNameKR: "\uBE5B\uC758\uAC80"
-    CastingVFX_ID: 60008
+    CastingVFX_ID_Raw: 60008
     TargetVFX_ID_Raw: 0
     BuffList_ID_Raw: 50006
+    SkillProjectileID: 0
   - DataID: 40005
     SkillName: AttackFront
     SkillNameKR: "\uC804\uBC29\uACF5\uACA9"
-    CastingVFX_ID: 60009
+    CastingVFX_ID_Raw: 60009
     TargetVFX_ID_Raw: 0
     BuffList_ID_Raw: 50007
+    SkillProjectileID: 0
   - DataID: 40006
     SkillName: CutTwice
     SkillNameKR: "\uB450\uBC88\uBCA0\uAE30"
-    CastingVFX_ID: 60010
+    CastingVFX_ID_Raw: 60010
     TargetVFX_ID_Raw: 0
     BuffList_ID_Raw: 50008
+    SkillProjectileID: 0
   - DataID: 40007
     SkillName: Metor
     SkillNameKR: "\uBA54\uD14C\uC624"
-    CastingVFX_ID: 60011
+    CastingVFX_ID_Raw: 60011
     TargetVFX_ID_Raw: 60012
     BuffList_ID_Raw: 50009
+    SkillProjectileID: 0
   - DataID: 40008
     SkillName: Buff
     SkillNameKR: "\uBC84\uD504"
-    CastingVFX_ID: 60013
+    CastingVFX_ID_Raw: 60013
     TargetVFX_ID_Raw: 60014
     BuffList_ID_Raw: 50010/50011/50012
+    SkillProjectileID: 0
   SkillEffectDataList:
   - DataID: 50000
     Description: "\uD074\uB808\uB9AD\uC758 \uD790"
@@ -443,7 +470,7 @@ MonoBehaviour:
     SkillEffectType: DamageEffect
     SkillDuration: 0
     AnimDuration: 1.7
-    ValueRatio: 1.5
+    ValueRatio: 1
     Radius: 0
     Length: 0
     Width: 0
@@ -496,12 +523,12 @@ MonoBehaviour:
   - DataID: 50006
     Description: "\uAE30\uC0AC\uC758 \uC2A4\uD0AC \uACF5\uACA9"
     SkillEffectType: DamageEffect
-    SkillDuration: 0
+    SkillDuration: 1.8
     AnimDuration: 3
     ValueRatio: 1.5
     Radius: 0
-    Length: 2
-    Width: 1
+    Length: 6
+    Width: 4
     Interval: 0
     BuffTypeID: 0
   - DataID: 50007
@@ -511,8 +538,8 @@ MonoBehaviour:
     AnimDuration: 1
     ValueRatio: 1.2
     Radius: 0
-    Length: 1
-    Width: 2
+    Length: 4
+    Width: 6
     Interval: 0
     BuffTypeID: 0
   - DataID: 50008
@@ -522,8 +549,8 @@ MonoBehaviour:
     AnimDuration: 1.4
     ValueRatio: 1.2
     Radius: 0
-    Length: 1
-    Width: 2
+    Length: 4
+    Width: 4
     Interval: 0
     BuffTypeID: 0
   - DataID: 50009

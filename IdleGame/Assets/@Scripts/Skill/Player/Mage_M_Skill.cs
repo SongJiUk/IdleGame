@@ -46,10 +46,20 @@ public class Mage_M_Skill : SkillBase
 
         if (target != null)
         {
-            foreach (var effect in effects)
+            //TODO : 데미지와, 이펙트 부분을 나눈것
+            DamageEffect damageEffect = effects.Find(e => e is DamageEffect) as DamageEffect;
+            List<ISkillEffect> buffEffects = effects.FindAll(e => e is BuffEffect);
+
+            if (damageEffect != null)
+            {
+                damageEffect.Execute(_caster, target);
+            }
+
+            foreach (var effect in buffEffects)
             {
                 effect.Execute(_caster, target, skill_Duration);
             }
+
             ShowEffect(target, skillData);
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
             return true;

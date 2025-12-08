@@ -11,7 +11,7 @@ public class Assassin_Skill : SkillBase
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         CreatureController target = null;
-        
+
 
         Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
         foreach (int data in skillData.BuffList_ID)

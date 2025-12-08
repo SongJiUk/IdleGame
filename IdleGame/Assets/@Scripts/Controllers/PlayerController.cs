@@ -75,7 +75,7 @@ public class PlayerController : CreatureController
         baseDamage = _data.BaseDamage;
 
         base.SetSkill();
-       
+
 
         isPlayer = true;
         isDead = false;
@@ -132,9 +132,12 @@ public class PlayerController : CreatureController
         GetMp(30);
     }
 
+
+
+
     public async UniTaskVoid TrailDisable()
     {
-        await UniTask.WaitForSeconds(1f);
+        await UniTask.WaitForSeconds(0.5f);
         if (trails != null)
         {
             for (int i = 0; i < trails.Count; i++)
@@ -242,7 +245,15 @@ public class PlayerController : CreatureController
         Managers.StageM.clearEvent -= OnClear;
         Managers.StageM.deadEvent -= OnDead;
     }
+    protected override void OnAttackDelayEnd()
+    {
+        base.OnAttackDelayEnd();
 
+        if (mp >= MaxMp)
+        {
+            UsePlayerSkill();
+        }
+    }
     public void GetMp(int _value)
     {
         //TODO : bool값 체크
@@ -251,7 +262,7 @@ public class PlayerController : CreatureController
         mp += _value;
         if (mp >= MaxMp)
         {
-            UsePlayerSkill();
+            mp = MaxMp;
         }
         OnPlayerDataUpdate?.Invoke(this);
     }

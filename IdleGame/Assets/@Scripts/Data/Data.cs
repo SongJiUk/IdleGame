@@ -163,14 +163,17 @@ namespace Data
         public int DataID;
         public string SkillName;
         public string SkillNameKR;
+        public string CastingVFX_ID_Raw;
         public string TargetVFX_ID_Raw;
         public string BuffList_ID_Raw;
-        public int CastingVFX_ID;
+        public int SkillProjectileID;
+        public List<int> CastingVFX_ID { get; private set; } = new List<int>();
         public List<int> TargetVFX_ID { get; private set; } = new List<int>();
         public List<int> BuffList_ID { get; private set; } = new List<int>();
 
         public void ParseRawData()
         {
+            CastingVFX_ID = ParseIdList(CastingVFX_ID_Raw);
             TargetVFX_ID = ParseIdList(TargetVFX_ID_Raw);
             BuffList_ID = ParseIdList(BuffList_ID_Raw);
         }

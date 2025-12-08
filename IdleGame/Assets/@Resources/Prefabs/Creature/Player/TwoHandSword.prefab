@@ -265,6 +265,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   buffController: {fileID: 0}
+  skillController: {fileID: 0}
+  isUsingSkill: 0
   trails:
   - {fileID: 6435985864691275530}
   provocation: {fileID: 6435985864297989929}
@@ -16753,6 +16755,14 @@ PrefabInstance:
     - target: {fileID: 1035941166400795979, guid: d48d5e0b7ab040245a72bfcaf17b0448, type: 3}
       propertyPath: m_Name
       value: TwoHandSwordWeapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8162507218767597089, guid: d48d5e0b7ab040245a72bfcaf17b0448, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8162507218767597091, guid: d48d5e0b7ab040245a72bfcaf17b0448, type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d48d5e0b7ab040245a72bfcaf17b0448, type: 3}

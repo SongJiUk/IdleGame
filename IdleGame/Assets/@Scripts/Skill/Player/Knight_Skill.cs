@@ -27,19 +27,18 @@ public class Knight_Skill : SkillBase
             {
                 attack_Radius = buffData.Radius;
             }
-            if(buffData.Length > 0)
+            if (buffData.Length > 0)
             {
                 attack_length = buffData.Length;
             }
-            
-            if(buffData.Width > 0)
+
+            if (buffData.Width > 0)
             {
                 attack_width = buffData.Width;
             }
-            
+
         }
 
-        //TODO : 이거찾는거 수정해야될듯
         List<CreatureController> enemiesInArea = Utils.FindEnemyForwardArea(_caster, attack_length, attack_width);
 
         if (enemiesInArea.Count > 0)
@@ -48,10 +47,10 @@ public class Knight_Skill : SkillBase
             {
                 foreach (var effect in effects)
                 {
-                    effect.Execute(_caster, enemy);
+                    effect.Execute(_caster, enemy, skill_Duration);
                 }
             }
-            ResetSkillStateAsync(_caster, skill_Duration).Forget();
+            ResetSkillStateAsync(_caster, anim_Duration).Forget();
             return true;
         }
         else

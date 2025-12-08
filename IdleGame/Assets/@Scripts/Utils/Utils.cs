@@ -149,7 +149,7 @@ public static class Utils
     {
         CreatureController nearEnemy = null;
         List<MonsterController> mcList = Managers.ObjectM.mcList;
-        
+
         float attackRange = _caster.AttackRange;
         float nearRange = attackRange;
         foreach (MonsterController monster in mcList)
@@ -245,13 +245,14 @@ public static class Utils
         return hitEnemies;
     }
 
+
     #endregion
 
 
     #region 이펙트 헬퍼함수
     public static string GetVfxPrefabName(int _vfxId)
     {
-        if(Managers.DataM.VFXDataDic.TryGetValue(_vfxId, out var vfxData))
+        if (Managers.DataM.VFXDataDic.TryGetValue(_vfxId, out var vfxData))
         {
             return vfxData.PrefabName;
         }

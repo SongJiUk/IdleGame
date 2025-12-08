@@ -28,7 +28,7 @@ public class ObjectManager
         }
         else if (typeof(T).IsSubclassOf(typeof(ObjectController)) || typeof(T) == typeof(ObjectController))
         {
-            //TODO : 데이터 추가해서 수정하기
+            //TODO : 데이터 추가해서 수정하기(스모크 나오는거 수정해줘야함)
             return "Smoke";
         }
 
@@ -225,7 +225,7 @@ public class ObjectManager
 
         GameObject go = Managers.ResourceM.Instantiate(prefabName, _pooling: true);
         DamageFont damageFont = go.GetOrAddComponent<DamageFont>();
-        damageFont.Init(_pos, _dmg, _isMonster, _isCritical);
+        damageFont.Init(_pos, _dmg, _isMonster, _isCritical, _isSkill);
 
     }
 }

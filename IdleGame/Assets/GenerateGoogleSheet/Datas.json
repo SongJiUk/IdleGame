@@ -67,7 +67,7 @@
       "BaseHp": 60,
       "BaseDamage": 12,
       "MaxMp": 80,
-      "ProjectileDataID": 20001,
+      "ProjectileDataID": 20003,
       "SkillDataID": 40001
     },
     {
@@ -83,7 +83,7 @@
       "BaseHp": 70,
       "BaseDamage": 15,
       "MaxMp": 70,
-      "ProjectileDataID": 20002,
+      "ProjectileDataID": 20005,
       "SkillDataID": 40002
     },
     {
@@ -99,7 +99,7 @@
       "BaseHp": 70,
       "BaseDamage": 15,
       "MaxMp": 70,
-      "ProjectileDataID": 20002,
+      "ProjectileDataID": 20005,
       "SkillDataID": 40003
     },
     {
@@ -115,7 +115,7 @@
       "BaseHp": 80,
       "BaseDamage": 17,
       "MaxMp": 70,
-      "ProjectileDataID": 20002,
+      "ProjectileDataID": 20005,
       "SkillDataID": 40004
     },
     {
@@ -131,7 +131,7 @@
       "BaseHp": 80,
       "BaseDamage": 17,
       "MaxMp": 70,
-      "ProjectileDataID": 20002,
+      "ProjectileDataID": 20005,
       "SkillDataID": 40005
     },
     {
@@ -147,7 +147,7 @@
       "BaseHp": 80,
       "BaseDamage": 17,
       "MaxMp": 70,
-      "ProjectileDataID": 20002,
+      "ProjectileDataID": 20005,
       "SkillDataID": 40006
     },
     {
@@ -163,7 +163,7 @@
       "BaseHp": 100,
       "BaseDamage": 20,
       "MaxMp": 120,
-      "ProjectileDataID": 20000,
+      "ProjectileDataID": 20001,
       "SkillDataID": 40007
     },
     {
@@ -179,7 +179,7 @@
       "BaseHp": 100,
       "BaseDamage": 20,
       "MaxMp": 120,
-      "ProjectileDataID": 20000,
+      "ProjectileDataID": 20002,
       "SkillDataID": 40008
     },
     {
@@ -195,7 +195,7 @@
       "BaseHp": 10,
       "BaseDamage": 10,
       "MaxMp": 0,
-      "ProjectileDataID": 20002,
+      "ProjectileDataID": 20005,
       "SkillDataID": 40009
     },
     {
@@ -211,21 +211,37 @@
       "BaseHp": 200,
       "BaseDamage": 20,
       "MaxMp": 0,
-      "ProjectileDataID": 20003,
+      "ProjectileDataID": 20006,
       "SkillDataID": 40010
     }
   ],
   "ProjectileData": [
     {
       "DataID": 20000,
-      "Name": "Projectile",
-      "NameKR": "에너지볼트",
-      "Description": "에너지볼트이다",
-      "prefabName": "EnergyBolt",
+      "Name": "Cleric_Attack",
+      "NameKR": "클레릭 공격",
+      "Description": "클레릭의 공격",
+      "prefabName": "Cleric_EnergyBolt",
       "AttackType": "Range"
     },
     {
       "DataID": 20001,
+      "Name": "Mage_M_Attack",
+      "NameKR": "남자마법사 공격",
+      "Description": "남자 마법사의 공격",
+      "prefabName": "Mage_M_EnergyBolt",
+      "AttackType": "Range"
+    },
+    {
+      "DataID": 20002,
+      "Name": "Mage_W_Attack",
+      "NameKR": "여자마법사 공격",
+      "Description": "여자 마법사의 공격",
+      "prefabName": "Mage_W_EnergyBolt",
+      "AttackType": "Range"
+    },
+    {
+      "DataID": 20003,
       "Name": "Projectile",
       "NameKR": "화살",
       "Description": "화살이다",
@@ -233,7 +249,15 @@
       "AttackType": "Range"
     },
     {
-      "DataID": 20002,
+      "DataID": 20004,
+      "Name": "Archer_Skill",
+      "NameKR": "궁수 스킬",
+      "Description": "궁수 스킬 화살이다",
+      "prefabName": "Archer_Skill_Arrow",
+      "AttackType": "Range"
+    },
+    {
+      "DataID": 20005,
       "Name": "MeleeAttack",
       "NameKR": "근접공격",
       "Description": "근접공격이다",
@@ -241,7 +265,7 @@
       "AttackType": "Melee"
     },
     {
-      "DataID": 20003,
+      "DataID": 20006,
       "Name": "Projectile",
       "NameKR": "보스 공격",
       "Description": "보스공격이다",
@@ -480,73 +504,82 @@
       "DataID": 40000,
       "SkillName": "Heal",
       "SkillNameKR": "힐",
-      "CastingVFX_ID": 60000,
+      "CastingVFX_ID_Raw": 60000,
       "TargetVFX_ID_Raw": "60001/60002",
-      "BuffList_ID_Raw": 50000
+      "BuffList_ID_Raw": 50000,
+      "SkillProjectileID": 0
     },
     {
       "DataID": 40001,
       "SkillName": "PoisonArrow",
       "SkillNameKR": "독화살",
-      "CastingVFX_ID": 60003,
+      "CastingVFX_ID_Raw": 60003,
       "TargetVFX_ID_Raw": "60004/60005",
-      "BuffList_ID_Raw": "50001/50002/50003"
+      "BuffList_ID_Raw": "50002/50003",
+      "SkillProjectileID": 20004
     },
     {
       "DataID": 40002,
       "SkillName": "AssassiNation",
       "SkillNameKR": "암살",
-      "CastingVFX_ID": 60006,
+      "CastingVFX_ID_Raw": 60006,
       "TargetVFX_ID_Raw": 0,
-      "BuffList_ID_Raw": 50004
+      "BuffList_ID_Raw": 50004,
+      "SkillProjectileID": 0
     },
     {
       "DataID": 40003,
       "SkillName": "SpinAttack",
       "SkillNameKR": "회전공격",
-      "CastingVFX_ID": 60007,
+      "CastingVFX_ID_Raw": 60007,
       "TargetVFX_ID_Raw": 0,
-      "BuffList_ID_Raw": 50005
+      "BuffList_ID_Raw": 50005,
+      "SkillProjectileID": 0
     },
     {
       "DataID": 40004,
       "SkillName": "RightSword",
       "SkillNameKR": "빛의검",
-      "CastingVFX_ID": 60008,
+      "CastingVFX_ID_Raw": 60008,
       "TargetVFX_ID_Raw": 0,
-      "BuffList_ID_Raw": 50006
+      "BuffList_ID_Raw": 50006,
+      "SkillProjectileID": 0
     },
     {
       "DataID": 40005,
       "SkillName": "AttackFront",
       "SkillNameKR": "전방공격",
-      "CastingVFX_ID": 60009,
+      "CastingVFX_ID_Raw": 60009,
       "TargetVFX_ID_Raw": 0,
-      "BuffList_ID_Raw": 50007
+      "BuffList_ID_Raw": 50007,
+      "SkillProjectileID": 0
     },
     {
       "DataID": 40006,
       "SkillName": "CutTwice",
       "SkillNameKR": "두번베기",
-      "CastingVFX_ID": 60010,
+      "CastingVFX_ID_Raw": 60010,
       "TargetVFX_ID_Raw": 0,
-      "BuffList_ID_Raw": 50008
+      "BuffList_ID_Raw": 50008,
+      "SkillProjectileID": 0
     },
     {
       "DataID": 40007,
       "SkillName": "Metor",
       "SkillNameKR": "메테오",
-      "CastingVFX_ID": 60011,
+      "CastingVFX_ID_Raw": 60011,
       "TargetVFX_ID_Raw": 60012,
-      "BuffList_ID_Raw": 50009
+      "BuffList_ID_Raw": 50009,
+      "SkillProjectileID": 0
     },
     {
       "DataID": 40008,
       "SkillName": "Buff",
       "SkillNameKR": "버프",
-      "CastingVFX_ID": 60013,
+      "CastingVFX_ID_Raw": 60013,
       "TargetVFX_ID_Raw": 60014,
-      "BuffList_ID_Raw": "50010/50011/50012"
+      "BuffList_ID_Raw": "50010/50011/50012",
+      "SkillProjectileID": 0
     }
   ],
   "SkillEffectData": [
@@ -569,7 +602,7 @@
       "SkillEffectType": "DamageEffect",
       "SkillDuration": 0,
       "AnimDuration": 1.7,
-      "ValueRatio": 1.5,
+      "ValueRatio": 1,
       "Radius": 0,
       "Length": 0,
       "Width": 0,
@@ -632,12 +665,12 @@
       "DataID": 50006,
       "Description": "기사의 스킬 공격",
       "SkillEffectType": "DamageEffect",
-      "SkillDuration": 0,
+      "SkillDuration": 1.8,
       "AnimDuration": 3,
       "ValueRatio": 1.5,
       "Radius": 0,
-      "Length": 2,
-      "Width": 1,
+      "Length": 6,
+      "Width": 4,
       "Interval": 0,
       "BuffTypeID": 0
     },
@@ -649,8 +682,8 @@
       "AnimDuration": 1,
       "ValueRatio": 1.2,
       "Radius": 0,
-      "Length": 1,
-      "Width": 2,
+      "Length": 4,
+      "Width": 6,
       "Interval": 0,
       "BuffTypeID": 0
     },
@@ -662,8 +695,8 @@
       "AnimDuration": 1.4,
       "ValueRatio": 1.2,
       "Radius": 0,
-      "Length": 1,
-      "Width": 2,
+      "Length": 4,
+      "Width": 4,
       "Interval": 0,
       "BuffTypeID": 0
     },

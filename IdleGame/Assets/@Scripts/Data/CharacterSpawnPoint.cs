@@ -34,7 +34,7 @@ public class CharacterSpawnPoint : MonoBehaviour
     {
         // TODO : 이거 초기값이 이건거고, 데이터 저장 되면 수정해야됌(메인캐릭터 바꾸려고 할거면)
         Vector3 pos = Vector3.zero;
-        Managers.CharacterM.players[0] = Managers.ObjectM.Spawn<PlayerController>(pos, 6);
+        Managers.CharacterM.players[0] = Managers.ObjectM.Spawn<PlayerController>(pos, 2);
         for (int i = 1; i < Managers.CharacterM.Characters.Length; i++)
         {
 

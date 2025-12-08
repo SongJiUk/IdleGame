@@ -6,12 +6,7 @@ using Cysharp.Threading.Tasks;
 
 public class Archer_Skill : SkillBase
 {
-    public Archer_Skill()
-    {
-        //effects.Add(new DamageEffect(1));
-        //effects.Add(new BuffEffect(_duration => new StatDownBuff(_duration), 10f));
-        //effects.Add(new BuffEffect(_duration => new DotBuff(_duration), 10f));
-    }
+    public Archer_Skill() { }
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
@@ -26,7 +21,6 @@ public class Archer_Skill : SkillBase
         }
 
         Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
-        float duration = 0;
         foreach (int data in skillData.BuffList_ID)
         {
             Managers.DataM.SkillEffectDataDic.TryGetValue(data, out var buffData);
@@ -45,6 +39,11 @@ public class Archer_Skill : SkillBase
         }
         if (randTarget != null)
         {
+            Managers.ObjectM.Spawn<RangeAttackController>(_caster.transform.position,
+                    skillData.SkillProjectileID,
+                    _caster,
+                    randTarget);
+
             foreach (var effect in effects)
             {
                 effect.Execute(_caster, randTarget);

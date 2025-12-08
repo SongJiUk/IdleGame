@@ -34,10 +34,9 @@ MonoBehaviour:
     m_SerializedLabels:
     - PrevLoad
   - m_GUID: 91cd657fb0dcd94458bdafd0354d29e9
-    m_Address: EnergyBolt
+    m_Address: Assets/@Resources/Prefabs/Projectile/Mage_M_EnergyBolt.prefab
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
+    m_SerializedLabels: []
   - m_GUID: ad7205a6917e1b047bfed9a19bb2d5c1
     m_Address: Smoke
     m_ReadOnly: 0
@@ -160,6 +159,21 @@ MonoBehaviour:
     - PrevLoad
   - m_GUID: a79c6f7fc3ca2429c8b4a7e1a275f91b
     m_Address: TwoHandSword
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: fa098c7bf39ba4f7d9171d5a1c3b13b0
+    m_Address: Cleric_EnergyBolt
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 3af6ea61e998544d7929674d7f260503
+    m_Address: Mage_W_EnergyBolt
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 6c81b2c90c035284cb58b89e1a7110ae
+    m_Address: Archer_Skill_Arrow
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad

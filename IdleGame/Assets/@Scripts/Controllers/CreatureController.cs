@@ -70,18 +70,20 @@ public class CreatureController : BaseController
         set { data = value; }
     }
     public bool isUsingSkill = false;
+    public List<GameObject> vfxs = new List<GameObject>();
     public override bool Init()
     {
         if (!base.Init()) return false;
         if (animator == null) animator = GetComponent<Animator>();
         if (buffController == null) buffController = GetComponent<BuffController>();
-
+        if (skillController == null) skillController = GetComponent<SkillController>();
         return true;
     }
 
     protected virtual void OnDisable()
     {
         if (target != null) target.OnTargetDead -= OnTargetDeadCallBack;
+        ClearChildVFXs();
     }
     public virtual void InitStat()
     {
@@ -96,6 +98,9 @@ public class CreatureController : BaseController
     public virtual void Dead()
     {
         isDead = true;
+        if (buffController != null) buffController.ClearAllBuffs();
+        //if (skillController != null) skillController.ClearAllSkillsVFX();
+        ClearChildVFXs();
         OnTargetDead?.Invoke();
     }
 
@@ -103,14 +108,30 @@ public class CreatureController : BaseController
     {
         this.Type = DATA.CreatureType;
 
-        skillController = GetComponent<SkillController>();
+
         if (skillController != null)
         {
+            skillController = GetComponent<SkillController>();
             List<SkillBase> initialSkills = SkillRegistry.CreateSkillsForCreature(this.Type);
             skillController.InitSkills(initialSkills);
         }
     }
 
+    void ClearChildVFXs()
+    {
+        for (int i = vfxs.Count - 1; i >= 0; i--)
+        {
+            GameObject vfx = vfxs[i];
+            if (vfx != null)
+            {
+                vfx.transform.SetParent(null);
+                Managers.ResourceM.Destroy(vfx);
+            }
+        }
+
+        vfxs.Clear();
+
+    }
     public virtual void Projectile() { }
     public virtual void Attack() { }
     public void Heal(float _amount)
@@ -137,10 +158,6 @@ public class CreatureController : BaseController
     {
         try
         {
-            // TODO : 이거도 캐릭터에 맞게 설정해야됌(공격 딜레이)
-
-            float time = GetCurrentPlayingClipDuration(animator);
-
             await UniTask.Delay(TimeSpan.FromSeconds(1f));
         }
         catch (Exception e)
@@ -151,9 +168,11 @@ public class CreatureController : BaseController
         {
             isAttack = false;
             isTargetLocked = false;
+            OnAttackDelayEnd();
         }
 
     }
+    protected virtual void OnAttackDelayEnd() { }
 
     public virtual void AnimatorChange(Define.CreatureState _state)
     {
@@ -254,19 +273,24 @@ public class CreatureController : BaseController
     {
         if (isDead) return;
 
-        double finaldamage = _dmg;
+        double finalDamage = _dmg;
         isCritical = _isCritical;
         if (isCritical)
         {
             //TODO : 수정 
-            finaldamage = _dmg * 1.5f;
+            finalDamage = _dmg * 1.5f;
         }
 
-        hp -= finaldamage;
+        if (_isSkill)
+        {
+            finalDamage = _dmg;
+        }
+
+        hp -= finalDamage;
         bool isMonster = false;
         if (_attacker as MonsterController) isMonster = true;
 
-        Managers.ObjectM.ShowDamageFont(transform.position, finaldamage, isMonster, isCritical, _isSkill);
+        Managers.ObjectM.ShowDamageFont(transform.position, finalDamage, isMonster, isCritical, _isSkill);
     }
 
     public virtual bool GetCritical()

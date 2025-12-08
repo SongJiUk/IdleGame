@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Cysharp.Threading.Tasks; 
+using Cysharp.Threading.Tasks;
+
 public abstract class SkillBase
 {
     protected float skill_Duration = 0f;
@@ -11,6 +12,7 @@ public abstract class SkillBase
     protected float attack_length = 0f;
     protected float attack_width = 0f;
     protected List<ISkillEffect> effects = new();
+    protected List<GameObject> activeVFXs = new List<GameObject>();
     public virtual bool UseSkill(CreatureController _caster, CreatureController _target) { return false; }
 
 
@@ -19,22 +21,28 @@ public abstract class SkillBase
         switch (_name)
         {
             case "AttackBuff":
-                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner) => new AttackBuff(_duration, ratio), _duration, _ratio));
+                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner)
+                => new AttackBuff(duration, ratio), _duration, _ratio, _radius, _interval, _owner));
                 break;
             case "DefenseBuff":
-                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner) => new DefenseBuff(_duration, ratio), _duration, _ratio));
+                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner)
+                => new DefenseBuff(duration, ratio), _duration, _ratio, _radius, _interval, _owner));
                 break;
             case "DotBuff":
-                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner) => new DotBuff(_duration, ratio, interval, owner), _duration, _ratio, _interval, _owner: _owner));
+                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner)
+                => new DotBuff(duration, ratio, interval, owner), _duration, _ratio, _radius, _interval, _owner));
                 break;
             case "HealBuff":
-                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner) => new HealBuff(_duration, ratio), _duration, _ratio));
+                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner)
+                => new HealBuff(duration, ratio), _duration, _ratio, _radius, _interval, _owner));
                 break;
             case "StatDownBuff":
-                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner) => new StatDownBuff(_duration, ratio), _duration, _ratio));
+                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner)
+                => new StatDownBuff(duration, ratio), _duration, _ratio, _radius, _interval, _owner));
                 break;
             case "SpinAttackBuff":
-                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner) => new SpinAttackBuff(_duration, ratio, radius, interval, owner), _duration, _ratio, _radius, _interval, _owner));
+                effects.Add(new BuffEffect((duration, ratio, radius, interval, owner)
+                => new SpinAttackBuff(duration, ratio, radius, interval, owner), _duration, _ratio, _radius, _interval, _owner));
                 break;
         }
     }
@@ -96,7 +104,7 @@ public abstract class SkillBase
     {
         await UniTask.WaitForSeconds(_duration);
 
-        if(_caster.isUsingSkill)
+        if (_caster.isUsingSkill)
         {
             _caster.isUsingSkill = false;
         }
@@ -111,9 +119,28 @@ public abstract class SkillBase
             {
                 var effect = Managers.ResourceM.Instantiate(vfxName, _pooling: true);
                 effect.transform.position = _randPlayer.transform.position;
+                effect.transform.SetParent(_randPlayer.transform);
+                _randPlayer.vfxs.Add(effect);
             }
 
         }
+    }
+
+    public void ClearSkillVFX()
+    {
+        if (Managers.ResourceM == null) return;
+
+        foreach (var vfx in activeVFXs)
+        {
+            if (vfx != null)
+            {
+                vfx.transform.SetParent(null);
+                Managers.ResourceM.Destroy(vfx);
+
+            }
+        }
+
+        activeVFXs.Clear();
     }
 
 
