@@ -49,7 +49,7 @@ public class PlayerController : CreatureController
     {
         get => maxMp;
     }
-    bool isUsingSkill = false;
+
     void OnEnable()
     {
         Managers.UpdateM.Register(this);
@@ -75,7 +75,7 @@ public class PlayerController : CreatureController
         baseDamage = _data.BaseDamage;
 
         base.SetSkill();
-
+       
 
         isPlayer = true;
         isDead = false;
@@ -187,7 +187,6 @@ public class PlayerController : CreatureController
     {
         if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
 
-        //TODO : IsUseSkill시 reutrn;
         if (isUsingSkill) return;
         if (isDead) return;
         if (isAttack) return;
@@ -252,7 +251,6 @@ public class PlayerController : CreatureController
         mp += _value;
         if (mp >= MaxMp)
         {
-            isUsingSkill = true;
             UsePlayerSkill();
         }
         OnPlayerDataUpdate?.Invoke(this);
@@ -267,6 +265,7 @@ public class PlayerController : CreatureController
             if (skillController.UseSKill(_target: t))
             {
                 mp = 0;
+                isUsingSkill = true;
             }
             else isUsingSkill = false;
         }
@@ -275,15 +274,17 @@ public class PlayerController : CreatureController
             if (skillController.UseSKill())
             {
                 mp = 0;
+                isUsingSkill = true;
             }
             else isUsingSkill = false;
         }
     }
+
     public void SkillEnd()
     {
         isUsingSkill = false;
     }
-    public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)
+    public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false, bool _isSkill = false)
     {
         if (isDead) return;
         if (Managers.StageM.isDead) return;

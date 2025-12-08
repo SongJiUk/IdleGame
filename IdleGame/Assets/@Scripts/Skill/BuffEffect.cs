@@ -27,7 +27,7 @@ public class BuffEffect : ISkillEffect
 
     }
 
-    public void Execute(CreatureController _caster, CreatureController _target)
+    public void Execute(CreatureController _caster, CreatureController _target,  float _delayTime = 0f)
     {
         //���� �ν��Ͻ� ���� : ���丮 �Լ��� ȣ���Ͽ� ���ο� Ibuff ��ü ����
         IBuff newBuff = buffFactory(buffDurtaion, buffRatio, buffRadius, buffInterval, buffOwner);

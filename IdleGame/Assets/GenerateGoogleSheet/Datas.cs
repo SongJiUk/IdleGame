@@ -92,7 +92,8 @@ public class SkillEffectData
 	public int DataID;
 	public string Description;
 	public string SkillEffectType;
-	public int Duration;
+	public int SkillDuration;
+	public float AnimDuration;
 	public float ValueRatio;
 	public int Radius;
 	public int Length;

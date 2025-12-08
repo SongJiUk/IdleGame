@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using Cysharp.Threading.Tasks; 
 public abstract class SkillBase
 {
+    protected float skill_Duration = 0f;
+    protected float anim_Duration = 0f;
     protected float attack_Radius = 0f;
     protected float attack_length = 0f;
     protected float attack_width = 0f;
@@ -55,7 +57,7 @@ public abstract class SkillBase
             }
 
             string className = effectData.SkillEffectType;
-            float duration = effectData.Duration;
+            float duration = effectData.SkillDuration;
             float value = effectData.ValueRatio;
             float splashRadius = effectData.Radius;
             float interval = effectData.Interval;
@@ -87,6 +89,16 @@ public abstract class SkillBase
                 effects.Add(effectComponent);
             }
 
+        }
+    }
+
+    public async UniTask ResetSkillStateAsync(CreatureController _caster, float _duration)
+    {
+        await UniTask.WaitForSeconds(_duration);
+
+        if(_caster.isUsingSkill)
+        {
+            _caster.isUsingSkill = false;
         }
     }
 

@@ -182,7 +182,7 @@ public class MonsterController : CreatureController
     }
 
 
-    public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCiritical = false)
+    public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCiritical = false, bool _isSkill = false)
     {
         if (isDead) return;
 

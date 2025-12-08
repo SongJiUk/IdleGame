@@ -47,6 +47,7 @@ public class CreatureController : BaseController
 
     }
     protected virtual float attackrange { get; set; }
+    public float AttackRange { get { return attackrange; } }
     protected virtual float detectrange { get; set; }
 
     protected CreatureController target;
@@ -68,7 +69,7 @@ public class CreatureController : BaseController
         get { return data; }
         set { data = value; }
     }
-
+    public bool isUsingSkill = false;
     public override bool Init()
     {
         if (!base.Init()) return false;
@@ -249,7 +250,7 @@ public class CreatureController : BaseController
     }
 
 
-    public virtual void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false)
+    public virtual void GetDamage(double _dmg, CreatureController _attacker, bool _isCritical = false, bool _isSkill = false)
     {
         if (isDead) return;
 
@@ -265,7 +266,7 @@ public class CreatureController : BaseController
         bool isMonster = false;
         if (_attacker as MonsterController) isMonster = true;
 
-        Managers.ObjectM.ShowDamageFont(transform.position, finaldamage, isMonster, isCritical);
+        Managers.ObjectM.ShowDamageFont(transform.position, finaldamage, isMonster, isCritical, _isSkill);
     }
 
     public virtual bool GetCritical()

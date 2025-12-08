@@ -618,6 +618,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8020141792703156283}
   - component: {fileID: 3233591890927322444}
+  - component: {fileID: 6958289086337414971}
+  - component: {fileID: 2337631593826673657}
+  - component: {fileID: 8325200473504906700}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -663,6 +666,47 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6958289086337414971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7207611923329075841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e666ec3da57045ce94e1a1878bd94d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2337631593826673657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7207611923329075841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c215ce7b8f97d4e47b0b0e1cedcddd8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8325200473504906700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7207611923329075841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 278dec707e2f541d1bba8b36341ebc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 0
+  buffController: {fileID: 0}
+  skillController: {fileID: 0}
+  isUsingSkill: 0
+  isBoss: 0
 --- !u!1 &7375518904319310707
 GameObject:
   m_ObjectHideFlags: 0

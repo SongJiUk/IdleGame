@@ -46,7 +46,7 @@ public class ObjectManager
             Managers.DataM.CreatureDataDic.TryGetValue(tempId, out var data);
 
             //TODO : 이거 수정해야됌 isMainCharacter 이런걸로 
-            if (tempId == 9) mPlayer = player;
+            if (tempId == 2) mPlayer = player;
             player.Init();
             player.transform.position = pos;
             //player.transform.rotation = Quaternion.identity;
@@ -217,7 +217,7 @@ public class ObjectManager
         Managers.ResourceM.Destroy(_obj.gameObject);
     }
 
-    public void ShowDamageFont(Vector3 _pos, double _dmg, bool _isMonster = false, bool _isCritical = false)
+    public void ShowDamageFont(Vector3 _pos, double _dmg, bool _isMonster = false, bool _isCritical = false, bool _isSkill = false)
     {
         //TODO : 하드코딩 제거
         //Spawn<DamageFont>(_pos, );

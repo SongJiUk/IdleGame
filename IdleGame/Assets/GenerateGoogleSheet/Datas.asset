@@ -387,32 +387,32 @@ MonoBehaviour:
   - DataID: 40002
     SkillName: AssassiNation
     SkillNameKR: "\uC554\uC0B4"
-    CastingVFX_ID: 0
-    TargetVFX_ID_Raw: 60006
+    CastingVFX_ID: 60006
+    TargetVFX_ID_Raw: 0
     BuffList_ID_Raw: 50004
   - DataID: 40003
     SkillName: SpinAttack
     SkillNameKR: "\uD68C\uC804\uACF5\uACA9"
-    CastingVFX_ID: 0
-    TargetVFX_ID_Raw: 60007
+    CastingVFX_ID: 60007
+    TargetVFX_ID_Raw: 0
     BuffList_ID_Raw: 50005
   - DataID: 40004
     SkillName: RightSword
     SkillNameKR: "\uBE5B\uC758\uAC80"
-    CastingVFX_ID: 0
-    TargetVFX_ID_Raw: 60008
+    CastingVFX_ID: 60008
+    TargetVFX_ID_Raw: 0
     BuffList_ID_Raw: 50006
   - DataID: 40005
     SkillName: AttackFront
     SkillNameKR: "\uC804\uBC29\uACF5\uACA9"
-    CastingVFX_ID: 0
-    TargetVFX_ID_Raw: 60009
+    CastingVFX_ID: 60009
+    TargetVFX_ID_Raw: 0
     BuffList_ID_Raw: 50007
   - DataID: 40006
     SkillName: CutTwice
     SkillNameKR: "\uB450\uBC88\uBCA0\uAE30"
-    CastingVFX_ID: 0
-    TargetVFX_ID_Raw: 60010
+    CastingVFX_ID: 60010
+    TargetVFX_ID_Raw: 0
     BuffList_ID_Raw: 50008
   - DataID: 40007
     SkillName: Metor
@@ -425,12 +425,13 @@ MonoBehaviour:
     SkillNameKR: "\uBC84\uD504"
     CastingVFX_ID: 60013
     TargetVFX_ID_Raw: 60014
-    BuffList_ID_Raw: 50010/50011
+    BuffList_ID_Raw: 50010/50011/50012
   SkillEffectDataList:
   - DataID: 50000
     Description: "\uD074\uB808\uB9AD\uC758 \uD790"
     SkillEffectType: BuffEffect
-    Duration: 0
+    SkillDuration: 0
+    AnimDuration: 2.7
     ValueRatio: 0.2
     Radius: 0
     Length: 0
@@ -440,7 +441,8 @@ MonoBehaviour:
   - DataID: 50001
     Description: "\uC544\uCC98\uC758 \uC2A4\uD0AC \uACF5\uACA9"
     SkillEffectType: DamageEffect
-    Duration: 0
+    SkillDuration: 0
+    AnimDuration: 1.7
     ValueRatio: 1.5
     Radius: 0
     Length: 0
@@ -450,7 +452,8 @@ MonoBehaviour:
   - DataID: 50002
     Description: "\uC544\uCC98\uC758 \uC2A4\uD0AC \uB514\uBC84\uD504"
     SkillEffectType: BuffEffect
-    Duration: 10
+    SkillDuration: 10
+    AnimDuration: 0
     ValueRatio: 0.2
     Radius: 0
     Length: 0
@@ -460,7 +463,8 @@ MonoBehaviour:
   - DataID: 50003
     Description: "\uC544\uCC98\uC758 \uC2A4\uD0AC \uB3C4\uD2B8\uB370\uBBF8\uC9C0"
     SkillEffectType: BuffEffect
-    Duration: 5
+    SkillDuration: 5
+    AnimDuration: 0
     ValueRatio: 0.2
     Radius: 0
     Length: 0
@@ -470,7 +474,8 @@ MonoBehaviour:
   - DataID: 50004
     Description: "\uC5B4\uC314\uC2E0\uC758 \uC2A4\uD0AC \uACF5\uACA9"
     SkillEffectType: DamageEffect
-    Duration: 0
+    SkillDuration: 0
+    AnimDuration: 2.4
     ValueRatio: 3
     Radius: 0
     Length: 0
@@ -480,7 +485,8 @@ MonoBehaviour:
   - DataID: 50005
     Description: "\uD574\uBA38\uC758 \uC2A4\uD0AC \uACF5\uACA9"
     SkillEffectType: BuffEffect
-    Duration: 2
+    SkillDuration: 2
+    AnimDuration: 2
     ValueRatio: 0.6
     Radius: 2
     Length: 0
@@ -490,7 +496,8 @@ MonoBehaviour:
   - DataID: 50006
     Description: "\uAE30\uC0AC\uC758 \uC2A4\uD0AC \uACF5\uACA9"
     SkillEffectType: DamageEffect
-    Duration: 0
+    SkillDuration: 0
+    AnimDuration: 3
     ValueRatio: 1.5
     Radius: 0
     Length: 2
@@ -500,7 +507,8 @@ MonoBehaviour:
   - DataID: 50007
     Description: "\uC2A4\uD53C\uC5B4\uB9E8\uC758 \uC2A4\uD0AC \uACF5\uACA9"
     SkillEffectType: DamageEffect
-    Duration: 0
+    SkillDuration: 0
+    AnimDuration: 1
     ValueRatio: 1.2
     Radius: 0
     Length: 1
@@ -510,7 +518,8 @@ MonoBehaviour:
   - DataID: 50008
     Description: "\uB450\uC190\uAC80\uC758 \uC2A4\uD0AC \uACF5\uACA9"
     SkillEffectType: DamageEffect
-    Duration: 0
+    SkillDuration: 0
+    AnimDuration: 1.4
     ValueRatio: 1.2
     Radius: 0
     Length: 1
@@ -520,27 +529,41 @@ MonoBehaviour:
   - DataID: 50009
     Description: "\uB0A8\uC790 \uB9C8\uBC95\uC0AC\uC758 \uC2A4\uD0AC \uACF5\uACA9"
     SkillEffectType: DamageEffect
-    Duration: 0
+    SkillDuration: 1
+    AnimDuration: 2.2
     ValueRatio: 2
-    Radius: 0
+    Radius: 2
     Length: 0
     Width: 0
     Interval: 0
     BuffTypeID: 0
   - DataID: 50010
+    Description: "\uC5EC\uC790 \uB9C8\uBC95\uC0AC \uC2A4\uD0AC"
+    SkillEffectType: DamageEffect
+    SkillDuration: 0
+    AnimDuration: 3.5
+    ValueRatio: 0
+    Radius: 0
+    Length: 0
+    Width: 0
+    Interval: 0
+    BuffTypeID: 0
+  - DataID: 50011
     Description: "\uC5EC\uC790 \uB9C8\uBC95\uC0AC\uC758 \uACF5\uACA9\uB825 \uBC84\uD504"
     SkillEffectType: BuffEffect
-    Duration: 10
+    SkillDuration: 10
+    AnimDuration: 0
     ValueRatio: 1.2
     Radius: 0
     Length: 0
     Width: 0
     Interval: 0
     BuffTypeID: 101
-  - DataID: 50011
+  - DataID: 50012
     Description: "\uC5EC\uC790 \uB9C8\uBC95\uC0AC\uC758 \uBC29\uC5B4\uB825 \uBC84\uD504"
     SkillEffectType: BuffEffect
-    Duration: 10
+    SkillDuration: 10
+    AnimDuration: 0
     ValueRatio: 1.2
     Radius: 0
     Length: 0

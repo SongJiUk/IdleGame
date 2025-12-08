@@ -124,4 +124,10 @@ public static class Define
         Monster,
         Boss,
     }
+
+    public enum SkillEffectType
+    {
+        BuffEffect,
+        DamageEffect
+    }
 }

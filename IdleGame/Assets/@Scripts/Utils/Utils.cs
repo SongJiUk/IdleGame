@@ -149,8 +149,9 @@ public static class Utils
     {
         CreatureController nearEnemy = null;
         List<MonsterController> mcList = Managers.ObjectM.mcList;
-        float nearRange = float.MaxValue;
-
+        
+        float attackRange = _caster.AttackRange;
+        float nearRange = attackRange;
         foreach (MonsterController monster in mcList)
         {
             if (monster.gameObject.activeSelf == false) continue;

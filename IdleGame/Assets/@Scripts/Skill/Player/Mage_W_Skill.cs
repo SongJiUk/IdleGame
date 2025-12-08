@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class Mage_W_Skill : SkillBase
 {
@@ -14,11 +15,20 @@ public class Mage_W_Skill : SkillBase
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
-        float duration = 0;
         foreach (int data in skillData.BuffList_ID)
         {
             Managers.DataM.SkillEffectDataDic.TryGetValue(data, out var buffData);
-            duration = buffData.Duration;
+            skill_Duration = buffData.SkillDuration;
+
+            if (buffData.AnimDuration > 0)
+            {
+                anim_Duration = buffData.AnimDuration;
+            }
+
+            if (buffData.Radius > 0)
+            {
+                attack_Radius = buffData.Radius;
+            }
         }
 
         //TODO : 이거 공격력, 방어력 버프 이펙트도 나눠야될듯
@@ -33,6 +43,7 @@ public class Mage_W_Skill : SkillBase
             chosenEffect.Execute(_caster, randPlayer);
             ShowEffect(_caster, skillData);
 
+            ResetSkillStateAsync(_caster, anim_Duration).Forget();
 
             return true;
         }

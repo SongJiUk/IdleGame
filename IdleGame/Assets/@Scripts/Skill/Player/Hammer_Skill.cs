@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cysharp.Threading.Tasks;
 public class Hammer_Skill : SkillBase
 {
     public Hammer_Skill()
@@ -10,9 +10,24 @@ public class Hammer_Skill : SkillBase
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        // //TODO : 하드코딩들 처리
-        // SpinAttackBuff spinBuff = new SpinAttackBuff(_caster, 2);
-        // _caster.buffController.AddBuff(spinBuff);
+        Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
+        
+        foreach (int data in skillData.BuffList_ID)
+        {
+            Managers.DataM.SkillEffectDataDic.TryGetValue(data, out var buffData);
+            skill_Duration = buffData.SkillDuration;
+            
+            if(buffData.AnimDuration > 0)
+            {
+                anim_Duration = buffData.AnimDuration;
+            }
+
+            if(buffData.Radius > 0)
+            {
+                attack_Radius = buffData.Radius;
+            }
+
+        }
 
         List<CreatureController> enemiesInArea = Utils.FindEnemyInSphereArea(_caster, attack_Radius);
         if (enemiesInArea.Count > 0)
@@ -24,6 +39,8 @@ public class Hammer_Skill : SkillBase
                     effect.Execute(_caster, enemy);
                 }
             }
+
+            ResetSkillStateAsync(_caster, skill_Duration).Forget();
             return true;
         }
         else

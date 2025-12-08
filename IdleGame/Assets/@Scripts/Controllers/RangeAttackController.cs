@@ -12,15 +12,15 @@ public class RangeAttackController : ProjectileController
     //TODO : 이거 프리팹을 여러개로 나눠서 하는게 나음.
     private void Awake()
     {
-        Transform projectiles = transform.GetChild(0);
-        Transform muzzles = transform.GetChild(1);
+        //Transform projectiles = transform.GetChild(0);
+        //Transform muzzles = transform.GetChild(1);
 
-        for (int i = 0; i < projectiles.childCount; i++)
-            Projectiles.Add(projectiles.GetChild(i).name, projectiles.GetChild(i).gameObject);
+        //for (int i = 0; i < projectiles.childCount; i++)
+        //    Projectiles.Add(projectiles.GetChild(i).name, projectiles.GetChild(i).gameObject);
 
 
-        for (int i = 0; i < muzzles.childCount; i++)
-            Muzzles.Add(muzzles.GetChild(i).name, muzzles.GetChild(i).GetComponent<ParticleSystem>());
+        //for (int i = 0; i < muzzles.childCount; i++)
+        //    Muzzles.Add(muzzles.GetChild(i).name, muzzles.GetChild(i).GetComponent<ParticleSystem>());
     }
 
     public override void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner)
@@ -29,7 +29,7 @@ public class RangeAttackController : ProjectileController
         base.AttackInit(_cc, _dmg, owner);
         transform.LookAt(target.transform);
         targetPos = target.transform.position;
-        Projectiles[characterName].SetActive(true);
+        //Projectiles[characterName].SetActive(true);
     }
 
     public override void Tick(float _deltaTime)
@@ -48,10 +48,10 @@ public class RangeAttackController : ProjectileController
                 target.GetDamage(damage, owner);
 
 
-                Projectiles[characterName].SetActive(false);
-                Muzzles[characterName].Play();
+                //Projectiles[characterName].SetActive(false);
+               // Muzzles[characterName].Play();
 
-                ReturnObject(Muzzles[characterName].duration).Forget();
+                //ReturnObject(Muzzles[characterName].duration).Forget();
             }
         }
     }

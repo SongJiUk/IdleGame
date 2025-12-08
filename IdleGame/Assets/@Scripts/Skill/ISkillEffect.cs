@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface ISkillEffect
 {
-    //½ºÅ³ ¹ßµ¿½Ã È£Ãâ : ½ÃÀüÀÚ, Å¸°Ù Á¤º¸¸¦ ¹Ş¾Æ È¿°ú ½ÇÇà
-    void Execute(CreatureController _caster, CreatureController _target);
+    //ìŠ¤í‚¬ ë°œë™ì‹œ í˜¸ì¶œ : ì‹œì „ì, íƒ€ê²Ÿ ì •ë³´ë¥¼ ë°›ì•„ íš¨ê³¼ ì‹¤í–‰
+    void Execute(CreatureController _caster, CreatureController _target, float _delayTime = 0f);
 }

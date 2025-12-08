@@ -15,7 +15,7 @@ public class DamageFont : BaseController
 
 
 
-    public void Init(Vector3 _pos, double _dmg, bool _isMonster = false, bool _isCritical = false)
+    public void Init(Vector3 _pos, double _dmg, bool _isMonster = false, bool _isCritical = false, bool _isSkill = false)
     {
         cam = Camera.main;
         transform.parent = Managers.UIM.SceneUI.WorldFontParent;
@@ -41,6 +41,13 @@ public class DamageFont : BaseController
             {
                 criticalObject.SetActive(false);
                 damageText.color = Utils.HexToColor("FFFFFF");
+                damageText.text = Utils.ToCurrencyString(_dmg);
+            }
+
+            if(_isSkill)
+            {
+                criticalObject.SetActive(false);
+                damageText.color = Utils.HexToColor("0000FF");
                 damageText.text = Utils.ToCurrencyString(_dmg);
             }
         }

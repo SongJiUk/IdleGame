@@ -223,7 +223,8 @@ namespace Data
         public int DataID;
         public string Description;
         public string SkillEffectType;
-        public float Duration;
+        public float SkillDuration;
+        public float AnimDuration;
         public float ValueRatio;
         public float Radius;
         public float Length;

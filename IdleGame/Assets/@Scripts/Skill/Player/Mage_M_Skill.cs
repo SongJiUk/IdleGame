@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using Cysharp.Threading.Tasks;
 public class Mage_M_Skill : SkillBase
 {
     public Mage_M_Skill()
@@ -11,6 +11,25 @@ public class Mage_M_Skill : SkillBase
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
+        Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
+
+        foreach (int data in skillData.BuffList_ID)
+        {
+            Managers.DataM.SkillEffectDataDic.TryGetValue(data, out var buffData);
+            skill_Duration = buffData.SkillDuration;
+
+            if (buffData.AnimDuration > 0)
+            {
+                anim_Duration = buffData.AnimDuration;
+            }
+
+            if (buffData.Radius > 0)
+            {
+                attack_Radius = buffData.Radius;
+            }
+
+        }
+
 
         CreatureController target = null;
         if (_target.IsDead) _target = null;
@@ -21,7 +40,7 @@ public class Mage_M_Skill : SkillBase
         }
         else
         {
-            target = Utils.FindRandomEnemyInRange(_caster, 2f);
+            target = Utils.FindRandomEnemyInRange(_caster, attack_Radius);
         }
 
 
@@ -29,8 +48,10 @@ public class Mage_M_Skill : SkillBase
         {
             foreach (var effect in effects)
             {
-                effect.Execute(_caster, target);
+                effect.Execute(_caster, target, skill_Duration);
             }
+            ShowEffect(target, skillData);
+            ResetSkillStateAsync(_caster, anim_Duration).Forget();
             return true;
         }
         else
