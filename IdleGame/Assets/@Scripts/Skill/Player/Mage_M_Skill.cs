@@ -11,25 +11,9 @@ public class Mage_M_Skill : SkillBase
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
 
-        foreach (int data in skillData.BuffList_ID)
-        {
-            Managers.DataM.SkillEffectDataDic.TryGetValue(data, out var buffData);
-            skill_Duration = buffData.SkillDuration;
 
-            if (buffData.AnimDuration > 0)
-            {
-                anim_Duration = buffData.AnimDuration;
-            }
-
-            if (buffData.Radius > 0)
-            {
-                attack_Radius = buffData.Radius;
-            }
-
-        }
-
+        InitSkillData(_caster);
 
         CreatureController target = null;
         if (_target.IsDead) _target = null;
@@ -40,27 +24,16 @@ public class Mage_M_Skill : SkillBase
         }
         else
         {
-            target = Utils.FindRandomEnemyInRange(_caster, attack_Radius);
+            target = Utils.FindRandomEnemyInRange(_caster, skill_Radius);
         }
 
 
         if (target != null)
         {
-            //TODO : 데미지와, 이펙트 부분을 나눈것
-            DamageEffect damageEffect = effects.Find(e => e is DamageEffect) as DamageEffect;
-            List<ISkillEffect> buffEffects = effects.FindAll(e => e is BuffEffect);
+            //TODO : 하드코딩 없애기
+            SetDamage(_caster, target, 1f);
 
-            if (damageEffect != null)
-            {
-                damageEffect.Execute(_caster, target);
-            }
-
-            foreach (var effect in buffEffects)
-            {
-                effect.Execute(_caster, target, skill_Duration);
-            }
-
-            ShowEffect(target, skillData);
+            ShowEffect(target);
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
             return true;
         }

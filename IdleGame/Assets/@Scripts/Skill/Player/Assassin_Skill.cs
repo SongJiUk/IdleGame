@@ -13,22 +13,7 @@ public class Assassin_Skill : SkillBase
         CreatureController target = null;
 
 
-        Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
-        foreach (int data in skillData.BuffList_ID)
-        {
-            Managers.DataM.SkillEffectDataDic.TryGetValue(data, out var buffData);
-
-            if (buffData.AnimDuration > 0)
-            {
-                anim_Duration = buffData.AnimDuration;
-            }
-
-            if (buffData.Radius > 0)
-            {
-                attack_Radius = buffData.Radius;
-            }
-
-        }
+        InitSkillData(_caster);
 
         if (_target != null)
         {
@@ -41,10 +26,14 @@ public class Assassin_Skill : SkillBase
 
         if (target != null)
         {
+            //TODO : 그럼 이건, 여러번 공격으로 바꾸자
+            SetDamage(_caster, _target);
+
             foreach (var effect in effects)
             {
                 effect.Execute(_caster, target);
             }
+
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
 
             return true;

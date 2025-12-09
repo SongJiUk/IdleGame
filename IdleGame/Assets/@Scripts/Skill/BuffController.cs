@@ -19,11 +19,22 @@ public class BuffController : MonoBehaviour, ITickable
 
     public void Tick(float _deltaTime)
     {
-        for (int i = activeBuffs.Count - 1; i >= 0; i--)
-        {   //TODO : 아오!!!
-            IBuff buff = activeBuffs[i];
-            if (i >= activeBuffs.Count) continue;
+        if (activeBuffs.Count == 0)
+        {
+            Managers.UpdateM.UnRegister(this);
+            return;
+        }
 
+        for (int i = activeBuffs.Count - 1; i >= 0; i--)
+        {
+            if (i >= activeBuffs.Count)
+            {
+                if (activeBuffs.Count == 0) return;
+
+                continue;
+            }
+
+            IBuff buff = activeBuffs[i];
             buff.Update(_deltaTime);
 
 
@@ -90,6 +101,7 @@ public class BuffController : MonoBehaviour, ITickable
         {
             Managers.UpdateM.UnRegister(this);
         }
+
         for (int i = activeBuffs.Count - 1; i >= 0; i--)
         {
             IBuff buff = activeBuffs[i];

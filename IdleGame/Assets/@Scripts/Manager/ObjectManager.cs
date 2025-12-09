@@ -12,7 +12,7 @@ public class ObjectManager
     public List<ProjectileController> pjList { get; } = new List<ProjectileController>();
     public List<ObjectController> ocList { get; } = new List<ObjectController>();
 
-    private Dictionary<Type, Action<BaseController, Vector3, int, CreatureController, CreatureController>> initActions;
+    private Dictionary<Type, Action<BaseController, Vector3, int, CreatureController, CreatureController, bool>> initActions;
     private Dictionary<Type, Action<BaseController>> removeActions;
     private string GetPrefabNames<T>(int _tempID) where T : BaseController
     {
@@ -39,14 +39,14 @@ public class ObjectManager
     public void Init()
     {
         #region 딕셔너리로 관리 스폰시 초기화 관리
-        initActions = new Dictionary<Type, Action<BaseController, Vector3, int, CreatureController, CreatureController>>();
-        initActions.Add(typeof(PlayerController), (baseController, pos, tempId, owner, target) =>
+        initActions = new Dictionary<Type, Action<BaseController, Vector3, int, CreatureController, CreatureController, bool>>();
+        initActions.Add(typeof(PlayerController), (baseController, pos, tempId, owner, target, isSkillProjectile) =>
         {
             var player = baseController as PlayerController;
             Managers.DataM.CreatureDataDic.TryGetValue(tempId, out var data);
 
             //TODO : 이거 수정해야됌 isMainCharacter 이런걸로 
-            if (tempId == 2) mPlayer = player;
+            if (tempId == 8) mPlayer = player;
             player.Init();
             player.transform.position = pos;
             //player.transform.rotation = Quaternion.identity;
@@ -54,7 +54,7 @@ public class ObjectManager
             if (data != null) player.SetInfo(data);
         });
 
-        initActions.Add(typeof(MonsterController), (baseController, pos, tempId, owner, target) =>
+        initActions.Add(typeof(MonsterController), (baseController, pos, tempId, owner, target, isSkillProjectile) =>
         {
             var monster = baseController as MonsterController;
             Managers.DataM.CreatureDataDic.TryGetValue(tempId, out var data);
@@ -63,19 +63,19 @@ public class ObjectManager
             mcList.Add(monster);
         });
 
-        initActions.Add(typeof(RangeAttackController), (baseController, pos, tempId, owner, target) =>
+        initActions.Add(typeof(RangeAttackController), (baseController, pos, tempId, owner, target, isSkillProjectile) =>
         {
             var rangeAttack = baseController as RangeAttackController;
-            rangeAttack.AttackInit(target, owner.Damage, owner);
+            rangeAttack.AttackInit(target, owner.Damage, owner, isSkillProjectile);
         });
 
-        initActions.Add(typeof(MeleeAttackController), (baseController, pos, tempId, owner, target) =>
+        initActions.Add(typeof(MeleeAttackController), (baseController, pos, tempId, owner, target, isSkillProjectile) =>
         {
             var meleeAttack = baseController as MeleeAttackController;
             meleeAttack.AttackInit(target, owner.Damage, owner);
         });
 
-        initActions.Add(typeof(ObjectController), (baseController, pos, tempId, owner, target) =>
+        initActions.Add(typeof(ObjectController), (baseController, pos, tempId, owner, target, isSkillProjectile) =>
         {
             var obj = baseController as ObjectController;
             obj.Init();
@@ -136,7 +136,7 @@ public class ObjectManager
 
     }
 
-    public T Spawn<T>(Vector3 _pos, int _tempId = 0, CreatureController _owner = null, CreatureController _target = null) where T : BaseController
+    public T Spawn<T>(Vector3 _pos, int _tempId = 0, CreatureController _owner = null, CreatureController _target = null, bool _isSkillProjectile = false) where T : BaseController
     {
 
         string prefabName = GetPrefabNames<T>(_tempId);
@@ -164,7 +164,7 @@ public class ObjectManager
         Type type = controller.GetType();
         if (initActions.TryGetValue(type, out var initAction))
         {
-            initAction(controller, _pos, _tempId, _owner, _target);
+            initAction(controller, _pos, _tempId, _owner, _target, _isSkillProjectile);
         }
         else
         {

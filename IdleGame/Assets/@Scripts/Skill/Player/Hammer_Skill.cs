@@ -10,36 +10,12 @@ public class Hammer_Skill : SkillBase
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
-        
-        foreach (int data in skillData.BuffList_ID)
-        {
-            Managers.DataM.SkillEffectDataDic.TryGetValue(data, out var buffData);
-            skill_Duration = buffData.SkillDuration;
-            
-            if(buffData.AnimDuration > 0)
-            {
-                anim_Duration = buffData.AnimDuration;
-            }
+        InitSkillData(_caster);
 
-            if(buffData.Radius > 0)
-            {
-                attack_Radius = buffData.Radius;
-            }
-
-        }
-
-        List<CreatureController> enemiesInArea = Utils.FindEnemyInSphereArea(_caster, attack_Radius);
+        List<CreatureController> enemiesInArea = Utils.FindEnemyInSphereArea(_caster, skill_Radius);
         if (enemiesInArea.Count > 0)
         {
-            foreach (CreatureController enemy in enemiesInArea)
-            {
-                foreach (var effect in effects)
-                {
-                    effect.Execute(_caster, enemy);
-                }
-            }
-
+            LoopSkill(_caster).Forget();
             ResetSkillStateAsync(_caster, skill_Duration).Forget();
             return true;
         }

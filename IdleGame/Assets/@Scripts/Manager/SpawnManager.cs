@@ -130,6 +130,8 @@ public class SpawnManager : MonoBehaviour, ITickable
 
         for (int i = Managers.ObjectM.mcList.Count - 1; i >= 0; i--)
         {
+            //TODO : 여기서 해주는게 맞나 싶긴한데
+            Managers.ObjectM.mcList[i].ClearChildVFXs();
             Managers.ObjectM.DeSpawn(Managers.ObjectM.mcList[i]);
         }
 

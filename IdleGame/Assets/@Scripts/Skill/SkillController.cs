@@ -59,7 +59,6 @@ public class SkillController : MonoBehaviour
         }
 
         return true;
-
     }
 
 
@@ -83,9 +82,13 @@ public class SkillController : MonoBehaviour
 
                 //TODO : 이거 y값 높여주면 다른 ui보다 위여서 안겹쳐서 보임
                 Vector3 pos = owner.transform.position;
-                pos.y += 0.5f;
+                pos.y = effect.transform.position.y;
+
                 effect.transform.position = pos;
-                effect.transform.rotation = owner.transform.rotation;
+                effect.transform.rotation = Quaternion.Euler(
+                                            effect.transform.eulerAngles.x,
+                                            owner.transform.eulerAngles.y,
+                                            effect.transform.eulerAngles.z);
             }
         }
     }

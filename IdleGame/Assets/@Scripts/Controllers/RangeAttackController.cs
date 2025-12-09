@@ -7,7 +7,7 @@ public class RangeAttackController : ProjectileController
     Dictionary<string, GameObject> Projectiles = new Dictionary<string, GameObject>();
     Dictionary<string, ParticleSystem> Muzzles = new Dictionary<string, ParticleSystem>();
     CreatureController owner;
-
+    bool isSkillProjectile = false;
 
     private void Awake()
     {
@@ -22,9 +22,10 @@ public class RangeAttackController : ProjectileController
             Muzzles.Add(muzzles.GetChild(i).name, muzzles.GetChild(i).GetComponent<ParticleSystem>());
     }
 
-    public override void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner)
+    public override void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner, bool _isSkillProjectile = false)
     {
         owner = _owner;
+        isSkillProjectile = _isSkillProjectile;
         base.AttackInit(_cc, _dmg, owner);
         transform.LookAt(target.transform);
 
@@ -50,14 +51,14 @@ public class RangeAttackController : ProjectileController
             if (target != null)
             {
                 isHit = true;
-                target.GetDamage(damage, owner);
+                target.GetDamage(damage, owner, _isSkill: isSkillProjectile);
 
 
                 if (Projectiles.Count != 0) Projectiles[characterName].SetActive(false);
                 if (Muzzles.Count != 0) Muzzles[characterName].Play();
 
                 if (Muzzles.Count != 0) ReturnObject(Muzzles[characterName].duration).Forget();
-                else ReturnObject(0.5f).Forget();
+                else ReturnObject(0.3f).Forget();
             }
         }
     }

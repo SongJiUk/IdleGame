@@ -11,7 +11,6 @@ public class Datas : ScriptableObject
 	public List<ItemData> ItemDataList;
 	public List<StageSpawnData> StageSpawnDataList;
 	public List<SkillData> SkillDataList;
-	public List<SkillEffectData> SkillEffectDataList;
 	public List<BuffTypeData> BuffTypeDataList;
 	public List<VFXData> VFXDataList;
 }
@@ -81,26 +80,17 @@ public class SkillData
 	public int DataID;
 	public string SkillName;
 	public string SkillNameKR;
+	public float SkillDuration;
+	public float SkillDamageMul;
+	public int SkillRadius;
+	public int SkillLength;
+	public int SkillWidth;
+	public float AnimDuration;
+	public bool IsSplash;
 	public int CastingVFX_ID_Raw;
 	public string TargetVFX_ID_Raw;
 	public string BuffList_ID_Raw;
 	public int SkillProjectileID;
-}
-
-[Serializable]
-public class SkillEffectData
-{
-	public int DataID;
-	public string Description;
-	public string SkillEffectType;
-	public float SkillDuration;
-	public float AnimDuration;
-	public float ValueRatio;
-	public int Radius;
-	public int Length;
-	public int Width;
-	public float Interval;
-	public int BuffTypeID;
 }
 
 [Serializable]

@@ -14,25 +14,7 @@ public class Mage_W_Skill : SkillBase
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
-        Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
-        foreach (int data in skillData.BuffList_ID)
-        {
-            Managers.DataM.SkillEffectDataDic.TryGetValue(data, out var buffData);
-            skill_Duration = buffData.SkillDuration;
-
-            if (buffData.AnimDuration > 0)
-            {
-                anim_Duration = buffData.AnimDuration;
-            }
-
-            if (buffData.Radius > 0)
-            {
-                attack_Radius = buffData.Radius;
-            }
-        }
-
-        //TODO : 이거 공격력, 방어력 버프 이펙트도 나눠야될듯
-
+        InitSkillData(_caster);
 
         CreatureController randPlayer = Utils.FindRandomPlayer(_caster); ;
 
@@ -41,7 +23,7 @@ public class Mage_W_Skill : SkillBase
             var chosenEffect = (Random.Range(0, 2) == 0) ? effects[0] : effects[1];
 
             chosenEffect.Execute(_caster, randPlayer);
-            ShowEffect(_caster, skillData);
+            ShowEffect(_caster);
 
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
 

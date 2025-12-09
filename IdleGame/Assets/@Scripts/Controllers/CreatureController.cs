@@ -83,7 +83,7 @@ public class CreatureController : BaseController
     protected virtual void OnDisable()
     {
         if (target != null) target.OnTargetDead -= OnTargetDeadCallBack;
-        ClearChildVFXs();
+
     }
     public virtual void InitStat()
     {
@@ -94,7 +94,6 @@ public class CreatureController : BaseController
     {
 
     }
-
     public virtual void Dead()
     {
         isDead = true;
@@ -117,7 +116,7 @@ public class CreatureController : BaseController
         }
     }
 
-    void ClearChildVFXs()
+    public void ClearChildVFXs()
     {
         for (int i = vfxs.Count - 1; i >= 0; i--)
         {

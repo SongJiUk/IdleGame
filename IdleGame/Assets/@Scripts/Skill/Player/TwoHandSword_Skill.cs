@@ -12,45 +12,17 @@ public class TwoHandSword_Skill : SkillBase
 
     override public bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
+        InitSkillData(_caster);
 
-        Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
+        //TODO : 두번 공격으로 바꿀까 생각중
 
-        foreach (int data in skillData.BuffList_ID)
-        {
-            Managers.DataM.SkillEffectDataDic.TryGetValue(data, out var buffData);
-            skill_Duration = buffData.SkillDuration;
-
-            if (buffData.AnimDuration > 0)
-            {
-                anim_Duration = buffData.AnimDuration;
-            }
-
-            if (buffData.Radius > 0)
-            {
-                attack_Radius = buffData.Radius;
-            }
-            if (buffData.Length > 0)
-            {
-                attack_length = buffData.Length;
-            }
-
-            if (buffData.Width > 0)
-            {
-                attack_width = buffData.Width;
-            }
-
-        }
-
-        List<CreatureController> enemiesInArea = Utils.FindEnemyForwardArea(_caster, attack_length, attack_width);
+        List<CreatureController> enemiesInArea = Utils.FindEnemyForwardArea(_caster, skill_Length, skill_Width);
 
         if (enemiesInArea.Count > 0)
         {
             foreach (CreatureController enemy in enemiesInArea)
             {
-                foreach (var effect in effects)
-                {
-                    effect.Execute(_caster, enemy);
-                }
+                SetDamage(_caster, enemy);
             }
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
             return true;

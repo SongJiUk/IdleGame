@@ -24,7 +24,7 @@ public class DataManager
     public Dictionary<int, Data.ItemData> ItemDataDic = new Dictionary<int, Data.ItemData>();
     public Dictionary<int, Data.StageSpawnData> StageDataDic = new Dictionary<int, Data.StageSpawnData>();
     public Dictionary<int, Data.SkillData> SkillDataDic = new Dictionary<int, Data.SkillData>();
-    public Dictionary<int, Data.SkillEffectData> SkillEffectDataDic = new Dictionary<int, Data.SkillEffectData>();
+    public Dictionary<int, Data.BuffData> BuffDataDic = new Dictionary<int, Data.BuffData>();
     public Dictionary<int, Data.BuffTypeData> BuffTypeDataDic = new Dictionary<int, Data.BuffTypeData>();
     public Dictionary<int, Data.VFXData> VFXDataDic = new Dictionary<int, Data.VFXData>();
     public void Init()
@@ -44,7 +44,7 @@ public class DataManager
         ItemDataDic = LoadJson<Data.ItemDataLoader, int, Data.ItemData>(jsonObj, "ItemData").MakeDict();
         StageDataDic = LoadJson<Data.StageSpawnDataLoader, int, Data.StageSpawnData>(jsonObj, "StageSpawnData").MakeDict();
         SkillDataDic = LoadJson<Data.SkillDataLoader, int, Data.SkillData>(jsonObj, "SkillData").MakeDict();
-        SkillEffectDataDic = LoadJson<Data.SkillEffectDataLoader, int, Data.SkillEffectData>(jsonObj, "SkillEffectData").MakeDict();
+        BuffDataDic = LoadJson<Data.BuffDataLoader, int, Data.BuffData>(jsonObj, "BuffData").MakeDict();
         BuffTypeDataDic = LoadJson<Data.BuffTypeDataLoader, int, Data.BuffTypeData>(jsonObj, "BuffTypeData").MakeDict();
         VFXDataDic = LoadJson<Data.VFXDataLoader, int, Data.VFXData>(jsonObj, "VFXData").MakeDict();
     }

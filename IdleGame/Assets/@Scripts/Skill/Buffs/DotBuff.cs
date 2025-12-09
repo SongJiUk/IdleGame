@@ -39,7 +39,7 @@ public class DotBuff : BuffBase
     void DotDamage()
     {
         float tickDamage = (float)Owner.Damage * ratio;
-        target.GetDamage(tickDamage, target, _isSkill: true);
+        target.GetDamage(tickDamage, Owner, _isSkill: true);
 
     }
 }

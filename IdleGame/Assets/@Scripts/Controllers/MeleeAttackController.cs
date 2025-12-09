@@ -7,7 +7,7 @@ using UnityEngine;
 public class MeleeAttackController : ProjectileController
 {
     ParticleSystem particle;
-    public override void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner = null)
+    public override void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner = null, bool _isSkillProjectile = false)
     {
         base.AttackInit(_cc, _dmg, _owner);
         target = _cc;
@@ -18,7 +18,7 @@ public class MeleeAttackController : ProjectileController
             isHit = true;
 
             //TODO : 보스에서 사망했거나 스테이지를 못깨서 사망했을때, 몬스터가 플레이어 못때리게 설정해뒀으니까 이것도 안되게
-            if(Managers.StageM.isDead && !_owner.IsPlayer)
+            if (Managers.StageM.isDead && !_owner.IsPlayer)
             {
                 Managers.ObjectM.DeSpawn(this);
                 return;

@@ -28,7 +28,7 @@ public class ProjectileController : BaseController
         return true;
     }
     //TODO: 
-    public virtual void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner)
+    public virtual void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner, bool _isSkillProjectile = false)
     {
         Managers.UpdateM.Register(this);
         target = _cc;

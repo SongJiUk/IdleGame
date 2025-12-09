@@ -163,6 +163,13 @@ namespace Data
         public int DataID;
         public string SkillName;
         public string SkillNameKR;
+        public float SkillDuration;
+        public float SkillDamageMul;
+        public float SkillRadius;
+        public float SkillLength;
+        public float SkillWidth;
+        public float AnimDuration;
+        public bool IsSplash;
         public string CastingVFX_ID_Raw;
         public string TargetVFX_ID_Raw;
         public string BuffList_ID_Raw;
@@ -219,30 +226,26 @@ namespace Data
     }
     #endregion
 
-    #region SkillEffectData
+    #region BuffData
     [Serializable]
-    public class SkillEffectData
+    public class BuffData
     {
         public int DataID;
         public string Description;
         public string SkillEffectType;
-        public float SkillDuration;
-        public float AnimDuration;
+        public float BuffDuration;
         public float ValueRatio;
-        public float Radius;
-        public float Length;
-        public float Width;
         public float Interval;
         public int BuffTypeID;
     }
 
-    public class SkillEffectDataLoader : ILoader<int, SkillEffectData>
+    public class BuffDataLoader : ILoader<int, BuffData>
     {
-        public List<SkillEffectData> dataList = new List<SkillEffectData>();
+        public List<BuffData> dataList = new List<BuffData>();
 
-        public Dictionary<int, SkillEffectData> MakeDict()
+        public Dictionary<int, BuffData> MakeDict()
         {
-            Dictionary<int, SkillEffectData> dic = new Dictionary<int, SkillEffectData>();
+            Dictionary<int, BuffData> dic = new Dictionary<int, BuffData>();
             foreach (var data in dataList)
             {
                 dic.Add(data.DataID, data);

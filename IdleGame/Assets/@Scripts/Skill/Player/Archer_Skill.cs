@@ -10,6 +10,7 @@ public class Archer_Skill : SkillBase
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
+        InitSkillData(_caster);
         CreatureController randTarget = null;
         if (_target != null)
         {
@@ -17,39 +18,27 @@ public class Archer_Skill : SkillBase
         }
         else
         {
-            randTarget = Utils.FindRandomEnemyInRange(_caster, _caster.DATA.AttackRange);
+            randTarget = Utils.FindRandomEnemyInRange(_caster, _caster.DATA.AttackRange * 2);
         }
 
-        Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData);
-        foreach (int data in skillData.BuffList_ID)
-        {
-            Managers.DataM.SkillEffectDataDic.TryGetValue(data, out var buffData);
-            skill_Duration = buffData.SkillDuration;
 
-            if (buffData.AnimDuration > 0)
-            {
-                anim_Duration = buffData.AnimDuration;
-            }
 
-            if (buffData.Radius > 0)
-            {
-                attack_Radius = buffData.Radius;
-            }
 
-        }
         if (randTarget != null)
         {
             Managers.ObjectM.Spawn<RangeAttackController>(_caster.transform.position,
-                    skillData.SkillProjectileID,
+                    skill_ProjectileID,
                     _caster,
-                    randTarget);
+                    randTarget,
+                    true);
+
 
             foreach (var effect in effects)
             {
                 effect.Execute(_caster, randTarget);
             }
 
-            ShowEffect(randTarget, skillData);
+            ShowEffect(randTarget);
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
 
             return true;
