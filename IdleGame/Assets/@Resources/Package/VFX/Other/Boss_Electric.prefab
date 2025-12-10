@@ -4911,6 +4911,7 @@ GameObject:
   - component: {fileID: 545829486768194052}
   - component: {fileID: 2114620699711764057}
   - component: {fileID: 7912758154695516860}
+  - component: {fileID: 5253850244795351749}
   m_Layer: 0
   m_Name: Boss_Electric
   m_TagString: Untagged
@@ -4946,7 +4947,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 3
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 3
   cullingMode: 1
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -9803,6 +9804,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &5253850244795351749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234166412216034119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007fa160b1d6743bbbc8cf351cccca5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6358829702266483775
 GameObject:
   m_ObjectHideFlags: 0

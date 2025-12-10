@@ -274,7 +274,7 @@ public class PlayerController : CreatureController
         if (target != null)
         {
             t = target;
-            if (skillController.UseSKill(_target: t))
+            if (skillController.UseSkill(_target: t))
             {
                 mp = 0;
                 isUsingSkill = true;
@@ -283,7 +283,7 @@ public class PlayerController : CreatureController
         }
         else
         {
-            if (skillController.UseSKill())
+            if (skillController.UseSkill())
             {
                 mp = 0;
                 isUsingSkill = true;

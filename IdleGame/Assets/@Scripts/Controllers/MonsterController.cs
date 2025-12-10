@@ -74,6 +74,9 @@ public class MonsterController : CreatureController
         if (DATA.Type == ObjectType.Boss)
         {
             isBoss = true;
+            maxHp *= 10;
+            hp *= 10;
+
             //skillCTS?.Cancel();
             //skillCTS = new CancellationTokenSource();
 
@@ -85,7 +88,7 @@ public class MonsterController : CreatureController
         }
     }
 
-   
+
     async UniTask SkillStart(CancellationToken _ct)
     {
         while (true)
@@ -120,8 +123,16 @@ public class MonsterController : CreatureController
     public override void Projectile()
     {
         if (target == null || target.IsDead) return;
-        Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
 
+        if (!UseSkill())
+            Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
+
+
+
+    }
+    bool UseSkill()
+    {
+        return skillController.UseSkill();
     }
 
     public void KnockBack(Vector3 _dir, float _power = 3f, float _duration = 0.3f)
@@ -149,9 +160,15 @@ public class MonsterController : CreatureController
 
     public override void Tick(float _deltaTime)
     {
+
+
         if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
         if (isDead) return;
         if (isAttack) return;
+
+
+
+        UpdateSkillCoolTime(_deltaTime);
         //TODO: 몬스터 플레이어 죽으면 Idle상태로 돌아가기.
         if (target == null || target.IsDead)
         {
@@ -190,7 +207,16 @@ public class MonsterController : CreatureController
         }
     }
 
-
+    public void UpdateSkillCoolTime(float _deltaTime)
+    {
+        if (skillController != null)
+        {
+            foreach (var skill in skillController.GetSkills())
+            {
+                skill.UpdateCoolTime(_deltaTime);
+            }
+        }
+    }
     public override void GetDamage(double _dmg, CreatureController _attacker, bool _isCiritical = false, bool _isSkill = false)
     {
         if (isDead) return;

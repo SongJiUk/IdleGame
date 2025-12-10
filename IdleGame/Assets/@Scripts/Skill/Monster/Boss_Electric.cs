@@ -14,25 +14,27 @@ public class Boss_Electric : SkillBase
 
     public override bool UseSkill(CreatureController _caster, CreatureController _target)
     {
+
+        if (!IsUseSkill())
+        {
+            Debug.Log("쿨타임");
+            return false;
+        }
+
         InitSkillData(_caster);
 
+        CreatureController enemy = Utils.FindRandomPlayer(_caster);
+        if (enemy == null || enemy.IsDead) return false;
 
-
-        for(int i =0; i<skill_AttackCount; i++)
+        if (enemy != null)
         {
-            CreatureController enemy = Utils.FindRandomPlayer(_caster);
-            if (enemy == null || enemy.IsDead) continue;
-
-            if (enemy != null)
-            {
-                SetDamage(_caster, _target);
-                ShowEffect(enemy);
-            }
-            else
-            {
-                Debug.Log("[Boss_Skill] : 유효한 적 없음");
-                continue;
-            }
+            LoopSkill(_caster, enemy).Forget();
+            current_CoolTime = skill_CoolTime;
+        }
+        else
+        {
+            Debug.Log("[Boss_Skill] : 유효한 적 없음");
+            return false;
         }
 
         return true;

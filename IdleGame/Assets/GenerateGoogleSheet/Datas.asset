@@ -395,7 +395,9 @@ MonoBehaviour:
     SkillNameKR: "\uD790"
     SkillAttackCount: 0
     SkillDuration: 0
+    SkillInterval: 0
     SkillDamageMul: 0
+    SkillCoolTime: 10
     SkillRadius: 0
     SkillLength: 0
     SkillWidth: 0
@@ -410,7 +412,9 @@ MonoBehaviour:
     SkillNameKR: "\uB3C5\uD654\uC0B4"
     SkillAttackCount: 0
     SkillDuration: 0
+    SkillInterval: 0
     SkillDamageMul: 1.3
+    SkillCoolTime: 10
     SkillRadius: 0
     SkillLength: 0
     SkillWidth: 0
@@ -425,7 +429,9 @@ MonoBehaviour:
     SkillNameKR: "\uC554\uC0B4"
     SkillAttackCount: 3
     SkillDuration: 0
+    SkillInterval: 0
     SkillDamageMul: 3
+    SkillCoolTime: 10
     SkillRadius: 0
     SkillLength: 0
     SkillWidth: 0
@@ -438,9 +444,11 @@ MonoBehaviour:
   - DataID: 43000
     SkillName: SpinAttack
     SkillNameKR: "\uD68C\uC804\uACF5\uACA9"
-    SkillAttackCount: 0
+    SkillAttackCount: 3
     SkillDuration: 1.8
+    SkillInterval: 0.6
     SkillDamageMul: 1
+    SkillCoolTime: 10
     SkillRadius: 2
     SkillLength: 0
     SkillWidth: 0
@@ -455,7 +463,9 @@ MonoBehaviour:
     SkillNameKR: "\uBE5B\uC758\uAC80"
     SkillAttackCount: 0
     SkillDuration: 0
+    SkillInterval: 0
     SkillDamageMul: 1.5
+    SkillCoolTime: 10
     SkillRadius: 0
     SkillLength: 6
     SkillWidth: 4
@@ -470,7 +480,9 @@ MonoBehaviour:
     SkillNameKR: "\uC804\uBC29\uACF5\uACA9"
     SkillAttackCount: 0
     SkillDuration: 0
+    SkillInterval: 0
     SkillDamageMul: 1.5
+    SkillCoolTime: 10
     SkillRadius: 0
     SkillLength: 4
     SkillWidth: 8
@@ -485,7 +497,9 @@ MonoBehaviour:
     SkillNameKR: "\uB450\uBC88\uBCA0\uAE30"
     SkillAttackCount: 2
     SkillDuration: 0
+    SkillInterval: 0
     SkillDamageMul: 1.5
+    SkillCoolTime: 10
     SkillRadius: 0
     SkillLength: 4
     SkillWidth: 6
@@ -500,7 +514,9 @@ MonoBehaviour:
     SkillNameKR: "\uBA54\uD14C\uC624"
     SkillAttackCount: 0
     SkillDuration: 1
+    SkillInterval: 0
     SkillDamageMul: 2
+    SkillCoolTime: 10
     SkillRadius: 2
     SkillLength: 0
     SkillWidth: 0
@@ -515,7 +531,9 @@ MonoBehaviour:
     SkillNameKR: "\uBC84\uD504"
     SkillAttackCount: 0
     SkillDuration: 0
+    SkillInterval: 0
     SkillDamageMul: 0
+    SkillCoolTime: 10
     SkillRadius: 0
     SkillLength: 0
     SkillWidth: 0
@@ -529,8 +547,10 @@ MonoBehaviour:
     SkillName: BossSkill
     SkillNameKR: "\uBCF4\uC2A4 \uC2A4\uD0AC"
     SkillAttackCount: 3
-    SkillDuration: 0
+    SkillDuration: 3
+    SkillInterval: 1
     SkillDamageMul: 0.6
+    SkillCoolTime: 5
     SkillRadius: 0
     SkillLength: 0
     SkillWidth: 0
@@ -583,4 +603,4 @@ MonoBehaviour:
   - DataID: 68001
     PrefabName: Mage_W_Buff
   - DataID: 69000
-    PrefabName: BossAttack
+    PrefabName: Boss_Electric

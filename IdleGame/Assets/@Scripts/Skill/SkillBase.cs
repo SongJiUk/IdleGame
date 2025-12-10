@@ -11,7 +11,10 @@ public abstract class SkillBase
     protected Data.SkillData skill_Data;
     protected int skill_AttackCount = 0;
     protected float skill_Duration = 0f;
+    protected float skill_Interval = 0f;
     protected float skill_DamageMul = 0f;
+    protected float skill_CoolTime = 0f;
+    protected float current_CoolTime = 0f;
     protected float skill_Radius = 0f;
     protected float skill_Length = 0f;
     protected float skill_Width = 0f;
@@ -107,7 +110,21 @@ public abstract class SkillBase
 
     public async UniTask ResetSkillStateAsync(CreatureController _caster, float _duration)
     {
-        await UniTask.WaitForSeconds(_duration);
+        try
+        {
+            await UniTask.WaitForSeconds(_duration);
+
+            if (_caster != null && _caster.isUsingSkill)
+            {
+                _caster.isUsingSkill = false;
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("[ResetSkillStateAsync] : " + e.Message);
+        }
+
+
 
         if (_caster.isUsingSkill)
         {
@@ -115,17 +132,28 @@ public abstract class SkillBase
         }
     }
 
-    public void ShowEffect(CreatureController _randPlayer)
+    public void ShowEffect(CreatureController _target)
     {
+        if (_target == null) return;
         foreach (var data in skill_Data.TargetVFX_ID)
         {
             string vfxName = Utils.GetVfxPrefabName(data);
             if (!string.IsNullOrEmpty(vfxName))
             {
                 var effect = Managers.ResourceM.Instantiate(vfxName, _pooling: true);
-                effect.transform.position = _randPlayer.transform.position;
-                effect.transform.SetParent(_randPlayer.transform);
-                _randPlayer.vfxs.Add(effect);
+                if (effect == null) continue;
+
+                effect.transform.position = _target.transform.position;
+                if (_target != null)
+                {
+                    effect.transform.SetParent(_target.transform);
+                    _target.vfxs.Add(effect);
+                }
+                else
+                {
+                    Managers.ResourceM.Destroy(effect);
+                }
+
             }
 
         }
@@ -155,7 +183,9 @@ public abstract class SkillBase
             skill_Data = skillData;
             skill_AttackCount = skillData.SkillAttackCount;
             skill_Duration = skillData.SkillDuration;
+            skill_Interval = skillData.SkillInterval;
             skill_DamageMul = skillData.SkillDamageMul;
+            skill_CoolTime = skillData.SkillCoolTime;
             skill_Radius = skillData.SkillRadius;
             skill_Length = skillData.SkillLength;
             skill_Width = skillData.SkillWidth;
@@ -220,24 +250,52 @@ public abstract class SkillBase
                 monster.GetDamage(splashDamage, _caster, _isSkill: true);
         }
     }
+    #endregion
 
-    public async UniTask LoopSkill(CreatureController _caster)
+    public void UpdateCoolTime(float _deltaTime)
     {
-        float startTime = Time.time;
-        float interval = skill_Duration / 3f;
-
-        while (Time.time < startTime + skill_Duration)
+        if (current_CoolTime > 0.0f)
         {
-            List<CreatureController> enemiesInArea = Utils.FindEnemyInSphereArea(_caster, skill_Radius);
-
-            foreach (CreatureController enemy in enemiesInArea)
+            current_CoolTime -= _deltaTime;
+            if (current_CoolTime < 0.0f)
             {
-                SetDamage(_caster, enemy);
+                current_CoolTime = 0f;
             }
-
-            await UniTask.Delay((int)(interval * 1000));
         }
     }
-    #endregion
+
+    public bool IsUseSkill()
+    {
+        return current_CoolTime <= 0.0f;
+    }
+
+    public async UniTask LoopSkill(CreatureController _caster, CreatureController _target = null)
+    {
+        int totalAttack = skill_AttackCount;
+        float interval = skill_Interval;
+
+        for (int i = 0; i < totalAttack; i++)
+        {
+            if (_target != null)
+            {
+                CreatureController enemy = Utils.FindRandomPlayer(_caster);
+                SetDamage(_caster, enemy);
+                ShowEffect(enemy);
+            }
+            else
+            {
+                List<CreatureController> enemiesInArea = Utils.FindEnemyInSphereArea(_caster, skill_Radius);
+
+                foreach (CreatureController enemy in enemiesInArea)
+                {
+                    SetDamage(_caster, enemy);
+                }
+            }
+
+
+            if (interval > 0f) await UniTask.Delay((int)(interval * 1000));
+        }
+    }
+
 
 }

@@ -15,7 +15,10 @@ public class SkillController : MonoBehaviour
 
     }
 
-
+    public List<SkillBase> GetSkills()
+    {
+        return skills;
+    }
     public void InitSkills(List<SkillBase> _skills)
     {
         skills.Clear();
@@ -34,7 +37,7 @@ public class SkillController : MonoBehaviour
     }
 
 
-    public bool UseSKill(int _skillIndex = 0, CreatureController _target = null)
+    public bool UseSkill(int _skillIndex = 0, CreatureController _target = null)
     {
         if (_skillIndex < 0 || _skillIndex >= skills.Count)
         {
@@ -49,6 +52,8 @@ public class SkillController : MonoBehaviour
 
         if (skillExecuted)
         {
+            if (_target.IsDead || _target == null) return false;
+
             caster.AnimatorChange(Define.CreatureState.Skill);
             ShowEffect();
         }
@@ -74,6 +79,8 @@ public class SkillController : MonoBehaviour
 
         foreach (var data in skillData.CastingVFX_ID)
         {
+            if (data == 0) continue;
+
             string vfxName = Utils.GetVfxPrefabName(data);
             if (!string.IsNullOrEmpty(vfxName))
             {

@@ -267,6 +267,7 @@ MonoBehaviour:
   buffController: {fileID: 0}
   skillController: {fileID: 0}
   isUsingSkill: 0
+  vfxs: []
   trails:
   - {fileID: 6435985864691275530}
   provocation: {fileID: 6435985864297989929}
@@ -16758,7 +16759,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8162507218767597089, guid: d48d5e0b7ab040245a72bfcaf17b0448, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8162507218767597091, guid: d48d5e0b7ab040245a72bfcaf17b0448, type: 3}
       propertyPath: m_Parameters.widthMultiplier

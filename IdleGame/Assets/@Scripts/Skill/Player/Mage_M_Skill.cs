@@ -16,8 +16,6 @@ public class Mage_M_Skill : SkillBase
         InitSkillData(_caster);
 
         CreatureController target = null;
-        if (_target.IsDead) _target = null;
-
         if (_target != null)
         {
             target = _target;
@@ -30,8 +28,10 @@ public class Mage_M_Skill : SkillBase
 
         if (target != null)
         {
+            if (target.IsDead) return false;
+
             //TODO : 하드코딩 없애기
-            SetDamage(_caster, target, 1f);
+            SetDamage(_caster, target, 1.2f);
 
             ShowEffect(target);
             ResetSkillStateAsync(_caster, anim_Duration).Forget();

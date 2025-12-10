@@ -82,7 +82,9 @@ public class SkillData
 	public string SkillNameKR;
 	public int SkillAttackCount;
 	public float SkillDuration;
+	public float SkillInterval;
 	public float SkillDamageMul;
+	public int SkillCoolTime;
 	public int SkillRadius;
 	public int SkillLength;
 	public int SkillWidth;
