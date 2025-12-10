@@ -9,6 +9,7 @@ public abstract class SkillBase
 
     #region SKill Info
     protected Data.SkillData skill_Data;
+    protected int skill_AttackCount = 0;
     protected float skill_Duration = 0f;
     protected float skill_DamageMul = 0f;
     protected float skill_Radius = 0f;
@@ -64,7 +65,7 @@ public abstract class SkillBase
         {
             if (!Managers.DataM.BuffDataDic.TryGetValue(buff, out var effectData))
             {
-                Debug.Log($"{_caster.name} : 해당 스킬 효과 없음 ]");
+                Debug.Log($"{_caster.name} : 해당 스킬에는 버프가 없음");
                 return;
             }
 
@@ -152,6 +153,7 @@ public abstract class SkillBase
         if (Managers.DataM.SkillDataDic.TryGetValue(_caster.DATA.SkillDataID, out Data.SkillData skillData))
         {
             skill_Data = skillData;
+            skill_AttackCount = skillData.SkillAttackCount;
             skill_Duration = skillData.SkillDuration;
             skill_DamageMul = skillData.SkillDamageMul;
             skill_Radius = skillData.SkillRadius;

@@ -23,7 +23,7 @@ public class Mage_W_Skill : SkillBase
             var chosenEffect = (Random.Range(0, 2) == 0) ? effects[0] : effects[1];
 
             chosenEffect.Execute(_caster, randPlayer);
-            ShowEffect(_caster);
+            ShowEffect(randPlayer);
 
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
 

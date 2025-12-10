@@ -13,7 +13,7 @@ public class BuffController : MonoBehaviour, ITickable
         owner = GetComponent<CreatureController>();
         if (owner == null)
         {
-            Debug.LogError("CreatureController ����");
+            Debug.LogError("CreatureController ����");  
         }
     }
 
@@ -24,7 +24,7 @@ public class BuffController : MonoBehaviour, ITickable
             Managers.UpdateM.UnRegister(this);
             return;
         }
-
+            
         for (int i = activeBuffs.Count - 1; i >= 0; i--)
         {
             if (i >= activeBuffs.Count)

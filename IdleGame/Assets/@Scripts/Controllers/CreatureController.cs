@@ -103,7 +103,7 @@ public class CreatureController : BaseController
         OnTargetDead?.Invoke();
     }
 
-    public void SetSkill()
+    public virtual void SetSkill()
     {
         this.Type = DATA.CreatureType;
 

@@ -82,7 +82,7 @@ public class PlayerController : CreatureController
         isAttack = false;
         SpawnPos = transform.position;
         //TODO : 지우기
-        hp = Utils.Datas.levelData.HP((float)baseHp) * 100;
+        hp = Utils.Datas.levelData.HP((float)baseHp);
         maxHp = hp;
         damage = Utils.Datas.levelData.Damage((float)baseDamage);
         mp = 0;

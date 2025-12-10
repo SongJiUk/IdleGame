@@ -121,7 +121,7 @@ public static class Utils
         else return null;
     }
 
-    //아군 중 랜덤한 캐릭터 찾기(본인 제외)
+    //아군 중 랜덤한 캐릭터 찾기
     public static CreatureController FindRandomPlayer(CreatureController _caster)
     {
         List<PlayerController> pList = Managers.ObjectM.pcList;

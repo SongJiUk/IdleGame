@@ -10,20 +10,37 @@ public class Boss_Electric : SkillBase
     CreatureController cc;
     List<PlayerController> players = new List<PlayerController>();
 
-    public Boss_Electric()
-    {
+    public Boss_Electric() { }
 
-    }
-
-    public override void SetSkill(CreatureController _cc = null)
+    public override bool UseSkill(CreatureController _caster, CreatureController _target)
     {
-        base.SetSkill();
-        if (_cc != null) cc = _cc;
-        Skills().Forget();
+        InitSkillData(_caster);
+
+
+
+        for(int i =0; i<skill_AttackCount; i++)
+        {
+            CreatureController enemy = Utils.FindRandomPlayer(_caster);
+            if (enemy == null || enemy.IsDead) continue;
+
+            if (enemy != null)
+            {
+                SetDamage(_caster, _target);
+                ShowEffect(enemy);
+            }
+            else
+            {
+                Debug.Log("[Boss_Skill] : 유효한 적 없음");
+                continue;
+            }
+        }
+
+        return true;
     }
 
     async UniTask Skills()
     {
+
         players = Managers.SpawnM.players.ToList();
         if (players.Count == 0) return;
         for (int i = 0; i < 5; i++)

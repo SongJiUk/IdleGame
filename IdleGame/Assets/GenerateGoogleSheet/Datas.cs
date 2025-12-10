@@ -80,6 +80,7 @@ public class SkillData
 	public int DataID;
 	public string SkillName;
 	public string SkillNameKR;
+	public int SkillAttackCount;
 	public float SkillDuration;
 	public float SkillDamageMul;
 	public int SkillRadius;

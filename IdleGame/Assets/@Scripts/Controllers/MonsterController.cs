@@ -57,9 +57,12 @@ public class MonsterController : CreatureController
         isKnockBack = false;
         baseHp = _data.BaseHp;
         //TODO : 지우기
-        baseDamage = _data.BaseDamage / 10;
-        maxHp = Utils.Datas.stageData.HP((float)baseHp) * 1000;
-        hp = Utils.Datas.stageData.HP((float)baseHp) * 1000;
+        baseDamage = _data.BaseDamage;
+        maxHp = Utils.Datas.stageData.HP((float)baseHp);
+        hp = Utils.Datas.stageData.HP((float)baseHp);
+        //baseDamage = _data.BaseDamage / 10;
+        //maxHp = Utils.Datas.stageData.HP((float)baseHp) * 1000;
+        //hp = Utils.Datas.stageData.HP((float)baseHp) * 1000;
         damage = Utils.Datas.stageData.Damage((float)baseDamage);
 
         attackrange = DATA.AttackRange;
@@ -71,13 +74,18 @@ public class MonsterController : CreatureController
         if (DATA.Type == ObjectType.Boss)
         {
             isBoss = true;
-            skillCTS?.Cancel();
-            skillCTS = new CancellationTokenSource();
+            //skillCTS?.Cancel();
+            //skillCTS = new CancellationTokenSource();
 
-            if (skillbase == null) skillbase = GetComponent<SkillBase>();
-            SkillStart(skillCTS.Token).Forget();
+            //if (skillbase == null) skillbase = GetComponent<SkillBase>();
+            //SkillStart(skillCTS.Token).Forget();
+
+            base.SetSkill();
+
         }
     }
+
+   
     async UniTask SkillStart(CancellationToken _ct)
     {
         while (true)
