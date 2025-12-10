@@ -26,7 +26,7 @@ public class Managers : MonoBehaviour
     readonly CameraManager cameraManager = new();
     readonly ItemManager itemManager = new();
     readonly CharacterManager characterManager = new();
-   
+    readonly InventoryManager inventoryManager = new();
 
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
@@ -44,7 +44,8 @@ public class Managers : MonoBehaviour
     public static ItemManager ItemM { get { return Instance?.itemManager; } }
     public static RenderManager RenderM { get { return Instance?.rederManager; } }
     public static CharacterManager CharacterM { get { return Instance?.characterManager; } }
-    
+    public static InventoryManager InventoryM { get { return Instance?.inventoryManager; } }
+
 
 
 

@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public class Item
+{
+    public Data.ItemData itemData;
+    public int count;
+}
 public class ItemManager
 {
     Dictionary<string, Data.ItemData> ItemDatas = new Dictionary<string, Data.ItemData>();
 
-    
+
     public void Init()
-    { 
-        foreach(var data in Managers.DataM.ItemDataDic)
+    {
+        foreach (var data in Managers.DataM.ItemDataDic)
         {
             ItemDatas.Add(data.Value.Name, data.Value);
         }
@@ -21,7 +27,7 @@ public class ItemManager
         foreach (var data in ItemDatas)
         {
             float randValue = Random.Range(0, 100);
-            if(randValue <= data.Value.Probability)
+            if (randValue <= data.Value.Probability)
             {
                 items.Add(data.Value);
             }

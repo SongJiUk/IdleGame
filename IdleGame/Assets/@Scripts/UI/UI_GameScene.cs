@@ -481,6 +481,7 @@ public class UI_GameScene : UI_Scene, ITickable
     {
         await Managers.UIM.ShowPopup<UI_Inventory>();
     }
+
     #region 하단 캐릭터들 정보 업데이트
     public async void OnClickCharacterPlus(int _index)
     {

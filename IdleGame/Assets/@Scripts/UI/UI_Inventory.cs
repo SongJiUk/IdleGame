@@ -4,11 +4,14 @@ using UnityEngine;
 using DG.Tweening;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 public class UI_Inventory : UI_Base
 {
+    List<UI_Item> itemPool = new List<UI_Item>();
     enum GameObjects
     {
-        BarObject
+        BarObject,
+        Content,
     }
 
     enum Buttons
@@ -28,6 +31,8 @@ public class UI_Inventory : UI_Base
         OthersText,
     }
 
+    Transform parent = null;
+    RectTransform rect = null;
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -45,15 +50,43 @@ public class UI_Inventory : UI_Base
         GetButton(ButtonsType, (int)Buttons.ConsumableButton).gameObject.BindEvent(OnClickConsumableButton);
         GetButton(ButtonsType, (int)Buttons.OthersButton).gameObject.BindEvent(OnClickOthersButton);
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
+
+        parent = GetObject(GameObjectsType, (int)GameObjects.Content).transform;
+        rect = gameObject.GetComponent<RectTransform>();
+        RefreshItems();
         return true;
     }
 
-    public void SetInfo()
+    public override void SetInfo()
     {
-        //���� ��� ���� Linq
-        //ex) Managers.ResourceM.ResourcDic.OrderByDescending(x => x.Value.name);
+        RefreshItems();
     }
 
+    public void RefreshItems()
+    {
+        //TODO : 켜져있는 동안에도 바꿔줄지? => 이벤트 사용해야됌 
+        int needCount = Managers.InventoryM.items.Count;
+
+        while (itemPool.Count < needCount)
+        {
+            UI_Item i = Managers.UIM.MakeSubItem<UI_Item>(parent);
+            itemPool.Add(i);
+        }
+
+        foreach (var slot in itemPool)
+            slot.gameObject.SetActive(false);
+
+        int index = 0;
+        var sort_items = Managers.InventoryM.items.OrderByDescending(x => x.Value.itemData.ItemGrade);
+        foreach (var item in sort_items)
+        {
+            UI_Item slot = itemPool[index++];
+            slot.gameObject.SetActive(true);
+
+            slot.Init().Forget();
+            slot.SetInfo(item.Value, rect);
+        }
+    }
     void OnClickAllButton()
     {
         //GetObject(GameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.AllButton).transform.position;

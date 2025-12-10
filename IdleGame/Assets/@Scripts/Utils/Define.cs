@@ -25,7 +25,8 @@ public static class Define
         PointerUp,
         Drag,
         BeginDrag,
-        EndDrag
+        EndDrag,
+        OnPointerExit
     }
     public enum CurrencyType
     {

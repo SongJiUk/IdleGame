@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.PlayerLoop;
 
-public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerExitHandler
 {
 
     public Action OnClickHandler = null;
@@ -15,6 +15,7 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IPointerDown
     public Action<BaseEventData> OnDragHandler = null;
     public Action<BaseEventData> OnBeginDragHandler = null;
     public Action<BaseEventData> OnEndDragHandler = null;
+    public Action<BaseEventData> OnPointerExitHandler = null;
 
     bool isPressed = false;
 
@@ -55,5 +56,12 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IPointerDown
     {
         isPressed = false;
         OnPointerUpHandler?.Invoke();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        isPressed = false;
+        OnPointerExitHandler?.Invoke(eventData);
+
     }
 }

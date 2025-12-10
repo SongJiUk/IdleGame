@@ -138,6 +138,7 @@ public class DropItemController : BaseController
             for (int i = 0; i < grades.Count; i++) grades[i].SetActive(false);
 
             (Managers.UIM.SceneUI as UI_GameScene).GetItem(itemData);
+            Managers.InventoryM.GetItem(itemData);
 
             itemRect.transform.parent = this.transform;
             itemRect.gameObject.SetActive(false);

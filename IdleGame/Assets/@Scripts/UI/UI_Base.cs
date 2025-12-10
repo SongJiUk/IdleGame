@@ -19,7 +19,7 @@ public class UI_Base : MonoBehaviour
     protected Type ButtonsType;
     protected Type TogglesType;
     protected Type SlidersType;
-   
+
 
     private void Start()
     {
@@ -33,6 +33,10 @@ public class UI_Base : MonoBehaviour
 
         isInit = true;
         return true;
+    }
+
+    public virtual void SetInfo()
+    {
     }
     #endregion
 
@@ -127,6 +131,11 @@ public class UI_Base : MonoBehaviour
             case Define.UIEvent.EndDrag:
                 eh.OnEndDragHandler -= _dragAction;
                 eh.OnEndDragHandler += _dragAction;
+                break;
+
+            case Define.UIEvent.OnPointerExit:
+                eh.OnPointerExitHandler -= _dragAction;
+                eh.OnPointerExitHandler += _dragAction;
                 break;
         }
     }

@@ -8,25 +8,52 @@ using UnityEngine.UI;
 public class UI_ItemInfo : UI_Popup
 {
 
+    #region Enum
+    enum Images
+    {
+        ItemImage,
+    }
+
+    enum Texts
+    {
+        ItemNameText,
+        ItemGradeText,
+        ItemDescriptionText
+    }
+    #endregion
+
     RectTransform rect;
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
 
+        ImagesType = typeof(Images);
+        TextsType = typeof(Texts);
+
+        BindImage(ImagesType);
+        BindText(TextsType);
+
         rect = GetComponent<RectTransform>();
+
+
         return true;
     }
 
-
-    //TODO : ���⼭ ��ġ �ʱ�ȭ ��Ű�� (�����Ͱ��� �޾ƿ;���)
-    public void SetInfo(Vector2 _pos)
+    public void SetInfo(Item _itemData, Vector2 _pos, RectTransform _parent)
     {
+        transform.localScale = Vector3.one;
+        GetImage(ImagesType, (int)Images.ItemImage).sprite = Managers.ResourceM.GetAtlas(_itemData.itemData.Name);
+        GetText(TextsType, (int)Texts.ItemNameText).text = _itemData.itemData.NameKR;
+        GetText(TextsType, (int)Texts.ItemDescriptionText).text = _itemData.itemData.Description;
+        GetText(TextsType, (int)Texts.ItemGradeText).text = Utils.StringToColorGrade(_itemData.itemData.ItemGrade) + _itemData.itemData.ItemGrade + "</color>";
+
         if (rect == null)
             rect = GetComponent<RectTransform>();
 
 
         rect.pivot = PivotPoint(_pos);
         rect.anchoredPosition = _pos;
+
 
 
     }

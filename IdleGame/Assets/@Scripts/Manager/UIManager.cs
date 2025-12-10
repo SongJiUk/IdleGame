@@ -82,6 +82,7 @@ public class UIManager
         }
         T popup = GetPopupUI<T>(_name);
         popup.Init().Forget();
+        popup.SetInfo();
 
         if (_isFade)
         {
