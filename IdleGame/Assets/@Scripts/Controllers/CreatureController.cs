@@ -169,7 +169,6 @@ public class CreatureController : BaseController
             isTargetLocked = false;
             OnAttackDelayEnd();
         }
-
     }
     protected virtual void OnAttackDelayEnd() { }
 

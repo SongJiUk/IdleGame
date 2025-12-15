@@ -51,6 +51,9 @@ public class UI_GameScene : UI_Scene, ITickable
         Character4_ReadyObject,
         Character5_ReadyObject,
         Character6_ReadyObject,
+        AttackBuffLockObject,
+        DropBuffLockObject,
+        CriticalBuffLockObject
 
     }
     enum Buttons
@@ -75,7 +78,8 @@ public class UI_GameScene : UI_Scene, ITickable
         Character4_PlusButton,
         Character5_PlusButton,
         Character6_PlusButton,
-        FastButton
+        FastButton,
+        BuffsButton
     }
 
     enum Texts
@@ -129,7 +133,7 @@ public class UI_GameScene : UI_Scene, ITickable
         MainSkillButton,
         Character1_Lock,
         Character2_Lock,
-        Character3_Lock, 
+        Character3_Lock,
         Character4_Lock,
         Character5_Lock,
         Character6_Lock,
@@ -222,7 +226,8 @@ public class UI_GameScene : UI_Scene, ITickable
     #endregion
 
     public bool isSavingMode = false;
-    public UI_SavingMode savingMode;
+    public UI_SavingMode savingModePopup;
+    public UI_AdsBuffPopup AdsBuffPopup;
     public delegate void PlayerStatUpdateHandler(PlayerController _pc);
     public bool[] isCharacterReady;
     private Tween blinkTween = null;
@@ -377,7 +382,7 @@ public class UI_GameScene : UI_Scene, ITickable
             case Buttons.MailBoxButton:
                 break;
             case Buttons.SavingModeButton:
-                savingMode = await Managers.UIM.ShowPopup<UI_SavingMode>();
+                savingModePopup = await Managers.UIM.ShowPopup<UI_SavingMode>();
                 isSavingMode = true;
                 break;
 
@@ -387,7 +392,10 @@ public class UI_GameScene : UI_Scene, ITickable
             case Buttons.FastButton:
                 OnClickGetFast();
                 break;
+            case Buttons.BuffsButton:
+                AdsBuffPopup = await Managers.UIM.ShowPopup<UI_AdsBuffPopup>();
 
+                break;
             case Buttons.QuestButton:
                 break;
             case Buttons.StatButton:
@@ -430,10 +438,29 @@ public class UI_GameScene : UI_Scene, ITickable
                 Managers.StageM.StateChange(Define.StageState.Boss);
                 break;
         }
+    }
+
+
+    public void SetBuffs(Define.BuffType _type, bool _isLock)
+    {
+        switch (_type)
+        {
+            case Define.BuffType.AttackUp:
+                GetObject(GameObjectsType, (int)GameObjects.AttackBuffLockObject).SetActive(!_isLock);
+                break;
+
+            case Define.BuffType.GoldUp:
+                GetObject(GameObjectsType, (int)GameObjects.DropBuffLockObject).SetActive(!_isLock);
+                break;
+
+            case Define.BuffType.CriticalUp:
+                GetObject(GameObjectsType, (int)GameObjects.CriticalBuffLockObject).SetActive(!_isLock);
+                break;
+        }
+
 
 
     }
-
     public void OnClickGetFast()
     {
         bool fast = !Managers.isFast;
@@ -446,17 +473,16 @@ public class UI_GameScene : UI_Scene, ITickable
 
         Time.timeScale = fast ? 1.5f : 1.0f;
 
-        if(fast)
+        if (fast)
         {
             StartBlinkTween();
         }
         else
         {
             KillBlinkTween();
-            
+
         }
     }
-    
 
     public void StartBlinkTween()
     {
@@ -470,7 +496,7 @@ public class UI_GameScene : UI_Scene, ITickable
 
     public void KillBlinkTween()
     {
-        if(blinkTween != null && blinkTween.IsActive())
+        if (blinkTween != null && blinkTween.IsActive())
         {
             blinkTween.Kill();
             blinkTween = null;
@@ -755,7 +781,7 @@ public class UI_GameScene : UI_Scene, ITickable
     public void PlayLegendaryPopupAnim()
     {
 
-        if(popupSequence != null && popupSequence.IsActive())
+        if (popupSequence != null && popupSequence.IsActive())
         {
             popupSequence.Kill();
             popupSequence = null;
@@ -795,7 +821,7 @@ public class UI_GameScene : UI_Scene, ITickable
     }
     public void PlayLegendaryPopupCloseAnim()
     {
-        if(popupSequence != null && popupSequence.IsActive())
+        if (popupSequence != null && popupSequence.IsActive())
         {
             popupSequence.Kill();
             popupSequence = null;

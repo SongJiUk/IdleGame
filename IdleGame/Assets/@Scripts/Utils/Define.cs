@@ -131,4 +131,11 @@ public static class Define
         BuffEffect,
         DamageEffect
     }
+
+    public enum BuffType
+    {
+        AttackUp,
+        GoldUp,
+        CriticalUp
+    }
 }

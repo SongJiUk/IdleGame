@@ -52,7 +52,7 @@ public class SkillController : MonoBehaviour
 
         if (skillExecuted)
         {
-            if (_target.IsDead || _target == null) return false;
+            if (_target == null || _target.IsDead) return false;
 
             caster.AnimatorChange(Define.CreatureState.Skill);
             ShowEffect();

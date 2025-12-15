@@ -131,7 +131,7 @@ public class UI_SavingMode : UI_Popup, ITickable
     public override void OnBeginDrag(BaseEventData _eventData)
     {
         PointerEventData pointerEventData = _eventData as PointerEventData;
-        if(pointerEventData != null)
+        if (pointerEventData != null)
         {
             dragStartPos = pointerEventData.position;
         }
@@ -176,7 +176,11 @@ public class UI_SavingMode : UI_Popup, ITickable
     {
         //TODO : 꺼지면, 초기화 시켜야됌 아이템 얻은 창
         SavingModeItem.Clear();
+
+        foreach (var slot in itemPool)
+            slot.gameObject.SetActive(false);
         itemPool.Clear();
+
         Managers.UpdateM.UnRegister(this);
         cam.enabled = true;
         (Managers.UIM.SceneUI as UI_GameScene).isSavingMode = false;

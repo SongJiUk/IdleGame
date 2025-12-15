@@ -40,7 +40,7 @@ public class CoinDirecting : BaseController
 
     public void Init(Vector3 _pos)
     {
-        if((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
+        if ((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
         {
             Managers.GameM.Gold += Utils.CalculatedValue(
             Utils.Datas.stageData.Base_Gold,
@@ -55,7 +55,7 @@ public class CoinDirecting : BaseController
         }
         targetPos = _pos;
 
-        transform.position = cam.WorldToScreenPoint(targetPos);
+        if (cam != null) transform.position = cam.WorldToScreenPoint(targetPos);
         for (int i = 0; i < childs.Length; i++) childs[i].anchoredPosition = Vector2.zero;
         transform.parent = Managers.UIM.SceneUI.WorldCoinParent;
 

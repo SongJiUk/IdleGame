@@ -8,11 +8,20 @@ public interface ITickable
     void Tick(float _deltaTime);
 }
 
+public interface IUnScaledTickable
+{
+    void UnscaledTick(float _unscaledDeltaTime);
+}
+
 public class UpdateManager : MonoBehaviour
 {
     private readonly List<ITickable> tickables = new();
     private readonly List<ITickable> toAdd = new();
     private readonly List<ITickable> toRemove = new();
+
+    private readonly List<IUnScaledTickable> unScaledTickables = new();
+    private readonly List<IUnScaledTickable> unScaledToAdd = new();
+    private readonly List<IUnScaledTickable> unScaledToRemove = new();
 
     private bool isPaused = false;
     public void PauseTicking(bool _pause)
@@ -20,14 +29,32 @@ public class UpdateManager : MonoBehaviour
         isPaused = _pause;
     }
 
-    public void Register(ITickable _tickable)
+    public void Register(ITickable _tickable = null, IUnScaledTickable _unscaledTickable = null)
     {
-        if (!tickables.Contains(_tickable)) toAdd.Add(_tickable);
+
+        if (_tickable != null)
+        {
+            if (!tickables.Contains(_tickable)) toAdd.Add(_tickable);
+        }
+
+
+        if (_unscaledTickable != null)
+        {
+            if (!unScaledTickables.Contains(_unscaledTickable)) unScaledToAdd.Add(_unscaledTickable);
+        }
+
+
     }
 
-    public void UnRegister(ITickable _tickable)
+
+    public void UnRegister(ITickable _tickable = null, IUnScaledTickable _unscaledTickable = null)
     {
-        toRemove.Add(_tickable);
+        if (_tickable != null) toRemove.Add(_tickable);
+
+        if (_unscaledTickable != null)
+        {
+            if (!unScaledToRemove.Contains(_unscaledTickable)) unScaledToRemove.Add(_unscaledTickable);
+        }
     }
 
 
@@ -35,12 +62,20 @@ public class UpdateManager : MonoBehaviour
     {
         if (isPaused) return;
         float deltaTime = Time.deltaTime;
+        float unscaledDeltaTime = Time.unscaledDeltaTime;
+
 
         foreach (var t in toAdd)
             if (!tickables.Contains(t)) tickables.Add(t);
         toAdd.Clear();
         foreach (var t in toRemove) tickables.Remove(t);
         toRemove.Clear();
+
+        foreach (var t in unScaledToAdd)
+            if (!unScaledTickables.Contains(t)) unScaledTickables.Add(t);
+        unScaledToAdd.Clear();
+        foreach (var t in unScaledToRemove) unScaledTickables.Remove(t);
+        unScaledToRemove.Clear();
 
         for (int i = tickables.Count - 1; i >= 0; i--)
         {
@@ -55,6 +90,20 @@ public class UpdateManager : MonoBehaviour
             }
             tick.Tick(deltaTime);
         }
+
+        for (int i = unScaledTickables.Count - 1; i >= 0; i--)
+        {
+            IUnScaledTickable tick = unScaledTickables[i];
+            if (tick is Component component)
+            {
+                if (component == null)
+                {
+                    unScaledTickables.RemoveAt(i);
+                    continue;
+                }
+            }
+            tick.UnscaledTick(unscaledDeltaTime);
+        }
     }
 
     public void Clear()
@@ -63,5 +112,9 @@ public class UpdateManager : MonoBehaviour
         tickables.Clear();
         toAdd.Clear();
         toRemove.Clear();
+
+        unScaledTickables.Clear();
+        unScaledToAdd.Clear();
+        unScaledToRemove.Clear();
     }
 }

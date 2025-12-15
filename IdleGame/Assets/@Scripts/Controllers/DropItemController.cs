@@ -137,7 +137,7 @@ public class DropItemController : BaseController
         itemRect.parent = Managers.UIM.SceneUI.WorldItemParent;
         text.text = Utils.StringToColorGrade(grade) + itemData.NameKR + "</color>";
 
-        itemRect.position = Camera.main.WorldToScreenPoint(transform.position);
+        if (cam != null) itemRect.position = cam.WorldToScreenPoint(transform.position);
 
         LootItem().Forget();
     }
@@ -157,11 +157,11 @@ public class DropItemController : BaseController
             itemRect.gameObject.SetActive(false);
             loot.Play();
 
-            if((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
+            if ((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
             {
-                if((Managers.UIM.SceneUI as UI_GameScene).savingMode != null)
+                if ((Managers.UIM.SceneUI as UI_GameScene).savingModePopup != null)
                 {
-                    (Managers.UIM.SceneUI as UI_GameScene).savingMode.GetItem(itemData);
+                    (Managers.UIM.SceneUI as UI_GameScene).savingModePopup.GetItem(itemData);
                 }
             }
 
