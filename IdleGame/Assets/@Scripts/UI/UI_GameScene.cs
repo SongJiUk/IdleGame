@@ -55,6 +55,9 @@ public class UI_GameScene : UI_Scene, ITickable
     }
     enum Buttons
     {
+        SettingButton,
+        MailBoxButton,
+        SavingModeButton,
         InventoryButton,
         QuestButton,
         StatButton,
@@ -71,7 +74,8 @@ public class UI_GameScene : UI_Scene, ITickable
         Character3_PlusButton,
         Character4_PlusButton,
         Character5_PlusButton,
-        Character6_PlusButton
+        Character6_PlusButton,
+        FastButton
     }
 
     enum Texts
@@ -125,7 +129,7 @@ public class UI_GameScene : UI_Scene, ITickable
         MainSkillButton,
         Character1_Lock,
         Character2_Lock,
-        Character3_Lock,
+        Character3_Lock, 
         Character4_Lock,
         Character5_Lock,
         Character6_Lock,
@@ -153,6 +157,8 @@ public class UI_GameScene : UI_Scene, ITickable
         BossHpImage,
         ItemPopupFrameImage,
         ItemPopupItemImage,
+        FastLockImage,
+        FastOnImage
 
     }
 
@@ -215,8 +221,11 @@ public class UI_GameScene : UI_Scene, ITickable
     List<TextMeshProUGUI> itemTexts = new List<TextMeshProUGUI>();
     #endregion
 
+    public bool isSavingMode = false;
+    public UI_SavingMode savingMode;
     public delegate void PlayerStatUpdateHandler(PlayerController _pc);
     public bool[] isCharacterReady;
+    private Tween blinkTween = null;
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -286,7 +295,8 @@ public class UI_GameScene : UI_Scene, ITickable
         shopBtn = GetButton(ButtonsType, (int)Buttons.ShopButton);
         levelUpBtn = GetButton(ButtonsType, (int)Buttons.LevelUpButton);
 
-
+        Managers.isFast = PlayerPrefs.GetInt("Fast") == 1 ? true : false;
+        Time.timeScale = Managers.isFast ? 1.5f : 1.0f;
         UpdateUIState();
 
         AllOff();
@@ -322,7 +332,8 @@ public class UI_GameScene : UI_Scene, ITickable
     }
     void UpdateUIState()
     {
-
+        GetImage(ImagesType, (int)Images.FastLockImage).gameObject.SetActive(Managers.isFast);
+        GetImage(ImagesType, (int)Images.FastOnImage).gameObject.SetActive(Managers.isFast);
 
         //TODO : 여기서 이제 플레이어 상황 받아와서 bool값으로 처리해 주거나 더 좋은 방법생각해보자.
         GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(false);
@@ -360,6 +371,23 @@ public class UI_GameScene : UI_Scene, ITickable
         clickedButton = null;
         switch (_clickButtonType)
         {
+            case Buttons.SettingButton:
+                break;
+
+            case Buttons.MailBoxButton:
+                break;
+            case Buttons.SavingModeButton:
+                savingMode = await Managers.UIM.ShowPopup<UI_SavingMode>();
+                isSavingMode = true;
+                break;
+
+            case Buttons.InventoryButton:
+                break;
+
+            case Buttons.FastButton:
+                OnClickGetFast();
+                break;
+
             case Buttons.QuestButton:
                 break;
             case Buttons.StatButton:
@@ -405,6 +433,50 @@ public class UI_GameScene : UI_Scene, ITickable
 
 
     }
+
+    public void OnClickGetFast()
+    {
+        bool fast = !Managers.isFast;
+        Managers.isFast = fast;
+
+        PlayerPrefs.SetInt("Fast", fast == true ? 1 : 0);
+
+        GetImage(ImagesType, (int)Images.FastLockImage).gameObject.SetActive(fast);
+        GetImage(ImagesType, (int)Images.FastOnImage).gameObject.SetActive(fast);
+
+        Time.timeScale = fast ? 1.5f : 1.0f;
+
+        if(fast)
+        {
+            StartBlinkTween();
+        }
+        else
+        {
+            KillBlinkTween();
+            
+        }
+    }
+    
+
+    public void StartBlinkTween()
+    {
+        KillBlinkTween();
+
+        blinkTween = GetImage(ImagesType, (int)Images.FastOnImage).DOFade(0.0f, 0.5f)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetLink(gameObject);
+    }
+
+    public void KillBlinkTween()
+    {
+        if(blinkTween != null && blinkTween.IsActive())
+        {
+            blinkTween.Kill();
+            blinkTween = null;
+        }
+    }
+
 
     private void ScaleUpSelectButton()
     {
@@ -671,6 +743,7 @@ public class UI_GameScene : UI_Scene, ITickable
 
     #region ItemPopup(TOP)
 
+    private DG.Tweening.Sequence popupSequence;
     public void SetHighGradeItem(Data.ItemData _data)
     {
         GetImage(ImagesType, (int)Images.ItemPopupFrameImage).sprite = Managers.ResourceM.GetAtlas(_data.ItemGrade.ToString());
@@ -682,6 +755,12 @@ public class UI_GameScene : UI_Scene, ITickable
     public void PlayLegendaryPopupAnim()
     {
 
+        if(popupSequence != null && popupSequence.IsActive())
+        {
+            popupSequence.Kill();
+            popupSequence = null;
+            GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).SetActive(false);
+        }
         GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).SetActive(true);
 
 
@@ -689,6 +768,8 @@ public class UI_GameScene : UI_Scene, ITickable
         ItemPopupFrameObjectRect.localScale = Vector3.zero;
 
         var seq = DOTween.Sequence();
+        popupSequence = seq;
+        seq.SetUpdate(UpdateType.Normal, true);
         seq.Append(ItemPopupObjectRect.DOScaleX(1.1f, 0.1f));
         seq.Append(ItemPopupObjectRect.DOScaleX(1.0f, 0.05f));
 
@@ -706,17 +787,23 @@ public class UI_GameScene : UI_Scene, ITickable
         seq.AppendInterval(displayTime);
         seq.OnComplete(() =>
         {
+            popupSequence = null;
             PlayLegendaryPopupCloseAnim();
         });
 
         seq.Play();
-
-
     }
     public void PlayLegendaryPopupCloseAnim()
     {
-        var seq = DOTween.Sequence();
+        if(popupSequence != null && popupSequence.IsActive())
+        {
+            popupSequence.Kill();
+            popupSequence = null;
+        }
 
+        var seq = DOTween.Sequence();
+        popupSequence = seq;
+        seq.SetUpdate(UpdateType.Normal, true);
 
         seq.Append(ItemPopupFrameObjectRect.DOScale(new Vector3(1f, 1.1f, 1f), 0.05f));
         seq.Append(ItemPopupFrameObjectRect.DOScale(new Vector3(1.1f, 0.9f, 1f), 0.1f));
@@ -727,6 +814,7 @@ public class UI_GameScene : UI_Scene, ITickable
 
         seq.OnComplete(() =>
                 {
+                    popupSequence = null;
                     GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).SetActive(false);
                 });
 

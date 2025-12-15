@@ -42,7 +42,7 @@ public class UI_Item : UI_Base
         return true;
     }
 
-    public void SetInfo(Item _item, RectTransform _parent)
+    public void SetInfo(Item _item, RectTransform _parent = null)
     {
         item = _item;
         parent = _parent;
@@ -56,10 +56,13 @@ public class UI_Item : UI_Base
     {
         if (item == null) return;
         Vector2 scrennPos = Input.mousePosition;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, scrennPos, null, out Vector2 localPos);
-        itemInfo = Managers.UIM.MakeSubItem<UI_ItemInfo>(parent);
-        itemInfo.Init().Forget();
-        itemInfo.SetInfo(item, localPos, parent);
+        if(parent != null)
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, scrennPos, null, out Vector2 localPos);
+            itemInfo = Managers.UIM.MakeSubItem<UI_ItemInfo>(parent);
+            itemInfo.Init().Forget();
+            itemInfo.SetInfo(item, localPos, parent);
+        }
     }
 
     void OnPointerExitItem(BaseEventData _eventData)

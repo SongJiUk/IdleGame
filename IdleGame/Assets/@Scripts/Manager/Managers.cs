@@ -46,7 +46,7 @@ public class Managers : MonoBehaviour
     public static CharacterManager CharacterM { get { return Instance?.characterManager; } }
     public static InventoryManager InventoryM { get { return Instance?.inventoryManager; } }
 
-
+    public static bool isFast = false;
 
 
     public static Managers Instance

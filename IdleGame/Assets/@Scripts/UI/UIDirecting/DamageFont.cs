@@ -17,6 +17,12 @@ public class DamageFont : BaseController
 
     public void Init(Vector3 _pos, double _dmg, bool _isMonster = false, bool _isCritical = false, bool _isSkill = false)
     {
+        if ((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
+        {
+            Managers.ResourceM.Destroy(gameObject);
+            return;
+        }
+
         cam = Camera.main;
         transform.parent = Managers.UIM.SceneUI.WorldFontParent;
         _pos.x += Random.Range(-0.3f, 0.3f);

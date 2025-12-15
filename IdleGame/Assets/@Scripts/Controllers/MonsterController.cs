@@ -266,7 +266,7 @@ public class MonsterController : CreatureController
         for (int i = 0; i < items.Count; i++)
         {
             GameObject obj = Managers.ResourceM.Instantiate("DropItem", _pooling: true);
-            DropItemController dc = obj.GetComponent<DropItemController>();
+            DropItemController dc = obj.GetOrAddComponent<DropItemController>();
             dc.Init();
             dc.SetInfo(transform.position, items[i]);
         }

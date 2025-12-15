@@ -24,7 +24,7 @@ public class CoinDirecting : BaseController
 
     }
 
-    #region �̰� Unitask���ư��� ���������ϸ� ���� ���������� �ۼ��س�����
+    #region  Unitask
     private CancellationTokenSource cts;
     private void OnEnable()
     {
@@ -38,10 +38,21 @@ public class CoinDirecting : BaseController
     }
     #endregion
 
-    //TODO: ������ �߰��ϱ�
-
     public void Init(Vector3 _pos)
     {
+        if((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
+        {
+            Managers.GameM.Gold += Utils.CalculatedValue(
+            Utils.Datas.stageData.Base_Gold,
+            Managers.GameM.stage,
+            Utils.Datas.stageData.Monster_Gold);
+
+
+            if (this != null && gameObject != null)
+                Managers.ResourceM.Destroy(gameObject);
+
+            return;
+        }
         targetPos = _pos;
 
         transform.position = cam.WorldToScreenPoint(targetPos);
@@ -56,7 +67,6 @@ public class CoinDirecting : BaseController
 
         Coin_Effect_DoTween(cts.Token).Forget();
         //Coin_Effect_DoTween(this.GetCancellationTokenOnDestroy()).Forget();
-
 
     }
 

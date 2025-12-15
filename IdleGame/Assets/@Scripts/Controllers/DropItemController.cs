@@ -21,14 +21,16 @@ public class DropItemController : BaseController
 
     Define.ItemGrade grade;
     Data.ItemData itemData;
+    Camera cam;
     public override bool Init()
     {
         if (!base.Init()) return false;
         if (itemRect == null || text == null || grades == null || loot == null)
         {
-            Debug.LogError("[DropItemController] ������Ʈ�� �����ϴ�. �ν����� Ȯ���ϱ�");
+            Debug.LogError("[DropItemController] 필요한 오브젝트가 없음");
             return false;
         }
+        cam = Camera.main;
 
         for (int i = 0; i < grades.Count; i++) grades[i].SetActive(false);
         return true;
@@ -36,11 +38,18 @@ public class DropItemController : BaseController
 
     public void SetInfo(Vector3 _pos, Data.ItemData _itemData)
     {
+
         itemData = _itemData;
         grade = itemData.ItemGrade;
         transform.position = _pos;
         Vector3 targetPos = new Vector3(_pos.x + (Random.insideUnitSphere.x * 2f)
             , 0.5f, _pos.z + (Random.insideUnitSphere.z * 2f));
+
+        if ((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
+        {
+            LootItem().Forget();
+            return;
+        }
 
         SimluateProjectileAsync(targetPos).Forget();
     }
@@ -76,6 +85,12 @@ public class DropItemController : BaseController
             timeTween = DOTween.To(() => currentTime, x => currentTime = x, flightDuration, flightDuration)
                 .OnUpdate(() =>
                 {
+                    if (transform == null)
+                    {
+                        timeTween?.Kill();
+                        return;
+                    }
+
                     float t = currentTime;
                     Vector3 nextPosXZ = startPos + horizontalDirection * (Vx * t);
 
@@ -92,16 +107,15 @@ public class DropItemController : BaseController
                 .SetLink(gameObject);
 
             await timeTween.ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
+            if (this == null) return;
             transform.position = _pos;
             ItemCheck();
-
-
 
         }
         catch (System.OperationCanceledException) { }
         catch (System.Exception e)
         {
-            Debug.LogError("��������� �ùķ��̼� �� ���� �߻� : " + e.Message);
+            Debug.LogError(e.Message);
         }
         finally
         {
@@ -121,7 +135,6 @@ public class DropItemController : BaseController
 
         itemRect.gameObject.SetActive(true);
         itemRect.parent = Managers.UIM.SceneUI.WorldItemParent;
-        //TODO : ������ ���� �޾ƿͼ� �ۼ�
         text.text = Utils.StringToColorGrade(grade) + itemData.NameKR + "</color>";
 
         itemRect.position = Camera.main.WorldToScreenPoint(transform.position);
@@ -143,6 +156,15 @@ public class DropItemController : BaseController
             itemRect.transform.parent = this.transform;
             itemRect.gameObject.SetActive(false);
             loot.Play();
+
+            if((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
+            {
+                if((Managers.UIM.SceneUI as UI_GameScene).savingMode != null)
+                {
+                    (Managers.UIM.SceneUI as UI_GameScene).savingMode.GetItem(itemData);
+                }
+            }
+
             await UniTask.WaitForSeconds(0.5f);
 
             Managers.ResourceM.Destroy(gameObject);
