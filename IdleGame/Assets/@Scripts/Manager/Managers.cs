@@ -27,6 +27,7 @@ public class Managers : MonoBehaviour
     readonly ItemManager itemManager = new();
     readonly CharacterManager characterManager = new();
     readonly InventoryManager inventoryManager = new();
+    readonly ADManager adManager = new();
 
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
@@ -45,6 +46,7 @@ public class Managers : MonoBehaviour
     public static RenderManager RenderM { get { return Instance?.rederManager; } }
     public static CharacterManager CharacterM { get { return Instance?.characterManager; } }
     public static InventoryManager InventoryM { get { return Instance?.inventoryManager; } }
+    public static ADManager AdM { get { return Instance?.adManager; } }
 
     public static bool isFast = false;
 

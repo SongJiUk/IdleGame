@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using TMPro;
 
-public class UI_GameScene : UI_Scene, ITickable
+public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 {
     //TODO : 이거 UI다 나누는게 편할거같긴함.(UI_TOP, Bottom으로 크개 두개로 나눠서 하던가, 아니면 그냥 연관있는것끼리 모아서 하던가)
     #region Enum
@@ -53,7 +53,8 @@ public class UI_GameScene : UI_Scene, ITickable
         Character6_ReadyObject,
         AttackBuffLockObject,
         DropBuffLockObject,
-        CriticalBuffLockObject
+        CriticalBuffLockObject,
+        FastSliderObject
 
     }
     enum Buttons
@@ -121,7 +122,8 @@ public class UI_GameScene : UI_Scene, ITickable
         Character3_MpText,
         Character4_MpText,
         Character5_MpText,
-        Character6_MpText
+        Character6_MpText, 
+        FastTimeText
 
     }
 
@@ -162,7 +164,8 @@ public class UI_GameScene : UI_Scene, ITickable
         ItemPopupFrameImage,
         ItemPopupItemImage,
         FastLockImage,
-        FastOnImage
+        FastOnImage,
+        FastSliderFill
 
     }
 
@@ -231,6 +234,7 @@ public class UI_GameScene : UI_Scene, ITickable
     public delegate void PlayerStatUpdateHandler(PlayerController _pc);
     public bool[] isCharacterReady;
     private Tween blinkTween = null;
+    public float FastremainTime = 0.0f;
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -337,8 +341,9 @@ public class UI_GameScene : UI_Scene, ITickable
     }
     void UpdateUIState()
     {
-        GetImage(ImagesType, (int)Images.FastLockImage).gameObject.SetActive(Managers.isFast);
-        GetImage(ImagesType, (int)Images.FastOnImage).gameObject.SetActive(Managers.isFast);
+
+        if (Managers.isFast) Managers.UpdateM.Register(_unscaledTickable: this);
+        UpdateFastUI();
 
         //TODO : 여기서 이제 플레이어 상황 받아와서 bool값으로 처리해 주거나 더 좋은 방법생각해보자.
         GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(false);
@@ -464,24 +469,55 @@ public class UI_GameScene : UI_Scene, ITickable
     public void OnClickGetFast()
     {
         bool fast = !Managers.isFast;
-        Managers.isFast = fast;
-
-        PlayerPrefs.SetInt("Fast", fast == true ? 1 : 0);
-
-        GetImage(ImagesType, (int)Images.FastLockImage).gameObject.SetActive(fast);
-        GetImage(ImagesType, (int)Images.FastOnImage).gameObject.SetActive(fast);
-
-        Time.timeScale = fast ? 1.5f : 1.0f;
 
         if (fast)
         {
-            StartBlinkTween();
+            if (FastremainTime <= 0.0f)
+            {
+                Action rewardedAction =  () => { FastremainTime = 10f; };
+
+                Action resumeAction = async () =>
+                {
+                    await CheckFast(fast);
+                    UpdateFastUI();
+                    Managers.UpdateM.Register(_unscaledTickable: this);
+                    StartBlinkTween();
+                };
+
+                Managers.AdM.ShowRewardedAd(rewardedAction, resumeAction);
+            }
+            else
+            {
+                CheckFast(fast).Forget();
+                UpdateFastUI();
+                Managers.UpdateM.Register(_unscaledTickable: this);
+                StartBlinkTween();
+            }
+                
         }
         else
         {
+            CheckFast(fast).Forget();
+            UpdateFastUI();
+            Managers.UpdateM.UnRegister(_unscaledTickable: this);
             KillBlinkTween();
-
         }
+    }
+
+    public void UpdateFastUI()
+    {
+        GetImage(ImagesType, (int)Images.FastLockImage).gameObject.SetActive(Managers.isFast);
+        GetImage(ImagesType, (int)Images.FastOnImage).gameObject.SetActive(Managers.isFast);
+        GetObject(GameObjectsType, (int)GameObjects.FastSliderObject).gameObject.SetActive(Managers.isFast);
+    }
+    
+    public async UniTask CheckFast(bool _fast)
+    {
+        Managers.isFast = _fast;
+        PlayerPrefs.SetInt("Fast", _fast == true ? 1 : 0);
+        await UniTask.Yield();
+
+        Time.timeScale = _fast ? 1.5f : 1.0f;
     }
 
     public void StartBlinkTween()
@@ -1025,6 +1061,28 @@ public class UI_GameScene : UI_Scene, ITickable
 
         }
     }
+
+    public void UnscaledTick(float _unscaledDeltaTime)
+    {
+        if (!Managers.isFast) return;
+
+        if(FastremainTime > 0.0f)
+        {
+            FastremainTime -= _unscaledDeltaTime;
+            int min = Mathf.FloorToInt(FastremainTime / 60f);
+            int hour = Mathf.FloorToInt(FastremainTime % 60f);
+            string timeString = string.Format("{0:00} : {1:00}", min, hour);
+            GetText(TextsType, (int)Texts.FastTimeText).text = timeString;
+            GetImage(ImagesType, (int)Images.FastSliderFill).fillAmount = FastremainTime / 1800f;
+        }
+        else
+        {
+            FastremainTime = 0.0f;
+            CheckFast(false);
+            UpdateFastUI();
+            if (Managers.isFast) Managers.UpdateM.UnRegister(_unscaledTickable: this);
+        }
+    }
     #endregion
 
     #region FadeInOut
@@ -1072,5 +1130,7 @@ public class UI_GameScene : UI_Scene, ITickable
 
         fadeImage.raycastTarget = false;
     }
+
+    
     #endregion
 }

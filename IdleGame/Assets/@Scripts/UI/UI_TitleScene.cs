@@ -88,6 +88,7 @@ public class UI_TitleScene : UI_Scene
                     Managers.ObjectM.Init();
                     Managers.GameM.gameData.Init();
                     Managers.ItemM.Init();
+                    Managers.AdM.Init();
                 }
             });
         }

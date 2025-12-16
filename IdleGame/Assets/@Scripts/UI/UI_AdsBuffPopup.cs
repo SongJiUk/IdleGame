@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 
 public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
 {
@@ -148,31 +148,37 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
 
     void OnClickUpButton(Define.BuffType _type)
     {
-        Managers.UpdateM.Register(_unscaledTickable: this);
-        BuffData item = new BuffData { BuffType = _type, remainTime = 10f };
-        BuffTimers.Add(item);
-
-        switch (_type)
+        Action rewardedAction = () =>
         {
-            case Define.BuffType.AttackUp:
+            Managers.UpdateM.Register(_unscaledTickable: this);
+            BuffData item = new BuffData { BuffType = _type, remainTime = 10f };
+            BuffTimers.Add(item);
+            switch (_type)
+            {
+                case Define.BuffType.AttackUp:
 
-                isAttackBuffing = true;
-                (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isAttackBuffing);
-                RefreshPopup();
-                break;
+                    isAttackBuffing = true;
+                    (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isAttackBuffing);
+                    RefreshPopup();
+                    break;
 
-            case Define.BuffType.GoldUp:
-                isGoldBuffing = true;
-                (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isGoldBuffing);
-                RefreshPopup();
-                break;
+                case Define.BuffType.GoldUp:
+                    isGoldBuffing = true;
+                    (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isGoldBuffing);
+                    RefreshPopup();
+                    break;
 
-            case Define.BuffType.CriticalUp:
-                isCriticalBuffing = true;
-                (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isCriticalBuffing);
-                RefreshPopup();
-                break;
-        }
+                case Define.BuffType.CriticalUp:
+                    isCriticalBuffing = true;
+                    (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isCriticalBuffing);
+                    RefreshPopup();
+                    break;
+            }
+        };
+        Managers.AdM.ShowRewardedAd(rewardedAction, null);
+        
+
+        
     }
 
     void OnClickCloseButton()
