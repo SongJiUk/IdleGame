@@ -75,7 +75,7 @@ public class UI_TitleScene : UI_Scene
 
         GetText(TextsType, (int)Texts.DataLoadText).text = "데이터를 로딩중입니다,";
         GetText(TextsType, (int)Texts.VersionText).text = "Versoin. " + Application.version;
-        
+
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(false);
 
         GetButton(ButtonsType, (int)Buttons.StartButton).gameObject.BindEvent(async () =>
@@ -144,7 +144,7 @@ public class UI_TitleScene : UI_Scene
         Managers.ItemM.Init();
         Managers.AdM.Init();
         Managers.firebaseM.Init();
-        
+
     }
 
     public void StartBlinkTween()
@@ -159,7 +159,7 @@ public class UI_TitleScene : UI_Scene
 
     public void KillBlinkTween()
     {
-        if(blinkTween!=null && blinkTween.IsActive())
+        if (blinkTween != null && blinkTween.IsActive())
         {
             blinkTween.Kill();
             blinkTween = null;
