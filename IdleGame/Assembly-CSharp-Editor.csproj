@@ -61,12 +61,18 @@
     <Compile Include="Assets\_ExternalModule\Favorites\FavoritesTab\Editor\Scripts\FavoritesTab.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Firebase\Editor\FirebaseDatabase_version-13.6.0_manifest.txt" />
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.186\Google.IOSResolver.dll" />
+    <None Include="Assets\Firebase\Editor\FirebaseAuth_version-13.6.0_manifest.txt" />
     <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll" />
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.186\Google.PackageManagerResolver.dll" />
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.186\Google.VersionHandlerImpl.dll" />
     <None Include="Assets\ExternalDependencyManager\Editor\external-dependency-manager_version-1.2.186_manifest.txt" />
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.186\Google.JarResolver.dll" />
+    <None Include="Assets\Firebase\Editor\AuthDependencies.xml" />
+    <None Include="Assets\Firebase\Editor\AppDependencies.xml" />
+    <None Include="Assets\Firebase\Editor\DatabaseDependencies.xml" />
+    <None Include="Assets\Firebase\Editor\Firebase.Editor.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -327,8 +333,47 @@
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.21f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Google.JarResolver">
+      <HintPath>Assets\ExternalDependencyManager\Editor\1.2.186\Google.JarResolver.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMobileAds">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMobileAds.Unity">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.IonicZip">
+      <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Cecil.Pdb">
+      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="log4netPlastic">
+      <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.1\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.VersionHandler">
+      <HintPath>Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.VersionHandlerImpl">
+      <HintPath>Assets\ExternalDependencyManager\Editor\1.2.186\Google.VersionHandlerImpl.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.IOSResolver">
+      <HintPath>Assets\ExternalDependencyManager\Editor\1.2.186\Google.IOSResolver.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.1\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMobileAds.Core">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMobileAds.Ump.Unity">
+      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Ump.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.1\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
@@ -348,56 +393,17 @@
     <Reference Include="Unity.VisualScripting.TextureAssets">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualScripting.IonicZip">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
-    </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.1\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Cecil.Pdb">
-      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Cecil">
       <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
     </Reference>
-    <Reference Include="log4netPlastic">
-      <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.1\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Burst.Cecil.Rocks">
       <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.JarResolver">
-      <HintPath>Assets\ExternalDependencyManager\Editor\1.2.186\Google.JarResolver.dll</HintPath>
-    </Reference>
-    <Reference Include="GoogleMobileAds">
-      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.dll</HintPath>
-    </Reference>
-    <Reference Include="GoogleMobileAds.Unity">
-      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.VersionHandler">
-      <HintPath>Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.VersionHandlerImpl">
-      <HintPath>Assets\ExternalDependencyManager\Editor\1.2.186\Google.VersionHandlerImpl.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.IOSResolver">
-      <HintPath>Assets\ExternalDependencyManager\Editor\1.2.186\Google.IOSResolver.dll</HintPath>
-    </Reference>
-    <Reference Include="GoogleMobileAds.Core">
-      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="GoogleMobileAds.Ump.Unity">
-      <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Ump.Unity.dll</HintPath>
+    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
+      <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMobileAds.Common">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Common.dll</HintPath>
@@ -407,6 +413,27 @@
     </Reference>
     <Reference Include="GoogleMobileAds.Ump">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Ump.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.App">
+      <HintPath>Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Editor">
+      <HintPath>Assets\Firebase\Editor\Firebase.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Database">
+      <HintPath>Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.TaskExtension">
+      <HintPath>Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.MiniJson">
+      <HintPath>Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Platform">
+      <HintPath>Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Auth">
+      <HintPath>Assets\Firebase\Plugins\Firebase.Auth.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>

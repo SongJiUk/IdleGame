@@ -112,6 +112,7 @@
     <Compile Include="Assets\@Scripts\UI\UI_Scene.cs" />
     <Compile Include="Assets\@Scripts\Skill\DamageEffect.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign\LevelDesignEditor.cs" />
+    <Compile Include="Assets\@Scripts\Manager\ADManager.cs" />
     <Compile Include="Assets\@Scripts\Skill\Buffs\SpinAttackBuff.cs" />
     <Compile Include="Assets\@Scripts\Manager\ObjectManager.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\Hammer_Skill.cs" />
@@ -149,7 +150,6 @@
     <Compile Include="Assets\@Scripts\Skill\BuffEffect.cs" />
     <Compile Include="Assets\@Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign\LevelDesign.cs" />
-    <Compile Include="Assets\@Scripts\Manager\ADManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -157,19 +157,26 @@
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\NW_Particle Rim AddSmooth 2S.shader" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\Shader_Decal.shader" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
+    <None Include="Assets\Firebase\Plugins\x86_64\FirebaseCppDatabase.dll" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Ump.iOS.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\NW_Particle Rim AddSmooth.shader" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.dll" />
+    <None Include="Assets\Firebase\Plugins\Firebase.App.dll" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.iOS.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds_version-10.6.0_manifest.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\Firebase\Plugins\x86_64\FirebaseCppApp-13_6_0.dll" />
     <None Include="Assets\@Resources\Package\Shader\Lightning.shader" />
+    <None Include="Assets\Firebase\Plugins\x86_64\FirebaseCppAuth.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\Shader_DistortionEffect.shader" />
+    <None Include="Assets\Firebase\Plugins\Firebase.TaskExtension.dll" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Core.dll" />
+    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-app-unity\maven-metadata.xml" />
     <None Include="Assets\GoogleMobileAds\link.xml" />
+    <None Include="Assets\Firebase\Plugins\Firebase.Auth.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
@@ -177,10 +184,13 @@
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Ump.Unity.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\Firebase\Plugins\Firebase.Database.dll" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Ump.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-auth-unity\maven-metadata.xml" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\NW_Particle AddSmooth.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Firebase\Plugins\iOS\Firebase.Auth.dll" />
     <None Include="Assets\@Resources\Package\Shader\Blend_CenterGlow.shader" />
     <None Include="Assets\@Resources\Package\Shader\DissolveNoise.shader" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\NW_Reflective Add.shader" />
@@ -190,17 +200,22 @@
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\NW_Unlit Color.shader" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\NW_Reflective Alpha.shader" />
+    <None Include="Assets\Firebase\Plugins\iOS\Firebase.Database.dll" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\Shader_IntegratedEffect.shader" />
+    <None Include="Assets\Firebase\Plugins\Firebase.Platform.dll" />
     <None Include="Assets\_ExternalModule\Favorites\FavoritesTab\_readme.txt" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Android.dll" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\Additive.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\Firebase\m2repository\com\google\firebase\firebase-database-unity\maven-metadata.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\Firebase\Plugins\Google.MiniJson.dll" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\@Resources\Prefabs\Creature\Monster\Charttyp\Goblin demon creature modular unit Demo\Informations\Read_Me.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\Firebase\Plugins\iOS\Firebase.App.dll" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Ump.Android.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
@@ -451,35 +466,20 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.21f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Cecil.Mdb">
-      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Cecil.Pdb">
-      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Cecil">
-      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Cecil.Rocks">
-      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="GoogleMobileAds">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMobileAds.Unity">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Cecil.Pdb">
+      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMobileAds.Core">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Core.dll</HintPath>
@@ -487,11 +487,44 @@
     <Reference Include="GoogleMobileAds.Ump.Unity">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Ump.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Burst.Unsafe">
+      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Cecil.Mdb">
+      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Cecil">
+      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Cecil.Rocks">
+      <HintPath>Library\PackageCache\com.unity.burst@1.6.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
+      <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="GoogleMobileAds.Common">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Common.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMobileAds.Ump">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Ump.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.App">
+      <HintPath>Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Database">
+      <HintPath>Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.TaskExtension">
+      <HintPath>Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.MiniJson">
+      <HintPath>Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Platform">
+      <HintPath>Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Firebase.Auth">
+      <HintPath>Assets\Firebase\Plugins\Firebase.Auth.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Android.Types">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.21f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
