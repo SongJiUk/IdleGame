@@ -7,7 +7,7 @@ public class GameScene : BaseScene
     public override void Init()
     {
         base.Init();
-        Managers.UIM.ShowScene<UI_GameScene>();
+        Managers.UIM.ShowScene<UI_GameScene>().Init();
 
         //TODO : ���⼭ ������ �ٷ� �ؾ��ϳ�?
     }

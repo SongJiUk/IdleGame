@@ -8,24 +8,92 @@ public class GameManager
     public PlayerController mPlayer { get { return Managers.ObjectM?.mPlayer; } }
     public GameData gameData = new GameData();
 
-    #region ��ȭ �̺�Ʈ
+    #region 재화 이벤트
     public event Action OnGoodsChanged;
     #endregion
 
-    double gold;
     public double Gold
     {
-        get { return gold; }
+        get { return gameData.gold; }
         set
         {
-            gold = value;
+            gameData.gold = value;
             OnGoodsChanged?.Invoke();
         }
     }
-    public int level = 1;
-    public double exp;
-    public int stage = 1;
+    public int Level
+    {
+        get { return gameData.level; }
+        set
+        {
+            gameData.level = value;
+        }
+    }
 
+    public double Exp
+    {
+        get
+        {
+            return gameData.exp;
+        }
+        set
+        {
+            gameData.exp = value;
+        }
+    }
 
+    public int Stage
+    {
+        get
+        {
+            return gameData.stage;
+        }
+        set
+        {
+            gameData.stage = value;
+        }
+    }
+
+    public float[] Buff_Timers
+    {
+        get
+        {
+            return gameData.buff_Timers;
+        }
+        set
+        {
+            gameData.buff_Timers = value;
+        }
+    }
+
+    public float Fast_Timer
+    {
+        get
+        {
+            return gameData.fast_Timer;
+        }
+        set
+        {
+            gameData.fast_Timer = value;
+        }
+    }
+
+    public int Buff_Level
+    {
+        get
+        {
+            return gameData.buff_Level;
+        }
+        set
+        {
+            gameData.buff_Level = value;
+        }
+    }
+
+    public int Buff_Count
+    {
+        get { return gameData.buff_count; }
+        set { gameData.buff_count = value; }
+    }
 
 }

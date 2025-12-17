@@ -15,6 +15,7 @@ public interface IUnScaledTickable
 
 public class UpdateManager : MonoBehaviour
 {
+    public bool isStartFirebase = false;
     private readonly List<ITickable> tickables = new();
     private readonly List<ITickable> toAdd = new();
     private readonly List<ITickable> toRemove = new();
@@ -61,6 +62,19 @@ public class UpdateManager : MonoBehaviour
     private void Update()
     {
         if (isPaused) return;
+
+
+        if(isStartFirebase)
+        {
+            Managers.save_Timer += Time.unscaledDeltaTime;
+            if (Managers.save_Timer >= 10.0f)
+            {
+                Managers.save_Timer = 0.0f;
+                Managers.firebaseM.WirteData();
+            }
+        }
+       
+
         float deltaTime = Time.deltaTime;
         float unscaledDeltaTime = Time.unscaledDeltaTime;
 

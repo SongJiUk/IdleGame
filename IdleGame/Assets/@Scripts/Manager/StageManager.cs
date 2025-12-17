@@ -66,7 +66,7 @@ public class StageManager
             case StageState.Clear:
                 count = 0;
                 clearEvent?.Invoke();
-                Managers.GameM.stage++;
+                Managers.GameM.Stage++;
                 isDead = false;
                 break;
             case StageState.Dead:

@@ -21,10 +21,11 @@ public class UI_Base : MonoBehaviour
     protected Type SlidersType;
 
 
-    private void Start()
-    {
-        Init().Forget();
-    }
+    //private async UniTaskVoid Start()
+    //{
+    //    await UniTask.WaitUntil(() => Managers.Instance != null && Managers.GameM != null);
+    //    Init().Forget();
+    //}
 
 
     public virtual async UniTask<bool> Init()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class UI_TitleScene : UI_Scene
 {
@@ -24,44 +25,66 @@ public class UI_TitleScene : UI_Scene
     {
         get { return null; }
     }
+    #region Enum
+
+    public enum GameObjects
+    {
+        LoadingBarObject
+    }
     public enum Buttons
     {
         StartButton,
     }
 
+    public enum Images
+    {
+        TapToStartImage
+    }
     public enum Sliders
     {
-        LoadingSlider
+        LoadingBar,
     }
 
     public enum Texts
     {
-        CountText,
-        MaxCountText,
-
+        DataLoadText,
+        VersionText,
     }
-
+    #endregion
     bool isLoadEnd = false;
+    Tween blinkTween = null;
+
+    private void Start()
+    {
+        Init().Forget();
+    }
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
-
+        GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
+        ImagesType = typeof(Images);
         SlidersType = typeof(Sliders);
         TextsType = typeof(Texts);
 
+        BindObject(GameObjectsType);
         BindButton(ButtonsType);
-        //BindSlider(SlidersType);
-        //BindText(TextsType);
+        BindImage(ImagesType);
+        BindSlider(SlidersType);
+        BindText(TextsType);
+
+        GetText(TextsType, (int)Texts.DataLoadText).text = "데이터를 로딩중입니다,";
+        GetText(TextsType, (int)Texts.VersionText).text = "Versoin. " + Application.version;
+        
+        GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(false);
 
         GetButton(ButtonsType, (int)Buttons.StartButton).gameObject.BindEvent(async () =>
         {
-            //TOOD: 씬 이동
             await Managers.SceneM.LoadSceneAsync(Define.SceneType.GameScene);
+            KillBlinkTween();
         });
 
-        GetButton(ButtonsType, (int)Buttons.StartButton).gameObject.SetActive(false);
-
+        GetButton(ButtonsType, (int)Buttons.StartButton).interactable = false;
 
         SetInfo().Forget();
         return true;
@@ -72,32 +95,76 @@ public class UI_TitleScene : UI_Scene
     {
         try
         {
-            await Managers.ResourceM.LoadGroupAsync<UnityEngine.Object>("PrevLoad", (key, count, max) =>
+            float realProgress = 0f;
+            float displayedProgress = 0f;
+            var slider = GetSlider(SlidersType, (int)Sliders.LoadingBar);
+
+            var loadTask = Managers.ResourceM.LoadGroupAsync<UnityEngine.Object>("PrevLoad", (key, count, max) =>
             {
-                //GetSlider(SlidersType, (int)Sliders.LoadingSlider).value = (float)count / max;
-                //GetText(TextsType, (int)Texts.CountText).text = $"{count} / {max}";
-
-                if (count == max)
-                {
-                    isLoadEnd = true;
-                    GetButton(ButtonsType, (int)Buttons.StartButton).gameObject.SetActive(true);
-                    //GetText(typeof(Texts), (int)Texts.CountText).gameObject.SetActive(true);
-
-                    //TODO : 초기화 작업
-                    Managers.DataM.Init();
-                    Managers.ObjectM.Init();
-                    Managers.GameM.gameData.Init();
-                    Managers.ItemM.Init();
-                    Managers.AdM.Init();
-                }
+                realProgress = (float)count / max;
             });
+
+            while (displayedProgress < 1f || !loadTask.GetAwaiter().IsCompleted)
+            {
+                displayedProgress = Mathf.MoveTowards(displayedProgress, realProgress, Time.deltaTime * 0.8f); // 0.8f는 속도 조절
+
+                slider.value = displayedProgress;
+
+                await UniTask.Yield();
+
+                if (loadTask.GetAwaiter().IsCompleted && displayedProgress >= 0.99f)
+                {
+                    slider.value = 1f;
+                    break;
+                }
+            }
+
+            await FinishLoadingProcess();
+
+
         }
         catch (System.Exception e)
         {
             Debug.LogError(e.Message);
         }
     }
+    async UniTask FinishLoadingProcess()
+    {
+        await UniTask.Delay(300); // 100%가 된 모습을 잠시 보여줌
 
+        isLoadEnd = true;
+        GetButton(ButtonsType, (int)Buttons.StartButton).interactable = true;
+        GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);
+        GetText(TextsType, (int)Texts.DataLoadText).text = "데이터가 정상적으로 로딩되었습니다,";
+        StartBlinkTween();
+
+        // 각종 매니저 초기화 로직
+        Managers.DataM.Init();
+        Managers.ObjectM.Init();
+        Managers.ItemM.Init();
+        Managers.AdM.Init();
+        Managers.firebaseM.Init();
+        
+    }
+
+    public void StartBlinkTween()
+    {
+        KillBlinkTween();
+
+        blinkTween = GetImage(ImagesType, (int)Images.TapToStartImage).DOFade(0.0f, 0.5f)
+                    .SetEase(Ease.InOutSine)
+                    .SetLoops(-1, LoopType.Yoyo)
+                    .SetLink(gameObject);
+    }
+
+    public void KillBlinkTween()
+    {
+        if(blinkTween!=null && blinkTween.IsActive())
+        {
+            blinkTween.Kill();
+            blinkTween = null;
+        }
+    }
 
 
 }

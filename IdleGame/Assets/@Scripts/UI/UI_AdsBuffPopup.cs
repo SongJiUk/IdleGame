@@ -90,7 +90,7 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
     {
 
         //TODO : 바꾸기
-        GetText(TextsType, (int)Texts.Level_Text).text = Managers.GameM.level.ToString();
+        GetText(TextsType, (int)Texts.Level_Text).text = Managers.GameM.Level.ToString();
         GetText(TextsType, (int)Texts.Count_Text).text = $"{1} / {3}";
         //GetImage(ImagesType, (int)Images.SliderFillImage).fillAmount = 
 

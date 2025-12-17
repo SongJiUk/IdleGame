@@ -82,9 +82,9 @@ public class PlayerController : CreatureController
         isAttack = false;
         SpawnPos = transform.position;
         //TODO : 지우기
-        hp = Utils.Datas.levelData.HP((float)baseHp);
+        hp = Utils.Datas.levelData.HP((float)baseHp, Managers.GameM.Level);
         maxHp = hp;
-        damage = Utils.Datas.levelData.Damage((float)baseDamage);
+        damage = Utils.Datas.levelData.Damage((float)baseDamage, Managers.GameM.Level);
         mp = 0;
         maxMp = DATA.MaxMp;
         attackrange = DATA.AttackRange;
@@ -97,8 +97,8 @@ public class PlayerController : CreatureController
 
     public override void InitStat()
     {
-        damage = Utils.Datas.levelData.Damage((float)baseDamage);
-        hp = Utils.Datas.levelData.HP((float)BaseHp);
+        damage = Utils.Datas.levelData.Damage((float)baseDamage, Managers.GameM.Level);
+        hp = Utils.Datas.levelData.HP((float)BaseHp, Managers.GameM.Level);
     }
 
     public override void OnDamage()

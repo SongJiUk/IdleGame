@@ -44,7 +44,7 @@ public class CoinDirecting : BaseController
         {
             Managers.GameM.Gold += Utils.CalculatedValue(
             Utils.Datas.stageData.Base_Gold,
-            Managers.GameM.stage,
+            Managers.GameM.Stage,
             Utils.Datas.stageData.Monster_Gold);
 
 
@@ -61,7 +61,7 @@ public class CoinDirecting : BaseController
 
         Managers.GameM.Gold += Utils.CalculatedValue(
             Utils.Datas.stageData.Base_Gold,
-            Managers.GameM.stage,
+            Managers.GameM.Stage,
             Utils.Datas.stageData.Monster_Gold);
 
 

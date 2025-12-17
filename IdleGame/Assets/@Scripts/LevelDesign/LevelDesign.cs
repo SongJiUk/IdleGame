@@ -29,11 +29,11 @@ public class LevelData
     public int Base_MaxExp;
     public int Base_Gold;
 
-    public double Damage(double _baseDamage) => Utils.CalculatedValue((float)_baseDamage, Managers.GameM.level, Player_Damage);
-    public double HP(double _baseHp) => Utils.CalculatedValue((float)_baseHp, Managers.GameM.level, Player_Hp);
-    public double Exp() => Utils.CalculatedValue(Base_Exp, Managers.GameM.level, Player_Exp);
-    public double MaxExp() => Utils.CalculatedValue(Base_MaxExp, Managers.GameM.level, Player_MaxExp);
-    public double Gold() => Utils.CalculatedValue(Base_Gold, Managers.GameM.level, Player_Gold);
+    public double Damage(double _baseDamage, int _level) => Utils.CalculatedValue((float)_baseDamage, _level, Player_Damage);
+    public double HP(double _baseHp, int _level) => Utils.CalculatedValue((float)_baseHp, _level, Player_Hp);
+    public double Exp(int _level) => Utils.CalculatedValue(Base_Exp, _level, Player_Exp);
+    public double MaxExp(int _level) => Utils.CalculatedValue(Base_MaxExp, _level, Player_MaxExp);
+    public double Gold(int _level) => Utils.CalculatedValue(Base_Gold, _level, Player_Gold);
 }
 
 
@@ -49,7 +49,8 @@ public class StageData
     public int Base_Hp;
     public int Base_Gold;
 
-    public double Damage(double _baseDamage) => Utils.CalculatedValue((float)_baseDamage, Managers.GameM.stage, Monster_Damage);
-    public double HP(double _baseHp) => Utils.CalculatedValue((float)_baseHp, Managers.GameM.stage, Monster_Hp);
-    public double Gold() => Utils.CalculatedValue(Base_Gold, Managers.GameM.stage, Monster_Gold);
+    public double Damage(double _baseDamage, int _stage) => Utils.CalculatedValue((float)_baseDamage, _stage, Monster_Damage);
+    public double HP(double _baseHp, int _stage) => Utils.CalculatedValue((float)_baseHp, _stage, Monster_Hp);
+    public double Gold(int _stage) => Utils.CalculatedValue(Base_Gold, _stage, Monster_Gold);
 }
+    

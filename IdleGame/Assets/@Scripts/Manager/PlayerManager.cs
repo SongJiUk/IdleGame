@@ -10,14 +10,14 @@ public class PlayerManager
 
     public void ExpUp()
     {
-        Managers.GameM.exp += Utils.Datas.levelData.Exp();
-        Damage += Utils.Datas.levelData.Damage((float)Managers.GameM.mPlayer.BaseDamage);
-        Hp += Utils.Datas.levelData.HP((float)Managers.GameM.mPlayer.BaseHp);
+        Managers.GameM.Exp += Utils.Datas.levelData.Exp(Managers.GameM.Level);
+        Damage += Utils.Datas.levelData.Damage((float)Managers.GameM.mPlayer.BaseDamage, Managers.GameM.Level);
+        Hp += Utils.Datas.levelData.HP((float)Managers.GameM.mPlayer.BaseHp, Managers.GameM.Level);
 
-        if(Managers.GameM.exp >= Utils.Datas.levelData.MaxExp())
+        if(Managers.GameM.Exp >= Utils.Datas.levelData.MaxExp(Managers.GameM.Level))
         {
-            Managers.GameM.level++;
-            Managers.GameM.exp = 0;
+            Managers.GameM.Level++;
+            Managers.GameM.Exp = 0;
         }
 
         for (int i = 0; i < Managers.SpawnM.players.Count; i++) Managers.SpawnM.players[i].InitStat();
@@ -25,16 +25,16 @@ public class PlayerManager
 
     public float ExpPercent()
     {
-        float exp = (float)Utils.Datas.levelData.MaxExp();
-        double myExp = Managers.GameM.exp;
+        float exp = (float)Utils.Datas.levelData.MaxExp(Managers.GameM.Level);
+        double myExp = Managers.GameM.Exp;
 
         return (float)myExp / exp;
     }
 
     public float NextExp()
     {
-        float exp = (float)Utils.Datas.levelData.MaxExp();
-        float myExp = (float)Utils.Datas.levelData.Exp();
+        float exp = (float)Utils.Datas.levelData.MaxExp( Managers.GameM.Level);
+        float myExp = (float)Utils.Datas.levelData.Exp( Managers.GameM.Level);
 
         return (myExp / exp) * 100.0f;
     }

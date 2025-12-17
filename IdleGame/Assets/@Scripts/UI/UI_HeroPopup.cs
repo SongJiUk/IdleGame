@@ -69,7 +69,7 @@ public class UI_HeroPopup : UI_Popup
     {
         //TODO : 이거 꺼졌다 켜질떄마다 계속 생성되게 하면 안됨 고쳐야됌
         //TODO : 그리고 가지고있는 데이터에 맞게 호출해야된다.
-        var datas = Managers.GameM.gameData.DataCharacter;
+        var datas = Managers.GameM.gameData.Characters_Data;
 
         foreach (var data in datas)
         {

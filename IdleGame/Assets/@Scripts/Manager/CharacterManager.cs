@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +17,7 @@ public class CharacterManager
 
     public void GetCharacter(int _value, string _name)
     {
-        Characters[_value] = Managers.GameM.gameData.DataCharacter[_name];
+        Characters[_value] = Managers.GameM.gameData.Characters_Data[_name];
     }
 
     public void OnNotifyCharacter(PlayerController _pc)

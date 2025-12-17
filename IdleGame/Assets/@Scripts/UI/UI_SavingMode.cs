@@ -27,7 +27,7 @@ public class UI_SavingMode : UI_Popup, ITickable
         TImeText,
         RoundText,
         RoundSituationText,
-
+        UnLockText,
     }
     #endregion
 
@@ -72,7 +72,7 @@ public class UI_SavingMode : UI_Popup, ITickable
 
         GetText(TextsType, (int)Texts.TImeText).text = System.DateTime.Now.ToString("HH:mm");
 
-        int stageValue = Managers.GameM.stage;
+        int stageValue = Managers.GameM.Stage;
         int stageForward = (stageValue / 20) + 1;
         int stageBack = stageValue % 20;
         GetText(TextsType, (int)Texts.RoundText).text = stageForward.ToString() + " - " + stageBack.ToString();

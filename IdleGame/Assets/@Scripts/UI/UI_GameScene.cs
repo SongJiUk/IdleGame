@@ -736,7 +736,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     double needGold;
     public void OnClickLevelupButton()
     {
-        needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.level, Utils.Datas.levelData.Player_Gold);
+        needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.Level, Utils.Datas.levelData.Player_Gold);
         if (Managers.GameM.Gold >= needGold)
         {
             Managers.GameM.Gold -= needGold;
@@ -749,14 +749,14 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
     public void CheckTexts()
     {
-        needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.level, Utils.Datas.levelData.Player_Gold);
+        needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.Level, Utils.Datas.levelData.Player_Gold);
 
         //TODO : 스테이지 수정방식
 
         GetText(TextsType, (int)Texts.StageStateText).text = Managers.StageM.isDead ? "반복중..." : "진행중...";
         GetText(TextsType, (int)Texts.StageStateText).color = Managers.StageM.isDead ? Color.yellow : Color.blue;
 
-        int stageValue = Managers.GameM.stage;
+        int stageValue = Managers.GameM.Stage;
         int stageForward = (stageValue / 20) + 1;
         int stageBack = stageValue % 20;
         GetText(TextsType, (int)Texts.StageText).text = stageForward.ToString() + " - " + stageBack.ToString();
@@ -764,8 +764,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
         GetImage(ImagesType, (int)Images.Exp_FillImage).fillAmount = Managers.PlayerM.ExpPercent();
         GetText(TextsType, (int)Texts.ExpText).text = string.Format("{0:0.00}", Managers.PlayerM.ExpPercent() * 100.0f) + "%";
-        GetText(TextsType, (int)Texts.AttackText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.Damage(Managers.GameM.mPlayer.BaseDamage))}";
-        GetText(TextsType, (int)Texts.HpText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.HP(Managers.GameM.mPlayer.BaseHp))}";
+        GetText(TextsType, (int)Texts.AttackText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.Damage(Managers.GameM.mPlayer.BaseDamage, Managers.GameM.Level))}";
+        GetText(TextsType, (int)Texts.HpText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.HP(Managers.GameM.mPlayer.BaseHp, Managers.GameM.Level))}";
         GetText(TextsType, (int)Texts.NeedLevelUpText).text = Utils.ToCurrencyString(needGold);
         GetText(TextsType, (int)Texts.NeedLevelUpText).color = Utils.CoinCheck(needGold) ? Color.green : Color.red;
         GetText(TextsType, (int)Texts.GetExpText).text = $"<color=#00FF00>EXP</color> + {string.Format("{0:0.00}", Managers.PlayerM.NextExp())}%";
@@ -777,9 +777,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     void CheckPlayer()
     {
         //GetImage(ImagesType, (int)Images.CharacterImage).sprite = "";
-        GetText(TextsType, (int)Texts.CharacterLevelText).text = $"LV : {Managers.GameM.level}";
+        GetText(TextsType, (int)Texts.CharacterLevelText).text = $"LV : {Managers.GameM.Level}";
         //TODO :이거 소수점 끝까지 안나오게 수정하기
-        GetText(TextsType, (int)Texts.UserCombatPowerText).text = Utils.ToCurrencyString(Utils.Datas.levelData.Damage(Managers.GameM.mPlayer.BaseDamage) + Utils.Datas.levelData.HP(Managers.GameM.mPlayer.BaseHp));
+        GetText(TextsType, (int)Texts.UserCombatPowerText).text = Utils.ToCurrencyString(Utils.Datas.levelData.Damage(Managers.GameM.mPlayer.BaseDamage, Managers.GameM.Level) + Utils.Datas.levelData.HP(Managers.GameM.mPlayer.BaseHp, Managers.GameM.Level));
     }
 
     IEnumerator coPush()

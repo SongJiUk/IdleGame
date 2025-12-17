@@ -150,6 +150,10 @@
     <Compile Include="Assets\@Scripts\Skill\BuffEffect.cs" />
     <Compile Include="Assets\@Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign\LevelDesign.cs" />
+    <Compile Include="Assets\@Scripts\Manager\Firebase\FirebaseManager.cs" />
+    <Compile Include="Assets\@Scripts\Manager\FirebaseManager.cs" />
+    <Compile Include="Assets\@Scripts\Manager\Firebase\FirebaseLogin.cs" />
+    <Compile Include="Assets\@Scripts\Manager\Firebase\FirebaseDB.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -479,7 +483,7 @@
       <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.2\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMobileAds.Core">
       <HintPath>Assets\GoogleMobileAds\GoogleMobileAds.Core.dll</HintPath>

@@ -28,6 +28,7 @@ public class Managers : MonoBehaviour
     readonly CharacterManager characterManager = new();
     readonly InventoryManager inventoryManager = new();
     readonly ADManager adManager = new();
+    readonly FirebaseManager firebaseManager = new();
 
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
@@ -47,9 +48,10 @@ public class Managers : MonoBehaviour
     public static CharacterManager CharacterM { get { return Instance?.characterManager; } }
     public static InventoryManager InventoryM { get { return Instance?.inventoryManager; } }
     public static ADManager AdM { get { return Instance?.adManager; } }
+    public static FirebaseManager firebaseM { get { return Instance?.firebaseManager; } }
 
     public static bool isFast = false;
-
+    public static float save_Timer = 0.0f;
 
     public static Managers Instance
     {
@@ -87,6 +89,12 @@ public class Managers : MonoBehaviour
     public static void Clear()
     {
         PoolM.Clear();
+    }
+
+    private void OnDestroy()
+    {
+        if(firebaseManager != null)
+            firebaseManager.WirteData();
     }
 
 }

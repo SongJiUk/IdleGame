@@ -58,12 +58,12 @@ public class MonsterController : CreatureController
         baseHp = _data.BaseHp;
         //TODO : 지우기
         baseDamage = _data.BaseDamage;
-        maxHp = Utils.Datas.stageData.HP((float)baseHp);
-        hp = Utils.Datas.stageData.HP((float)baseHp);
+        maxHp = Utils.Datas.stageData.HP((float)baseHp, Managers.GameM.Stage);
+        hp = Utils.Datas.stageData.HP((float)baseHp, Managers.GameM.Stage);
         //baseDamage = _data.BaseDamage / 10;
         //maxHp = Utils.Datas.stageData.HP((float)baseHp) * 1000;
         //hp = Utils.Datas.stageData.HP((float)baseHp) * 1000;
-        damage = Utils.Datas.stageData.Damage((float)baseDamage);
+        damage = Utils.Datas.stageData.Damage((float)baseDamage, Managers.GameM.Stage);
 
         attackrange = DATA.AttackRange;
         detectrange = Mathf.Infinity;
