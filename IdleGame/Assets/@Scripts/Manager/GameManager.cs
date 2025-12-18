@@ -21,6 +21,16 @@ public class GameManager
             OnGoodsChanged?.Invoke();
         }
     }
+
+    public double Dia
+    {
+        get { return gameData.dia; }
+        set
+        {
+            gameData.dia = value;
+            OnGoodsChanged?.Invoke();
+        }
+    }
     public int Level
     {
         get { return gameData.level; }

@@ -13,6 +13,7 @@ public abstract class UI_Scene : UI_Base
     protected RectTransform coinDirectingTr;
     protected RectTransform jewelDirectingTr;
     protected Transform layers;
+    protected Transform popupLayer;
 
     public RectTransform CoinDirectingTr
     {
@@ -39,10 +40,21 @@ public abstract class UI_Scene : UI_Base
     {
         if (layers == null)
         {
-            Debug.LogError("���̾ ����!!");
+            Debug.LogError("layers가 없어요..!!");
             return null;
         }
 
         return layers.GetChild(_num);
+    }
+
+    public Transform GetPopUpLayer()
+    {
+        if (popupLayer == null)
+        {
+            Debug.LogError("PopupLayer가 없음");
+            return null;
+        }
+
+        return popupLayer;
     }
 }

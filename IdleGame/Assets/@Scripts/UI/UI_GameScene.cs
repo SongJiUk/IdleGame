@@ -17,7 +17,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     enum GameObjects
     {
         LayersObject,
-        JewelObject,
+        PopupLayerObject,
+        DiaObject,
         CoinObject,
         StageMonsterCountObject,
         BossBoardObject,
@@ -85,7 +86,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
     enum Texts
     {
-        JewelText,
+        DiaText,
         CoinText,
         StageText,
         StageStateText,
@@ -122,7 +123,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Character3_MpText,
         Character4_MpText,
         Character5_MpText,
-        Character6_MpText, 
+        Character6_MpText,
         FastTimeText
 
     }
@@ -268,7 +269,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
 
         coinDirectingTr = GetObject(GameObjectsType, (int)GameObjects.CoinObject).GetComponent<RectTransform>();
-        jewelDirectingTr = GetObject(GameObjectsType, (int)GameObjects.JewelObject).GetComponent<RectTransform>();
+        jewelDirectingTr = GetObject(GameObjectsType, (int)GameObjects.DiaObject).GetComponent<RectTransform>();
         ItemPopupObjectRect = GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).GetComponent<RectTransform>();
         ItemPopupFrameObjectRect = GetImage(ImagesType, (int)Images.ItemPopupFrameImage).GetComponent<RectTransform>();
 
@@ -280,7 +281,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         }
 
         layers = GetObject(GameObjectsType, (int)GameObjects.LayersObject).GetComponent<Transform>();
-
+        popupLayer = GetObject(GameObjectsType, (int)GameObjects.PopupLayerObject).GetComponent<Transform>();
         foreach (Buttons buttonType in Enum.GetValues(typeof(Buttons)))
         {
             GetButton(ButtonsType, (int)buttonType).gameObject.BindEvent(() => OnClickAnyButtons(buttonType).Forget());
@@ -373,7 +374,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     public void OnRefreshGoods()
     {
         GetText(TextsType, (int)Texts.CoinText).text = Utils.ToCurrencyString(Managers.GameM.Gold);
-        GetText(TextsType, (int)Texts.JewelText).text = "0";
+        GetText(TextsType, (int)Texts.DiaText).text = Utils.ToCurrencyString(Managers.GameM.Dia);
         CheckTexts();
     }
     async UniTaskVoid OnClickAnyButtons(Buttons _clickButtonType)
@@ -435,6 +436,13 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
             case Buttons.ShopButton:
                 clickedButton = shopBtn;
+                ScaleUpSelectButton();
+
+                UI_ShopPopup shopPopup = await Managers.UIM.ShowPopup<UI_ShopPopup>();
+                shopPopup.transform.SetParent(GetPopUpLayer());
+                shopPopup.OnThisPopupClosed = ScaleDownSelectButton;
+
+
                 break;
 
 
@@ -474,7 +482,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         {
             if (FastremainTime <= 0.0f)
             {
-                Action rewardedAction =  () => { FastremainTime = 10f; };
+                Action rewardedAction = () => { FastremainTime = 10f; };
 
                 Action resumeAction = async () =>
                 {
@@ -493,7 +501,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 Managers.UpdateM.Register(_unscaledTickable: this);
                 StartBlinkTween();
             }
-                
+
         }
         else
         {
@@ -510,7 +518,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetImage(ImagesType, (int)Images.FastOnImage).gameObject.SetActive(Managers.isFast);
         GetObject(GameObjectsType, (int)GameObjects.FastSliderObject).gameObject.SetActive(Managers.isFast);
     }
-    
+
     public async UniTask CheckFast(bool _fast)
     {
         Managers.isFast = _fast;
@@ -771,6 +779,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetText(TextsType, (int)Texts.GetExpText).text = $"<color=#00FF00>EXP</color> + {string.Format("{0:0.00}", Managers.PlayerM.NextExp())}%";
 
         GetText(TextsType, (int)Texts.CoinText).text = Utils.ToCurrencyString(Managers.GameM.Gold);
+        GetText(TextsType, (int)Texts.DiaText).text = Utils.ToCurrencyString(Managers.GameM.Dia);
 
         CheckPlayer();
     }
@@ -1066,7 +1075,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         if (!Managers.isFast) return;
 
-        if(FastremainTime > 0.0f)
+        if (FastremainTime > 0.0f)
         {
             FastremainTime -= _unscaledDeltaTime;
             int min = Mathf.FloorToInt(FastremainTime / 60f);
@@ -1131,6 +1140,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         fadeImage.raycastTarget = false;
     }
 
-    
+
     #endregion
 }

@@ -20,6 +20,7 @@ public class Holder
 public class GameData
 {
     public double gold;
+    public double dia;
     public int level = 1;
     public double exp;
     public int stage = 1;
@@ -57,10 +58,24 @@ public class GameData
             {
                 Character_Holder.Add(data.Name, holder);
             }
-            
+
             character.holder = holder;
             Characters_Data.Add(data.Name, character);
 
         }
+    }
+
+    public Data.CreatureData GetGradeCharacter(Define.CharacterGrade _grade)
+    {
+        List<Data.CreatureData> holder = new List<Data.CreatureData>();
+        foreach (var data in Characters_Data)
+        {
+            if (data.Value.data.CharacterGrade == _grade)
+            {
+                holder.Add(data.Value.data);
+            }
+        }
+
+        return holder[UnityEngine.Random.Range(0, holder.Count)];
     }
 }

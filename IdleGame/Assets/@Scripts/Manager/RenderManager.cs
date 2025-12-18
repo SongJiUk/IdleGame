@@ -5,6 +5,7 @@ using UnityEngine;
 public class RenderManager : MonoBehaviour
 {
     public RenderCharacter renderCharacter;
+    public RenderGacha renderRecall;
 
     private void Start()
     {

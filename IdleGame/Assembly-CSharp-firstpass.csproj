@@ -292,30 +292,6 @@
     <Reference Include="UnityEditor.UnityConnectModule">
         <HintPath>/Applications/Unity/Hub/Editor/2021.3.21f1/Unity.app/Contents/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Burst.Unsafe">
-        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Cecil.Mdb">
-        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Cecil.Pdb">
-        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Cecil">
-        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Cecil.Rocks">
-        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.nuget.newtonsoft-json@3.2.2/Runtime/Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="GoogleMobileAds.Ump">
         <HintPath>/Users/songjiuk/IdleGame/IdleGame/Assets/GoogleMobileAds/GoogleMobileAds.Ump.dll</HintPath>
     </Reference>
@@ -325,8 +301,17 @@
     <Reference Include="GoogleMobileAds.Unity">
         <HintPath>/Users/songjiuk/IdleGame/IdleGame/Assets/GoogleMobileAds/GoogleMobileAds.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Burst.Cecil.Pdb">
+        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
+    </Reference>
     <Reference Include="Firebase.App">
         <HintPath>/Users/songjiuk/IdleGame/IdleGame/Assets/Firebase/Plugins/Firebase.App.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.nuget.newtonsoft-json@3.2.2/Runtime/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="GoogleMobileAds.Core">
         <HintPath>/Users/songjiuk/IdleGame/IdleGame/Assets/GoogleMobileAds/GoogleMobileAds.Core.dll</HintPath>
@@ -337,11 +322,26 @@
     <Reference Include="GoogleMobileAds.Ump.Unity">
         <HintPath>/Users/songjiuk/IdleGame/IdleGame/Assets/GoogleMobileAds/GoogleMobileAds.Ump.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Burst.Unsafe">
+        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Cecil.Mdb">
+        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.Mdb.dll</HintPath>
+    </Reference>
     <Reference Include="Firebase.TaskExtension">
         <HintPath>/Users/songjiuk/IdleGame/IdleGame/Assets/Firebase/Plugins/Firebase.TaskExtension.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Burst.Cecil">
+        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Cecil.Rocks">
+        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.burst@1.6.6/Unity.Burst.CodeGen/Unity.Burst.Cecil.Rocks.dll</HintPath>
+    </Reference>
     <Reference Include="Google.MiniJson">
         <HintPath>/Users/songjiuk/IdleGame/IdleGame/Assets/Firebase/Plugins/Google.MiniJson.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
+        <HintPath>/Users/songjiuk/IdleGame/IdleGame/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Platform">
         <HintPath>/Users/songjiuk/IdleGame/IdleGame/Assets/Firebase/Plugins/Firebase.Platform.dll</HintPath>
@@ -962,6 +962,10 @@
       <Project>{d3c8bdb1-8337-5354-e5b6-d62aae767cdb}</Project>
       <Name>Unity.ScriptableBuildPipeline.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="GoogleMobileAds.Editor.csproj">
+      <Project>{e899d43c-d50a-4ebd-715c-eff04110cf53}</Project>
+      <Name>GoogleMobileAds.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.2D.SpriteShape.Runtime.csproj">
       <Project>{0632ae21-e4bc-c7eb-2b32-b216aa80639a}</Project>
       <Name>Unity.2D.SpriteShape.Runtime</Name>
@@ -969,10 +973,6 @@
     <ProjectReference Include="Unity.VisualScripting.State.csproj">
       <Project>{01f8f65b-c56b-1756-8189-0ff2e73f2496}</Project>
       <Name>Unity.VisualScripting.State</Name>
-    </ProjectReference>
-    <ProjectReference Include="GoogleMobileAds.Editor.csproj">
-      <Project>{e899d43c-d50a-4ebd-715c-eff04110cf53}</Project>
-      <Name>GoogleMobileAds.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

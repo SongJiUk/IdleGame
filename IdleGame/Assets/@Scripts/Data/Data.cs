@@ -304,4 +304,61 @@ namespace Data
         }
     }
     #endregion
+
+    #region GachaData
+    [Serializable]
+    public class GachaData
+    {
+        public Define.GachaType GachaType;
+        public float GachaRate;
+        public Define.CharacterGrade Grade;
+    }
+
+    public class GachaDataLoader : ILoader<int, GachaData>
+    {
+        public List<GachaData> dataList = new List<GachaData>();
+
+        public Dictionary<int, GachaData> MakeDict()
+        {
+            Dictionary<int, GachaData> dic = new Dictionary<int, GachaData>();
+            foreach (var data in dataList)
+            {
+                //dic.Add(data.DataID, data);
+            }
+
+            return dic;
+        }
+    }
+
+    // public class GachaTableData
+    // {
+    //     public Define.GachaType Type;
+    //     public List<GachaRateData> GachaRateTable = new List<GachaRateData>();
+    // }
+
+    // public class GachaDataLoader : ILoader<Define.GachaType, GachaTableData>
+    // {
+    //     public List<GachaTableData> list = new List<GachaTableData>();
+
+    //     public Dictionary<Define.GachaType, GachaTableData> MakeDict()
+    //     {
+    //         Dictionary<Define.GachaType, GachaTableData> dic = new Dictionary<Define.GachaType, GachaTableData>();
+    //         foreach (GachaTableData gacha in list)
+    //             dic.Add(gacha.Type, gacha);
+
+    //         return dic;
+    //     }
+    // }
+
+
+
+
+    // public class GachaRateData
+    // {
+    //     public string EquipmentID;
+    //     public float GachaRate;
+    //     public Define.EquipmentGrade EquipGrade;
+    // }
+
+    #endregion
 }

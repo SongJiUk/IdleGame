@@ -103,7 +103,7 @@ public class UI_HeroPopup : UI_Popup
 
     void OnClickCloseButton()
     {
-        TriggerClose(this);
+        TriggerClose(this, true);
     }
 
     void OnClickCircleButton(Buttons _clickButton)

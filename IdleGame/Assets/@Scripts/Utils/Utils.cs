@@ -10,6 +10,10 @@ using System.Linq;
 
 public static class Utils
 {
+
+    //TODO : 확률 이거 나중에 데이터로 관리하기
+    public static float[] Gacha_Percentage = { 60.0f, 20.0f, 10.0f, 6.0f, 4.0f };
+
     //NOTE: 레벨 데이터 값
     private static LevelDesign datas;
     public static LevelDesign Datas

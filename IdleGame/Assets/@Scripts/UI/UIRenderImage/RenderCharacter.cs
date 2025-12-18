@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIRenderCharacter : MonoBehaviour
+public class RenderCharacter : MonoBehaviour
 {
     public Transform[] circles;
     public GameObject[] particles;
@@ -32,5 +32,13 @@ public class UIRenderCharacter : MonoBehaviour
             }
 
         }
+    }
+
+    public bool isCheckCharacter(int _index)
+    {
+        if (isGetCharacter[_index]) return true;
+
+
+        return false;
     }
 }

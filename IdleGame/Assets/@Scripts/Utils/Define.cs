@@ -138,4 +138,10 @@ public static class Define
         GoldUp,
         CriticalUp
     }
+
+    public enum GachaType
+    {
+        HeroGacha,
+        RelicGacha
+    }
 }

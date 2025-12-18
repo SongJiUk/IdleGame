@@ -58,6 +58,7 @@ public class UI_TitleScene : UI_Scene
     {
         Init().Forget();
     }
+
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -80,11 +81,13 @@ public class UI_TitleScene : UI_Scene
 
         GetButton(ButtonsType, (int)Buttons.StartButton).gameObject.BindEvent(async () =>
         {
-            await Managers.SceneM.LoadSceneAsync(Define.SceneType.GameScene);
-            KillBlinkTween();
-        });
+            if (isLoadEnd)
+            {
+                await Managers.SceneM.LoadSceneAsync(Define.SceneType.GameScene);
+                KillBlinkTween();
+            }
 
-        GetButton(ButtonsType, (int)Buttons.StartButton).interactable = false;
+        });
 
         SetInfo().Forget();
         return true;
@@ -130,10 +133,11 @@ public class UI_TitleScene : UI_Scene
     }
     async UniTask FinishLoadingProcess()
     {
+
+
         await UniTask.Delay(300); // 100%가 된 모습을 잠시 보여줌
 
         isLoadEnd = true;
-        GetButton(ButtonsType, (int)Buttons.StartButton).interactable = true;
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);
         GetText(TextsType, (int)Texts.DataLoadText).text = "데이터가 정상적으로 로딩되었습니다,";
         StartBlinkTween();
