@@ -46,7 +46,7 @@ MonoBehaviour:
     CreatureType: Cleric
     Type: Player
     AttackRange: 2
-    CharacterGrade: Common
+    CharacterGrade: None
     BaseHp: 50
     BaseDamage: 10
     MaxMp: 120
@@ -60,7 +60,7 @@ MonoBehaviour:
     CreatureType: Archer
     Type: Player
     AttackRange: 2
-    CharacterGrade: UnCommon
+    CharacterGrade: Common
     BaseHp: 60
     BaseDamage: 12
     MaxMp: 80
@@ -74,7 +74,7 @@ MonoBehaviour:
     CreatureType: Assassin
     Type: Player
     AttackRange: 1
-    CharacterGrade: Rare
+    CharacterGrade: UnCommon
     BaseHp: 70
     BaseDamage: 15
     MaxMp: 70

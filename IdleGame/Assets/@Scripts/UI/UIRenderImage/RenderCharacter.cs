@@ -26,7 +26,7 @@ public class RenderCharacter : MonoBehaviour
             {
                 isGetCharacter[i] = true;
                 string name = Managers.CharacterM.Characters[i].data.Name;
-                var go = Managers.ResourceM.Instantiate(name);
+                var go = Managers.ResourceM.Instantiate(name, _pooling:true);
                 go.transform.position = circles[i].position;
                 go.GetComponent<PlayerController>().enabled = false;
             }

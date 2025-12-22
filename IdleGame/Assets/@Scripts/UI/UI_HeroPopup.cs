@@ -10,7 +10,7 @@ public class UI_HeroPopup : UI_Popup
 {
     //TODO : 렌더텍스쳐 해상도 값도 수정해줘야함.
     public List<UI_CharacterIcon> characters = new List<UI_CharacterIcon>();
-    Dictionary<string, Data.CreatureData> characterDic = new Dictionary<string, Data.CreatureData>();
+    Dictionary<string, CharacterHolder> characterDic = new Dictionary<string, CharacterHolder>();
     enum GameObjects
     {
         CharacterContentObject,
@@ -23,7 +23,6 @@ public class UI_HeroPopup : UI_Popup
     }
     enum Buttons
     {
-        Circle0Button,
         Circle1Button,
         Circle2Button,
         Circle3Button,
@@ -54,40 +53,41 @@ public class UI_HeroPopup : UI_Popup
 
         foreach (Buttons buttonType in Enum.GetValues(typeof(Buttons)))
         {
-            //TODO : 이거 CIrcle0 ~ 6까지만 되어야됌
             GetButton(ButtonsType, (int)buttonType).gameObject.BindEvent(() => OnClickCircleButton(buttonType));
         }
 
         rect = GetObject(GameObjectsType, (int)GameObjects.CharacterContentObject).GetComponent<RectTransform>();
         Managers.RenderM.renderCharacter.InitCharacter();
-        SetInfo();
+
         return true;
     }
 
     //처음에만 사용할것인지? 아이템을 뽑거나 할때는 수정이 되어야함
-    public void SetInfo()
+    public override void SetInfo()
     {
         //TODO : 이거 꺼졌다 켜질떄마다 계속 생성되게 하면 안됨 고쳐야됌
         //TODO : 그리고 가지고있는 데이터에 맞게 호출해야된다.
         var datas = Managers.GameM.gameData.Characters_Data;
+        characterDic.Clear();
 
         foreach (var data in datas)
         {
-            characterDic.Add(data.Value.data.Name, data.Value.data);
+            characterDic.Add(data.Value.data.Name, data.Value);
         }
 
-        var sortdic = characterDic.OrderBy(x => x.Value.CharacterGrade);
+        var sortdic = characterDic.OrderBy(x => x.Value.data.CharacterGrade);
 
         foreach (var data in sortdic)
         {
-            //TODO : 이것도 수정(오브젝트 매니저 사용하는걸로)
-            var go = Managers.ResourceM.Instantiate("UI_CharacterIcon");
+            if (data.Value.holder.Count == 0) continue;
+
+            var go = Managers.UIM.MakeSubItem<UI_CharacterIcon>();
             go.transform.parent = rect.transform;
             go.transform.localScale = Vector3.one;
-            var icon = go.GetComponent<UI_CharacterIcon>();
-            icon.Init().Forget();
-            icon.SetInfo(data.Value, this);
-            characters.Add(icon);
+
+            go.Init().Forget();
+            go.SetInfo(data.Value.data, this);
+            characters.Add(go);
         }
     }
 
@@ -104,6 +104,14 @@ public class UI_HeroPopup : UI_Popup
     void OnClickCloseButton()
     {
         TriggerClose(this, true);
+
+        characterDic.Clear();
+        for (int i = 0; i < characters.Count; i++)
+        {
+            Managers.ResourceM.Destroy(characters[i].gameObject);
+        }
+        characters.Clear();
+
     }
 
     void OnClickCircleButton(Buttons _clickButton)

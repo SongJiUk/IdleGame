@@ -56,9 +56,9 @@ public class UI_ShopPopup : UI_Popup
         GetText(TextsType, (int)Texts.DiaText).text = Utils.ToCurrencyString(Managers.GameM.Dia);
 
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
-        GetButton(ButtonsType, (int)Buttons.HeroAdRecallButton).gameObject.BindEvent(OnClickHeroAdRecallButton);
-        GetButton(ButtonsType, (int)Buttons.HeroOneRecallButton).gameObject.BindEvent(OnClickHeroOneRecallButton);
-        GetButton(ButtonsType, (int)Buttons.HeroElevenRecallButton).gameObject.BindEvent(OnClickHeroElevenRecallButton);
+        GetButton(ButtonsType, (int)Buttons.HeroAdRecallButton).gameObject.BindEvent(OnClickHeroAdGachaButton);
+        GetButton(ButtonsType, (int)Buttons.HeroOneRecallButton).gameObject.BindEvent(OnClickHeroOneGachaButton);
+        GetButton(ButtonsType, (int)Buttons.HeroElevenRecallButton).gameObject.BindEvent(OnClickHeroElevenGachaButton);
 
         RefreshUI();
         return true;
@@ -79,15 +79,15 @@ public class UI_ShopPopup : UI_Popup
         //TODO : 광고
     }
 
-    async void OnClickHeroAdRecallButton()
+    async void OnClickHeroAdGachaButton()
     {
         //TODO : TEST
-        var popup = await Managers.UIM.ShowPopup<UI_RecallPopup>();
-        popup.GetRecallHero(11);
+        var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
+        popup.GetGachaHero(11);
 
     }
 
-    void OnClickHeroOneRecallButton()
+    void OnClickHeroOneGachaButton()
     {
         if (Managers.GameM.Dia >= 300)
         {
@@ -99,7 +99,7 @@ public class UI_ShopPopup : UI_Popup
         }
     }
 
-    void OnClickHeroElevenRecallButton()
+    void OnClickHeroElevenGachaButton()
     {
         if (Managers.GameM.Dia >= 3000)
         {

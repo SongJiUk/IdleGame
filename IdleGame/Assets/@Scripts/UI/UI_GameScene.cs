@@ -644,7 +644,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).gameObject.SetActive(true);
                 GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).sprite = Managers.ResourceM.GetAtlas(Managers.CharacterM.Characters[i].data.Name);
                 GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).SetNativeSize();
-                GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).rectTransform.localScale = GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).rectTransform.localScale / 6;
+                //GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).rectTransform.localScale = GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).rectTransform.localScale / 6;
 
 
                 //지금 스폰 되어있는거랑 아닌거랑 비교하기?

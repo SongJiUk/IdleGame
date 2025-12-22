@@ -47,7 +47,7 @@
       "CreatureType": "Cleric",
       "Type": "Player",
       "AttackRange": 2,
-      "CharacterGrade": "Common",
+      "CharacterGrade": "None",
       "BaseHp": 50,
       "BaseDamage": 10,
       "MaxMp": 120,
@@ -63,7 +63,7 @@
       "CreatureType": "Archer",
       "Type": "Player",
       "AttackRange": 2,
-      "CharacterGrade": "UnCommon",
+      "CharacterGrade": "Common",
       "BaseHp": 60,
       "BaseDamage": 12,
       "MaxMp": 80,
@@ -79,7 +79,7 @@
       "CreatureType": "Assassin",
       "Type": "Player",
       "AttackRange": 1,
-      "CharacterGrade": "Rare",
+      "CharacterGrade": "UnCommon",
       "BaseHp": 70,
       "BaseDamage": 15,
       "MaxMp": 70,
@@ -213,6 +213,62 @@
       "MaxMp": 0,
       "ProjectileDataID": 20006,
       "SkillDataID": 49000
+    }
+  ],
+  "GachaData": [
+    {
+      "GachaType": "HeroGacha",
+      "DataID": 1,
+      "GachaRate": 60,
+      "Grade": "Common"
+    },
+    {
+      "GachaType": "HeroGacha",
+      "DataID": 2,
+      "GachaRate": 20,
+      "Grade": "UnCommon"
+    },
+    {
+      "GachaType": "HeroGacha",
+      "DataID": 3,
+      "GachaRate": 10,
+      "Grade": "Rare"
+    },
+    {
+      "GachaType": "HeroGacha",
+      "DataID": 4,
+      "GachaRate": 10,
+      "Grade": "Rare"
+    },
+    {
+      "GachaType": "HeroGacha",
+      "DataID": 5,
+      "GachaRate": 6,
+      "Grade": "Unique"
+    },
+    {
+      "GachaType": "HeroGacha",
+      "DataID": 6,
+      "GachaRate": 6,
+      "Grade": "Unique"
+    },
+    {
+      "GachaType": "HeroGacha",
+      "DataID": 7,
+      "GachaRate": 6,
+      "Grade": "Unique"
+    },
+    {
+      "GachaType": "HeroGacha",
+      "DataID": 8,
+      "GachaRate": 4,
+      "Grade": "Legendary"
+    },
+    {
+      "GachaType": "HeroGacha",
+      "DataID": 9,
+      "GachaRate": 4,
+      "Grade": "Legendary"
     }
   ],
   "ProjectileData": [

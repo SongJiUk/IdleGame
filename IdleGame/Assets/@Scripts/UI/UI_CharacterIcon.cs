@@ -64,7 +64,12 @@ public class UI_CharacterIcon : UI_Base
         GetImage(ImagesType, (int)Images.UI_CharacterIcon).sprite = Managers.ResourceM.GetAtlas(_data.CharacterGrade.ToString());
         GetImage(ImagesType, (int)Images.CharacterImage).sprite = Managers.ResourceM.GetAtlas(_data.prefabName);
         GetObject(GameObjectsType, (int)GameObjects.CharacterUseObject).SetActive(false);
-        //GetImage(ImagesType, (int)Images.CountFillImage).fillAmount = Utils.GetAtlas("Common");
+
+        //TODO : 예시 
+        int levelCount = Managers.GameM.gameData.Character_Holder[_data.Name].Level * 5;
+        GetImage(ImagesType, (int)Images.CountFillImage).fillAmount = (float)Managers.GameM.gameData.Character_Holder[_data.Name].Count / (float)levelCount;
+        GetText(TextsType, (int)Texts.CharacterCountText).text = Managers.GameM.gameData.Character_Holder[_data.Name].Count.ToString() + " / " + levelCount.ToString();
+        GetText(TextsType, (int)Texts.CharacterLevelText).text = "Lv. " + Managers.GameM.gameData.Character_Holder[_data.Name].Level.ToString();
         Reset();
     }
     public void Reset()

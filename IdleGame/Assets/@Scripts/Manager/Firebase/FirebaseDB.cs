@@ -15,15 +15,9 @@ public partial class FirebaseManager
 {
     public void WirteData()
     {
-        GameData data = new GameData();
-        if (Managers.GameM.gameData != null)
-        {
-            data = Managers.GameM.gameData;
-        }
+        GameData data = Managers.GameM.gameData;
+        if (data == null || reference == null) return;
 
-
-
-        if (reference == null) return;
         #region 기본 캐릭터 데이터
         string default_json = JsonUtility.ToJson(data);
         reference.Child("USER").Child(currentUser.UserId).Child("DATA").SetRawJsonValueAsync(default_json)
@@ -33,12 +27,14 @@ public partial class FirebaseManager
                 {
                     Debug.LogError("데이터 쓰기 실패 : " + task.Exception.ToString());
                 }
+                else
+                    Debug.Log("기본 캐릭터 데이터 저장 완료");
 
             });
         #endregion
 
         #region 배치하는 캐릭터 데이터
-        string character_json = JsonConvert.SerializeObject(Managers.GameM.gameData.Character_Holder);
+        string character_json = JsonConvert.SerializeObject(data.Character_Holder);
         reference.Child("USER").Child(currentUser.UserId).Child("CHARACTER").SetRawJsonValueAsync(character_json)
             .ContinueWithOnMainThread(task =>
             {
@@ -46,6 +42,8 @@ public partial class FirebaseManager
                 {
                     Debug.LogError("데이터 쓰기 실패 : " + task.Exception.ToString());
                 }
+                else
+                    Debug.Log("배치하는 캐릭터 데이터 저장 완료");
 
             });
         #endregion
@@ -70,6 +68,7 @@ public partial class FirebaseManager
 
                     Managers.GameM.gameData = data;
                     Managers.GameM.gameData.Init();
+                    Debug.Log("기본 캐릭터 데이터 로드 성공 ");
                 }
                 else
                 {
@@ -90,6 +89,7 @@ public partial class FirebaseManager
                     var data = JsonConvert.DeserializeObject<Dictionary<string, Holder>>(snapshot.GetRawJsonValue());
                     Managers.GameM.gameData.Character_Holder = data;
                     Managers.GameM.gameData.Init();
+                    Debug.Log("배치하는 캐릭터 데이터 로드 성공 ");
                 }
                 else
                 {

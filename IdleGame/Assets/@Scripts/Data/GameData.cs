@@ -13,8 +13,34 @@ public class CharacterHolder
 
 public class Holder
 {
-    public int Level;
-    public int Count;
+    int level;
+
+    public int Level
+    {
+        get => level;
+        set
+        {
+            if(level != value)
+            {
+                Debug.Log($"[Holder Level 변경] {level} -> {value}\n{StackTraceUtility.ExtractStackTrace()}");
+                level = value;
+            }
+        }
+    }
+    int count;
+    public int Count
+    {
+        get => count;
+
+        set
+        {
+            if (count != value)
+            {
+                Debug.Log($"[Holder Level 변경] {count} -> {value}\n{StackTraceUtility.ExtractStackTrace()}");
+                count = value;
+            }
+        }
+    }
 }
 
 public class GameData
@@ -37,6 +63,25 @@ public class GameData
     {
         SetCharacter();
     }
+   
+    public void ChangeCharacterInfo(Data.CreatureData _data)
+    {
+        var character = new CharacterHolder();
+        character.data = _data;
+
+        Holder holder = new Holder();
+        if (Character_Holder.ContainsKey(_data.Name))
+        {
+            holder = Character_Holder[_data.Name];
+        }
+
+        character.holder = holder;
+
+        if(Characters_Data.ContainsKey(_data.Name))
+        {
+            Characters_Data[_data.Name] = character;
+        }
+    }
 
     private void SetCharacter()
     {
@@ -45,23 +90,23 @@ public class GameData
         {
             if (data.Type != Define.ObjectType.Player) continue;
 
-            //TODO : 추후엔 파이어 베이스 이용
-            var character = new CharacterHolder();
-            character.data = data;
-            Holder holder = new Holder();
-            if (Character_Holder.ContainsKey(data.Name))
+            Holder currentHolder;
+            if (Character_Holder.TryGetValue(data.Name, out currentHolder))
             {
-                holder = Character_Holder[data.Name];
-                Debug.Log($"{data.Name} :  {holder.Count} : {holder.Level}");
+                Debug.Log($"[로드 확인] {data.Name} : 개수 {currentHolder.Count}");
             }
             else
             {
-                Character_Holder.Add(data.Name, holder);
+                currentHolder = new Holder();
+                Character_Holder.Add(data.Name, currentHolder);
+                Debug.Log($"[신규 생성] {data.Name} 데이터가 없어 새로 생성합니다.");
             }
 
-            character.holder = holder;
-            Characters_Data.Add(data.Name, character);
+            var character = new CharacterHolder();
+            character.data = data;
+            character.holder = currentHolder;
 
+            Characters_Data[data.Name] = character;
         }
     }
 

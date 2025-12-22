@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI
 ;
 
-public class UI_RecallPopup : UI_Popup
+public class UI_GachaPopup : UI_Popup
 {
     const int horizontal_limit = 4;
     const int horizontalCount = 3;
@@ -18,15 +18,34 @@ public class UI_RecallPopup : UI_Popup
         Horizontal_3,
     }
 
+    enum Buttons
+    {
+        CloseButton,
+        OneMoreButton
+    }
 
+    enum Texts
+    {
+        OneMoreButtonText,
+        OneMoreButtonPriceText,
+    }
+    int value = 0;
+    List<UI_GachaHeroIcon> iconList = new List<UI_GachaHeroIcon>();
+    bool isUsingButton = false;
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
 
         GameObjectsType = typeof(GameObjects);
+        ButtonsType = typeof(Buttons);
+        TextsType = typeof(Texts);
 
         BindObject(GameObjectsType);
+        BindButton(ButtonsType);
+        BindText(TextsType);
 
+        GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
+        GetButton(ButtonsType, (int)Buttons.OneMoreButton).gameObject.BindEvent(OnClickOneMoreButton);
 
         for (int i = 0; i < horizontalCount; i++)
         {
@@ -36,16 +55,16 @@ public class UI_RecallPopup : UI_Popup
         return true;
     }
 
-    public async void GetRecallHero(int _count)
+    public async void GetGachaHero(int _count)
     {
-        await RecallHeroes(_count);
-
+        await GachaHeroes(_count);
     }
 
 
-    async UniTask RecallHeroes(int _count)
+    async UniTask GachaHeroes(int _count)
     {
         int horizontalCount = 0;
+        value = _count;
 
         for (int i = 0; i < _count; i++)
         {
@@ -58,7 +77,7 @@ public class UI_RecallPopup : UI_Popup
                 horizontalCount++;
             }
 
-            var heroInfo = Managers.UIM.MakeSubItem<UI_RecallHeroIcon>(horizontals[horizontalCount]);
+            var heroInfo = Managers.UIM.MakeSubItem<UI_GachaHeroIcon>(horizontals[horizontalCount]);
 
             for (int j = 0; j < 5; j++)
             {
@@ -69,14 +88,63 @@ public class UI_RecallPopup : UI_Popup
                     break;
                 }
             }
-            Data.CreatureData data = Managers.GameM.gameData.GetGradeCharacter(grade);
 
-            //TODO : 여기에 가챠 정보 들어가야함.
+            Data.CreatureData data = Managers.GameM.gameData.GetGradeCharacter(grade);
+            Managers.GameM.gameData.Character_Holder[data.Name].Count++;
+
             heroInfo.Init().Forget();
             heroInfo.SetHeroIcon(data);
 
-            await UniTask.Delay(100);
+            iconList.Add(heroInfo);
+            switch (_count)
+            {
+                case 11:
+                    Managers.RenderM.renderGacha.GetHerosForEleven(i, data);
+                    GetText(TextsType, (int)Texts.OneMoreButtonText).text = "11회 소환";
+                    GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "3000";
+                    break;
+                case 1:
+                    Managers.RenderM.renderGacha.GetHero(data);
+                    GetText(TextsType, (int)Texts.OneMoreButtonText).text = "1회 소환";
+                    GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "300";
+                    break;
+            }
+
+            Managers.GameM.gameData.ChangeCharacterInfo(data);
+
+            await UniTask.Delay(120);
         }
+       
+        Managers.firebaseM.WirteData();
+        isUsingButton = false;
     }
 
+    void ResetIcon()
+    {
+        for(int i =0; i< iconList.Count; i++)
+        {
+            Managers.ResourceM.Destroy(iconList[i].gameObject);
+        }
+
+        iconList.Clear();
+    }
+    void OnClickCloseButton()
+    {
+        ResetIcon();
+        Managers.RenderM.renderGacha.ClearList();
+        Managers.UIM.ClosePopup(this).Forget();
+    }
+
+    void OnClickOneMoreButton()
+    {
+        if(!isUsingButton)
+        {
+            isUsingButton = true;
+            ResetIcon();
+            Managers.RenderM.renderGacha.ClearList();
+
+            GetGachaHero(value);
+        }
+        
+    }
 }

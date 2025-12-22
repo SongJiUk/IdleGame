@@ -64,6 +64,7 @@ public static class Define
 
     public enum CharacterGrade
     {
+        None = -1,
         Common,
         UnCommon,
         Rare,
