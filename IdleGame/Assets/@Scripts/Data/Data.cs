@@ -163,6 +163,7 @@ namespace Data
         public int DataID;
         public string SkillName;
         public string SkillNameKR;
+        public string Description;
         public int SkillAttackCount;
         public float SkillDuration;
         public float SkillInterval;
@@ -309,9 +310,14 @@ namespace Data
     [Serializable]
     public class GachaData
     {
-        public Define.GachaType GachaType;
-        public float GachaRate;
-        public Define.CharacterGrade Grade;
+        public int Level;
+        public float Common;
+        public float UnCommon;
+        public float Rare;
+        public float Unique;
+        public float Legendary;
+        public int SummonCount;
+        public float[] GetRates() => new float[] { Common, UnCommon, Rare, Unique, Legendary };
     }
 
     public class GachaDataLoader : ILoader<int, GachaData>
@@ -323,7 +329,7 @@ namespace Data
             Dictionary<int, GachaData> dic = new Dictionary<int, GachaData>();
             foreach (var data in dataList)
             {
-                //dic.Add(data.DataID, data);
+                dic.Add(data.Level, data);
             }
 
             return dic;

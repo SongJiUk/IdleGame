@@ -106,4 +106,18 @@ public class GameManager
         set { gameData.buff_count = value; }
     }
 
+    public int Summon_Count
+    {
+        get { return gameData.summonCount; }
+        set
+        {
+            gameData.summonCount = value;
+        }
+    }
+
+    public int Confirmed_Legendary_Count
+    {
+        get { return gameData.confirmedLegendaryCount; }
+        set { gameData.confirmedLegendaryCount = value; }
+    }    
 }

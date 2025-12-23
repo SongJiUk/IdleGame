@@ -29,7 +29,7 @@ public class UI_HeroPopup : UI_Popup
         Circle4Button,
         Circle5Button,
         Circle6Button,
-        HeroRecallButton,
+        HeroGachaButton,
         HeroEnforceButton,
         CloseButton
     }
@@ -46,7 +46,7 @@ public class UI_HeroPopup : UI_Popup
         BindText(TextsType);
         BindButton(ButtonsType);
 
-        GetButton(ButtonsType, (int)Buttons.HeroRecallButton).gameObject.BindEvent(OnClickHeroRecallButton);
+        GetButton(ButtonsType, (int)Buttons.HeroGachaButton).gameObject.BindEvent(OnClickHeroGachaButton);
         GetButton(ButtonsType, (int)Buttons.HeroEnforceButton).gameObject.BindEvent(OnClickHeroEnforceButton);
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
 
@@ -91,7 +91,7 @@ public class UI_HeroPopup : UI_Popup
         }
     }
 
-    void OnClickHeroRecallButton()
+    void OnClickHeroGachaButton()
     {
 
     }

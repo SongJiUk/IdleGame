@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Prefabs
+  m_EditorClassIdentifier: 
+  m_GroupName: Prefabs
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 4b44878d7420ebb4e83d702d3255348a
+  m_SerializeEntries:
+  - m_GUID: 3af6ea61e998544d7929674d7f260503
+    m_Address: Mage_W_EnergyBolt
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: fa098c7bf39ba4f7d9171d5a1c3b13b0
+    m_Address: Cleric_EnergyBolt
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 82e5bc2d0e98fc04981490914cc9d7ee
+    m_Address: Arrow
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 786a6fef06b0fc34e8dfc6be21db857b
+    m_Address: BossAttack
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 3d84922c38d7c444782fb1a791d97b21
+    m_Address: MeleeAttack
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 223d3958487cb0f43a2de9c4e1e02846
+    m_Address: DamageFont
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 6a5506c6b0f1e7441890896f3c583118
+    m_Address: CoinDirecting
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 996640b0c7d224a4a824d6f776599aec
+    m_Address: DropItem
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 91cd657fb0dcd94458bdafd0354d29e9
+    m_Address: Mage_M_EnergyBolt
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ca570c7d28bbb4267b961b4eeab1c88e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a0e2bb0f9f548044c994d93e2e3a1f5c, type: 2}
+    - {fileID: 11400000, guid: c92ec4e3070c6904b941261f68d12804, type: 2}

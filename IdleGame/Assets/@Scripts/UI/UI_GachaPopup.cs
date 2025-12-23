@@ -55,7 +55,7 @@ public class UI_GachaPopup : UI_Popup
         return true;
     }
 
-    public async void GetGachaHero(int _count)
+    public async UniTask GetGachaHero(int _count)
     {
         await GachaHeroes(_count);
     }
@@ -70,7 +70,12 @@ public class UI_GachaPopup : UI_Popup
         {
             float percentage = Random.Range(0.0f, 100.0f);
             float r_Percentage = 0.0f;
+
+            Managers.GameM.Summon_Count++;
+            Managers.GameM.Confirmed_Legendary_Count++;
+
             Define.CharacterGrade grade = Define.CharacterGrade.Common;
+
 
             if (i % horizontal_limit == 0 && i != 0)
             {
@@ -79,18 +84,29 @@ public class UI_GachaPopup : UI_Popup
 
             var heroInfo = Managers.UIM.MakeSubItem<UI_GachaHeroIcon>(horizontals[horizontalCount]);
 
-            for (int j = 0; j < 5; j++)
+
+            if(Managers.GameM.Confirmed_Legendary_Count >= Managers.DataM.GachaDataDic[Utils.GachaMaxLevel].SummonCount)
             {
-                r_Percentage += Utils.Gacha_Percentage[j];
-                if (percentage <= r_Percentage)
-                {
-                    grade = (Define.CharacterGrade)j;
-                    break;
-                }
+                Managers.GameM.Confirmed_Legendary_Count = 0;
+                grade = Define.CharacterGrade.Legendary;
             }
 
+            if(grade != Define.CharacterGrade.Legendary)
+            {
+                for (int j = 0; j < Utils.GradeCount; j++)
+                {
+                    r_Percentage += Utils.Gacha_Percentage()[j];
+                    if (percentage <= r_Percentage)
+                    {
+                        grade = (Define.CharacterGrade)j;
+                        break;
+                    }
+                }
+            }
+           
             Data.CreatureData data = Managers.GameM.gameData.GetGradeCharacter(grade);
             Managers.GameM.gameData.Character_Holder[data.Name].Count++;
+            
 
             heroInfo.Init().Forget();
             heroInfo.SetHeroIcon(data);
@@ -143,7 +159,7 @@ public class UI_GachaPopup : UI_Popup
             ResetIcon();
             Managers.RenderM.renderGacha.ClearList();
 
-            GetGachaHero(value);
+            GetGachaHero(value).Forget();
         }
         
     }

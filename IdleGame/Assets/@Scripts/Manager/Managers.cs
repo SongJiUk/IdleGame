@@ -91,10 +91,4 @@ public class Managers : MonoBehaviour
         PoolM.Clear();
     }
 
-    private void OnDestroy()
-    {
-        if(firebaseManager != null)
-            firebaseManager.WirteData();
-    }
-
 }

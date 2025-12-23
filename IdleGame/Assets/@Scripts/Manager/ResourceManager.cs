@@ -23,6 +23,7 @@ public class ResourceManager
     public Sprite GetAtlas(string _temp)
     {
         if (atlas == null) atlas = Managers.ResourceM.Load<SpriteAtlas>("Atlas");
+
         return atlas.GetSprite(_temp);
     }
     public T Load<T>(string _key) where T : Object

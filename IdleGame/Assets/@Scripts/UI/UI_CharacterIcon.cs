@@ -14,13 +14,17 @@ public class UI_CharacterIcon : UI_Base
     }
     enum Buttons
     {
-        UI_CharacterIcon
+        UI_CharacterIcon,
+    CharacterUseButton,
+
     }
     enum Images
     {
         UI_CharacterIcon,
         CharacterImage,
         CountFillImage,
+        PlusImage,
+        MinusImage
 
     }
     enum Texts
@@ -51,7 +55,9 @@ public class UI_CharacterIcon : UI_Base
         BindText(TextsType);
         BindButton(ButtonsType);
 
-        GetButton(ButtonsType, (int)Buttons.UI_CharacterIcon).gameObject.BindEvent(OnClickCharacter);
+        //TODO: 캐릭터 정보창
+        GetButton(ButtonsType, (int)Buttons.UI_CharacterIcon).gameObject.BindEvent(OnClickCharacterInfo);
+        GetButton(ButtonsType, (int)Buttons.CharacterUseButton).gameObject.BindEvent(OnClickCharacter);
 
 
         return true;
@@ -63,6 +69,10 @@ public class UI_CharacterIcon : UI_Base
         parent = _parent;
         GetImage(ImagesType, (int)Images.UI_CharacterIcon).sprite = Managers.ResourceM.GetAtlas(_data.CharacterGrade.ToString());
         GetImage(ImagesType, (int)Images.CharacterImage).sprite = Managers.ResourceM.GetAtlas(_data.prefabName);
+
+        GetImage(ImagesType, (int)Images.PlusImage).gameObject.SetActive(false);
+        GetImage(ImagesType, (int)Images.MinusImage).gameObject.SetActive(false);
+
         GetObject(GameObjectsType, (int)GameObjects.CharacterUseObject).SetActive(false);
 
         //TODO : 예시 
@@ -94,6 +104,12 @@ public class UI_CharacterIcon : UI_Base
         }
         GetObject(GameObjectsType, (int)GameObjects.CharacterUseObject).SetActive(isUseCharacter);
 
+    }
+
+    public async void OnClickCharacterInfo()
+    {
+        var popup = await Managers.UIM.ShowPopup<UI_CharacterInfoPopup>();
+        popup.SetInfo(data);
     }
 
     public void OnClickCharacter()

@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Characters
+  m_EditorClassIdentifier: 
+  m_GroupName: Characters
+  m_Data:
+    m_SerializedData: []
+  m_GUID: abe668996e921c944be56ab64982b830
+  m_SerializeEntries:
+  - m_GUID: a79c6f7fc3ca2429c8b4a7e1a275f91b
+    m_Address: TwoHandSword
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: b3ac7712206a64c538d5b36cb105c1b9
+    m_Address: Assassin
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 159ce3b4c650bac4b80418ea09c86dc4
+    m_Address: Archer
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 2074461c66be04b36a4bd5889ac1e16c
+    m_Address: SpearMan
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 7f50fb63631ee4261a75f3e49a35b9f8
+    m_Address: Knight
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 48ee9270f49414a1897c0948af6ea5ed
+    m_Address: Mage_M
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: bd66c02a202764af0b6a6248f40f78f6
+    m_Address: Mage_W
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 8cde3ba0c8be31e49a39a8c86e8352ea
+    m_Address: Cleric
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: feb3119f0c6404cf4a78897ff534845c
+    m_Address: Hammer
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 30db57c76ec074574b116261653b61b2
+    m_Address: Boss
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  - m_GUID: 0ce3605d7f2574dfc9067810672e4153
+    m_Address: Monster
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ca570c7d28bbb4267b961b4eeab1c88e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: cb043b0410bc30b40a2e5da03a0f2912, type: 2}
+    - {fileID: 11400000, guid: af6a39d499cbc4749b5f7afe0f8ed2de, type: 2}

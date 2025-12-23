@@ -10,10 +10,8 @@ using System.Linq;
 
 public static class Utils
 {
-
-    //TODO : 확률 이거 나중에 데이터로 관리하기
-    public static float[] Gacha_Percentage = { 60.0f, 20.0f, 10.0f, 6.0f, 4.0f };
-
+    public const int GachaMaxLevel = 10;
+    public const int GradeCount = 5;
     //NOTE: 레벨 데이터 값
     private static LevelDesign datas;
     public static LevelDesign Datas
@@ -538,10 +536,31 @@ public static class Utils
         }
     }
 
+    public static int Summon_Level(int _count)
+    {
+        if(_count >= Managers.DataM.GachaDataDic[GachaMaxLevel].SummonCount)
+        {
+            return GachaMaxLevel;
+        }
 
+        for (int i = 1; i <= GachaMaxLevel; i++)
+        {
+            if (_count < Managers.DataM.GachaDataDic[i].SummonCount)
+            {
+                return i;
+            }
+        }
 
+        return -1;
+    }    
+    public static float[] Gacha_Percentage()
+    {
+        float[] valueCount = new float[GradeCount];
 
-
+        valueCount = Managers.DataM.GachaDataDic[Summon_Level(Managers.GameM.Summon_Count)].GetRates();
+        
+        return valueCount;
+    }
 
     //// DamageEffect.cs
 

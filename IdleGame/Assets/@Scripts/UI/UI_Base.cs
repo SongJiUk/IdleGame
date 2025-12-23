@@ -38,6 +38,7 @@ public class UI_Base : MonoBehaviour
 
     public virtual void SetInfo()
     {
+        //TODO : 이걸 사용하는 팝업이 있고 안하는 팝업이있는데, 그냥 선언해서 하는게 나으려나
     }
     #endregion
 

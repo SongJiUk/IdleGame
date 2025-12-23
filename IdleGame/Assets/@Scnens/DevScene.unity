@@ -319,9 +319,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_SavingMode
       objectReference: {fileID: 0}
+    - target: {fileID: 7278129742281498606, guid: b5444806e2d24894398dd0f58fd309ec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7278129742307965415, guid: b5444806e2d24894398dd0f58fd309ec, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -561
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5444806e2d24894398dd0f58fd309ec, type: 3}
@@ -620,7 +624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAccessGoogleSheet: 1
   googleSheetUrl: https://script.google.com/macros/s/AKfycbz3UOGnRSdHVVANrG6_YRP4lB0d69YK2qce46Gl2ZJ6ryD_eCFJyhv8zC4i809MEICwsw/exec
-  availSheets: WeaponData/CreatureData/ProjectileData/ItemData/StageSpawnData/SkillData/SkillEffectData/BuffTypeData/VFXData
+  availSheets: 
   generateFolderPath: /GenerateGoogleSheet
   datasSO: {fileID: 11400000, guid: a1990fd92d20348a8b88231ba006c60a, type: 2}
 --- !u!1 &2026532870

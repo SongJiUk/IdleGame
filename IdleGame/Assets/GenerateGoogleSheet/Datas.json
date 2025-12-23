@@ -217,58 +217,94 @@
   ],
   "GachaData": [
     {
-      "GachaType": "HeroGacha",
-      "DataID": 1,
-      "GachaRate": 60,
-      "Grade": "Common"
+      "Level": 1,
+      "Common": 70,
+      "UnCommon": 20,
+      "Rare": 10,
+      "Unique": 0,
+      "Legendary": 0,
+      "SummonCount": 11
     },
     {
-      "GachaType": "HeroGacha",
-      "DataID": 2,
-      "GachaRate": 20,
-      "Grade": "UnCommon"
+      "Level": 2,
+      "Common": 68,
+      "UnCommon": 21,
+      "Rare": 11,
+      "Unique": 0,
+      "Legendary": 0,
+      "SummonCount": 22
     },
     {
-      "GachaType": "HeroGacha",
-      "DataID": 3,
-      "GachaRate": 10,
-      "Grade": "Rare"
+      "Level": 3,
+      "Common": 65,
+      "UnCommon": 22,
+      "Rare": 12,
+      "Unique": 1,
+      "Legendary": 0,
+      "SummonCount": 33
     },
     {
-      "GachaType": "HeroGacha",
-      "DataID": 4,
-      "GachaRate": 10,
-      "Grade": "Rare"
+      "Level": 4,
+      "Common": 62,
+      "UnCommon": 23,
+      "Rare": 13,
+      "Unique": 2,
+      "Legendary": 0,
+      "SummonCount": 44
     },
     {
-      "GachaType": "HeroGacha",
-      "DataID": 5,
-      "GachaRate": 6,
-      "Grade": "Unique"
+      "Level": 5,
+      "Common": 58.9,
+      "UnCommon": 24,
+      "Rare": 14,
+      "Unique": 3,
+      "Legendary": 0.1,
+      "SummonCount": 55
     },
     {
-      "GachaType": "HeroGacha",
-      "DataID": 6,
-      "GachaRate": 6,
-      "Grade": "Unique"
+      "Level": 6,
+      "Common": 55.89,
+      "UnCommon": 25,
+      "Rare": 15,
+      "Unique": 4,
+      "Legendary": 0.11,
+      "SummonCount": 66
     },
     {
-      "GachaType": "HeroGacha",
-      "DataID": 7,
-      "GachaRate": 6,
-      "Grade": "Unique"
+      "Level": 7,
+      "Common": 52.88,
+      "UnCommon": 26,
+      "Rare": 16,
+      "Unique": 5,
+      "Legendary": 0.12,
+      "SummonCount": 77
     },
     {
-      "GachaType": "HeroGacha",
-      "DataID": 8,
-      "GachaRate": 4,
-      "Grade": "Legendary"
+      "Level": 8,
+      "Common": 49.87,
+      "UnCommon": 27,
+      "Rare": 17,
+      "Unique": 6,
+      "Legendary": 0.13,
+      "SummonCount": 88
     },
     {
-      "GachaType": "HeroGacha",
-      "DataID": 9,
-      "GachaRate": 4,
-      "Grade": "Legendary"
+      "Level": 9,
+      "Common": 46.86,
+      "UnCommon": 28,
+      "Rare": 18,
+      "Unique": 7,
+      "Legendary": 0.14,
+      "SummonCount": 99
+    },
+    {
+      "Level": 10,
+      "Common": 43.85,
+      "UnCommon": 29,
+      "Rare": 19,
+      "Unique": 8,
+      "Legendary": 0.15,
+      "SummonCount": 110
     }
   ],
   "ProjectileData": [
@@ -560,6 +596,7 @@
       "DataID": 40000,
       "SkillName": "Heal",
       "SkillNameKR": "힐",
+      "Description": "힐 입니다.",
       "SkillAttackCount": 0,
       "SkillDuration": 0,
       "SkillInterval": 0,
@@ -579,6 +616,7 @@
       "DataID": 41000,
       "SkillName": "PoisonArrow",
       "SkillNameKR": "독화살",
+      "Description": "독화살 입니다.",
       "SkillAttackCount": 1,
       "SkillDuration": 0,
       "SkillInterval": 0,
@@ -598,6 +636,7 @@
       "DataID": 42000,
       "SkillName": "AssassiNation",
       "SkillNameKR": "암살",
+      "Description": "암살 입니다.",
       "SkillAttackCount": 3,
       "SkillDuration": 0,
       "SkillInterval": 0,
@@ -617,6 +656,7 @@
       "DataID": 43000,
       "SkillName": "SpinAttack",
       "SkillNameKR": "회전공격",
+      "Description": "회전공격 입니다.",
       "SkillAttackCount": 3,
       "SkillDuration": 1.8,
       "SkillInterval": 0.6,
@@ -636,6 +676,7 @@
       "DataID": 44000,
       "SkillName": "RightSword",
       "SkillNameKR": "빛의검",
+      "Description": "빛의검 입니다.",
       "SkillAttackCount": 1,
       "SkillDuration": 0,
       "SkillInterval": 0,
@@ -655,6 +696,7 @@
       "DataID": 45000,
       "SkillName": "AttackFront",
       "SkillNameKR": "전방공격",
+      "Description": "전방공격 입니다.",
       "SkillAttackCount": 1,
       "SkillDuration": 0,
       "SkillInterval": 0,
@@ -674,6 +716,7 @@
       "DataID": 46000,
       "SkillName": "CutTwice",
       "SkillNameKR": "두번베기",
+      "Description": "두번베기 입니다.",
       "SkillAttackCount": 2,
       "SkillDuration": 0,
       "SkillInterval": 0,
@@ -693,6 +736,7 @@
       "DataID": 47000,
       "SkillName": "Metor",
       "SkillNameKR": "메테오",
+      "Description": "메테오 입니다.",
       "SkillAttackCount": 1,
       "SkillDuration": 1,
       "SkillInterval": 0,
@@ -712,6 +756,7 @@
       "DataID": 48000,
       "SkillName": "Buff",
       "SkillNameKR": "버프",
+      "Description": "버프 입니다.",
       "SkillAttackCount": 0,
       "SkillDuration": 0,
       "SkillInterval": 0,
@@ -731,6 +776,7 @@
       "DataID": 49000,
       "SkillName": "BossSkill",
       "SkillNameKR": "보스 스킬",
+      "Description": "보스스킬 입니다.",
       "SkillAttackCount": 3,
       "SkillDuration": 0,
       "SkillInterval": 0.6,

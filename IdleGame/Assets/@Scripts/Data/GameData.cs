@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Data;
-
+using Newtonsoft.Json;
 
 public class CharacterHolder
 {
@@ -11,40 +11,25 @@ public class CharacterHolder
     public Holder holder;
 }
 
+[Serializable]
 public class Holder
 {
-    int level;
+    public int level;
+    public int count;
 
-    public int Level
-    {
-        get => level;
-        set
-        {
-            if(level != value)
-            {
-                Debug.Log($"[Holder Level 변경] {level} -> {value}\n{StackTraceUtility.ExtractStackTrace()}");
-                level = value;
-            }
-        }
-    }
-    int count;
-    public int Count
-    {
-        get => count;
-
-        set
-        {
-            if (count != value)
-            {
-                Debug.Log($"[Holder Level 변경] {count} -> {value}\n{StackTraceUtility.ExtractStackTrace()}");
-                count = value;
-            }
-        }
-    }
+    [JsonIgnore]
+    public int Level { get => level; set => level = value; }
+    public int Count { get => count; set => count = value; }
+   
 }
 
 public class GameData
 {
+    public GameData()
+    {
+        Debug.Log($"[GameData 생성됨] 호출 스택: {StackTraceUtility.ExtractStackTrace()}");
+    }
+
     public double gold;
     public double dia;
     public int level = 1;
@@ -55,9 +40,12 @@ public class GameData
     public float fast_Timer = 0.0f;
     public int buff_Level, buff_count;
 
+    public int summonCount = 0;
+    public int confirmedLegendaryCount = 0;
     //플레이어가 가지고 있는 데이터 저장
     public Dictionary<string, CharacterHolder> Characters_Data = new Dictionary<string, CharacterHolder>();
     public Dictionary<string, Holder> Character_Holder = new Dictionary<string, Holder>();
+
 
     public void Init()
     {
@@ -66,21 +54,17 @@ public class GameData
    
     public void ChangeCharacterInfo(Data.CreatureData _data)
     {
+        if (!Character_Holder.TryGetValue(_data.Name, out Holder holder))
+        {
+            holder = new Holder();
+            Character_Holder.Add(_data.Name, holder);
+        }
+
+
         var character = new CharacterHolder();
         character.data = _data;
-
-        Holder holder = new Holder();
-        if (Character_Holder.ContainsKey(_data.Name))
-        {
-            holder = Character_Holder[_data.Name];
-        }
-
         character.holder = holder;
-
-        if(Characters_Data.ContainsKey(_data.Name))
-        {
-            Characters_Data[_data.Name] = character;
-        }
+        Characters_Data[_data.Name] = character;
     }
 
     private void SetCharacter()
@@ -90,8 +74,7 @@ public class GameData
         {
             if (data.Type != Define.ObjectType.Player) continue;
 
-            Holder currentHolder;
-            if (Character_Holder.TryGetValue(data.Name, out currentHolder))
+            if (Character_Holder.TryGetValue(data.Name, out Holder currentHolder))
             {
                 Debug.Log($"[로드 확인] {data.Name} : 개수 {currentHolder.Count}");
             }
@@ -105,7 +88,6 @@ public class GameData
             var character = new CharacterHolder();
             character.data = data;
             character.holder = currentHolder;
-
             Characters_Data[data.Name] = character;
         }
     }
