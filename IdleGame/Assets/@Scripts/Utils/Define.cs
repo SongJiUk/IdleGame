@@ -122,7 +122,7 @@ public static class Define
         SpearMan,
         TwoHandSword,
         Mage_M,
-        Mage_W,
+        Enchantress,
         Monster,
         Boss,
     }

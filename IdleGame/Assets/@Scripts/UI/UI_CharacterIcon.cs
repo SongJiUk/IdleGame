@@ -15,7 +15,7 @@ public class UI_CharacterIcon : UI_Base
     enum Buttons
     {
         UI_CharacterIcon,
-    CharacterUseButton,
+        CharacterUseButton,
 
     }
     enum Images
@@ -67,6 +67,9 @@ public class UI_CharacterIcon : UI_Base
     {
         data = _data;
         parent = _parent;
+        parent.OnValueChange -= CheckUseCharacter;
+        parent.OnValueChange += CheckUseCharacter;
+
         GetImage(ImagesType, (int)Images.UI_CharacterIcon).sprite = Managers.ResourceM.GetAtlas(_data.CharacterGrade.ToString());
         GetImage(ImagesType, (int)Images.CharacterImage).sprite = Managers.ResourceM.GetAtlas(_data.prefabName);
 
@@ -75,15 +78,16 @@ public class UI_CharacterIcon : UI_Base
 
         GetObject(GameObjectsType, (int)GameObjects.CharacterUseObject).SetActive(false);
 
-        //TODO : 예시 
-        int levelCount = Managers.GameM.gameData.Character_Holder[_data.Name].Level * 5;
-        GetImage(ImagesType, (int)Images.CountFillImage).fillAmount = (float)Managers.GameM.gameData.Character_Holder[_data.Name].Count / (float)levelCount;
-        GetText(TextsType, (int)Texts.CharacterCountText).text = Managers.GameM.gameData.Character_Holder[_data.Name].Count.ToString() + " / " + levelCount.ToString();
-        GetText(TextsType, (int)Texts.CharacterLevelText).text = "Lv. " + Managers.GameM.gameData.Character_Holder[_data.Name].Level.ToString();
-        Reset();
+
+        RefreshUI();
     }
-    public void Reset()
+    public void RefreshUI()
     {
+        int levelCount = Managers.GameM.gameData.Character_Holder[data.Name].Level * 5;
+        GetImage(ImagesType, (int)Images.CountFillImage).fillAmount = (float)Managers.GameM.gameData.Character_Holder[data.Name].Count / (float)levelCount;
+        GetText(TextsType, (int)Texts.CharacterCountText).text = Managers.GameM.gameData.Character_Holder[data.Name].Count.ToString() + " / " + levelCount.ToString();
+        GetText(TextsType, (int)Texts.CharacterLevelText).text = "Lv. " + Managers.GameM.gameData.Character_Holder[data.Name].Level.ToString();
+
         this.GetComponent<Outline>().enabled = false;
         GetObject(GameObjectsType, (int)GameObjects.CharacterLockObject).SetActive(false);
 
@@ -102,6 +106,10 @@ public class UI_CharacterIcon : UI_Base
                 isUseCharacter = true;
             }
         }
+
+        GetImage(ImagesType, (int)Images.MinusImage).gameObject.SetActive(isUseCharacter);
+        GetImage(ImagesType, (int)Images.PlusImage).gameObject.SetActive(!isUseCharacter);
+
         GetObject(GameObjectsType, (int)GameObjects.CharacterUseObject).SetActive(isUseCharacter);
 
     }
@@ -110,14 +118,30 @@ public class UI_CharacterIcon : UI_Base
     {
         var popup = await Managers.UIM.ShowPopup<UI_CharacterInfoPopup>();
         popup.SetInfo(data);
+        popup.OnChangeCharacterInfo -= CheckCharacterInfo;
+        popup.OnChangeCharacterInfo += CheckCharacterInfo;
+    }
+
+    public void CheckCharacterInfo()
+    {
+        RefreshUI();
     }
 
     public void OnClickCharacter()
     {
-        if (isUseCharacter) return;
+        if (isUseCharacter)
+        {
+            //TODO : 여기선 뺴기.
 
-        parent.SetClick(this);
-        Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(true);
+            parent.SetClick(this, true);
+            Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(true);
+        }
+        else
+        {
+            parent.SetClick(this);
+            Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(true);
+        }
+
     }
 
     public void SetLockImage(bool _isLock)

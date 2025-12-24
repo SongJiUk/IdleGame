@@ -288,7 +288,7 @@ public abstract class SkillBase
 
                 foreach (CreatureController enemy in enemiesInArea)
                 {
-                    SetDamage(_caster, enemy);
+                    SetDamage(_caster, enemy, 0.2f);
                 }
             }
 

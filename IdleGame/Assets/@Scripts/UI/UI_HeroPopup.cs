@@ -35,9 +35,13 @@ public class UI_HeroPopup : UI_Popup
     }
     UI_CharacterIcon clickCharacter;
     RectTransform rect;
+    public System.Action OnValueChange;
+    bool isRemoveCharacter = false;
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
+        Managers.StageM.playEvent -= OnPlay;
+        Managers.StageM.playEvent += OnPlay;
         GameObjectsType = typeof(GameObjects);
         TextsType = typeof(Texts);
         ButtonsType = typeof(Buttons);
@@ -119,25 +123,58 @@ public class UI_HeroPopup : UI_Popup
         //일단 선택된 캐릭터가 없으면 return
         if (clickCharacter == null) return;
         if (_clickButton > Buttons.Circle6Button) return;
-        if (Managers.RenderM.renderCharacter.isCheckCharacter((int)_clickButton)) return;
+
+        InitCharacter(_clickButton);
+    }
+
+    void InitCharacter(Buttons _clickButton)
+    {
+
+        if (Managers.RenderM.renderCharacter.isCheckCharacter((int)_clickButton))
+        {
+            //TODO : 여기는 해당 버튼에 캐릭터가 있을때
+            Managers.CharacterM.SetCharacter((int)_clickButton, clickCharacter.DATA.Name);
+            Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(false);
+            SetClick(null);
+            (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
+
+            Managers.RenderM.renderCharacter.ChangeCharacter();
+            OnValueChange?.Invoke();
+            clickCharacter = null;
+        }
+        else
+        {
+            //TODO : 전에클릭되어있던 clickCharacter정보 가져와서 거기 초기화 시켜줘야함
+
+            Managers.CharacterM.SetCharacter((int)_clickButton, clickCharacter.DATA.Name);
+            //해당 지역 이펙트
+            Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(false);
+            //해당 아이콘 잠금 처리?
+            SetClick(null);
+            //TODO : 아직 게임 진행중일때, 대기중 사진 띄우기.
+            (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
 
 
-        //TODO : 이렇게 해서 해당 지역 체크 후 넣어주기
-        Managers.CharacterM.GetCharacter((int)_clickButton, clickCharacter.DATA.Name);
-        Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(false);
-        SetClick(null);
-        //TODO : 아직 게임 진행중일때, 대기중 사진 띄우기.
-        (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
-
-        Managers.RenderM.renderCharacter.InitCharacter();
-        clickCharacter.CheckUseCharacter();
-
-        clickCharacter = null;
+            //여기서 해당 지역에 있던 오브젝트를 변경해줘야할듯
+            Managers.RenderM.renderCharacter.InitCharacter();
+            OnValueChange?.Invoke();
+            clickCharacter = null;
+        }
     }
 
 
+    void OnlyRemoveCharacter()
+    {
+        Managers.CharacterM.GetCharacter(clickCharacter.DATA.Name);
+        SetClick(null);
+        isRemoveCharacter = true;
 
-    public void SetClick(UI_CharacterIcon _clickCharacter)
+        Managers.RenderM.renderCharacter.RemoveCharacter();
+        OnValueChange?.Invoke();
+        clickCharacter = null;
+    }
+
+    public void SetClick(UI_CharacterIcon _clickCharacter, bool _isMinusClick = false)
     {
 
         if (_clickCharacter == null)
@@ -151,16 +188,28 @@ public class UI_HeroPopup : UI_Popup
         else
         {
             clickCharacter = _clickCharacter;
-            for (int i = 0; i < characters.Count; i++)
+            if (_isMinusClick)
             {
-                characters[i].SetLockImage(true);
-                characters[i].GetComponent<Outline>().enabled = false;
+                OnlyRemoveCharacter();
             }
+            else
+            {
+                for (int i = 0; i < characters.Count; i++)
+                {
+                    characters[i].SetLockImage(true);
+                    characters[i].GetComponent<Outline>().enabled = false;
+                }
 
-            clickCharacter.SetLockImage(false);
-            clickCharacter.GetComponent<Outline>().enabled = true;
+                clickCharacter.SetLockImage(false);
+                clickCharacter.GetComponent<Outline>().enabled = true;
+            }
         }
     }
 
+    public void OnPlay()
+    {
+        (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
+        isRemoveCharacter = false;
+    }
 
 }

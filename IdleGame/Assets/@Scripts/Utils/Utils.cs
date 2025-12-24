@@ -508,6 +508,7 @@ public static class Utils
 
     #endregion
 
+
     public static string StringToColorGrade(Define.ItemGrade _grade)
     {
         switch (_grade)
@@ -521,6 +522,21 @@ public static class Utils
 
         return "<color=#FFFFFF>";
     }
+
+    public static string StringToColorGrade(Define.CharacterGrade _grade)
+    {
+        switch (_grade)
+        {
+            case Define.CharacterGrade.Common: return "<color=#FFFFFF>";
+            case Define.CharacterGrade.UnCommon: return "<color=#00FF00>";
+            case Define.CharacterGrade.Rare: return "<color=#0000FF>";
+            case Define.CharacterGrade.Unique: return "<color=#BB45FF>";
+            case Define.CharacterGrade.Legendary: return "<color=#FF9A45>";
+        }
+
+        return "<color=#FFFFFF>";
+    }
+
 
     public static void Shuffle<T>(this List<T> _list)
     {
@@ -538,7 +554,7 @@ public static class Utils
 
     public static int Summon_Level(int _count)
     {
-        if(_count >= Managers.DataM.GachaDataDic[GachaMaxLevel].SummonCount)
+        if (_count >= Managers.DataM.GachaDataDic[GachaMaxLevel].SummonCount)
         {
             return GachaMaxLevel;
         }
@@ -552,13 +568,13 @@ public static class Utils
         }
 
         return -1;
-    }    
+    }
     public static float[] Gacha_Percentage()
     {
         float[] valueCount = new float[GradeCount];
 
         valueCount = Managers.DataM.GachaDataDic[Summon_Level(Managers.GameM.Summon_Count)].GetRates();
-        
+
         return valueCount;
     }
 

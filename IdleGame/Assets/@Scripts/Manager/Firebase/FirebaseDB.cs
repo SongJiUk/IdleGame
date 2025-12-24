@@ -105,12 +105,6 @@ public partial class FirebaseManager
 
             });
         #endregion
-
-
-        
-        
-
-
     }
 
     public async UniTask ReadDataAsync()
@@ -138,11 +132,11 @@ public partial class FirebaseManager
             Debug.Log("3. Init(SetCharacter) 완료");
             Debug.Log("모든 데이터 로드 및 초기화 완료");
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             Debug.LogError($"데이터 로드 중 오류 발생: {e.Message}");
         }
-        
+
 
     }
 }

@@ -43,8 +43,8 @@ public static class SkillRegistry
                new List<Type>{typeof(Mage_M_Skill) }
            },
            {
-               CreatureType.Mage_W,
-               new List<Type>{typeof(Mage_W_Skill) }
+               CreatureType.Enchantress,
+               new List<Type>{typeof(Enchantress_Skill) }
            },
            {
                CreatureType.Boss,

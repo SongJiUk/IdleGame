@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-public class Mage_W_Skill : SkillBase
+public class Enchantress_Skill : SkillBase
 {
 
-    public Mage_W_Skill()
+    public Enchantress_Skill()
     {
     }
 
@@ -16,7 +16,7 @@ public class Mage_W_Skill : SkillBase
 
         if (effects == null || effects.Count < 2)
         {
-            Debug.LogError("[Mage_W_Skill] : skillEffects가 제대로 설정되지 않았음.");
+            Debug.LogError("[EnchantressSkill] : skillEffects가 제대로 설정되지 않았음.");
             return false;
         }
 
@@ -30,7 +30,7 @@ public class Mage_W_Skill : SkillBase
             var chosenEffect = (Random.Range(0, 2) == 0) ? effects[0] : effects[1];
             if (chosenEffect == null)
             {
-                Debug.LogError("[Mage_W_Skill] : 랜덤선택된 이펙트가 없음.");
+                Debug.LogError("[EnchantressSkill] : 랜덤선택된 이펙트가 없음.");
                 return false;
             }
             chosenEffect.Execute(_caster, randPlayer);
@@ -42,7 +42,7 @@ public class Mage_W_Skill : SkillBase
         }
         else
         {
-            Debug.Log("[Mage_W_Skill] : 유효한 아군이 없음");
+            Debug.Log("[Enchantress_Skill] : 유효한 아군이 없음");
             return false;
         }
 

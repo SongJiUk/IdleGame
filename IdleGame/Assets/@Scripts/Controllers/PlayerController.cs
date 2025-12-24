@@ -82,9 +82,9 @@ public class PlayerController : CreatureController
         isAttack = false;
         SpawnPos = transform.position;
         //TODO : 지우기
-        hp = Utils.Datas.levelData.HP((float)baseHp, Managers.GameM.Level);
+        hp = Utils.Datas.levelData.HP();
         maxHp = hp;
-        damage = Utils.Datas.levelData.Damage((float)baseDamage, Managers.GameM.Level);
+        damage = Utils.Datas.levelData.Damage();
         mp = 0;
         maxMp = DATA.MaxMp;
         attackrange = DATA.AttackRange;
@@ -94,11 +94,15 @@ public class PlayerController : CreatureController
         CriticalRate = 0.5f;
         target = null;
     }
-
+    public void SetStat()
+    {
+        hp = Managers.PlayerM.GetHP(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name]);
+        damage = Managers.PlayerM.GetAttack(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name]);
+    }
     public override void InitStat()
     {
-        damage = Utils.Datas.levelData.Damage((float)baseDamage, Managers.GameM.Level);
-        hp = Utils.Datas.levelData.HP((float)BaseHp, Managers.GameM.Level);
+        damage = Utils.Datas.levelData.Damage();
+        hp = Utils.Datas.levelData.HP();
     }
 
     public override void OnDamage()

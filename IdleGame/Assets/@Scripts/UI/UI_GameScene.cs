@@ -639,7 +639,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             //TODO : 메인캐릭터가 0이기 떄문에, -1
             if (Managers.CharacterM.Characters[i] != null)
             {
-
                 GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + (i - 1)).gameObject.SetActive(false);
                 GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).gameObject.SetActive(true);
                 GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).sprite = Managers.ResourceM.GetAtlas(Managers.CharacterM.Characters[i].data.Name);
@@ -664,6 +663,16 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
                 GetObject(GameObjectsType, (int)GameObjects.Character1_Object + (i - 1)).transform.SetSiblingIndex(index);
                 index++;
+            }
+            //TODO : 이거 나중에 오류나면 Icon으로 뺀것빼문임. 
+            else
+            {
+                GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + (i - 1)).gameObject.SetActive(true);
+                GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).gameObject.SetActive(false);
+                GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).sprite = null;
+                GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + (i - 1)).gameObject.SetActive(false);
+                GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + (i - 1)).gameObject.SetActive(false);
+                GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + (i - 1)).gameObject.SetActive(false);
             }
         }
     }
@@ -755,6 +764,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
     }
 
+    //TODO : 반드시 게임씬에 들어가있는것들 나누기
     public void CheckTexts()
     {
         needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.Level, Utils.Datas.levelData.Player_Gold);
@@ -772,8 +782,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
         GetImage(ImagesType, (int)Images.Exp_FillImage).fillAmount = Managers.PlayerM.ExpPercent();
         GetText(TextsType, (int)Texts.ExpText).text = string.Format("{0:0.00}", Managers.PlayerM.ExpPercent() * 100.0f) + "%";
-        GetText(TextsType, (int)Texts.AttackText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.Damage(Managers.GameM.mPlayer.BaseDamage, Managers.GameM.Level))}";
-        GetText(TextsType, (int)Texts.HpText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.HP(Managers.GameM.mPlayer.BaseHp, Managers.GameM.Level))}";
+        GetText(TextsType, (int)Texts.AttackText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.Damage())}";
+        GetText(TextsType, (int)Texts.HpText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.HP())}";
         GetText(TextsType, (int)Texts.NeedLevelUpText).text = Utils.ToCurrencyString(needGold);
         GetText(TextsType, (int)Texts.NeedLevelUpText).color = Utils.CoinCheck(needGold) ? Color.green : Color.red;
         GetText(TextsType, (int)Texts.GetExpText).text = $"<color=#00FF00>EXP</color> + {string.Format("{0:0.00}", Managers.PlayerM.NextExp())}%";
@@ -788,7 +798,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         //GetImage(ImagesType, (int)Images.CharacterImage).sprite = "";
         GetText(TextsType, (int)Texts.CharacterLevelText).text = $"LV : {Managers.GameM.Level}";
         //TODO :이거 소수점 끝까지 안나오게 수정하기
-        GetText(TextsType, (int)Texts.UserCombatPowerText).text = Utils.ToCurrencyString(Utils.Datas.levelData.Damage(Managers.GameM.mPlayer.BaseDamage, Managers.GameM.Level) + Utils.Datas.levelData.HP(Managers.GameM.mPlayer.BaseHp, Managers.GameM.Level));
+        GetText(TextsType, (int)Texts.UserCombatPowerText).text = Utils.ToCurrencyString(Utils.Datas.levelData.Damage() + Utils.Datas.levelData.HP());
     }
 
     IEnumerator coPush()

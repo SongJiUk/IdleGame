@@ -14,13 +14,8 @@ public class CharacterHolder
 [Serializable]
 public class Holder
 {
-    public int level;
-    public int count;
-
-    [JsonIgnore]
-    public int Level { get => level; set => level = value; }
-    public int Count { get => count; set => count = value; }
-   
+    public int Level = 1;
+    public int Count = 0;
 }
 
 public class GameData
@@ -51,7 +46,7 @@ public class GameData
     {
         SetCharacter();
     }
-   
+
     public void ChangeCharacterInfo(Data.CreatureData _data)
     {
         if (!Character_Holder.TryGetValue(_data.Name, out Holder holder))
@@ -87,6 +82,8 @@ public class GameData
 
             var character = new CharacterHolder();
             character.data = data;
+            //TODO : 레벨값 처음에 0으로 들어가있는거 긴급 코드(지울거임)
+            //if (currentHolder.Level == 0) currentHolder.Level = 1;
             character.holder = currentHolder;
             Characters_Data[data.Name] = character;
         }

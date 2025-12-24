@@ -23,6 +23,7 @@ namespace Data
         public int MaxMp;
         public int ProjectileDataID;
         public int SkillDataID;
+
     }
 
     public class CreatureDataLoader : ILoader<int, CreatureData>
