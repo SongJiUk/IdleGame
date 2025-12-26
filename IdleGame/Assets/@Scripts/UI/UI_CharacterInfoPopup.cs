@@ -70,6 +70,8 @@ public class UI_CharacterInfoPopup : UI_Popup
         GetText(TextsType, (int)Texts.CharacterInfoDescriptionText).text = data.Description;
         GetImage(ImagesType, (int)Images.CharacterInfoBackGround).sprite = Managers.ResourceM.GetAtlas(data.CharacterGrade.ToString());
         GetImage(ImagesType, (int)Images.CharacterInfoImage).sprite = Managers.ResourceM.GetAtlas(data.Name);
+        GetImage(ImagesType, (int)Images.CharacterInfoImage).SetNativeSize();
+
 
         var damage = Managers.PlayerM.GetAttack(data.CharacterGrade, Managers.GameM.gameData.Characters_Data[data.Name]);
         var hp = Managers.PlayerM.GetHP(data.CharacterGrade, Managers.GameM.gameData.Characters_Data[data.Name]);
@@ -123,7 +125,8 @@ public class UI_CharacterInfoPopup : UI_Popup
                 OnChangeCharacterInfo?.Invoke();
                 RefreshUI();
             }
+            else
+                Managers.UIM.ShowToast("캐릭터의 개수가 부족합니다.");
         }
     }
-
 }

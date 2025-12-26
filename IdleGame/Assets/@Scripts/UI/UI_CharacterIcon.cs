@@ -67,11 +67,12 @@ public class UI_CharacterIcon : UI_Base
     {
         data = _data;
         parent = _parent;
-        parent.OnValueChange -= CheckUseCharacter;
-        parent.OnValueChange += CheckUseCharacter;
+        parent.OnValueChange -= RefreshUI;
+        parent.OnValueChange += RefreshUI;
 
         GetImage(ImagesType, (int)Images.UI_CharacterIcon).sprite = Managers.ResourceM.GetAtlas(_data.CharacterGrade.ToString());
         GetImage(ImagesType, (int)Images.CharacterImage).sprite = Managers.ResourceM.GetAtlas(_data.prefabName);
+        GetImage(ImagesType, (int)Images.CharacterImage).SetNativeSize();
 
         GetImage(ImagesType, (int)Images.PlusImage).gameObject.SetActive(false);
         GetImage(ImagesType, (int)Images.MinusImage).gameObject.SetActive(false);
@@ -111,7 +112,6 @@ public class UI_CharacterIcon : UI_Base
         GetImage(ImagesType, (int)Images.PlusImage).gameObject.SetActive(!isUseCharacter);
 
         GetObject(GameObjectsType, (int)GameObjects.CharacterUseObject).SetActive(isUseCharacter);
-
     }
 
     public async void OnClickCharacterInfo()

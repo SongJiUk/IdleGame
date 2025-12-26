@@ -1077,7 +1077,17 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 timer = 0.0f;
                 ExpUPAnim();
             }
-
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (Managers.UIM.popupStack.Count > 0)
+            {
+                Managers.UIM.CloseAllPopup();
+            }
+            else
+            {
+                Managers.UIM.ShowPopup<UI_GameExitPopup>().Forget();
+            }
         }
     }
 

@@ -109,6 +109,7 @@
      <Compile Include="Assets/@Scripts/Skill/Buffs/HealBuff.cs" />
      <Compile Include="Assets/@Scripts/UI/UI_GachaPopup.cs" />
      <Compile Include="Assets/@Scripts/Manager/GameManager.cs" />
+     <Compile Include="Assets/@Scripts/UI/UI_GameExitPopup.cs" />
      <Compile Include="Assets/@Scripts/Skill/ParticleController.cs" />
      <Compile Include="Assets/@Scripts/UI/UI_GachaHeroIcon.cs" />
      <Compile Include="Assets/@Resources/Prefabs/Creature/Monster/SazenGames/Skeleton/Scripts/AnimationReplayer.cs" />
@@ -123,6 +124,7 @@
      <Compile Include="Assets/@Scripts/UI/UIDirecting/DamageFont.cs" />
      <Compile Include="Assets/@Scripts/UI/UI_CharacterInfoPopup.cs" />
      <Compile Include="Assets/@Scripts/UI/UI_SavingMode.cs" />
+     <Compile Include="Assets/@Scripts/UI/UI_CharacterUpgradePopup.cs" />
      <Compile Include="Assets/@Scripts/Manager/CustomSceneManager.cs" />
      <Compile Include="Assets/@Scripts/Utils/EditorStartInit.cs" />
      <Compile Include="Assets/@Scripts/UI/UI_Popup.cs" />
@@ -130,6 +132,7 @@
      <Compile Include="Assets/@Scripts/Skill/Buffs/DefenseBuff.cs" />
      <Compile Include="Assets/@Scripts/Manager/SkillEffectDataLoader.cs" />
      <Compile Include="Assets/@Scripts/Manager/ItemManager.cs" />
+     <Compile Include="Assets/@Scripts/UI/UI_UpgradeHeroIcon.cs" />
      <Compile Include="Assets/@Scripts/Manager/RenderManager.cs" />
      <Compile Include="Assets/@Scripts/Manager/UIManager.cs" />
      <Compile Include="Assets/@Resources/Package/Scripts/StringMethod.cs" />

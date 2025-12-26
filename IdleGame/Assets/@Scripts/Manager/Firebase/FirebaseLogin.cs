@@ -5,21 +5,33 @@ using Firebase.Extensions;
 public partial class FirebaseManager
 {
     //Guest
-    public void GuestLogin()
+    public async UniTask GuestLogin()
     {
-        auth.SignInAnonymouslyAsync().ContinueWithOnMainThread(task =>
+        try
         {
-
-            if(task.IsCanceled || task.IsFaulted)
-            {
-                Debug.Log("게스트 로그인 실패");
-                return;
-            }
-
-            FirebaseUser user = task.Result.User;
+            Firebase.Auth.AuthResult authResult = await auth.SignInAnonymouslyAsync().AsUniTask();
+            FirebaseUser user = authResult.User;
             Debug.Log("게스트 로그인 성공 ! 사용자 ID : " + user.UserId);
-            ReadDataAsync().Forget();
-        });
+            await ReadDataAsync();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"로그인 실패 : {e.Message}");
+        }
+
+        // auth.SignInAnonymouslyAsync().ContinueWithOnMainThread(task =>
+        // {
+
+        //     if (task.IsCanceled || task.IsFaulted)
+        //     {
+        //         Debug.Log("게스트 로그인 실패");
+        //         return;
+        //     }
+
+        //     FirebaseUser user = task.Result.User;
+        //     Debug.Log("게스트 로그인 성공 ! 사용자 ID : " + user.UserId);
+        //     ReadDataAsync().Forget();
+        // });
     }
-    
+
 }

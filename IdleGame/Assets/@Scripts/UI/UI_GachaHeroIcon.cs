@@ -38,7 +38,7 @@ public class UI_GachaHeroIcon : UI_Base
         var blinkImage = GetImage(ImagesType, (int)Images.HereBlinkImage);
 
         blinkImage.color = new Color(1, 1, 1, 1);
-
+        blinkImage.DOKill();
         blinkImage.DOFade(0.0f, 0.3f)
             .SetEase(Ease.OutQuart)
             .SetLink(gameObject);

@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class UIManager
 {
-    readonly Stack<UI_Base> popupStack = new();
+    public readonly Stack<UI_Base> popupStack = new();
 
     UI_Scene sceneUI = null;
     public UI_Scene SceneUI { get { return sceneUI; } }
@@ -167,6 +167,8 @@ public class UIManager
         string name = typeof(UI_Toast).Name;
         GameObject go = Managers.ResourceM.Instantiate(name, _pooling: true);
         UI_Toast toast = go.GetOrAddComponent<UI_Toast>();
+
+        toast.Init().Forget();
         toast.SetInfo(_detail);
         go.transform.SetParent(Root.transform);
 

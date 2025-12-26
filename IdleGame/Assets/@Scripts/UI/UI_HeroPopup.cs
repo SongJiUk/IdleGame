@@ -37,6 +37,7 @@ public class UI_HeroPopup : UI_Popup
     RectTransform rect;
     public System.Action OnValueChange;
     bool isRemoveCharacter = false;
+    List<CharacterHolder> characterList = new List<CharacterHolder>();
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -71,6 +72,7 @@ public class UI_HeroPopup : UI_Popup
     {
         //TODO : 이거 꺼졌다 켜질떄마다 계속 생성되게 하면 안됨 고쳐야됌
         //TODO : 그리고 가지고있는 데이터에 맞게 호출해야된다.
+
         var datas = Managers.GameM.gameData.Characters_Data;
         characterDic.Clear();
 
@@ -95,14 +97,46 @@ public class UI_HeroPopup : UI_Popup
         }
     }
 
+
     void OnClickHeroGachaButton()
     {
+        //TODO : 해당 팝업 끄고, shopPopup으로 이동
+        Managers.UIM.ClosePopup(this).Forget();
+        Managers.UIM.ShowPopup<UI_ShopPopup>().Forget();
+    }
+
+    async void OnClickHeroEnforceButton()
+    {
+        if (CheckUpgradeCharacter())
+        {
+            var popup = await Managers.UIM.ShowPopup<UI_CharacterUpgradePopup>();
+            popup.SetInfo(characterList);
+        }
+        else
+        {
+            Managers.UIM.ShowToast("강화가 가능한 캐릭터가 없습니다.");
+        }
 
     }
 
-    void OnClickHeroEnforceButton()
+    bool CheckUpgradeCharacter()
     {
+        characterList.Clear();
+        foreach (var character in Managers.GameM.gameData.Characters_Data)
+        {
+            var data = character.Value;
+            int needCount = data.holder.Level * 5;
+            if (needCount <= data.holder.Count)
+            {
+                data.holder.Count -= needCount;
+                data.holder.Level++;
+                OnValueChange?.Invoke();
+                characterList.Add(data);
+            }
+        }
 
+        if (characterList.Count == 0) return false;
+        else return true;
     }
 
     void OnClickCloseButton()

@@ -109,7 +109,7 @@ public class UI_TitleScene : UI_Scene
 
             while (displayedProgress < 1f || !loadTask.GetAwaiter().IsCompleted)
             {
-                displayedProgress = Mathf.MoveTowards(displayedProgress, realProgress, Time.deltaTime * 0.8f); // 0.8f는 속도 조절
+                displayedProgress = Mathf.MoveTowards(displayedProgress, realProgress, Time.deltaTime * 0.5f);
 
                 slider.value = displayedProgress;
 
@@ -137,17 +137,17 @@ public class UI_TitleScene : UI_Scene
 
         await UniTask.Delay(300); // 100%가 된 모습을 잠시 보여줌
 
-        isLoadEnd = true;
-        GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);
-        GetText(TextsType, (int)Texts.DataLoadText).text = "데이터가 정상적으로 로딩되었습니다,";
-        StartBlinkTween();
-
         // 각종 매니저 초기화 로직
         Managers.DataM.Init();
         Managers.ObjectM.Init();
         Managers.ItemM.Init();
         Managers.AdM.Init();
-        Managers.firebaseM.Init();
+        await Managers.firebaseM.Init();
+
+        GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);
+        GetText(TextsType, (int)Texts.DataLoadText).text = "데이터가 정상적으로 로딩되었습니다,";
+        StartBlinkTween();
+        isLoadEnd = true;
 
     }
 
