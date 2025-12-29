@@ -24,7 +24,7 @@ public class DamageFont : BaseController
         }
 
         cam = Camera.main;
-        transform.SetParent(Managers.UIM.SceneUI.WorldFontParent, false) ;
+        transform.SetParent(Managers.UIM.SceneUI.WorldFontParent, false);
         _pos.x += Random.Range(-0.3f, 0.3f);
         _pos.z += Random.Range(-0.3f, 0.3f);
         target = _pos;
@@ -32,7 +32,7 @@ public class DamageFont : BaseController
 
         if (_isMonster)
         {
-            damageText.color = Utils.HexToColor("FF0000");
+            damageText.color = Utils.HexToColor("#FF0000");
             damageText.text = Utils.ToCurrencyString(_dmg);
         }
         else
@@ -40,20 +40,20 @@ public class DamageFont : BaseController
             if (_isCritical)
             {
                 criticalObject.SetActive(true);
-                damageText.color = Utils.HexToColor("FFFFFF");
+                damageText.color = Utils.HexToColor("#FFFFFF");
                 damageText.text = Utils.ToCurrencyString(_dmg);
             }
             else
             {
                 criticalObject.SetActive(false);
-                damageText.color = Utils.HexToColor("FFFFFF");
+                damageText.color = Utils.HexToColor("#FFFFFF");
                 damageText.text = Utils.ToCurrencyString(_dmg);
             }
 
-            if(_isSkill)
+            if (_isSkill)
             {
                 criticalObject.SetActive(false);
-                damageText.color = Utils.HexToColor("0000FF");
+                damageText.color = Utils.HexToColor("#0000FF");
                 damageText.text = Utils.ToCurrencyString(_dmg);
             }
         }

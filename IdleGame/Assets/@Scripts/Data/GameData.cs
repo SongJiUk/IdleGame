@@ -25,7 +25,7 @@ public class Holder
 }
 
 public class GameData
-{ 
+{
     public double gold;
     public double dia;
     public int level = 1;
@@ -47,6 +47,7 @@ public class GameData
 
     public Dictionary<string, ItemHolder> Item_Data = new Dictionary<string, ItemHolder>();
     public Dictionary<string, Holder> Item_Holder = new Dictionary<string, Holder>();
+    public Data.ItemData[] Items = new Data.ItemData[7];
 
 
     public void Init()

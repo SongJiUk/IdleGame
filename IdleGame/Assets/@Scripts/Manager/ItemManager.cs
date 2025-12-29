@@ -10,10 +10,10 @@ public class ItemManager
         List<Data.ItemData> items = new List<Data.ItemData>();
         foreach (var data in Managers.GameM.gameData.Item_Data)
         {
-            if(data.Value.data.ItemType == Define.ItemType.Consumable)
+            if (data.Value.data.ItemType == Define.ItemType.Consumable)
             {
                 float randValue = Random.Range(0, 100);
-                if (randValue <= (float)data.Value.data.ItemGrade)
+                if (randValue <= data.Value.data.Probability)
                 {
                     items.Add(data.Value.data);
                 }

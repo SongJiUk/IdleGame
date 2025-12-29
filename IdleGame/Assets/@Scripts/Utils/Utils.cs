@@ -508,7 +508,7 @@ public static class Utils
     public static Color HexToColor(string _color)
     {
         Color parsedColor;
-        ColorUtility.TryParseHtmlString("#" + _color, out parsedColor);
+        ColorUtility.TryParseHtmlString(_color, out parsedColor);
 
         return parsedColor;
     }
@@ -518,7 +518,7 @@ public static class Utils
     public static double TimerCheck()
     {
         //TODO : 인터넷 시간으로 바꾸기
-        if(Managers.GameM.gameData.EndDate == "" || Managers.GameM.gameData.StartDate == "")
+        if (Managers.GameM.gameData.EndDate == "" || Managers.GameM.gameData.StartDate == "")
         {
             return 0.0d;
         }
@@ -530,6 +530,20 @@ public static class Utils
         double timeCount = timer.TotalSeconds;
 
         return timeCount;
+    }
+
+    public static string StringToColorGradeImage(Define.ItemGrade _grade)
+    {
+        switch (_grade)
+        {
+            case Define.ItemGrade.Common: return "#FFFFFF";
+            case Define.ItemGrade.UnCommon: return "#00FF00";
+            case Define.ItemGrade.Rare: return "#0000FF";
+            case Define.ItemGrade.Unique: return "#BB45FF";
+            case Define.ItemGrade.Legendary: return "#FF9A45";
+        }
+
+        return "#FFFFFF";
     }
 
     public static string StringToColorGrade(Define.ItemGrade _grade)

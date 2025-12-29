@@ -313,7 +313,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         StartSpawn();
 
 
-        if(Utils.TimerCheck() >= 10.0d)
+        if (Utils.TimerCheck() >= 10.0d)
         {
             Managers.UIM.ShowPopup<UI_OfflinePopup>().Forget();
         }
@@ -428,6 +428,10 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
             case Buttons.RelicsButton:
                 clickedButton = relicsBtn;
+                ScaleUpSelectButton();
+
+                UI_RelicsPopup relicPopup = await Managers.UIM.ShowPopup<UI_RelicsPopup>();
+                relicPopup.OnThisPopupClosed = ScaleDownSelectButton;
                 break;
 
             case Buttons.DungeonButton:

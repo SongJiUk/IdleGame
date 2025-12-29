@@ -52,6 +52,8 @@ public class MonsterController : CreatureController
     //TODO : 이걸 temp아이디를 넘겨받아서 여기서 하는게 맞을까 싶긴함
     public void SetInfo(Data.CreatureData _data)
     {
+        Managers.StageM.deadEvent -= OnDead;
+        Managers.StageM.deadEvent += OnDead;
         DATA = _data;
         isDead = false;
         isKnockBack = false;
@@ -276,9 +278,16 @@ public class MonsterController : CreatureController
 
     // }
 
+
+    public void OnDead()
+    {
+        target = null;
+        AnimatorChange(Define.CreatureState.Idle);
+    }
     //TODO : 필요하면 사용 
     public override UniTask ReturnObject(float _time)
     {
         return base.ReturnObject(_time);
     }
+
 }
