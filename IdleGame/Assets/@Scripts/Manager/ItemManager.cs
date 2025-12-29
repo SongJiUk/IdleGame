@@ -5,6 +5,27 @@ using UnityEngine;
 
 public class ItemManager
 {
+    public void SetItem(int _value, string _name)
+    {
+        Managers.GameM.gameData.Items[_value] = Managers.GameM.gameData.Item_Data[_name].data;
+    }
+
+    public void GetItem(string _name)
+    {
+        for(int i =0; i<Managers.GameM.gameData.Items.Length; i++)
+        {
+            if (Managers.GameM.gameData.Items[i] == null) continue;
+
+            if (Managers.GameM.gameData.Items[i].Name == _name) Managers.GameM.gameData.Items[i] = null;
+        }
+    }
+
+    public void DisableItem(int _value)
+    {
+        Managers.GameM.gameData.Items[_value] = null;
+    }
+
+
     public List<Data.ItemData> GetDropItem()
     {
         List<Data.ItemData> items = new List<Data.ItemData>();

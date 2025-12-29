@@ -21,15 +21,15 @@ public class UI_RelicsPopup : UI_Popup
 
     enum Buttons
     {
-        CloseButton,
-        GachaButton,
-        EnforceButton,
         RelicButton12,
         RelicButton10,
         RelicButton2,
         RelicButton5,
         RelicButton7,
         CenterRelicButton,
+        CloseButton,
+        GachaButton,
+        EnforceButton,
     }
     enum Images
     {
@@ -51,7 +51,6 @@ public class UI_RelicsPopup : UI_Popup
     public System.Action OnValueChange;
     Transform parent = null;
     UI_RelicIcon clickRelic;
-    bool isRemoveRelic = false;
 
     public List<UI_RelicIcon> relics = new List<UI_RelicIcon>();
     Dictionary<Buttons, (Images bg, Images icon)> relicMaps;
@@ -81,7 +80,7 @@ public class UI_RelicsPopup : UI_Popup
 
         for (int i = 0; i < 6; i++)
         {
-            GetObject(GameObjectsType, (int)GameObjects.RelicLockObject12 + i).gameObject.SetActive(true);
+            GetObject(GameObjectsType, (int)GameObjects.RelicLockObject12 + i).gameObject.SetActive(false);
         }
 
 
@@ -126,21 +125,48 @@ public class UI_RelicsPopup : UI_Popup
         GetObject(GameObjectsType, (int)GameObjects.RelicLockObject12).gameObject.SetActive(false);
     }
 
+
+    //NOTE : 놓이는곳 클릭
     void OnClickRelicButton(Buttons _button)
     {
         if (clickRelic == null) return;
 
-        if (relicMaps.TryGetValue(_button, out var map))
-        {
-            GetImage(ImagesType, (int)map.bg).color = Utils.HexToColor(Utils.StringToColorGradeImage(clickRelic.DATA.ItemGrade));
-            GetImage(ImagesType, (int)map.icon).sprite = Managers.ResourceM.GetAtlas(clickRelic.DATA.Name);
 
-            SetClick(null);
-            OnValueChange?.Invoke();
-            clickRelic = null;
-        }
+        InitRelic(_button);
+        
     }
 
+
+    void InitRelic(Buttons _button)
+    {
+        relicMaps.TryGetValue(_button, out var map);
+
+
+        Managers.ItemM.SetItem((int)_button, clickRelic.DATA.Name);
+        GetImage(ImagesType, (int)map.bg).color = Utils.HexToColor(Utils.StringToColorGradeImage(clickRelic.DATA.ItemGrade));
+        GetImage(ImagesType, (int)map.icon).gameObject.SetActive(true);
+        GetImage(ImagesType, (int)map.icon).sprite = Managers.ResourceM.GetAtlas(clickRelic.DATA.Name);
+        GetImage(ImagesType, (int)map.icon).SetNativeSize();
+
+
+        SetClickIcon(null);
+        OnValueChange?.Invoke();
+        clickRelic = null;
+    }
+
+    void RemoveRelic()
+    {
+        for(int i =0; i<Managers.GameM.gameData.Items.Length; i++)
+        {
+            if (Managers.GameM.gameData.Items[i] == null)
+            {
+                Buttons btn = (Buttons)i;
+                GetImage(ImagesType, (int)relicMaps[btn].bg).color = Utils.HexToColor("#FFFFFF");
+                GetImage(ImagesType, (int)relicMaps[btn].icon).sprite = null;
+                GetImage(ImagesType, (int)relicMaps[btn].icon).gameObject.SetActive(false);
+            }
+        }
+    }
 
     void OnClickCloseButton()
     {
@@ -164,7 +190,7 @@ public class UI_RelicsPopup : UI_Popup
 
     }
 
-    public void SetClick(UI_RelicIcon _clickRelic, bool _isMinusClick = false)
+    public void SetClickIcon(UI_RelicIcon _clickRelic, bool _isMinusClick = false)
     {
         if (_clickRelic == null)
         {
@@ -177,6 +203,20 @@ public class UI_RelicsPopup : UI_Popup
         else
         {
             clickRelic = _clickRelic;
+
+            for(int i =0; i<Managers.GameM.gameData.Items.Length; i++)
+            {
+                var data = Managers.GameM.gameData.Items[i];
+                if(data != null)
+                {
+                    if(data == clickRelic.DATA)
+                    {
+                        Managers.ItemM.DisableItem(i);
+                        SetClickIcon(null);
+                    }
+                }
+            }
+
             if (_isMinusClick)
             {
                 OnlyRemoveRelic();
@@ -199,10 +239,11 @@ public class UI_RelicsPopup : UI_Popup
 
     void OnlyRemoveRelic()
     {
-        SetClick(null);
-        isRemoveRelic = true;
-
+        Managers.ItemM.GetItem(clickRelic.name);
+        SetClickIcon(null);
+       
         OnValueChange?.Invoke();
+        RemoveRelic();
         clickRelic = null;
     }
 

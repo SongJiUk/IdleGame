@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public interface ITickable
 {
@@ -25,6 +26,7 @@ public class UpdateManager : MonoBehaviour
     private readonly List<IUnScaledTickable> unScaledToRemove = new();
 
     private bool isPaused = false;
+    bool isWriting = false;
     public void PauseTicking(bool _pause)
     {
         isPaused = _pause;
@@ -57,20 +59,25 @@ public class UpdateManager : MonoBehaviour
             if (!unScaledToRemove.Contains(_unscaledTickable)) unScaledToRemove.Add(_unscaledTickable);
         }
     }
-
+    async void ExcuteWriteData()
+    {
+        isWriting = true;
+        await Managers.firebaseM.WirteData();
+        isWriting = false;
+    }
 
     private void Update()
     {
         if (isPaused) return;
 
 
-        if(isStartFirebase)
+        if(isStartFirebase && !Managers.firebaseM.IsLoading && !isWriting)
         {
             Managers.save_Timer += Time.unscaledDeltaTime;
             if (Managers.save_Timer >= 10.0f)
             {
                 Managers.save_Timer = 0.0f;
-                Managers.firebaseM.WirteData();
+                ExcuteWriteData();
             }
         }
        

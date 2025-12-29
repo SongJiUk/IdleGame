@@ -100,24 +100,37 @@ public class GameData
     private void SetItem()
     {
         var datas = Managers.DataM.ItemDataDic.Values;
-        foreach (var data in datas)
+
+        foreach(var data in datas)
         {
-            var item = new ItemHolder();
-            item.data = data;
-
-            Holder holder = new Holder();
-
-            if (Item_Holder.ContainsKey(data.Name))
+            if(!Item_Holder.TryGetValue(data.Name, out Holder holder))
             {
-                holder = Item_Holder[data.Name];
-            }
-            else
-            {
+                holder = new Holder();
                 Item_Holder.Add(data.Name, holder);
             }
-            item.holder = holder;
+
+            var item = new ItemHolder { data = data, holder = holder };
             Item_Data[data.Name] = item;
         }
+
+        //foreach (var data in datas)
+        //{
+        //    var item = new ItemHolder();
+        //    item.data = data;
+
+        //    Holder holder = new Holder();
+
+        //    if (Item_Holder.ContainsKey(data.Name))
+        //    {
+        //        holder = Item_Holder[data.Name];
+        //    }
+        //    else
+        //    {
+        //        Item_Holder.Add(data.Name, holder);
+        //    }
+        //    item.holder = holder;
+        //    Item_Data[data.Name] = item;
+        //}
     }
     public Data.CreatureData GetGradeCharacter(Define.CharacterGrade _grade)
     {

@@ -98,11 +98,11 @@ public class UI_RelicIcon : UI_Base
     {
         isUseRelic = false;
 
-        for (int i = 0; i < parent.relics.Count; i++)
+        for (int i = 0; i < Managers.GameM.gameData.Items.Length; i++)
         {
-            if (parent.relics[i] == null) continue;
+            if (Managers.GameM.gameData.Items[i] == null) continue;
 
-            if (parent.relics[i].data == data)
+            if (Managers.GameM.gameData.Items[i] == data)
             {
                 isUseRelic = true;
             }
@@ -138,11 +138,11 @@ public class UI_RelicIcon : UI_Base
     {
         if (isUseRelic)
         {
-            parent.SetClick(this, true);
+            parent.SetClickIcon(this, true);
         }
         else
         {
-            parent.SetClick(this);
+            parent.SetClickIcon(this);
         }
     }
 }
