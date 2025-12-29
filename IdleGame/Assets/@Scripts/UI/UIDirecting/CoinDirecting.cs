@@ -42,10 +42,7 @@ public class CoinDirecting : BaseController
     {
         if ((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
         {
-            Managers.GameM.Gold += Utils.CalculatedValue(
-            Utils.Datas.stageData.Base_Gold,
-            Managers.GameM.Stage,
-            Utils.Datas.stageData.Monster_Gold);
+            Managers.GameM.Gold += Utils.Money();
 
 
             if (this != null && gameObject != null)
@@ -57,12 +54,9 @@ public class CoinDirecting : BaseController
 
         if (cam != null) transform.position = cam.WorldToScreenPoint(targetPos);
         for (int i = 0; i < childs.Length; i++) childs[i].anchoredPosition = Vector2.zero;
-        transform.parent = Managers.UIM.SceneUI.WorldCoinParent;
+        transform.SetParent(Managers.UIM.SceneUI.WorldCoinParent, false);
 
-        Managers.GameM.Gold += Utils.CalculatedValue(
-            Utils.Datas.stageData.Base_Gold,
-            Managers.GameM.Stage,
-            Utils.Datas.stageData.Monster_Gold);
+        Managers.GameM.Gold += Utils.Money();
 
 
         Coin_Effect_DoTween(cts.Token).Forget();

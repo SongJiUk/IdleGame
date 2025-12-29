@@ -134,7 +134,7 @@ public class DropItemController : BaseController
         grades[(int)grade].gameObject.SetActive(true);
 
         itemRect.gameObject.SetActive(true);
-        itemRect.parent = Managers.UIM.SceneUI.WorldItemParent;
+        itemRect.SetParent(Managers.UIM.SceneUI.WorldItemParent,false);
         text.text = Utils.StringToColorGrade(grade) + itemData.NameKR + "</color>";
 
         if (cam != null) itemRect.position = cam.WorldToScreenPoint(transform.position);
@@ -153,7 +153,7 @@ public class DropItemController : BaseController
             (Managers.UIM.SceneUI as UI_GameScene).GetItem(itemData);
             Managers.InventoryM.GetItem(itemData);
 
-            itemRect.transform.parent = this.transform;
+            itemRect.transform.SetParent(this.transform,false);
             itemRect.gameObject.SetActive(false);
             loot.Play();
 

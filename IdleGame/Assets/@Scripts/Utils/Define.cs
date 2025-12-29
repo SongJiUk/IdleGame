@@ -145,4 +145,10 @@ public static class Define
         HeroGacha,
         RelicGacha
     }
+
+    public enum ItemType
+    {
+        Consumable,
+        Equipment
+    }
 }

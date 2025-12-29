@@ -274,6 +274,13 @@ public static class Utils
     }
 
     #region 지수증가 공식(레벨, 스테이지데이터)
+    public static double Money()
+    {
+        return Utils.CalculatedValue(
+            Utils.Datas.stageData.Base_Gold,
+            Managers.GameM.Stage,
+            Utils.Datas.stageData.Monster_Gold);
+    }
     public static double CalculatedValue(float _baseValue, int _level, float _value)
     {
         return _baseValue * Mathf.Pow(_level, _value);
@@ -508,6 +515,22 @@ public static class Utils
 
     #endregion
 
+    public static double TimerCheck()
+    {
+        //TODO : 인터넷 시간으로 바꾸기
+        if(Managers.GameM.gameData.EndDate == "" || Managers.GameM.gameData.StartDate == "")
+        {
+            return 0.0d;
+        }
+
+        DateTime startDate = DateTime.Parse(Managers.GameM.gameData.StartDate);
+        DateTime endDate = DateTime.Parse(Managers.GameM.gameData.EndDate);
+
+        TimeSpan timer = startDate - endDate;
+        double timeCount = timer.TotalSeconds;
+
+        return timeCount;
+    }
 
     public static string StringToColorGrade(Define.ItemGrade _grade)
     {

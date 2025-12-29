@@ -70,9 +70,7 @@ public class UI_HeroPopup : UI_Popup
     //처음에만 사용할것인지? 아이템을 뽑거나 할때는 수정이 되어야함
     public override void SetInfo()
     {
-        //TODO : 이거 꺼졌다 켜질떄마다 계속 생성되게 하면 안됨 고쳐야됌
-        //TODO : 그리고 가지고있는 데이터에 맞게 호출해야된다.
-
+        Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(false);
         var datas = Managers.GameM.gameData.Characters_Data;
         characterDic.Clear();
 
@@ -81,6 +79,7 @@ public class UI_HeroPopup : UI_Popup
             characterDic.Add(data.Value.data.Name, data.Value);
         }
 
+        //TODO : 정렬 방법 바꾸기
         var sortdic = characterDic.OrderBy(x => x.Value.data.CharacterGrade);
 
         foreach (var data in sortdic)
@@ -88,7 +87,7 @@ public class UI_HeroPopup : UI_Popup
             if (data.Value.holder.Count == 0) continue;
 
             var go = Managers.UIM.MakeSubItem<UI_CharacterIcon>();
-            go.transform.parent = rect.transform;
+            go.transform.SetParent(rect.transform, false);
             go.transform.localScale = Vector3.one;
 
             go.Init().Forget();
@@ -125,6 +124,7 @@ public class UI_HeroPopup : UI_Popup
         foreach (var character in Managers.GameM.gameData.Characters_Data)
         {
             var data = character.Value;
+            if (data.holder.Level == 0) continue;
             int needCount = data.holder.Level * 5;
             if (needCount <= data.holder.Count)
             {

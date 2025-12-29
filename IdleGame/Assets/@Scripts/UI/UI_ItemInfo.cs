@@ -39,13 +39,13 @@ public class UI_ItemInfo : UI_Popup
         return true;
     }
 
-    public void SetInfo(Item _itemData, Vector2 _pos, RectTransform _parent)
+    public void SetInfo(ItemHolder _itemData, Vector2 _pos, RectTransform _parent)
     {
         transform.localScale = Vector3.one;
-        GetImage(ImagesType, (int)Images.ItemImage).sprite = Managers.ResourceM.GetAtlas(_itemData.itemData.Name);
-        GetText(TextsType, (int)Texts.ItemNameText).text = _itemData.itemData.NameKR;
-        GetText(TextsType, (int)Texts.ItemDescriptionText).text = _itemData.itemData.Description;
-        GetText(TextsType, (int)Texts.ItemGradeText).text = Utils.StringToColorGrade(_itemData.itemData.ItemGrade) + _itemData.itemData.ItemGrade + "</color>";
+        GetImage(ImagesType, (int)Images.ItemImage).sprite = Managers.ResourceM.GetAtlas(_itemData.data.Name);
+        GetText(TextsType, (int)Texts.ItemNameText).text = _itemData.data.NameKR;
+        GetText(TextsType, (int)Texts.ItemDescriptionText).text = _itemData.data.Description;
+        GetText(TextsType, (int)Texts.ItemGradeText).text = Utils.StringToColorGrade(_itemData.data.ItemGrade) + _itemData.data.ItemGrade + "</color>";
 
         if (rect == null)
             rect = GetComponent<RectTransform>();

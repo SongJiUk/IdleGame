@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager
-{
-    public Dictionary<string, Item> items = new Dictionary<string, Item>();
-
-
-    public void GetItem(Data.ItemData _item)
+{ 
+    public void GetItem(Data.ItemData _item, int _count = 1)
     {
-        if (items.ContainsKey(_item.Name))
+        if (Managers.GameM.gameData.Item_Data.ContainsKey(_item.Name))
         {
-            items[_item.Name].count++;
+            Managers.GameM.gameData.Item_Data[_item.Name].holder.Count += _count;
         }
-        else
-            items.Add(_item.Name, new Item { itemData = _item, count = 1 });
     }
 }

@@ -32,7 +32,7 @@ public class UI_SavingMode : UI_Popup, ITickable
     #endregion
 
     List<UI_Item> itemPool = new List<UI_Item>();
-    Dictionary<string, Item> SavingModeItem = new Dictionary<string, Item>();
+    Dictionary<string, ItemHolder> SavingModeItem = new Dictionary<string, ItemHolder>();
     Transform parent = null;
     Vector2 dragStartPos;
     Vector2 dragEndPos;
@@ -90,11 +90,12 @@ public class UI_SavingMode : UI_Popup, ITickable
 
         if (SavingModeItem.ContainsKey(_itemData.Name))
         {
-            SavingModeItem[_itemData.Name].count++;
+            SavingModeItem[_itemData.Name].holder.Count++;
             RefreshItem(_itemData);
             return;
         }
-        Item item = new Item { itemData = _itemData, count = 1 };
+        ItemHolder item = new ItemHolder { data = _itemData, holder = new Holder()};
+        item.holder.Count = 1;
 
         SavingModeItem.Add(_itemData.Name, item);
 
@@ -116,7 +117,7 @@ public class UI_SavingMode : UI_Popup, ITickable
             slot.gameObject.SetActive(false);
 
         int index = 0;
-        var sort_items = SavingModeItem.OrderByDescending(x => x.Value.itemData.ItemGrade);
+        var sort_items = SavingModeItem.OrderByDescending(x => x.Value.data.ItemGrade);
 
         foreach (var item in sort_items)
         {

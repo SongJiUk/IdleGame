@@ -53,7 +53,6 @@ public class UI_Inventory : UI_Base
 
         parent = GetObject(GameObjectsType, (int)GameObjects.Content).transform;
         rect = gameObject.GetComponent<RectTransform>();
-        RefreshItems();
         return true;
     }
 
@@ -65,7 +64,7 @@ public class UI_Inventory : UI_Base
     public void RefreshItems()
     {
         //TODO : 켜져있는 동안에도 바꿔줄지? => 이벤트 사용해야됌 
-        int needCount = Managers.InventoryM.items.Count;
+        int needCount = Managers.GameM.gameData.Item_Data.Count;
 
         while (itemPool.Count < needCount)
         {
@@ -77,14 +76,17 @@ public class UI_Inventory : UI_Base
             slot.gameObject.SetActive(false);
 
         int index = 0;
-        var sort_items = Managers.InventoryM.items.OrderByDescending(x => x.Value.itemData.ItemGrade);
+        var sort_items = Managers.GameM.gameData.Item_Data.OrderByDescending(x => x.Value.data.ItemGrade);
         foreach (var item in sort_items)
         {
-            UI_Item slot = itemPool[index++];
-            slot.gameObject.SetActive(true);
+            if (Managers.GameM.gameData.Item_Holder[item.Key].Count > 0)
+            {
+                UI_Item slot = itemPool[index++];
+                slot.gameObject.SetActive(true);
 
-            slot.Init().Forget();
-            slot.SetInfo(item.Value, rect);
+                slot.Init().Forget();
+                slot.SetInfo(item.Value, rect);
+            }
         }
     }
     void OnClickAllButton()
@@ -96,7 +98,7 @@ public class UI_Inventory : UI_Base
         targetTr.DOMove(endPos, 0.5f)
             .SetEase(Ease.OutQuad);
 
-        // TODO : ���⿡ ���� �ڵ� ���ָ�ɵ�. �����ۿ� Ư��������
+        
     }
 
     void OnClickEquipmentButton()

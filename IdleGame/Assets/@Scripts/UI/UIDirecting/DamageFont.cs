@@ -24,7 +24,7 @@ public class DamageFont : BaseController
         }
 
         cam = Camera.main;
-        transform.parent = Managers.UIM.SceneUI.WorldFontParent;
+        transform.SetParent(Managers.UIM.SceneUI.WorldFontParent, false) ;
         _pos.x += Random.Range(-0.3f, 0.3f);
         _pos.z += Random.Range(-0.3f, 0.3f);
         target = _pos;

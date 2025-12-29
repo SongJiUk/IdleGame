@@ -11,6 +11,12 @@ public class CharacterHolder
     public Holder holder;
 }
 
+public class ItemHolder
+{
+    public Data.ItemData data;
+    public Holder holder;
+}
+
 [Serializable]
 public class Holder
 {
@@ -19,12 +25,7 @@ public class Holder
 }
 
 public class GameData
-{
-    public GameData()
-    {
-        Debug.Log($"[GameData 생성됨] 호출 스택: {StackTraceUtility.ExtractStackTrace()}");
-    }
-
+{ 
     public double gold;
     public double dia;
     public int level = 1;
@@ -37,14 +38,21 @@ public class GameData
 
     public int summonCount = 0;
     public int confirmedLegendaryCount = 0;
+
+    public string StartDate;
+    public string EndDate;
     //플레이어가 가지고 있는 데이터 저장
     public Dictionary<string, CharacterHolder> Characters_Data = new Dictionary<string, CharacterHolder>();
     public Dictionary<string, Holder> Character_Holder = new Dictionary<string, Holder>();
+
+    public Dictionary<string, ItemHolder> Item_Data = new Dictionary<string, ItemHolder>();
+    public Dictionary<string, Holder> Item_Holder = new Dictionary<string, Holder>();
 
 
     public void Init()
     {
         SetCharacter();
+        SetItem();
     }
 
     public void ChangeCharacterInfo(Data.CreatureData _data)
@@ -65,30 +73,51 @@ public class GameData
     private void SetCharacter()
     {
         var datas = Managers.DataM.CreatureDataDic.Values;
+
         foreach (var data in datas)
         {
             if (data.Type != Define.ObjectType.Player) continue;
 
-            if (Character_Holder.TryGetValue(data.Name, out Holder currentHolder))
+            var character = new CharacterHolder();
+            character.data = data;
+
+            Holder holder = new Holder();
+
+            if (Character_Holder.ContainsKey(data.Name))
             {
-                Debug.Log($"[로드 확인] {data.Name} : 개수 {currentHolder.Count}");
+                holder = Character_Holder[data.Name];
             }
             else
             {
-                currentHolder = new Holder();
-                Character_Holder.Add(data.Name, currentHolder);
-                Debug.Log($"[신규 생성] {data.Name} 데이터가 없어 새로 생성합니다.");
+                Character_Holder.Add(data.Name, holder);
             }
-
-            var character = new CharacterHolder();
-            character.data = data;
-            //TODO : 레벨값 처음에 0으로 들어가있는거 긴급 코드(지울거임)
-            //if (currentHolder.Level == 0) currentHolder.Level = 1;
-            character.holder = currentHolder;
+            character.holder = holder;
             Characters_Data[data.Name] = character;
         }
     }
 
+    private void SetItem()
+    {
+        var datas = Managers.DataM.ItemDataDic.Values;
+        foreach (var data in datas)
+        {
+            var item = new ItemHolder();
+            item.data = data;
+
+            Holder holder = new Holder();
+
+            if (Item_Holder.ContainsKey(data.Name))
+            {
+                holder = Item_Holder[data.Name];
+            }
+            else
+            {
+                Item_Holder.Add(data.Name, holder);
+            }
+            item.holder = holder;
+            Item_Data[data.Name] = item;
+        }
+    }
     public Data.CreatureData GetGradeCharacter(Define.CharacterGrade _grade)
     {
         List<Data.CreatureData> holder = new List<Data.CreatureData>();

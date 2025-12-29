@@ -31,7 +31,7 @@ public class UI_GameExitPopup : UI_Popup
 
     void OnClickGameExitButton()
     {
-        //Application.Exit();
+        Application.Quit();
     }
 
     void OnClickKeepGameButton()

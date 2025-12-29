@@ -312,6 +312,12 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         AllOff();
         StartSpawn();
 
+
+        if(Utils.TimerCheck() >= 10.0d)
+        {
+            Managers.UIM.ShowPopup<UI_OfflinePopup>().Forget();
+        }
+
         return true;
     }
     void OnDestroy()
@@ -1124,13 +1130,13 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         if (_isSibling)
         {
 
-            fadeImage.transform.parent = Managers.UIM.Root.transform;
+            fadeImage.transform.SetParent(Managers.UIM.Root.transform, false);
             fadeImage.transform.SetAsLastSibling();
         }
         else
         {
 
-            fadeImage.transform.parent = this.transform;
+            fadeImage.transform.SetParent(this.transform, false);
             fadeImage.transform.SetSiblingIndex(0);
         }
 

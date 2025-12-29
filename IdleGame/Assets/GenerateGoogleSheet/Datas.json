@@ -372,7 +372,8 @@
       "NameKR": "크리스탈",
       "Description": "크리스탈",
       "ItemGrade": "Legendary",
-      "Probability": 20
+      "Probability": 20,
+      "ItemType": "Consumable"
     },
     {
       "DataID": 30002,
@@ -380,7 +381,8 @@
       "NameKR": "깃털",
       "Description": "깃털",
       "ItemGrade": "UnCommon",
-      "Probability": 20
+      "Probability": 20,
+      "ItemType": "Consumable"
     },
     {
       "DataID": 30003,
@@ -388,7 +390,8 @@
       "NameKR": "가죽",
       "Description": "가죽",
       "ItemGrade": "UnCommon",
-      "Probability": 20
+      "Probability": 20,
+      "ItemType": "Consumable"
     },
     {
       "DataID": 30004,
@@ -396,7 +399,8 @@
       "NameKR": "몬스터에너지",
       "Description": "몬스터에너지",
       "ItemGrade": "Rare",
-      "Probability": 20
+      "Probability": 20,
+      "ItemType": "Consumable"
     },
     {
       "DataID": 30005,
@@ -404,7 +408,8 @@
       "NameKR": "스크롤",
       "Description": "스크롤",
       "ItemGrade": "Common",
-      "Probability": 50
+      "Probability": 50,
+      "ItemType": "Consumable"
     },
     {
       "DataID": 30006,
@@ -412,7 +417,35 @@
       "NameKR": "돌",
       "Description": "돌",
       "ItemGrade": "Common",
-      "Probability": 50
+      "Probability": 50,
+      "ItemType": "Consumable"
+    },
+    {
+      "DataID": 30007,
+      "Name": "Gold_Dice",
+      "NameKR": "황금주사위",
+      "Description": "획득 골드 추가",
+      "ItemGrade": "Legendary",
+      "Probability": 0,
+      "ItemType": "Equipment"
+    },
+    {
+      "DataID": 30008,
+      "Name": "Axe",
+      "NameKR": "도끼",
+      "Description": "공격력 추가",
+      "ItemGrade": "Legendary",
+      "Probability": 0,
+      "ItemType": "Equipment"
+    },
+    {
+      "DataID": 30009,
+      "Name": "GoddessTears",
+      "NameKR": "여신의 눈물",
+      "Description": "피격시 마나 회복",
+      "ItemGrade": "Rare",
+      "Probability": 0,
+      "ItemType": "Equipment"
     }
   ],
   "StageSpawnData": [

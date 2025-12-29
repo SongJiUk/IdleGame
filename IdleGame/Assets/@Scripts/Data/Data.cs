@@ -110,6 +110,7 @@ namespace Data
         public string Description;
         public Define.ItemGrade ItemGrade;
         public int Probability;
+        public Define.ItemType ItemType;
     }
 
     public class ItemDataLoader : ILoader<int, ItemData>

@@ -3,33 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Item
-{
-    public Data.ItemData itemData;
-    public int count;
-}
 public class ItemManager
 {
-    Dictionary<string, Data.ItemData> ItemDatas = new Dictionary<string, Data.ItemData>();
-
-
-    public void Init()
-    {
-        foreach (var data in Managers.DataM.ItemDataDic)
-        {
-            ItemDatas.Add(data.Value.Name, data.Value);
-        }
-    }
-
     public List<Data.ItemData> GetDropItem()
     {
         List<Data.ItemData> items = new List<Data.ItemData>();
-        foreach (var data in ItemDatas)
+        foreach (var data in Managers.GameM.gameData.Item_Data)
         {
-            float randValue = Random.Range(0, 100);
-            if (randValue <= data.Value.Probability)
+            if(data.Value.data.ItemType == Define.ItemType.Consumable)
             {
-                items.Add(data.Value);
+                float randValue = Random.Range(0, 100);
+                if (randValue <= (float)data.Value.data.ItemGrade)
+                {
+                    items.Add(data.Value.data);
+                }
             }
         }
 

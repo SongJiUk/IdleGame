@@ -140,7 +140,6 @@ public class UI_TitleScene : UI_Scene
         // 각종 매니저 초기화 로직
         Managers.DataM.Init();
         Managers.ObjectM.Init();
-        Managers.ItemM.Init();
         Managers.AdM.Init();
         await Managers.firebaseM.Init();
 
