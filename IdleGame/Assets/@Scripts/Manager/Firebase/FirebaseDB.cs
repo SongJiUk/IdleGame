@@ -78,7 +78,22 @@ public partial class FirebaseManager
 
             if(itemSnap.Exists)
             {
+                string rawJson = itemSnap.GetRawJsonValue();
+                Debug.Log($"[1. 서버 원본 데이터]: {rawJson}");
                 var itemDic = JsonConvert.DeserializeObject<Dictionary<string, Holder>>(itemSnap.GetRawJsonValue());
+                foreach (var key in itemDic.Keys)
+                {
+                    Debug.Log($"[2. 서버에 존재하는 키]: '{key}' (글자수: {key.Length})");
+                }
+                string targetKey = "Axe"; // 혹은 "Gold_Dice", "GoddessTears"
+                if (itemDic.ContainsKey(targetKey))
+                {
+                    Debug.Log($"[3. 결과] {targetKey} 찾기 성공! 개수: {itemDic[targetKey].Count}");
+                }
+                else
+                {
+                    Debug.LogWarning($"[3. 결과] {targetKey} 찾기 실패! 서버 키 목록을 다시 확인하세요.");
+                }
                 Managers.GameM.gameData.Item_Holder = itemDic ?? new Dictionary<string, Holder>();
 
                 if (itemDic != null && itemDic.TryGetValue("Axe", out var axe))

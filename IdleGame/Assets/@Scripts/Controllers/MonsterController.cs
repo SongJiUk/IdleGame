@@ -166,7 +166,7 @@ public class MonsterController : CreatureController
 
         if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
         if (isDead) return;
-        if (isAttack) return;
+        if (isAttacking) return;
 
 
 
@@ -188,7 +188,7 @@ public class MonsterController : CreatureController
 
         if (targetDist > attackrange)
         {
-            if (!isAttack)
+            if (!isAttacking)
             {
                 AnimatorChange(Define.CreatureState.Move);
                 transform.LookAt(target.transform.position);
@@ -197,9 +197,9 @@ public class MonsterController : CreatureController
         }
         else
         {
-            if (!isAttack)
+            if (!isAttacking)
             {
-                isAttack = true;
+                isAttacking = true;
                 isTargetLocked = true;
 
                 AnimatorChange(Define.CreatureState.Attack);
@@ -231,6 +231,7 @@ public class MonsterController : CreatureController
         if (hp <= 0)
         {
             hp = 0;
+            DelegateHolder.MosnterDead(this);
 
             Dead();
         }

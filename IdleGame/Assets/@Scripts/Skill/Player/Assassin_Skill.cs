@@ -11,23 +11,17 @@ public class Assassin_Skill : SkillBase
     public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         CreatureController target = null;
-
-
         InitSkillData(_caster);
 
-        if (_target != null)
-        {
-            target = _target;
-        }
-        else
-        {
-            target = Utils.FindNearEnemy(_caster);
-        }
+
+        if (_target != null) target = _target;
+        else target = Utils.FindNearEnemy(_caster);
+        
 
         if (target != null)
         {
             //TODO : 그럼 이건, 여러번 공격으로 바꾸자
-            SetDamage(_caster, _target);
+            SetDamage(_caster, target);
 
             foreach (var effect in effects)
             {

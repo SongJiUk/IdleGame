@@ -166,6 +166,9 @@
     <Compile Include="Assets\@Scripts\Skill\BuffEffect.cs" />
     <Compile Include="Assets\@Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign\LevelDesign.cs" />
+    <Compile Include="Assets\@Scripts\Manager\RelicManager.cs" />
+    <Compile Include="Assets\@Scripts\Utils\DelegateHolder.cs" />
+    <Compile Include="Assets\@Scripts\Relic\Gold_Dice.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

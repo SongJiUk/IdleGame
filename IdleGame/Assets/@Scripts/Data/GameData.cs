@@ -103,14 +103,21 @@ public class GameData
 
         foreach(var data in datas)
         {
-            if(!Item_Holder.TryGetValue(data.Name, out Holder holder))
+            string targetName = data.Name.Trim();
+
+            if (!Item_Holder.TryGetValue(targetName, out Holder holder))
             {
                 holder = new Holder();
                 Item_Holder.Add(data.Name, holder);
+                Debug.Log($"[신규 아이템 생성] {targetName}");
+            }
+            else
+            {
+                Debug.Log($"[서버 데이터 유지] {targetName}: {holder.Count}개");
             }
 
             var item = new ItemHolder { data = data, holder = holder };
-            Item_Data[data.Name] = item;
+            Item_Data[targetName] = item;
         }
 
         //foreach (var data in datas)

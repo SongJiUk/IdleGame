@@ -5,14 +5,6 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using static Define;
 
-
-public delegate void OnReadyEvent();
-public delegate void OnPlayEvent();
-public delegate void OnBossEvent();
-public delegate void OnBossPlayEvent();
-public delegate void OnClearEvent();
-public delegate void OnDeadEvent();
-
 //State Pattern
 public class StageManager
 {

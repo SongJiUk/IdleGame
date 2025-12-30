@@ -1088,7 +1088,16 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 ExpUPAnim();
             }
         }
-        if (Input.GetKeyDown(KeyCode.E))
+
+        //TODO : 지울거임
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            Managers.InventoryM.GetItem(Managers.GameM.gameData.Item_Data["Axe"].data);
+            Managers.InventoryM.GetItem(Managers.GameM.gameData.Item_Data["Gold_Dice"].data);
+            Managers.InventoryM.GetItem(Managers.GameM.gameData.Item_Data["GoddessTears"].data);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (Managers.UIM.popupStack.Count > 0)
             {

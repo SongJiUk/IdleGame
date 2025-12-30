@@ -141,15 +141,16 @@ public class UI_RelicsPopup : UI_Popup
     {
         relicMaps.TryGetValue(_button, out var map);
 
-
         Managers.ItemM.SetItem((int)_button, clickRelic.DATA.Name);
         GetImage(ImagesType, (int)map.bg).color = Utils.HexToColor(Utils.StringToColorGradeImage(clickRelic.DATA.ItemGrade));
         GetImage(ImagesType, (int)map.icon).gameObject.SetActive(true);
         GetImage(ImagesType, (int)map.icon).sprite = Managers.ResourceM.GetAtlas(clickRelic.DATA.Name);
         GetImage(ImagesType, (int)map.icon).SetNativeSize();
 
-
         SetClickIcon(null);
+        DelegateHolder.Clear();
+        Managers.relicM.Init();
+
         OnValueChange?.Invoke();
         clickRelic = null;
     }
@@ -192,6 +193,7 @@ public class UI_RelicsPopup : UI_Popup
 
     public void SetClickIcon(UI_RelicIcon _clickRelic, bool _isMinusClick = false)
     {
+        //TODO : 이거 체크하기
         if (_clickRelic == null)
         {
             for (int i = 0; i < relics.Count; i++)

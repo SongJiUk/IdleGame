@@ -29,7 +29,7 @@ public class Managers : MonoBehaviour
     readonly InventoryManager inventoryManager = new();
     readonly ADManager adManager = new();
     readonly FirebaseManager firebaseManager = new();
-
+    readonly RelicManager relicManager = new();
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
     public static ResourceManager ResourceM { get { return Instance?.resourceManager; } }
@@ -49,6 +49,7 @@ public class Managers : MonoBehaviour
     public static InventoryManager InventoryM { get { return Instance?.inventoryManager; } }
     public static ADManager AdM { get { return Instance?.adManager; } }
     public static FirebaseManager firebaseM { get { return Instance?.firebaseManager; } }
+    public static RelicManager relicM { get { return Instance?.relicManager; } }
 
     public static bool isFast = false;
     public static float save_Timer = 0.0f;

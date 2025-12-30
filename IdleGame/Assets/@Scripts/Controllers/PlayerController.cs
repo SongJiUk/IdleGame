@@ -50,6 +50,9 @@ public class PlayerController : CreatureController
         get => maxMp;
     }
 
+
+   
+
     void OnEnable()
     {
         Managers.UpdateM.Register(this);
@@ -79,17 +82,14 @@ public class PlayerController : CreatureController
 
         isPlayer = true;
         isDead = false;
-        isAttack = false;
+        isAttacking = false;
         SpawnPos = transform.position;
         //TODO : 지우기
-        hp = Utils.Datas.levelData.HP();
-        maxHp = hp;
-        damage = Utils.Datas.levelData.Damage();
+        SetStat();
         mp = 0;
         maxMp = DATA.MaxMp;
         attackrange = DATA.AttackRange;
         detectrange = 5f;
-
         ownerName = this.name;
         CriticalRate = 0.5f;
         target = null;
@@ -97,6 +97,7 @@ public class PlayerController : CreatureController
     public void SetStat()
     {
         hp = Managers.PlayerM.GetHP(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name]);
+        maxHp = hp;
         damage = Managers.PlayerM.GetAttack(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name]);
     }
     public override void InitStat()
@@ -114,15 +115,16 @@ public class PlayerController : CreatureController
     {
         if (target == null || target.IsDead) return;
         Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
-        GetMp(30);
+        GetMp(5);
 
     }
 
     public override void Attack()
     {
-        if (!isAttack) return;
-        if (target == null || target.IsDead) return;
-
+        if (!isAttacking) return;
+        MonsterController monsterTarget = target as MonsterController;
+        if (monsterTarget == null || monsterTarget.IsDead) return;
+        
         if (trails != null)
         {
             for (int i = 0; i < trails.Count; i++)
@@ -131,10 +133,12 @@ public class PlayerController : CreatureController
             }
 
         }
-
-        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
+        
+        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, DATA.ProjectileDataID, this, monsterTarget);
+        DelegateHolder.PlayerAttack(this, monsterTarget);
         TrailDisable().Forget();
-        GetMp(30);
+        
+        GetMp(5);
     }
 
 
@@ -190,19 +194,23 @@ public class PlayerController : CreatureController
             await UniTask.Yield();
         }
     }
+ 
 
     public override void Tick(float _deltaTime)
     {
         if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
 
-        if (isUsingSkill) return;
-        if (isDead) return;
-        if (isAttack) return;
+        if (isUsingSkill || isDead || isAttacking) return;
+
+        //if (searchDelayTimer > 0)
+        //{
+        //    searchDelayTimer -= _deltaTime;
+        //    base.AnimatorChange(CreatureState.Idle);
+        //    return;
+        //}
 
         if (target == null || target.IsDead)
         {
-            ResetTarget();
-
             FindClosetTarget(Managers.ObjectM.mcList);
             if (target == null)
             {
@@ -215,21 +223,21 @@ public class PlayerController : CreatureController
 
         if (targetDist > detectrange)
         {
-            ResetTarget();
+            //ResetTarget();
             GoBackToSpawn(_deltaTime);
             return;
         }
 
         if (targetDist > attackrange)
         {
-            if (!isAttack)
+            if (!isAttacking)
                 MoveToTarget(_deltaTime);
         }
         else
         {
-            if (!isAttack)
+            if (!isAttacking)
             {
-                StartAttack();
+                StartAttack().Forget();
             }
 
         }
@@ -252,8 +260,6 @@ public class PlayerController : CreatureController
     }
     protected override void OnAttackDelayEnd()
     {
-        base.OnAttackDelayEnd();
-
         if (mp >= MaxMp)
         {
             UsePlayerSkill();
@@ -274,25 +280,13 @@ public class PlayerController : CreatureController
 
     void UsePlayerSkill()
     {
-        CreatureController t = null;
-        if (target != null)
+        if(skillController.UseSkill(_target: target))
         {
-            t = target;
-            if (skillController.UseSkill(_target: t))
-            {
-                mp = 0;
-                isUsingSkill = true;
-            }
-            else isUsingSkill = false;
-        }
-        else
-        {
-            if (skillController.UseSkill())
-            {
-                mp = 0;
-                isUsingSkill = true;
-            }
-            else isUsingSkill = false;
+            mp = 0;
+            isUsingSkill = true;
+            isAttacking = false;
+
+            OnPlayerDataUpdate?.Invoke(this);
         }
     }
 
@@ -304,8 +298,9 @@ public class PlayerController : CreatureController
     {
         if (isDead) return;
         if (Managers.StageM.isDead) return;
-        GetMp(3);
         base.GetDamage(_dmg, _attacker, _attacker.GetCritical());
+        DelegateHolder.PlayerHit(this);
+
         if (hp <= 0)
         {
             hp = 0;

@@ -12,7 +12,7 @@ public class CreatureController : BaseController
     protected Animator animator;
     protected virtual bool isDead { get; set; }
     protected virtual bool isTargetLocked { get; set; }
-    protected virtual bool isAttack { get; set; }
+    protected virtual bool isAttacking { get; set; }
     protected virtual bool isCritical { get; set; }
     public bool IsDead { get { return isDead; } }
 
@@ -71,6 +71,9 @@ public class CreatureController : BaseController
     }
     public bool isUsingSkill = false;
     public List<GameObject> vfxs = new List<GameObject>();
+
+    protected float searchDelayTimer = 0f;
+    private const float SEARCH_DELAY = 0.5f;
     public override bool Init()
     {
         if (!base.Init()) return false;
@@ -157,15 +160,16 @@ public class CreatureController : BaseController
     {
         try
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+            await UniTask.Delay(TimeSpan.FromSeconds(1f), cancellationToken: this.GetCancellationTokenOnDestroy());
         }
+        catch (OperationCanceledException) { }
         catch (Exception e)
         {
             Debug.LogError($"InitAttack Error {e.Message}");
         }
         finally
         {
-            isAttack = false;
+            isAttacking = false;
             isTargetLocked = false;
             OnAttackDelayEnd();
         }
@@ -201,24 +205,19 @@ public class CreatureController : BaseController
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
     }
 
-    public void StartAttack()
+    public virtual async UniTask StartAttack()
     {
-
         if (target == null || !target.IsValid()) return;
-        float dist = Vector3.Distance(transform.position, target.transform.position);
-        if (dist > attackrange) return;
-
-        isAttack = true;
+        isAttacking = true; 
         AnimatorChange(Define.CreatureState.Attack);
         transform.LookAt(target.transform);
 
-        WaitForAttackDelay().Forget();
+        await WaitForAttackDelay();
     }
 
-    public void ResetTarget()
+    public virtual void ResetTarget()
     {
         target = null;
-        isAttack = false;
         isTargetLocked = false;
     }
 
@@ -263,7 +262,6 @@ public class CreatureController : BaseController
     protected void OnTargetDeadCallBack()
     {
         ResetTarget();
-        isAttack = false;
     }
 
 
