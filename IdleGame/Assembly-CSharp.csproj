@@ -85,6 +85,7 @@
     <Compile Include="Assets\@Scripts\Skill\SkillRegistry.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign\StageDesign.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\Knight_Skill.cs" />
+    <Compile Include="Assets\@Scripts\Manager\RelicManager.cs" />
     <Compile Include="Assets\@Scripts\Manager\UpdateManager.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\Mage_M_Skill.cs" />
     <Compile Include="Assets\@Scripts\Manager\InventoryManager.cs" />
@@ -100,10 +101,12 @@
     <Compile Include="Assets\@Scripts\Manager\FirebaseManager.cs" />
     <Compile Include="Assets\@Resources\Prefabs\Creature\Monster\SazenGames\Skeleton\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\_ExternalModule\Favorites\Common\Scripts\FG_GameObjectGUIDs.cs" />
+    <Compile Include="Assets\@Scripts\Relic\Gold_Dice.cs" />
     <Compile Include="Assets\@Scripts\Skill\BuffController.cs" />
     <Compile Include="Assets\@Scripts\Manager\PlayerManager.cs" />
     <Compile Include="Assets\@Scripts\Manager\GoogleSheetManager.cs" />
     <Compile Include="Assets\@Scripts\Skill\Buffs\AttackBuff.cs" />
+    <Compile Include="Assets\@Scripts\Utils\DelegateHolder.cs" />
     <Compile Include="Assets\@Scripts\Controllers\ObjectController.cs" />
     <Compile Include="Assets\@Scripts\Utils\Define.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\Cleric_Skill.cs" />
@@ -166,9 +169,6 @@
     <Compile Include="Assets\@Scripts\Skill\BuffEffect.cs" />
     <Compile Include="Assets\@Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign\LevelDesign.cs" />
-    <Compile Include="Assets\@Scripts\Manager\RelicManager.cs" />
-    <Compile Include="Assets\@Scripts\Utils\DelegateHolder.cs" />
-    <Compile Include="Assets\@Scripts\Relic\Gold_Dice.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

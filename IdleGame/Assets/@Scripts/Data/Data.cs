@@ -109,8 +109,9 @@ namespace Data
         public string NameKR;
         public string Description;
         public Define.ItemGrade ItemGrade;
-        public int Probability;
+        public float Probability;
         public Define.ItemType ItemType;
+        public int MinStage;
     }
 
     public class ItemDataLoader : ILoader<int, ItemData>

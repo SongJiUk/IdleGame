@@ -21,9 +21,9 @@ public class ItemManager
         Managers.GameM.gameData.Items[_value] = Managers.GameM.gameData.Item_Data[_name].data;
     }
 
-    public void GetItem(string _name)
+    public void RemoveItem(string _name)
     {
-        for(int i =0; i<Managers.GameM.gameData.Items.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.Items.Length; i++)
         {
             if (Managers.GameM.gameData.Items[i] == null) continue;
 
@@ -42,7 +42,7 @@ public class ItemManager
         List<Data.ItemData> items = new List<Data.ItemData>();
         foreach (var data in Managers.GameM.gameData.Item_Data)
         {
-            if (data.Value.data.ItemType == Define.ItemType.Consumable)
+            if(data.Value.data.MinStage <= Managers.GameM.Stage)
             {
                 float randValue = Random.Range(0, 100);
                 if (randValue <= data.Value.data.Probability)
@@ -50,6 +50,8 @@ public class ItemManager
                     items.Add(data.Value.data);
                 }
             }
+            
+
         }
 
         return items;

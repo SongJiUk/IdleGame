@@ -46,9 +46,9 @@ public class UI_Item : UI_Base
     {
         item = _item;
         parent = _parent;
-        GetImage(ImagesType, (int)Images.ItemBGImage).sprite = Managers.ResourceM.GetAtlas(_item.data.ItemGrade.ToString());
-        GetImage(ImagesType, (int)Images.ItemIconImage).sprite = Managers.ResourceM.GetAtlas(_item.data.Name);
-        GetText(TextsType, (int)Texts.ItemCountText).text = _item.holder.Count.ToString();
+        GetImage(ImagesType, (int)Images.ItemBGImage).sprite = Managers.ResourceM.GetAtlas(item.data.ItemGrade.ToString());
+        GetImage(ImagesType, (int)Images.ItemIconImage).sprite = Managers.ResourceM.GetAtlas(item.data.Name);
+        GetText(TextsType, (int)Texts.ItemCountText).text = item.holder.Count.ToString();
 
         RectTransform myRect = GetComponent<RectTransform>();
 

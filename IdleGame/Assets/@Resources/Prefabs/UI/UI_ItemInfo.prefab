@@ -466,8 +466,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 211.32, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 273, y: 0}
+  m_SizeDelta: {x: 446, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6796625179706480794
 CanvasRenderer:
@@ -497,7 +497,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC544\uC774\uD15C \uC124\uBA85 \uCC3D \uC785\uB2C8\uB2E4.\nqweqweqwe12\nweqweqwe12\nqweqwe\n"
+  m_text: "\u3142\u3148\u3137\u3142\u3148\u3137\u3142\u3148\u3137\u3142\u3148\u3137\u3141\u3134\u3147\u3141\u3134\u3147\u3142\u3148\u3137\u3142\u3141\u3134\u3147\u3141\u3134\u3147\u3142\u3148\u3137\u3142\u3148\u3147\u3141\u3134\u3147"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f042465329aeb0e4b91a9c9a3b9d666b, type: 2}
   m_sharedMaterial: {fileID: 6906440704022309904, guid: f042465329aeb0e4b91a9c9a3b9d666b, type: 2}
@@ -578,7 +578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
+  m_HorizontalFit: 0
   m_VerticalFit: 2
 --- !u!1 &6796625179929676654
 GameObject:

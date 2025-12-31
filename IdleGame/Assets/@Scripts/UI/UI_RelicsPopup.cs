@@ -45,7 +45,23 @@ public class UI_RelicsPopup : UI_Popup
         Relic5BGImage,
         Relic7BGImage,
         CenterRelicBGImage
+    }
 
+    enum Texts
+    {
+        Relic12NameText,
+        Relic10NameText,
+        Relic2NameText,
+        Relic5NameText,
+        Relic7NameText,
+        RelicCenterNameText,
+
+        Relic12LevelText,
+        Relic10LevelText,
+        Relic2LevelText,
+        Relic5LevelText,
+        Relic7LevelText,
+        RelicCenterLevelText,
     }
     #endregion
     public System.Action OnValueChange;
@@ -53,7 +69,7 @@ public class UI_RelicsPopup : UI_Popup
     UI_RelicIcon clickRelic;
 
     public List<UI_RelicIcon> relics = new List<UI_RelicIcon>();
-    Dictionary<Buttons, (Images bg, Images icon)> relicMaps;
+    Dictionary<Buttons, (Images bg, Images icon, Texts name, Texts level)> relicMaps;
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -61,10 +77,12 @@ public class UI_RelicsPopup : UI_Popup
         GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
         ImagesType = typeof(Images);
+        TextsType = typeof(Texts);
 
         BindObject(GameObjectsType);
         BindButton(ButtonsType);
         BindImage(ImagesType);
+        BindText(TextsType);
 
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
         GetButton(ButtonsType, (int)Buttons.GachaButton).gameObject.BindEvent(OnClickGachaButton);
@@ -81,17 +99,19 @@ public class UI_RelicsPopup : UI_Popup
         for (int i = 0; i < 6; i++)
         {
             GetObject(GameObjectsType, (int)GameObjects.RelicLockObject12 + i).gameObject.SetActive(false);
+            GetText(TextsType, (int)Texts.Relic12NameText + i).text = "";
+            GetText(TextsType, (int)Texts.Relic12LevelText + i).text = "";
         }
 
 
-        relicMaps = new Dictionary<Buttons, (Images bg, Images icon)>
+        relicMaps = new Dictionary<Buttons, (Images bg, Images icon, Texts name, Texts level)>
         {
-        { Buttons.RelicButton12, (Images.Relic12BGImage, Images.RelicIconImage12) },
-        { Buttons.RelicButton10, (Images.Relic10BGImage, Images.RelicIconImage10) },
-        { Buttons.RelicButton2,  (Images.Relic2BGImage,  Images.RelicIconImage2) },
-        { Buttons.RelicButton5,  (Images.Relic5BGImage,  Images.RelicIconImage5) },
-        { Buttons.RelicButton7,  (Images.Relic7BGImage,  Images.RelicIconImage7) },
-        { Buttons.CenterRelicButton, (Images.CenterRelicBGImage, Images.CenterRelicIconImage) }
+        { Buttons.RelicButton12, (Images.Relic12BGImage, Images.RelicIconImage12, Texts.Relic12NameText, Texts.Relic12LevelText) },
+        { Buttons.RelicButton10, (Images.Relic10BGImage, Images.RelicIconImage10, Texts.Relic10NameText, Texts.Relic10LevelText) },
+        { Buttons.RelicButton2,  (Images.Relic2BGImage,  Images.RelicIconImage2, Texts.Relic2NameText, Texts.Relic2LevelText) },
+        { Buttons.RelicButton5,  (Images.Relic5BGImage,  Images.RelicIconImage5, Texts.Relic5NameText, Texts.Relic5LevelText) },
+        { Buttons.RelicButton7,  (Images.Relic7BGImage,  Images.RelicIconImage7, Texts.Relic7NameText, Texts.Relic7LevelText) },
+        { Buttons.CenterRelicButton, (Images.CenterRelicBGImage, Images.CenterRelicIconImage,Texts.RelicCenterNameText, Texts.RelicCenterLevelText ) }
         };
         //GetButton(ButtonsType, (int)Buttons.CenterRelicButton).image.color = Utils.StringToColorGrade()
         return true;
@@ -142,10 +162,18 @@ public class UI_RelicsPopup : UI_Popup
         relicMaps.TryGetValue(_button, out var map);
 
         Managers.ItemM.SetItem((int)_button, clickRelic.DATA.Name);
+
         GetImage(ImagesType, (int)map.bg).color = Utils.HexToColor(Utils.StringToColorGradeImage(clickRelic.DATA.ItemGrade));
         GetImage(ImagesType, (int)map.icon).gameObject.SetActive(true);
         GetImage(ImagesType, (int)map.icon).sprite = Managers.ResourceM.GetAtlas(clickRelic.DATA.Name);
         GetImage(ImagesType, (int)map.icon).SetNativeSize();
+
+
+        GetText(TextsType, (int)map.name).text = clickRelic.DATA.NameKR;
+        Managers.GameM.gameData.Item_Data.TryGetValue(clickRelic.DATA.Name, out var itemHolder);
+        if (itemHolder != null) GetText(TextsType, (int)map.level).text ="Lv. " + itemHolder.holder.Level.ToString();
+
+
 
         SetClickIcon(null);
         DelegateHolder.Clear();
@@ -165,6 +193,8 @@ public class UI_RelicsPopup : UI_Popup
                 GetImage(ImagesType, (int)relicMaps[btn].bg).color = Utils.HexToColor("#FFFFFF");
                 GetImage(ImagesType, (int)relicMaps[btn].icon).sprite = null;
                 GetImage(ImagesType, (int)relicMaps[btn].icon).gameObject.SetActive(false);
+                GetText(TextsType, (int)relicMaps[btn].name).text = "";
+                GetText(TextsType, (int)relicMaps[btn].level).text = "";
             }
         }
     }
@@ -180,12 +210,15 @@ public class UI_RelicsPopup : UI_Popup
         relics.Clear();
     }
 
+
+    //TODO : 가챠 만들기
     void OnClickGachaButton()
     {
 
     }
 
 
+    //TODO : 강화 만들기
     void OnClickEnforceButton()
     {
 
@@ -241,7 +274,7 @@ public class UI_RelicsPopup : UI_Popup
 
     void OnlyRemoveRelic()
     {
-        Managers.ItemM.GetItem(clickRelic.name);
+        Managers.ItemM.RemoveItem(clickRelic.name);
         SetClickIcon(null);
        
         OnValueChange?.Invoke();

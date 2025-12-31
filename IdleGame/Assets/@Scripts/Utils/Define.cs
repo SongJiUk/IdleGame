@@ -149,6 +149,7 @@ public static class Define
     public enum ItemType
     {
         Consumable,
-        Equipment
+        Equipment,
+        Other
     }
 }

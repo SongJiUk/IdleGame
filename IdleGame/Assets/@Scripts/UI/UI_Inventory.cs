@@ -76,6 +76,7 @@ public class UI_Inventory : UI_Base
             slot.gameObject.SetActive(false);
 
         int index = 0;
+        //TODO : 수정
         var sort_items = Managers.GameM.gameData.Item_Data.OrderByDescending(x => x.Value.data.ItemGrade);
         foreach (var item in sort_items)
         {
@@ -91,9 +92,50 @@ public class UI_Inventory : UI_Base
     }
     void OnClickAllButton()
     {
-        //GetObject(GameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.AllButton).transform.position;
         Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
         Vector3 endPos = GetButton(ButtonsType, (int)Buttons.AllButton).transform.position;
+
+        targetTr.DOMove(endPos, 0.5f)
+            .SetEase(Ease.OutQuad);
+
+        RefreshItems();
+
+
+    }
+
+    void OnClickEquipmentButton()
+    {
+        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
+        Vector3 endPos = GetButton(ButtonsType, (int)Buttons.EquipmentButton).transform.position;
+
+        targetTr.DOMove(endPos, 0.5f)
+            .SetEase(Ease.OutQuad);
+
+        foreach (var slot in itemPool)
+            slot.gameObject.SetActive(false);
+
+        int index = 0;
+        var sort_items = Managers.GameM.gameData.Item_Data.OrderByDescending(x => x.Value.data.ItemGrade);
+        foreach (var item in sort_items)
+        {
+            if (Managers.GameM.gameData.Item_Holder[item.Key].Count > 0)
+            {
+                if(item.Value.data.ItemType == Define.ItemType.Equipment)
+                {
+                    UI_Item slot = itemPool[index++];
+                    slot.gameObject.SetActive(true);
+
+                    slot.Init().Forget();
+                    slot.SetInfo(item.Value, rect);
+                }
+            }
+        }
+    }
+
+    void OnClickConsumableButton()
+    {
+        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
+        Vector3 endPos = GetButton(ButtonsType, (int)Buttons.ConsumableButton).transform.position;
 
         targetTr.DOMove(endPos, 0.5f)
             .SetEase(Ease.OutQuad);
@@ -101,34 +143,33 @@ public class UI_Inventory : UI_Base
         
     }
 
-    void OnClickEquipmentButton()
-    {
-        //GetObject(GameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.EquipmentButton).transform.position;
-        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
-        Vector3 endPos = GetButton(ButtonsType, (int)Buttons.EquipmentButton).transform.position;
-
-        targetTr.DOMove(endPos, 0.5f)
-            .SetEase(Ease.OutQuad);
-    }
-
-    void OnClickConsumableButton()
-    {
-        //GetObject(GameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.ConsumableButton).transform.position;
-        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
-        Vector3 endPos = GetButton(ButtonsType, (int)Buttons.ConsumableButton).transform.position;
-
-        targetTr.DOMove(endPos, 0.5f)
-            .SetEase(Ease.OutQuad);
-    }
-
     void OnClickOthersButton()
     {
-        //GetObject(GameObjectsType, (int)GameObjects.BarObject).transform.position = GetButton(ButtonsType, (int)Buttons.OthersButton).transform.position;
         Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
         Vector3 endPos = GetButton(ButtonsType, (int)Buttons.OthersButton).transform.position;
 
         targetTr.DOMove(endPos, 0.5f)
             .SetEase(Ease.OutQuad);
+
+        foreach (var slot in itemPool)
+            slot.gameObject.SetActive(false);
+
+        int index = 0;
+        var sort_items = Managers.GameM.gameData.Item_Data.OrderByDescending(x => x.Value.data.ItemGrade);
+        foreach (var item in sort_items)
+        {
+            if (Managers.GameM.gameData.Item_Holder[item.Key].Count > 0)
+            {
+                if (item.Value.data.ItemType == Define.ItemType.Other)
+                {
+                    UI_Item slot = itemPool[index++];
+                    slot.gameObject.SetActive(true);
+
+                    slot.Init().Forget();
+                    slot.SetInfo(item.Value, rect);
+                }
+            }
+        }
     }
 
     void OnClickCloseButton()
