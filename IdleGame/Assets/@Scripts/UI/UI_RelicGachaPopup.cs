@@ -3,10 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI
-;
 
-public class UI_GachaPopup : UI_Popup
+public class UI_RelicGachaPopup : UI_Popup
 {
     #region Enum
     enum GameObjects
@@ -27,14 +25,15 @@ public class UI_GachaPopup : UI_Popup
         OneMoreButtonText,
         OneMoreButtonPriceText,
     }
+
     #endregion
+
     const int horizontal_limit = 4;
     const int horizontalCount = 3;
     Transform[] horizontals = new Transform[horizontalCount];
-
-    int value = 0;
-    List<UI_GachaHeroIcon> iconList = new List<UI_GachaHeroIcon>();
     bool isUsingButton = false;
+    int gachaCount = 0;
+    List<UI_RelicGachaIcon> iconList = new List<UI_RelicGachaIcon>();
     public Action OnGachaFinished;
     public async override UniTask<bool> Init()
     {
@@ -48,6 +47,7 @@ public class UI_GachaPopup : UI_Popup
         BindButton(ButtonsType);
         BindText(TextsType);
 
+
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
         GetButton(ButtonsType, (int)Buttons.OneMoreButton).gameObject.BindEvent(OnClickOneMoreButton);
 
@@ -55,91 +55,86 @@ public class UI_GachaPopup : UI_Popup
         {
             horizontals[i] = GetObject(GameObjectsType, (int)GameObjects.Horizontal_1 + i).transform;
         }
-
         return true;
     }
 
-    public async UniTask GetGachaHero(int _count)
+    public async UniTask GetGachaRelic(int _count)
     {
-        await GachaHeroes(_count);
+        await GachaRelics(_count);
     }
 
-
-    async UniTask GachaHeroes(int _count)
+    async UniTask GachaRelics(int _count)
     {
         isUsingButton = true;
         try
         {
             int horizontalCount = 0;
-            value = _count;
+            gachaCount = _count;
 
-            for (int i = 0; i < _count; i++)
+            for (int i = 0; i < gachaCount; i++)
             {
                 float percentage = UnityEngine.Random.Range(0.0f, 100.0f);
-                float r_Percentage = 0.0f;
+                float r_percentage = 0.0f;
 
-                Managers.GameM.Hero_Summon_Count++;
-                Managers.GameM.Hero_Confirmed_Legendary_Count++;
+                Managers.GameM.Relics_Summon_Count++;
+                Managers.GameM.Relics_Confirmed_Legendary_Count++;
 
-                Define.CharacterGrade grade = Define.CharacterGrade.Common;
+                Define.ItemGrade grade = Define.ItemGrade.Common;
 
+                if (i % horizontal_limit == 0 && i != 0) horizontalCount++;
 
-                if (i % horizontal_limit == 0 && i != 0)
+                var relicInfo = Managers.UIM.MakeSubItem<UI_RelicGachaIcon>(horizontals[horizontalCount]);
+
+                if (Managers.GameM.Relics_Confirmed_Legendary_Count >= Managers.DataM.GachaDataDic[Utils.GachaMaxLevel].SummonCount)
                 {
-                    horizontalCount++;
+                    Managers.GameM.Relics_Confirmed_Legendary_Count = 0;
+                    grade = Define.ItemGrade.Legendary;
                 }
 
-                var heroInfo = Managers.UIM.MakeSubItem<UI_GachaHeroIcon>(horizontals[horizontalCount]);
-
-
-                if (Managers.GameM.Hero_Confirmed_Legendary_Count >= Managers.DataM.GachaDataDic[Utils.GachaMaxLevel].SummonCount)
-                {
-                    Managers.GameM.Hero_Confirmed_Legendary_Count = 0;
-                    grade = Define.CharacterGrade.Legendary;
-                }
-
-                if (grade != Define.CharacterGrade.Legendary)
+                if (grade != Define.ItemGrade.Legendary)
                 {
                     for (int j = 0; j < Utils.GradeCount; j++)
                     {
-                        r_Percentage += Utils.Gacha_Percentage(Define.GachaType.HeroGacha)[j];
-                        if (percentage <= r_Percentage)
+                        r_percentage += Utils.Gacha_Percentage(Define.GachaType.RelicGacha)[j];
+                        if (percentage <= r_percentage)
                         {
-                            grade = (Define.CharacterGrade)j;
+                            grade = (Define.ItemGrade)j;
                             break;
                         }
                     }
                 }
 
-                Data.CreatureData data = Managers.GameM.gameData.GetGradeCharacter(grade);
-                Managers.GameM.gameData.Character_Holder[data.Name].Count++;
+                Data.ItemData data = Managers.GameM.gameData.GetGradeRelic(grade);
+                Managers.GameM.gameData.Item_Holder[data.Name].Count++;
 
+                relicInfo.Init().Forget();
+                relicInfo.SetRelicIcon(data);
 
-                heroInfo.Init().Forget();
-                heroInfo.SetHeroIcon(data);
+                iconList.Add(relicInfo);
 
-                iconList.Add(heroInfo);
-                switch (_count)
+                switch (gachaCount)
                 {
                     case 11:
-                        Managers.RenderM.renderGacha.GetHerosForEleven(i, data);
                         GetText(TextsType, (int)Texts.OneMoreButtonText).text = "11회 소환";
                         GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "3000";
                         break;
+
                     case 1:
-                        Managers.RenderM.renderGacha.GetHero(data);
                         GetText(TextsType, (int)Texts.OneMoreButtonText).text = "1회 소환";
                         GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "300";
                         break;
+
                 }
 
-                Managers.GameM.gameData.ChangeCharacterInfo(data);
+                Managers.GameM.gameData.ChangeRelicInfo(data);
 
                 await UniTask.Delay(120);
             }
 
             await Managers.firebaseM.WriteData();
+
             OnGachaFinished?.Invoke();
+
         }
         catch (Exception e) { }
         finally
@@ -150,23 +145,22 @@ public class UI_GachaPopup : UI_Popup
 
     }
 
+
     void ResetIcon()
     {
-        for (int i = 0; i < iconList.Count; i++)
+        for (int i = iconList.Count - 1; i >= 0; i--)
         {
             Managers.ResourceM.Destroy(iconList[i].gameObject);
         }
-
         iconList.Clear();
     }
+
     void OnClickCloseButton()
     {
         if (isUsingButton) return;
 
         ResetIcon();
-        Managers.RenderM.renderGacha.ClearList();
         Managers.UIM.ClosePopup(this).Forget();
-
     }
 
     void OnClickOneMoreButton()
@@ -174,8 +168,7 @@ public class UI_GachaPopup : UI_Popup
         if (isUsingButton) return;
 
         ResetIcon();
-        Managers.RenderM.renderGacha.ClearList();
-        GetGachaHero(value).Forget();
+        GetGachaRelic(gachaCount).Forget();
 
     }
 }

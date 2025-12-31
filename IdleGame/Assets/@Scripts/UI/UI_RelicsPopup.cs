@@ -68,6 +68,7 @@ public class UI_RelicsPopup : UI_Popup
     Transform parent = null;
     UI_RelicIcon clickRelic;
 
+    List<ItemHolder> relicList = new List<ItemHolder>();
     public List<UI_RelicIcon> relics = new List<UI_RelicIcon>();
     Dictionary<Buttons, (Images bg, Images icon, Texts name, Texts level)> relicMaps;
     public async override UniTask<bool> Init()
@@ -153,7 +154,7 @@ public class UI_RelicsPopup : UI_Popup
 
 
         InitRelic(_button);
-        
+
     }
 
 
@@ -171,7 +172,7 @@ public class UI_RelicsPopup : UI_Popup
 
         GetText(TextsType, (int)map.name).text = clickRelic.DATA.NameKR;
         Managers.GameM.gameData.Item_Data.TryGetValue(clickRelic.DATA.Name, out var itemHolder);
-        if (itemHolder != null) GetText(TextsType, (int)map.level).text ="Lv. " + itemHolder.holder.Level.ToString();
+        if (itemHolder != null) GetText(TextsType, (int)map.level).text = "Lv. " + itemHolder.holder.Level.ToString();
 
 
 
@@ -185,7 +186,7 @@ public class UI_RelicsPopup : UI_Popup
 
     void RemoveRelic()
     {
-        for(int i =0; i<Managers.GameM.gameData.Items.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.Items.Length; i++)
         {
             if (Managers.GameM.gameData.Items[i] == null)
             {
@@ -219,10 +220,42 @@ public class UI_RelicsPopup : UI_Popup
 
 
     //TODO : 강화 만들기
-    void OnClickEnforceButton()
+    async void OnClickEnforceButton()
     {
-
+        if (CheckUpgradeRelic())
+        {
+            var popup = await Managers.UIM.ShowPopup<UI_UpgradePopup>();
+            popup.SetInfo(relicList);
+        }
+        else
+        {
+            Managers.UIM.ShowToast("강화가 가능한 유물이 없습니다.");
+        }
     }
+
+    bool CheckUpgradeRelic()
+    {
+        relicList.Clear();
+        foreach (var relic in Managers.GameM.gameData.Item_Data)
+        {
+            var data = relic.Value;
+            if (data.data.ItemType == Define.ItemType.Equipment)
+            {
+                if (data.holder.Level == 0) continue;
+                int needCount = data.holder.Level * 5;
+                if (needCount < data.holder.Count)
+                {
+                    data.holder.Count -= needCount;
+                    data.holder.Level++;
+                    OnValueChange?.Invoke();
+                    relicList.Add(data);
+                }
+            }
+        }
+        if (relicList.Count == 0) return false;
+        else return true;
+    }
+
 
     public void SetClickIcon(UI_RelicIcon _clickRelic, bool _isMinusClick = false)
     {
@@ -239,12 +272,12 @@ public class UI_RelicsPopup : UI_Popup
         {
             clickRelic = _clickRelic;
 
-            for(int i =0; i<Managers.GameM.gameData.Items.Length; i++)
+            for (int i = 0; i < Managers.GameM.gameData.Items.Length; i++)
             {
                 var data = Managers.GameM.gameData.Items[i];
-                if(data != null)
+                if (data != null)
                 {
-                    if(data == clickRelic.DATA)
+                    if (data == clickRelic.DATA)
                     {
                         Managers.ItemM.DisableItem(i);
                         SetClickIcon(null);
@@ -276,7 +309,7 @@ public class UI_RelicsPopup : UI_Popup
     {
         Managers.ItemM.RemoveItem(clickRelic.name);
         SetClickIcon(null);
-       
+
         OnValueChange?.Invoke();
         RemoveRelic();
         clickRelic = null;

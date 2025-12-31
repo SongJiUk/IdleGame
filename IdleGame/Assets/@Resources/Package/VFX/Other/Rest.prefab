@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2837189095165696319}
   - component: {fileID: 3071011050871662872}
   m_Layer: 7
-  m_Name: z
+  m_Name: Rest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4145897340859740733}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.24, y: -1.43, z: -0.37}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1446,7 +1446,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 21300000, guid: a7ad8ac14f379c940b9973d154cb359c, type: 3}
+    - sprite: {fileID: 21300000, guid: 34fb43201416248069a128cdf185a11c, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:

@@ -16,14 +16,19 @@ public class UI_ShopPopup : UI_Popup
         HeroOneGachaButton,
         HeroElevenGachaButton,
         HeroAdGachaButton,
-        GachaListButton,
+        HeroGachaListButton,
 
+        RelicOneGachaButton,
+        RelicElevenGachaButton,
+        RelicAdGachaButton,
+        RelicGachaListButton,
     }
 
     enum Texts
     {
         DiaText,
         GoldText,
+
         HeroOnGachaPriceText,
         HeroOnGachaText,
         HeroElevenGachaText,
@@ -31,7 +36,16 @@ public class UI_ShopPopup : UI_Popup
         HeroAdGachaCountText,
         HeroGachaExpText,
         HeroGachaLevelText,
-        LegendaryConfirmedCountText,
+        HeroLegendaryConfirmedCountText,
+
+        RelicOnGachaPriceText,
+        RelicOnGachaText,
+        RelicElevenGachaText,
+        RelicElevenGachaPriceText,
+        RelicAdGachaCountText,
+        RelicGachaExpText,
+        RelicGachaLevelText,
+        RelicLegendaryConfirmedCountText,
     }
 
     enum Images
@@ -40,7 +54,10 @@ public class UI_ShopPopup : UI_Popup
         HeroImage2,
         HeroImage3,
         HeroGachaExpFillImage,
-        LegendaryConfirmedFillImage,
+        HeroLegendaryConfirmedFillImage,
+
+        RelicGachaExpFillImage,
+        RelicLegendaryConfirmedFillImage,
     }
 
 
@@ -59,10 +76,17 @@ public class UI_ShopPopup : UI_Popup
         BindImage(ImagesType);
 
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
+
+
         GetButton(ButtonsType, (int)Buttons.HeroAdGachaButton).gameObject.BindEvent(OnClickHeroAdGachaButton);
         GetButton(ButtonsType, (int)Buttons.HeroOneGachaButton).gameObject.BindEvent(OnClickHeroOneGachaButton);
         GetButton(ButtonsType, (int)Buttons.HeroElevenGachaButton).gameObject.BindEvent(OnClickHeroElevenGachaButton);
-        GetButton(ButtonsType, (int)Buttons.GachaListButton).gameObject.BindEvent(OnClickGachaListButton);
+        GetButton(ButtonsType, (int)Buttons.HeroGachaListButton).gameObject.BindEvent(OnClickHeroGachaListButton);
+
+        GetButton(ButtonsType, (int)Buttons.RelicAdGachaButton).gameObject.BindEvent(OnClickRelicAdGachaButton);
+        GetButton(ButtonsType, (int)Buttons.RelicOneGachaButton).gameObject.BindEvent(OnClickRelicOneGachaButton);
+        GetButton(ButtonsType, (int)Buttons.RelicElevenGachaButton).gameObject.BindEvent(OnClickRelicElevenGachaButton);
+        GetButton(ButtonsType, (int)Buttons.RelicGachaListButton).gameObject.BindEvent(OnClickRelicGachaListButton);
         return true;
     }
     public override void SetInfo()
@@ -73,6 +97,7 @@ public class UI_ShopPopup : UI_Popup
     {
         CheckGoodsCount();
         CheckGachaHero();
+        CheckGachaRelic();
         CheckButtonTextColor();
     }
 
@@ -80,8 +105,8 @@ public class UI_ShopPopup : UI_Popup
 
     void CheckGachaHero()
     {
-        int level = Utils.Summon_Level(Managers.GameM.Summon_Count);
-        
+        int level = Utils.Summon_Level(Managers.GameM.Hero_Summon_Count);
+
         if (level >= 10)
         {
             GetText(TextsType, (int)Texts.HeroGachaLevelText).text = "소환 Lv. " + level.ToString();
@@ -90,17 +115,38 @@ public class UI_ShopPopup : UI_Popup
         }
         else
         {
-            int levelValue = Managers.DataM.GachaDataDic[level].SummonCount; 
+            int levelValue = Managers.DataM.GachaDataDic[level].SummonCount;
             GetText(TextsType, (int)Texts.HeroGachaLevelText).text = "소환 Lv. " + level.ToString();
-            GetText(TextsType, (int)Texts.HeroGachaExpText).text = $"({Managers.GameM.Summon_Count} / {levelValue})";
-            GetImage(ImagesType, (int)Images.HeroGachaExpFillImage).fillAmount = (float)Managers.GameM.Summon_Count / (float)levelValue;
+            GetText(TextsType, (int)Texts.HeroGachaExpText).text = $"({Managers.GameM.Hero_Summon_Count} / {levelValue})";
+            GetImage(ImagesType, (int)Images.HeroGachaExpFillImage).fillAmount = (float)Managers.GameM.Hero_Summon_Count / (float)levelValue;
         }
 
         int maxCount = Managers.DataM.GachaDataDic[Utils.GachaMaxLevel].SummonCount;
-        GetText(TextsType, (int)Texts.LegendaryConfirmedCountText).text = $"({Managers.GameM.Confirmed_Legendary_Count} / {maxCount})";
-        GetImage(ImagesType, (int)Images.LegendaryConfirmedFillImage).fillAmount = (float)Managers.GameM.Confirmed_Legendary_Count / (float)maxCount;
+        GetText(TextsType, (int)Texts.HeroLegendaryConfirmedCountText).text = $"({Managers.GameM.Hero_Confirmed_Legendary_Count} / {maxCount})";
+        GetImage(ImagesType, (int)Images.HeroLegendaryConfirmedFillImage).fillAmount = (float)Managers.GameM.Hero_Confirmed_Legendary_Count / (float)maxCount;
     }
+    void CheckGachaRelic()
+    {
+        int level = Utils.Summon_Level(Managers.GameM.Relics_Summon_Count);
 
+        if (level >= 10)
+        {
+            GetText(TextsType, (int)Texts.RelicGachaLevelText).text = "소환 Lv. " + level.ToString();
+            GetText(TextsType, (int)Texts.RelicGachaExpText).text = "MAX";
+            GetImage(ImagesType, (int)Images.RelicGachaExpFillImage).fillAmount = 1f;
+        }
+        else
+        {
+            int levelValue = Managers.DataM.GachaDataDic[level].SummonCount;
+            GetText(TextsType, (int)Texts.RelicGachaLevelText).text = "소환 Lv. " + level.ToString();
+            GetText(TextsType, (int)Texts.RelicGachaExpText).text = $"({Managers.GameM.Relics_Summon_Count} / {levelValue})";
+            GetImage(ImagesType, (int)Images.RelicGachaExpFillImage).fillAmount = (float)Managers.GameM.Relics_Summon_Count / (float)levelValue;
+        }
+
+        int maxCount = Managers.DataM.GachaDataDic[Utils.GachaMaxLevel].SummonCount;
+        GetText(TextsType, (int)Texts.RelicLegendaryConfirmedCountText).text = $"({Managers.GameM.Relics_Confirmed_Legendary_Count} / {maxCount})";
+        GetImage(ImagesType, (int)Images.RelicLegendaryConfirmedFillImage).fillAmount = (float)Managers.GameM.Relics_Confirmed_Legendary_Count / (float)maxCount;
+    }
     void CheckGoodsCount()
     {
         GetText(TextsType, (int)Texts.DiaText).text = Utils.ToCurrencyString(Managers.GameM.Gold);
@@ -113,11 +159,17 @@ public class UI_ShopPopup : UI_Popup
         {
             GetText(TextsType, (int)Texts.HeroOnGachaPriceText).color = Color.white;
             GetText(TextsType, (int)Texts.HeroOnGachaText).color = Color.white;
+
+            GetText(TextsType, (int)Texts.RelicOnGachaPriceText).color = Color.white;
+            GetText(TextsType, (int)Texts.RelicOnGachaText).color = Color.white;
         }
         else
         {
             GetText(TextsType, (int)Texts.HeroOnGachaPriceText).color = Color.red;
             GetText(TextsType, (int)Texts.HeroOnGachaText).color = Color.red;
+
+            GetText(TextsType, (int)Texts.RelicOnGachaPriceText).color = Color.red;
+            GetText(TextsType, (int)Texts.RelicOnGachaText).color = Color.red;
         }
 
 
@@ -125,23 +177,30 @@ public class UI_ShopPopup : UI_Popup
         {
             GetText(TextsType, (int)Texts.HeroElevenGachaText).color = Color.white;
             GetText(TextsType, (int)Texts.HeroElevenGachaPriceText).color = Color.white;
+
+            GetText(TextsType, (int)Texts.RelicElevenGachaText).color = Color.white;
+            GetText(TextsType, (int)Texts.RelicElevenGachaPriceText).color = Color.white;
         }
         else
         {
             GetText(TextsType, (int)Texts.HeroElevenGachaText).color = Color.red;
             GetText(TextsType, (int)Texts.HeroElevenGachaPriceText).color = Color.red;
+
+            GetText(TextsType, (int)Texts.RelicElevenGachaText).color = Color.red;
+            GetText(TextsType, (int)Texts.RelicElevenGachaPriceText).color = Color.red;
         }
 
         //TODO : 광고
     }
     #endregion
 
-    #region Button
+    #region Hero Button
 
     async void OnClickHeroAdGachaButton()
     {
         //TODO : TEST
         var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
+        popup.OnGachaFinished = RefreshUI;
         await popup.GetGachaHero(11);
         RefreshUI();
     }
@@ -170,16 +229,36 @@ public class UI_ShopPopup : UI_Popup
         }
     }
 
-    void OnClickGachaListButton()
+    void OnClickHeroGachaListButton()
     {
         Managers.UIM.ShowPopup<UI_GachaListPopup>().Forget();
 
     }
+    #endregion
 
+    #region RelicButton
+    async void OnClickRelicAdGachaButton()
+    {
+        var popup = await Managers.UIM.ShowPopup<UI_RelicGachaPopup>();
+        popup.OnGachaFinished = RefreshUI;
+        await popup.GetGachaRelic(11);
+        RefreshUI();
+    }
+
+    void OnClickRelicOneGachaButton()
+    {
+    }
+
+    void OnClickRelicElevenGachaButton()
+    {
+    }
+
+    void OnClickRelicGachaListButton()
+    {
+    }
+    #endregion
     void OnClickCloseButton()
     {
         TriggerClose(this);
     }
-
-    #endregion
 }

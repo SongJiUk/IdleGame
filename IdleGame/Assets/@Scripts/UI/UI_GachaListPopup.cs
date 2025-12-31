@@ -39,13 +39,13 @@ public class UI_GachaListPopup : UI_Popup
         GetButton(ButtonsType, (int)Buttons.GachaLevelBeforeButton).gameObject.BindEvent(OnClickLevelBeforeButton);
         GetButton(ButtonsType, (int)Buttons.GachaLevelNextButton).gameObject.BindEvent(OnClickLevelNextButton);
 
-        Level = Utils.Summon_Level(Managers.GameM.Summon_Count);
+        Level = Utils.Summon_Level(Managers.GameM.Hero_Summon_Count);
         return true;
     }
 
     public override void SetInfo()
     {
-        Level = Utils.Summon_Level(Managers.GameM.Summon_Count);
+        Level = Utils.Summon_Level(Managers.GameM.Hero_Summon_Count);
         RefreshUI();
     }
 
@@ -59,9 +59,9 @@ public class UI_GachaListPopup : UI_Popup
 
         GetText(TextsType, (int)Texts.CommonProbabilityText).text = string.Format("{0:0.000}", data.Common.ToString()) + "%";
         GetText(TextsType, (int)Texts.UnCommonProbabilityText).text = string.Format("{0:0.000}", data.UnCommon.ToString()) + "%";
-        GetText(TextsType, (int)Texts.RareProbabilityText).text = string.Format("{0:0.000}", data.Rare.ToString()) +"%";
-        GetText(TextsType, (int)Texts.UniqueProbabilityText).text = string.Format("{0:0.000}", data.Unique.ToString()) +"%";
-        GetText(TextsType, (int)Texts.LegendaryProbabilityText).text = string.Format("{0:0.000}", data.Legendary.ToString())+ "%";
+        GetText(TextsType, (int)Texts.RareProbabilityText).text = string.Format("{0:0.000}", data.Rare.ToString()) + "%";
+        GetText(TextsType, (int)Texts.UniqueProbabilityText).text = string.Format("{0:0.000}", data.Unique.ToString()) + "%";
+        GetText(TextsType, (int)Texts.LegendaryProbabilityText).text = string.Format("{0:0.000}", data.Legendary.ToString()) + "%";
         GetText(TextsType, (int)Texts.GachaLevelText).text = "Level. " + Level.ToString();
     }
 

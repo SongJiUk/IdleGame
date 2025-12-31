@@ -12,7 +12,7 @@ public partial class FirebaseManager
             Firebase.Auth.AuthResult authResult = await auth.SignInAnonymouslyAsync().AsUniTask();
             FirebaseUser user = authResult.User;
             Debug.Log("게스트 로그인 성공 ! 사용자 ID : " + user.UserId);
-            await ReadDataAsync();
+            await ReadData();
         }
         catch (System.Exception e)
         {

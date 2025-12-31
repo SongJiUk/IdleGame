@@ -36,9 +36,12 @@ public class GameData
     public float fast_Timer = 0.0f;
     public int buff_Level, buff_count;
 
-    public int summonCount = 0;
-    public int confirmedLegendaryCount = 0;
+    public int heroSummonCount = 0;
+    public int heroConfirmedLegendaryCount = 0;
 
+
+    public int relicsSummonCount = 0;
+    public int relicsConfirmedLegendaryCount = 0;
     public string StartDate;
     public string EndDate;
     //플레이어가 가지고 있는 데이터 저장
@@ -54,21 +57,6 @@ public class GameData
     {
         SetCharacter();
         SetItem();
-    }
-
-    public void ChangeCharacterInfo(Data.CreatureData _data)
-    {
-        if (!Character_Holder.TryGetValue(_data.Name, out Holder holder))
-        {
-            holder = new Holder();
-            Character_Holder.Add(_data.Name, holder);
-        }
-
-
-        var character = new CharacterHolder();
-        character.data = _data;
-        character.holder = holder;
-        Characters_Data[_data.Name] = character;
     }
 
     private void SetCharacter()
@@ -101,7 +89,7 @@ public class GameData
     {
         var datas = Managers.DataM.ItemDataDic.Values;
 
-        foreach(var data in datas)
+        foreach (var data in datas)
         {
             string targetName = data.Name.Trim();
 
@@ -120,24 +108,6 @@ public class GameData
             Item_Data[targetName] = item;
         }
 
-        //foreach (var data in datas)
-        //{
-        //    var item = new ItemHolder();
-        //    item.data = data;
-
-        //    Holder holder = new Holder();
-
-        //    if (Item_Holder.ContainsKey(data.Name))
-        //    {
-        //        holder = Item_Holder[data.Name];
-        //    }
-        //    else
-        //    {
-        //        Item_Holder.Add(data.Name, holder);
-        //    }
-        //    item.holder = holder;
-        //    Item_Data[data.Name] = item;
-        //}
     }
     public Data.CreatureData GetGradeCharacter(Define.CharacterGrade _grade)
     {
@@ -151,5 +121,52 @@ public class GameData
         }
 
         return holder[UnityEngine.Random.Range(0, holder.Count)];
+    }
+
+    public Data.ItemData GetGradeRelic(Define.ItemGrade _grade)
+    {
+        List<Data.ItemData> holder = new List<Data.ItemData>();
+        foreach (var data in Item_Data)
+        {
+            if (data.Value.data.ItemType == Define.ItemType.Equipment)
+            {
+                if (data.Value.data.ItemGrade == _grade)
+                {
+                    holder.Add(data.Value.data);
+                }
+            }
+        }
+
+        return holder[UnityEngine.Random.Range(0, holder.Count)];
+    }
+
+    public void ChangeCharacterInfo(Data.CreatureData _data)
+    {
+        if (!Character_Holder.TryGetValue(_data.Name, out Holder holder))
+        {
+            holder = new Holder();
+            Character_Holder.Add(_data.Name, holder);
+        }
+
+
+        var character = new CharacterHolder();
+        character.data = _data;
+        character.holder = holder;
+        Characters_Data[_data.Name] = character;
+    }
+
+    public void ChangeRelicInfo(Data.ItemData _data)
+    {
+        if (!Item_Holder.TryGetValue(_data.Name, out Holder holder))
+        {
+            holder = new Holder();
+            Item_Holder.Add(_data.Name, holder);
+        }
+
+
+        var item = new ItemHolder();
+        item.data = _data;
+        item.holder = holder;
+        Item_Data[_data.Name] = item;
     }
 }

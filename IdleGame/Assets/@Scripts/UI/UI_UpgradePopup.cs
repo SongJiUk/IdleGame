@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_CharacterUpgradePopup : UI_Popup
+public class UI_UpgradePopup : UI_Popup
 {
     #region Enum
 
@@ -20,6 +20,7 @@ public class UI_CharacterUpgradePopup : UI_Popup
     #endregion
 
     Transform parent = null;
+    List<UI_Base> iconList = new List<UI_Base>();
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -44,14 +45,39 @@ public class UI_CharacterUpgradePopup : UI_Popup
             var characterHolder = _characterList[i];
             var icon = Managers.UIM.MakeSubItem<UI_UpgradeHeroIcon>(parent);
 
+
             icon.Init().Forget();
             icon.SetInfo(characterHolder);
+            iconList.Add(icon);
+        }
+    }
+    public void SetInfo(List<ItemHolder> _itemList)
+    {
+
+        for (int i = 0; i < _itemList.Count; i++)
+        {
+            var itemHolder = _itemList[i];
+            var icon = Managers.UIM.MakeSubItem<UI_UpgradeRelicIcon>(parent);
+
+            icon.Init().Forget();
+            icon.SetInfo(itemHolder);
+            iconList.Add(icon);
         }
     }
 
 
+    void ClearUI()
+    {
+        for (int i = iconList.Count - 1; i >= 0; i--)
+        {
+            Managers.ResourceM.Destroy(iconList[i].gameObject);
+        }
+
+        iconList.Clear();
+    }
     void OnClickCloseButton()
     {
+        ClearUI();
         Managers.UIM.ClosePopup(this).Forget();
     }
 }

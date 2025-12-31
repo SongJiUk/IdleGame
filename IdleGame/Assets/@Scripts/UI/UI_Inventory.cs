@@ -29,6 +29,8 @@ public class UI_Inventory : UI_Base
         EquipmentText,
         ConsumableText,
         OthersText,
+        CoinText,
+
     }
 
     Transform parent = null;
@@ -89,6 +91,8 @@ public class UI_Inventory : UI_Base
                 slot.SetInfo(item.Value, rect);
             }
         }
+
+        GetText(TextsType, (int)Texts.CoinText).text = Utils.ToCurrencyString(Managers.GameM.Gold);
     }
     void OnClickAllButton()
     {
@@ -120,7 +124,7 @@ public class UI_Inventory : UI_Base
         {
             if (Managers.GameM.gameData.Item_Holder[item.Key].Count > 0)
             {
-                if(item.Value.data.ItemType == Define.ItemType.Equipment)
+                if (item.Value.data.ItemType == Define.ItemType.Equipment)
                 {
                     UI_Item slot = itemPool[index++];
                     slot.gameObject.SetActive(true);
@@ -140,7 +144,7 @@ public class UI_Inventory : UI_Base
         targetTr.DOMove(endPos, 0.5f)
             .SetEase(Ease.OutQuad);
 
-        
+
     }
 
     void OnClickOthersButton()

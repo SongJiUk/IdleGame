@@ -17,13 +17,13 @@ public class User
 public partial class FirebaseManager
 {
     public bool IsLoading { get; private set; } = false;
-    public async UniTask WirteData()
+    public async UniTask WriteData()
     {
         if (IsLoading || reference == null || currentUser == null) return;
 
 
         GameData data = Managers.GameM.gameData;
-        if(data == null || data.Character_Holder.Count == 0)
+        if (data == null || data.Character_Holder.Count == 0)
         {
             Debug.LogWarning("데이터가 비어있어 저장을 취소합니다.");
             return;
@@ -44,13 +44,13 @@ public partial class FirebaseManager
 
             Debug.Log("모든 게임 데이터 통합 저장 완료");
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.LogError($"데이터 저장중 오류 발생 : {e.Message}");
         }
     }
 
-    public async UniTask ReadDataAsync()
+    public async UniTask ReadData()
     {
         try
         {
@@ -62,7 +62,7 @@ public partial class FirebaseManager
             reference.Child("USER").Child(userId).Child("CHARACTER").GetValueAsync().AsUniTask(),
             reference.Child("USER").Child(userId).Child("ITEM").GetValueAsync().AsUniTask());
 
-            if(dataSnap.Exists)
+            if (dataSnap.Exists)
             {
                 string json = dataSnap.GetRawJsonValue();
                 JsonUtility.FromJsonOverwrite(json, Managers.GameM.gameData);
@@ -70,13 +70,13 @@ public partial class FirebaseManager
 
             Managers.GameM.gameData.StartDate = DateTime.Now.ToString();
 
-            if(charSnap.Exists)
+            if (charSnap.Exists)
             {
                 var characterDic = JsonConvert.DeserializeObject<Dictionary<string, Holder>>(charSnap.GetRawJsonValue());
                 Managers.GameM.gameData.Character_Holder = characterDic ?? new Dictionary<string, Holder>();
             }
 
-            if(itemSnap.Exists)
+            if (itemSnap.Exists)
             {
                 string rawJson = itemSnap.GetRawJsonValue();
                 Debug.Log($"[1. 서버 원본 데이터]: {rawJson}");
@@ -101,7 +101,7 @@ public partial class FirebaseManager
             }
 
             Managers.GameM.gameData.Init();
-           
+
 
             Debug.Log("모든 데이터 로드 및 초기화 완료");
         }

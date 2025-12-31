@@ -106,18 +106,31 @@ public class GameManager
         set { gameData.buff_count = value; }
     }
 
-    public int Summon_Count
+    public int Hero_Summon_Count
     {
-        get { return gameData.summonCount; }
+        get { return gameData.heroSummonCount; }
         set
         {
-            gameData.summonCount = value;
+            gameData.heroSummonCount = value;
         }
     }
 
-    public int Confirmed_Legendary_Count
+    public int Hero_Confirmed_Legendary_Count
     {
-        get { return gameData.confirmedLegendaryCount; }
-        set { gameData.confirmedLegendaryCount = value; }
-    }    
+        get { return gameData.heroConfirmedLegendaryCount; }
+        set { gameData.heroConfirmedLegendaryCount = value; }
+    }
+
+    public int Relics_Summon_Count
+    {
+        get { return gameData.relicsSummonCount; }
+        set { gameData.relicsSummonCount = value; }
+    }
+
+    public int Relics_Confirmed_Legendary_Count
+    {
+        get { return gameData.relicsConfirmedLegendaryCount; }
+        set { gameData.relicsConfirmedLegendaryCount = value; }
+    }
+
 }

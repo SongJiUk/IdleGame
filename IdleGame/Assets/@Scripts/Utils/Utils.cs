@@ -606,11 +606,20 @@ public static class Utils
 
         return -1;
     }
-    public static float[] Gacha_Percentage()
+    public static float[] Gacha_Percentage(Define.GachaType _type)
     {
         float[] valueCount = new float[GradeCount];
+        switch (_type)
+        {
+            case Define.GachaType.HeroGacha:
+                valueCount = Managers.DataM.GachaDataDic[Summon_Level(Managers.GameM.Hero_Summon_Count)].GetRates();
+                break;
 
-        valueCount = Managers.DataM.GachaDataDic[Summon_Level(Managers.GameM.Summon_Count)].GetRates();
+            case Define.GachaType.RelicGacha:
+                valueCount = Managers.DataM.GachaDataDic[Summon_Level(Managers.GameM.Relics_Summon_Count)].GetRates();
+                break;
+        }
+
 
         return valueCount;
     }

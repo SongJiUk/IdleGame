@@ -108,7 +108,7 @@ public class UI_HeroPopup : UI_Popup
     {
         if (CheckUpgradeCharacter())
         {
-            var popup = await Managers.UIM.ShowPopup<UI_CharacterUpgradePopup>();
+            var popup = await Managers.UIM.ShowPopup<UI_UpgradePopup>();
             popup.SetInfo(characterList);
         }
         else

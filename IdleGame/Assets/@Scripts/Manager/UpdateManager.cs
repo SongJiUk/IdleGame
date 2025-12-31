@@ -62,7 +62,7 @@ public class UpdateManager : MonoBehaviour
     async void ExcuteWriteData()
     {
         isWriting = true;
-        await Managers.firebaseM.WirteData();
+        await Managers.firebaseM.WriteData();
         isWriting = false;
     }
 
@@ -71,7 +71,7 @@ public class UpdateManager : MonoBehaviour
         if (isPaused) return;
 
 
-        if(isStartFirebase && !Managers.firebaseM.IsLoading && !isWriting)
+        if (isStartFirebase && !Managers.firebaseM.IsLoading && !isWriting)
         {
             Managers.save_Timer += Time.unscaledDeltaTime;
             if (Managers.save_Timer >= 10.0f)
@@ -80,7 +80,7 @@ public class UpdateManager : MonoBehaviour
                 ExcuteWriteData();
             }
         }
-       
+
 
         float deltaTime = Time.deltaTime;
         float unscaledDeltaTime = Time.unscaledDeltaTime;
