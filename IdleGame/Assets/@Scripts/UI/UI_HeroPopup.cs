@@ -72,6 +72,10 @@ public class UI_HeroPopup : UI_Popup
     {
         Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(false);
         var datas = Managers.GameM.gameData.Characters_Data;
+
+        if (characters.Count != 0) ClearIcons();
+
+
         characterDic.Clear();
 
         foreach (var data in datas)
@@ -99,7 +103,6 @@ public class UI_HeroPopup : UI_Popup
 
     void OnClickHeroGachaButton()
     {
-        //TODO : 해당 팝업 끄고, shopPopup으로 이동
         Managers.UIM.ClosePopup(this).Forget();
         Managers.UIM.ShowPopup<UI_ShopPopup>().Forget();
     }
@@ -139,17 +142,20 @@ public class UI_HeroPopup : UI_Popup
         else return true;
     }
 
-    void OnClickCloseButton()
+    async void OnClickCloseButton()
     {
-        TriggerClose(this, true);
+        await TriggerClose(this, true);
 
-        characterDic.Clear();
+        ClearIcons();
+    }
+
+    void ClearIcons()
+    {
         for (int i = 0; i < characters.Count; i++)
         {
             Managers.ResourceM.Destroy(characters[i].gameObject);
         }
         characters.Clear();
-
     }
 
     void OnClickCircleButton(Buttons _clickButton)

@@ -122,6 +122,8 @@ public class UI_RelicsPopup : UI_Popup
     {
         var datas = Managers.GameM.gameData.Item_Data;
 
+        if (relics.Count != 0) ClearIcons();
+
         foreach (var data in datas)
         {
             if (data.Value.data.ItemType == Define.ItemType.Equipment)
@@ -200,10 +202,15 @@ public class UI_RelicsPopup : UI_Popup
         }
     }
 
-    void OnClickCloseButton()
+    async void OnClickCloseButton()
     {
-        TriggerClose(this);
+        await TriggerClose(this, true);
 
+        ClearIcons();
+    }
+
+    void ClearIcons()
+    {
         for (int i = 0; i < relics.Count; i++)
         {
             Managers.ResourceM.Destroy(relics[i].gameObject);
@@ -212,14 +219,13 @@ public class UI_RelicsPopup : UI_Popup
     }
 
 
-    //TODO : 가챠 만들기
     void OnClickGachaButton()
     {
-
+        Managers.UIM.ClosePopup(this).Forget();
+        Managers.UIM.ShowPopup<UI_ShopPopup>().Forget();
     }
 
 
-    //TODO : 강화 만들기
     async void OnClickEnforceButton()
     {
         if (CheckUpgradeRelic())

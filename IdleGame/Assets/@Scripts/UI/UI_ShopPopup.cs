@@ -259,6 +259,6 @@ public class UI_ShopPopup : UI_Popup
     #endregion
     void OnClickCloseButton()
     {
-        TriggerClose(this);
+        TriggerClose(this, true).Forget();
     }
 }

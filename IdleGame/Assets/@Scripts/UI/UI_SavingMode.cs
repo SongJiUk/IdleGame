@@ -54,9 +54,7 @@ public class UI_SavingMode : UI_Popup, ITickable
         parent = GetObject(GameObjectsType, (int)GameObjects.Content).transform;
         return true;
     }
-
-
-    private void OnEnable()
+    public override void SetInfo()
     {
         cam = Camera.main;
         cam.enabled = false;
@@ -69,6 +67,10 @@ public class UI_SavingMode : UI_Popup, ITickable
         //핸드폰에서만 됌.
         GetText(TextsType, (int)Texts.Battery_Text).text = (SystemInfo.batteryLevel * 100f).ToString();
         GetImage(ImagesType, (int)Images.Battery_Image_Fill).fillAmount = SystemInfo.batteryLevel;
+        int battery = (int)(SystemInfo.batteryLevel * 100f);
+        if (battery > 20) GetImage(ImagesType, (int)Images.Battery_Image_Fill).color = Color.green;
+        else GetImage(ImagesType, (int)Images.Battery_Image_Fill).color = Color.red;
+
 
         GetText(TextsType, (int)Texts.TImeText).text = System.DateTime.Now.ToString("HH:mm");
 
@@ -94,7 +96,7 @@ public class UI_SavingMode : UI_Popup, ITickable
             RefreshItem(_itemData);
             return;
         }
-        ItemHolder item = new ItemHolder { data = _itemData, holder = new Holder()};
+        ItemHolder item = new ItemHolder { data = _itemData, holder = new Holder() };
         item.holder.Count = 1;
 
         SavingModeItem.Add(_itemData.Name, item);

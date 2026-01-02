@@ -114,7 +114,8 @@ public class UI_RelicInfoPopup : UI_Popup
 
     void OnClickGachaButton()
     {
-
+        Managers.UIM.CloseAllPopup();
+        Managers.UIM.ShowPopup<UI_ShopPopup>().Forget();
     }
 
     void OnClickEnforceButton()

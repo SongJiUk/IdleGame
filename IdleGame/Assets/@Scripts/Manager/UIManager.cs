@@ -73,7 +73,7 @@ public class UIManager
     }
     #region  Popup
 
-    public async UniTask<T> ShowPopup<T>(string _name = null, bool _isFade = false) where T : UI_Base
+    public async UniTask<T> ShowPopup<T>(string _name = null, bool _isFade = false, Transform _parent = null) where T : UI_Base
     {
         if (_isFade)
         {
@@ -81,9 +81,17 @@ public class UIManager
             await scene.AsyncFadeInOut(false, true);
         }
         T popup = GetPopupUI<T>(_name);
+        if (_parent != null) popup.gameObject.SetActive(false);
+        await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+
+        if (_parent != null) popup.gameObject.transform.SetParent(_parent);
+        await UniTask.Yield();
+
+        if (_parent != null) popup.gameObject.SetActive(true);
         popup.Init().Forget();
         popup.SetInfo();
 
+        await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
         if (_isFade)
         {
             UI_GameScene scene = (sceneUI as UI_GameScene);
@@ -113,6 +121,7 @@ public class UIManager
         }
         popupStack.Push(popup);
         popup.gameObject.transform.SetAsLastSibling();
+
         return popup;
     }
 

@@ -21,6 +21,7 @@ namespace Data
         public double BaseHp;
         public double BaseDamage;
         public int MaxMp;
+        public float AttackSpeed;
         public int ProjectileDataID;
         public int SkillDataID;
 

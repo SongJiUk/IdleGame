@@ -18,9 +18,9 @@ public class UI_Popup : UI_Base
     }
 
     //하단 버튼 애니메이션
-    protected void TriggerClose(UI_Popup _popup, bool _isFade = false)
+    protected async UniTask TriggerClose(UI_Popup _popup, bool _isFade = false)
     {
-        Managers.UIM.ClosePopup(_popup, _isFade).Forget();
+        await Managers.UIM.ClosePopup(_popup, _isFade);
         OnThisPopupClosed?.Invoke();
         OnThisPopupClosed = null;
     }

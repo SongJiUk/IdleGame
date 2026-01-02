@@ -71,7 +71,7 @@ public class DamageFont : BaseController
     {
         var tr = transform;
         Vector3 targetPos = new Vector3(target.x, target.y + 0.5f, target.z);
-        transform.position = cam.WorldToScreenPoint(targetPos);
+        if (cam != null) transform.position = cam.WorldToScreenPoint(targetPos);
 
         Sequence sq = DOTween.Sequence();
         transform.localScale = Vector3.zero;

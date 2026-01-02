@@ -40,6 +40,7 @@ public class UI_UpgradeHeroIcon : UI_Base
         characterHolder = _characterHolder;
         GetImage(ImagesType, (int)Images.HeroBGImage).sprite = Managers.ResourceM.GetAtlas(characterHolder.data.CharacterGrade.ToString());
         GetImage(ImagesType, (int)Images.HeroImage).sprite = Managers.ResourceM.GetAtlas(characterHolder.data.Name);
+        GetImage(ImagesType, (int)Images.HeroImage).SetNativeSize();
 
 
         GetText(TextsType, (int)Texts.BeforeLevelText).text = (characterHolder.holder.Level - 1).ToString();

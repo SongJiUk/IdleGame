@@ -386,6 +386,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     async UniTaskVoid OnClickAnyButtons(Buttons _clickButtonType)
     {
         clickedButton = null;
+        Managers.UIM.CloseAllPopup();
         switch (_clickButtonType)
         {
             case Buttons.SettingButton:
@@ -418,8 +419,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 clickedButton = heroBtn;
                 ScaleUpSelectButton();
 
-                UI_HeroPopup popup = await Managers.UIM.ShowPopup<UI_HeroPopup>(_isFade: true);
-                popup.OnThisPopupClosed = ScaleDownSelectButton;
+                UI_HeroPopup heroPopup = await Managers.UIM.ShowPopup<UI_HeroPopup>(_isFade: true, _parent: GetPopUpLayer());
+                //heroPopup.transform.SetParent(GetPopUpLayer());
+                heroPopup.OnThisPopupClosed = ScaleDownSelectButton;
                 // ui_HeroPopup.gameObject.SetActive(true);
                 // ui_HeroPopup.SetInfo();
                 // ui_HeroPopup.OnThisPopupClosed = ScaleDownSelectButton;
@@ -430,7 +432,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 clickedButton = relicsBtn;
                 ScaleUpSelectButton();
 
-                UI_RelicsPopup relicPopup = await Managers.UIM.ShowPopup<UI_RelicsPopup>();
+                UI_RelicsPopup relicPopup = await Managers.UIM.ShowPopup<UI_RelicsPopup>(_isFade: true, _parent: GetPopUpLayer());
+                //relicPopup.transform.SetParent(GetPopUpLayer());
                 relicPopup.OnThisPopupClosed = ScaleDownSelectButton;
                 break;
 
@@ -448,8 +451,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 clickedButton = shopBtn;
                 ScaleUpSelectButton();
 
-                UI_ShopPopup shopPopup = await Managers.UIM.ShowPopup<UI_ShopPopup>();
-                shopPopup.transform.SetParent(GetPopUpLayer());
+                UI_ShopPopup shopPopup = await Managers.UIM.ShowPopup<UI_ShopPopup>(_isFade: true, _parent: GetPopUpLayer());
+                //shopPopup.transform.SetParent(GetPopUpLayer());
                 shopPopup.OnThisPopupClosed = ScaleDownSelectButton;
 
 
@@ -459,6 +462,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             case Buttons.DeadFrameButton:
                 Managers.StageM.isDead = false;
                 Managers.StageM.StateChange(Define.StageState.Boss);
+
                 break;
         }
     }
@@ -615,6 +619,12 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         }
         GetImage(ImagesType, (int)Images.BossHpImage).fillAmount = (float)value;
         GetText(TextsType, (int)Texts.BossHPText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
+
+        int stageValue = Managers.GameM.Stage;
+        int stageForward = (stageValue / 20) + 1;
+        int stageBack = stageValue % 20;
+
+        GetText(TextsType, (int)Texts.BossBoardStageText).text = stageForward.ToString() + " - " + stageBack.ToString();
     }
 
     public void ResetStageBoard()
@@ -691,8 +701,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         //TODO : HP도 
         GetImage(ImagesType, (int)Images.Character1_HpFillImage + (_pc.index - 1)).fillAmount = (float)_pc.HP / (float)_pc.MaxHP;
-        GetText(TextsType, (int)Texts.Character1_HpText + (_pc.index - 1)).text = $"{(int)_pc.HP} / {(int)_pc.MaxHP}";
-
+        GetText(TextsType, (int)Texts.Character1_HpText + (_pc.index - 1)).text = $"{Utils.ToCurrencyString(_pc.HP)} / {Utils.ToCurrencyString(_pc.MaxHP)}";
         GetImage(ImagesType, (int)Images.Character1_MpFillImage + (_pc.index - 1)).fillAmount = (float)_pc.MP / (float)_pc.MaxMp;
         GetText(TextsType, (int)Texts.Character1_MpText + (_pc.index - 1)).text = _pc.MP.ToString() + " / " + _pc.MaxMp.ToString();
     }
@@ -1090,7 +1099,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         }
 
         //TODO : 지울거임
-        if(Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             Managers.InventoryM.GetItem(Managers.GameM.gameData.Item_Data["Axe"].data);
             Managers.InventoryM.GetItem(Managers.GameM.gameData.Item_Data["Gold_Dice"].data);

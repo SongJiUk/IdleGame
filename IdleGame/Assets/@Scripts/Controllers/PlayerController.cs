@@ -51,7 +51,7 @@ public class PlayerController : CreatureController
     }
 
 
-   
+
 
     void OnEnable()
     {
@@ -99,6 +99,12 @@ public class PlayerController : CreatureController
         hp = Managers.PlayerM.GetHP(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name]);
         maxHp = hp;
         damage = Managers.PlayerM.GetAttack(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name]);
+
+        if (animator != null)
+        {
+            animator.speed = 1.0f;
+            animator.SetFloat("AttackSpeed", DATA.AttackSpeed);
+        }
     }
     public override void InitStat()
     {
@@ -113,7 +119,11 @@ public class PlayerController : CreatureController
 
     public override void Projectile()
     {
-        if (target == null || target.IsDead) return;
+        if (!isAttacking || currentTarget == null || currentTarget.IsDead)
+        {
+            StopAttack();
+            return;
+        }
         Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
         GetMp(5);
 
@@ -122,31 +132,40 @@ public class PlayerController : CreatureController
     public override void Attack()
     {
         if (!isAttacking) return;
+
+        if (currentTarget == null || currentTarget.IsDead)
+        {
+            StopAttack();
+            return;
+        }
+
         MonsterController monsterTarget = target as MonsterController;
-        if (monsterTarget == null || monsterTarget.IsDead) return;
-        
+        if (monsterTarget == null) return;
+
+
+
         if (trails != null)
         {
-            for (int i = 0; i < trails.Count; i++)
-            {
-                trails[i].SetActive(true);
-            }
-
+            foreach (var trail in trails) trail.SetActive(true);
         }
-        
+
         Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, DATA.ProjectileDataID, this, monsterTarget);
         DelegateHolder.PlayerAttack(this, monsterTarget);
         TrailDisable().Forget();
-        
+
         GetMp(5);
     }
 
-
+    private void StopAttack()
+    {
+        isAttacking = false;
+        AnimatorChange(CreatureState.Idle); // 타겟이 없으니 대기 상태로
+    }
 
 
     public async UniTaskVoid TrailDisable()
     {
-        await UniTask.WaitForSeconds(0.5f);
+        await UniTask.WaitForSeconds(0.3f);
         if (trails != null)
         {
             for (int i = 0; i < trails.Count; i++)
@@ -194,7 +213,7 @@ public class PlayerController : CreatureController
             await UniTask.Yield();
         }
     }
- 
+
 
     public override void Tick(float _deltaTime)
     {
@@ -280,7 +299,7 @@ public class PlayerController : CreatureController
 
     void UsePlayerSkill()
     {
-        if(skillController.UseSkill(_target: target))
+        if (skillController.UseSkill(_target: target))
         {
             mp = 0;
             isUsingSkill = true;

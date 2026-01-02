@@ -51,6 +51,7 @@ public class CreatureController : BaseController
     protected virtual float detectrange { get; set; }
 
     protected CreatureController target;
+    protected CreatureController currentTarget;
     protected Vector3 SpawnPos;
     protected bool isPlayer = false;
     public bool IsPlayer
@@ -160,7 +161,8 @@ public class CreatureController : BaseController
     {
         try
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(1f), cancellationToken: this.GetCancellationTokenOnDestroy());
+            float attackDuration = 1f / data.AttackSpeed;
+            await UniTask.Delay(TimeSpan.FromSeconds(attackDuration), cancellationToken: this.GetCancellationTokenOnDestroy());
         }
         catch (OperationCanceledException) { }
         catch (Exception e)
@@ -171,9 +173,11 @@ public class CreatureController : BaseController
         {
             isAttacking = false;
             isTargetLocked = false;
+            currentTarget = null;
             OnAttackDelayEnd();
         }
     }
+
     protected virtual void OnAttackDelayEnd() { }
 
     public virtual void AnimatorChange(Define.CreatureState _state)
@@ -208,7 +212,8 @@ public class CreatureController : BaseController
     public virtual async UniTask StartAttack()
     {
         if (target == null || !target.IsValid()) return;
-        isAttacking = true; 
+        currentTarget = target;
+        isAttacking = true;
         AnimatorChange(Define.CreatureState.Attack);
         transform.LookAt(target.transform);
 

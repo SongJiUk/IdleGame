@@ -27,6 +27,7 @@ public class RangeAttackController : ProjectileController
         owner = _owner;
         isSkillProjectile = _isSkillProjectile;
         base.AttackInit(_cc, _dmg, owner);
+        //TODO : 여기에서 null값뜸 똑같은 상황나오면 체크하기
         transform.LookAt(target.transform);
 
 
