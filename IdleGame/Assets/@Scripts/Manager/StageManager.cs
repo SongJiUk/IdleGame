@@ -11,7 +11,7 @@ public class StageManager
     public StageState stageState;
     public event Action OnChangeCount;
 
-    //TODO: ��� 10��? 20��? �����غ���
+    
     public int maxCount;
     int count = 0;
     public int COUNT
@@ -24,7 +24,7 @@ public class StageManager
         }
     }
 
-    //TODO : ����� ���� ���� x
+    
     public bool isDead = false;
     public OnReadyEvent readyEvent;
     public OnPlayEvent playEvent;
@@ -32,15 +32,15 @@ public class StageManager
     public OnBossPlayEvent bossPlayEvent;
     public OnClearEvent clearEvent;
     public OnDeadEvent deadEvent;
+    public OnDungeonEvent dungeonEvent;
 
-    public void StateChange(StageState _state)
+    public void StateChange(StageState _state, int _value = 0)
     {
         stageState = _state;
         switch (stageState)
         {
             case StageState.Ready:
-                //maxCount = Managers.DataM.StageDataDic[Managers.GameM.stage].StageClearMaxCount;
-                maxCount = 200;
+                maxCount = Managers.DataM.StageDataDic[Managers.GameM.Stage].StageClearMaxCount;
                 readyEvent?.Invoke();
                 AsyncAction(() => StateChange(StageState.Play), 1f).Forget();
 
@@ -65,6 +65,12 @@ public class StageManager
                 count = 0;
                 deadEvent?.Invoke();
                 isDead = true;
+                break;
+
+            case StageState.Dungeon:
+                dungeonEvent?.Invoke(_value);
+                //TODO : 이걸 해주면 UI_GameScene에서 초기화 돼서 안됌. 고치던가 수정해야됌
+                //AsyncAction(() => StateChange(StageState.Play), 1f).Forget();
                 break;
         }
     }

@@ -15,6 +15,7 @@ public class SpearMan_Skill : SkillBase
 
         List<CreatureController> enemiesInArea = Utils.FindEnemyForwardArea(_caster, skill_Length, skill_Width);
 
+       
         if (enemiesInArea.Count > 0)
         {
             foreach (CreatureController enemy in enemiesInArea)

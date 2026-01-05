@@ -98,7 +98,8 @@ public static class Define
         Boss,
         BossPlay,
         Clear,
-        Dead
+        Dead,
+        Dungeon
     }
 
     public enum CircleButtons

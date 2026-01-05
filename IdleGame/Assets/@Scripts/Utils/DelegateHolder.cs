@@ -16,6 +16,7 @@ public delegate void OnBossEvent();
 public delegate void OnBossPlayEvent();
 public delegate void OnClearEvent();
 public delegate void OnDeadEvent();
+public delegate void OnDungeonEvent(int _value);
 #endregion
 public class DelegateHolder
 {

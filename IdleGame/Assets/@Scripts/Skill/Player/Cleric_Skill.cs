@@ -15,6 +15,7 @@ public class Cleric_Skill : SkillBase
         CreatureController target = Utils.FindLowestHpPlayer();
         InitSkillData(_caster);
 
+        _caster.transform.LookAt(target.transform);
         if (target != null)
         {
             //TODO: 클레릭은 공격 로직이 없음.

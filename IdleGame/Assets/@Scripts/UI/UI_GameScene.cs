@@ -22,6 +22,11 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         CoinObject,
         StageMonsterCountObject,
         BossBoardObject,
+        DungeonBoardObject,
+        GoldDungeonObject,
+        TreasureTroveObject,
+
+
         DeadFrameHandObject,
         ItemPopupObject,
         ItemTextPopupObject,
@@ -106,6 +111,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         BossHPText,
         BossText,
         BossBoardStageText,
+        DungeonHpText,
+        DungeonBoardStageText,
+
         ItemPopupText,
         ItemText1,
         ItemText2,
@@ -162,6 +170,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         FadeImage,
         StageMonsterCountImage,
         BossHpImage,
+        DungeonHpImage,
+
         ItemPopupFrameImage,
         ItemPopupItemImage,
         FastLockImage,
@@ -245,6 +255,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Managers.StageM.bossPlayEvent += OnBossPlay;
         Managers.StageM.clearEvent += OnClear;
         Managers.StageM.deadEvent += OnDead;
+        Managers.StageM.dungeonEvent += OnDungeon;
 
         Managers.GameM.OnGoodsChanged += OnRefreshGoods;
         Managers.StageM.OnChangeCount += OnCheckStageMonsterCount;
@@ -295,6 +306,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).gameObject.BindEvent(ClickDown, _type: Define.UIEvent.PointerDown);
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).gameObject.BindEvent(ClickUp, _type: Define.UIEvent.PointerUp);
 
+        GetObject(GameObjectsType, (int)GameObjects.GoldDungeonObject).SetActive(false);
+        GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject).SetActive(false);
 
         GetButton(ButtonsType, (int)Buttons.InventoryButton).gameObject.BindEvent(OnClickInventory);
         statBtn = GetButton(ButtonsType, (int)Buttons.StatButton);
@@ -327,6 +340,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Managers.StageM.bossPlayEvent -= OnBossPlay;
         Managers.StageM.clearEvent -= OnClear;
         Managers.StageM.deadEvent -= OnDead;
+        Managers.StageM.dungeonEvent -= OnDungeon;
 
         Managers.GameM.OnGoodsChanged -= OnRefreshGoods;
         Managers.StageM.OnChangeCount -= OnCheckStageMonsterCount;
@@ -342,6 +356,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
+        GetObject(GameObjectsType, (int)GameObjects.DungeonBoardObject).SetActive(false);
         GetButton(ButtonsType, (int)Buttons.DeadFrameButton).gameObject.SetActive(false);
 
         GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).SetActive(false);
@@ -439,6 +454,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
             case Buttons.DungeonButton:
                 clickedButton = dungeonBtn;
+                ScaleUpSelectButton();
+                UI_DungeonPopup dungeonPopup = await Managers.UIM.ShowPopup<UI_DungeonPopup>(_isFade: true, _parent: GetPopUpLayer());
+                dungeonPopup.OnThisPopupClosed = ScaleDownSelectButton;
 
                 break;
 
@@ -627,6 +645,33 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetText(TextsType, (int)Texts.BossBoardStageText).text = stageForward.ToString() + " - " + stageBack.ToString();
     }
 
+
+    public async UniTaskVoid UpdateDungeonInfo()
+    {
+        float totalTime = 30.0f;
+        float currentTime = totalTime;
+
+        var cts = this.GetCancellationTokenOnDestroy();
+        try
+        {
+            
+            while (currentTime >= 0.0f)
+            {
+                currentTime -= Time.deltaTime;
+                float ratio = currentTime / totalTime;
+
+                GetImage(ImagesType, (int)Images.DungeonHpImage).fillAmount = ratio;
+                GetText(TextsType, (int)Texts.DungeonHpText).text = string.Format("{0:0.00}/s", ratio);
+
+                await UniTask.Yield(PlayerLoopTiming.Update, cts);
+            }
+
+            GetText(TextsType, (int)Texts.DungeonHpText).text = "0.0";
+        }
+        catch (Exception e) { }
+        
+    }
+
     public void ResetStageBoard()
     {
         GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = 0;
@@ -639,6 +684,11 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetText(TextsType, (int)Texts.BossHPText).text = "100%";
     }
 
+    public void ResetDungeonBoard()
+    {
+        GetImage(ImagesType, (int)Images.DungeonHpImage).fillAmount = 1f;
+        GetText(TextsType, (int)Texts.DungeonHpText).text = "100%";
+    }
     public async void OnClickInventory()
     {
         await Managers.UIM.ShowPopup<UI_Inventory>();
@@ -747,6 +797,18 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         AllOff();
 
+    }
+
+    public void OnDungeon(int _value)
+    {
+        OnReady();
+        AllOff();
+        GetObject(GameObjectsType, (int)GameObjects.DungeonBoardObject).SetActive(true);
+
+        GetObject(GameObjectsType, (int)GameObjects.GoldDungeonObject + _value).SetActive(true);
+
+        ResetDungeonBoard();
+        UpdateDungeonInfo().Forget();
     }
 
     #endregion

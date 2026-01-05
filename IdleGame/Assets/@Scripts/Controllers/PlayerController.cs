@@ -125,7 +125,7 @@ public class PlayerController : CreatureController
             return;
         }
         Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
-        GetMp(5);
+        GetMp(30);
 
     }
 
@@ -199,6 +199,14 @@ public class PlayerController : CreatureController
         AnimatorChange(CreatureState.Idle);
     }
 
+    void OnDungeon(int _value)
+    {
+        AnimatorChange(CreatureState.Idle);
+        isDead = false;
+        target = null;
+        transform.position = startPos;
+
+    }
 
     public async UniTask KnockBack(float _power, float _durtaion)
     {
@@ -268,6 +276,7 @@ public class PlayerController : CreatureController
         Managers.StageM.bossEvent += OnBoss;
         Managers.StageM.clearEvent += OnClear;
         Managers.StageM.deadEvent += OnDead;
+        Managers.StageM.dungeonEvent += OnDungeon;
     }
 
     void UnConnectEvent()
@@ -276,6 +285,7 @@ public class PlayerController : CreatureController
         Managers.StageM.bossEvent -= OnBoss;
         Managers.StageM.clearEvent -= OnClear;
         Managers.StageM.deadEvent -= OnDead;
+        Managers.StageM.dungeonEvent -= OnDungeon;
     }
     protected override void OnAttackDelayEnd()
     {
@@ -306,6 +316,12 @@ public class PlayerController : CreatureController
             isAttacking = false;
 
             OnPlayerDataUpdate?.Invoke(this);
+        }
+        else
+        {
+            isUsingSkill = false;
+            target = null;
+            AnimatorChange(CreatureState.Idle);
         }
     }
 

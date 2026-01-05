@@ -44,6 +44,10 @@ public class GameData
     public int relicsConfirmedLegendaryCount = 0;
     public string StartDate;
     public string EndDate;
+
+    public int[] DungeonKey = { 2, 2 };
+    public int[] DungeonKeyAssets = { 0, 0 };
+    public int[] DungeonClearLevel = { 0,0 };
     //플레이어가 가지고 있는 데이터 저장
     public Dictionary<string, CharacterHolder> Characters_Data = new Dictionary<string, CharacterHolder>();
     public Dictionary<string, Holder> Character_Holder = new Dictionary<string, Holder>();

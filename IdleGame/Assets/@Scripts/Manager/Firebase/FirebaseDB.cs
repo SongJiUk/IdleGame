@@ -30,7 +30,15 @@ public partial class FirebaseManager
         }
         try
         {
+            DateTime endDate = DateTime.Parse(Managers.GameM.gameData.EndDate);
             data.EndDate = DateTime.Now.ToString();
+
+            if (GetDateItem(endDate, DateTime.Now))
+            {
+                Managers.GameM.gameData.DungeonKey[0] = 2;
+                Managers.GameM.gameData.DungeonKey[1] = 2;
+            }
+
             string userID = currentUser.UserId;
 
             string default_json = JsonUtility.ToJson(data);
@@ -70,6 +78,15 @@ public partial class FirebaseManager
 
             Managers.GameM.gameData.StartDate = DateTime.Now.ToString();
 
+            DateTime startDate = DateTime.Parse(Managers.GameM.gameData.StartDate);
+            DateTime endDate = DateTime.Parse(Managers.GameM.gameData.EndDate);
+            
+            if(GetDateItem(startDate, endDate))
+            {
+                Managers.GameM.gameData.DungeonKey[0] = 2;
+                Managers.GameM.gameData.DungeonKey[1] = 2;
+            }
+
             if (charSnap.Exists)
             {
                 var characterDic = JsonConvert.DeserializeObject<Dictionary<string, Holder>>(charSnap.GetRawJsonValue());
@@ -85,7 +102,7 @@ public partial class FirebaseManager
                 {
                     Debug.Log($"[2. 서버에 존재하는 키]: '{key}' (글자수: {key.Length})");
                 }
-                string targetKey = "Axe"; // 혹은 "Gold_Dice", "GoddessTears"
+                string targetKey = "Axe"; 
                 if (itemDic.ContainsKey(targetKey))
                 {
                     Debug.Log($"[3. 결과] {targetKey} 찾기 성공! 개수: {itemDic[targetKey].Count}");
@@ -113,7 +130,14 @@ public partial class FirebaseManager
         {
             IsLoading = false;
         }
+    }
 
-
+    private bool GetDateItem(DateTime _startTime, DateTime _endTime)
+    {
+        if(_startTime.Day != _endTime.Day)
+        {
+            return true;
+        }
+        return false;
     }
 }

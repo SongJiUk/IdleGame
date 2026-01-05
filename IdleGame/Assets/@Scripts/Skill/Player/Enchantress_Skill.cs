@@ -21,7 +21,7 @@ public class Enchantress_Skill : SkillBase
         }
 
         CreatureController randPlayer = Utils.FindRandomPlayer(_caster); ;
-
+        _caster.transform.LookAt(randPlayer.transform);
         if (randPlayer != null)
         {
             if (randPlayer.IsDead) return false;

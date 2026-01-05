@@ -29,6 +29,7 @@ public class SpawnManager : MonoBehaviour, ITickable
         Managers.StageM.bossEvent += OnBoss;
         Managers.StageM.clearEvent += OnClear;
         Managers.StageM.deadEvent += OnDead;
+        Managers.StageM.dungeonEvent += OnDungeon;
 
         scene = Managers.UIM.SceneUI as UI_GameScene;
     }
@@ -43,7 +44,7 @@ public class SpawnManager : MonoBehaviour, ITickable
     {
         spawnMaxCount = Managers.DataM.StageDataDic[Managers.GameM.Stage].SpawnMaxCount;
         spawnTime = Managers.DataM.StageDataDic[Managers.GameM.Stage].SpawnTimer;
-
+        spawnInterval = 2f;
         if (scene != null) scene.CheckTexts();
     }
 
@@ -121,6 +122,29 @@ public class SpawnManager : MonoBehaviour, ITickable
         }
     }
 
+    public async void OnDungeon(int _value)
+    {
+        await scene.AsyncFadeInOut(true);
+        StopSpawn();
+
+        for (int i = Managers.ObjectM.mcList.Count - 1; i >= 0; i--)
+        {
+            Managers.ObjectM.mcList[i].ClearChildVFXs();
+            Managers.ObjectM.DeSpawn(Managers.ObjectM.mcList[i]);
+        }
+
+        Managers.ObjectM.mcList.Clear();
+
+        
+        if (_value == 0)
+        {
+            StartSpawn();
+            spawnMaxCount = 30;
+            spawnInterval = 3f;
+        }
+    }
+
+    
     async UniTask ClearDelay()
     {
         StopSpawn();
@@ -149,15 +173,20 @@ public class SpawnManager : MonoBehaviour, ITickable
 
 
     #endregion
+
+    public void StartSpawn()
+    {
+        Managers.UpdateM.Register(this);
+    }
     public void StopSpawn()
     {
         Managers.UpdateM.UnRegister(this);
     }
 
-    void SpawnMonster()
+    void SpawnMonster(int _count)
     {
 
-        int value = spawnMaxCount - Managers.ObjectM.mcList.Count;
+        int value = _count - Managers.ObjectM.mcList.Count;
         for (int i = 0; i < value; i++)
         {
             //TODO: 여기 스테이지 마다 생성되는 몬스터가 달라진다면 하드코딩 없애기(10000) 이거 
@@ -172,7 +201,7 @@ public class SpawnManager : MonoBehaviour, ITickable
         if (spawnTime <= 0f)
         {
             spawnTime = spawnInterval;
-            SpawnMonster();
+            SpawnMonster(spawnMaxCount);
         }
     }
 }

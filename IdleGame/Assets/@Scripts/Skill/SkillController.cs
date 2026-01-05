@@ -47,7 +47,6 @@ public class SkillController : MonoBehaviour
 
         SkillBase useSkill = skills[_skillIndex];
         CreatureController caster = owner;
-
         bool skillExecuted = useSkill.UseSkill(owner, _target);
 
         if (skillExecuted)
@@ -63,8 +62,6 @@ public class SkillController : MonoBehaviour
             Debug.Log("[SkillController]스킬이 실행되지않음 ");
             return false;
         }
-
-        return true;
     }
 
 

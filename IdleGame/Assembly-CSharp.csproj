@@ -172,12 +172,14 @@
     <Compile Include="Assets\@Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_RelicGachaPopup.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign\LevelDesign.cs" />
+    <Compile Include="Assets\@Scripts\UI\UI_DungeonPopup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\NW_Particle Rim AddSmooth 2S.shader" />
     <None Include="Assets\@Resources\Prefabs\Effect\Shader\Shader_Decal.shader" />
+    <None Include="Assets\Fantasy Forest Environment Free Sample\StandardNoCulling.shader" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Common.dll" />
     <None Include="Assets\Firebase\Plugins\x86_64\FirebaseCppDatabase.dll" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Ump.iOS.dll" />
@@ -238,6 +240,7 @@
     <None Include="Assets\@Resources\Prefabs\Creature\Monster\Charttyp\Goblin demon creature modular unit Demo\Informations\Read_Me.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Firebase\Plugins\iOS\Firebase.App.dll" />
+    <None Include="Assets\HandPainted Lava Textures\Documentation\Documentation.txt" />
     <None Include="Assets\GoogleMobileAds\GoogleMobileAds.Ump.Android.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>

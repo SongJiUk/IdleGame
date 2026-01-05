@@ -14,7 +14,6 @@ public class TwoHandSword_Skill : SkillBase
     {
         InitSkillData(_caster);
 
-        //TODO : 두번 공격으로 바꿀까 생각중
 
         List<CreatureController> enemiesInArea = Utils.FindEnemyForwardArea(_caster, skill_Length, skill_Width);
 

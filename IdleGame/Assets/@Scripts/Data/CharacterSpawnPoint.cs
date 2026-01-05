@@ -7,9 +7,12 @@ public class CharacterSpawnPoint : MonoBehaviour
 {
     public List<Transform> SpawnTr = new List<Transform>();
     public PlayerController[] players = new PlayerController[7];
+
+    public GameObject[] Maps;
     private void Awake()
     {
         Managers.StageM.readyEvent += OnReady;
+        Managers.StageM.dungeonEvent += OnDungeon;
     }
 
     private void Start()
@@ -30,6 +33,10 @@ public class CharacterSpawnPoint : MonoBehaviour
         PlayerSpawn();
     }
 
+    public void OnDungeon(int _value)
+    {
+        Maps[_value].SetActive(true);
+    }
     public void PlayerSpawn()
     {
         // TODO : 이거 초기값이 이건거고, 데이터 저장 되면 수정해야됌(메인캐릭터 바꾸려고 할거면)
