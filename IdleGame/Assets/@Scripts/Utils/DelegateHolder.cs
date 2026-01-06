@@ -11,12 +11,14 @@ public delegate void PlayerHit(PlayerController _pc);
 
 #region Stage
 public delegate void OnReadyEvent();
-public delegate void OnPlayEvent();
+public delegate void OnPlayEvent(Define.StageState _state);
 public delegate void OnBossEvent();
 public delegate void OnBossPlayEvent();
 public delegate void OnClearEvent();
 public delegate void OnDeadEvent();
 public delegate void OnDungeonEvent(int _value);
+public delegate void OnDungeonClearEvent(int _value);
+public delegate void OnDungeonFailEvent(int _value);
 #endregion
 public class DelegateHolder
 {
@@ -31,7 +33,7 @@ public class DelegateHolder
         PlayerHitEvent = null;
     }
 
-    public static void MosnterDead(MonsterController _mc)
+    public static void MonsterDead(MonsterController _mc)
     {
         MonsterDeadEvent?.Invoke(_mc);
     }

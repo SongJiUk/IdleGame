@@ -175,7 +175,7 @@ public class PlayerController : CreatureController
         }
     }
 
-    private void OnPlay()
+    private void OnPlay(Define.StageState _state)
     {
         base.AnimatorChange(CreatureState.Idle);
         OnPlayerDataUpdate?.Invoke(this);
@@ -196,6 +196,7 @@ public class PlayerController : CreatureController
     private void OnClear()
     {
         if (isDead) return;
+        //TODO : 환호 애니메이션으로 변경하기
         AnimatorChange(CreatureState.Idle);
     }
 
@@ -206,6 +207,11 @@ public class PlayerController : CreatureController
         target = null;
         transform.position = startPos;
 
+    }
+
+    void OnDungeonClear(int _value)
+    {
+        OnDead();
     }
 
     public async UniTask KnockBack(float _power, float _durtaion)
@@ -277,6 +283,7 @@ public class PlayerController : CreatureController
         Managers.StageM.clearEvent += OnClear;
         Managers.StageM.deadEvent += OnDead;
         Managers.StageM.dungeonEvent += OnDungeon;
+        Managers.StageM.dungeonClearEvent += OnDungeonClear;
     }
 
     void UnConnectEvent()
@@ -286,9 +293,11 @@ public class PlayerController : CreatureController
         Managers.StageM.clearEvent -= OnClear;
         Managers.StageM.deadEvent -= OnDead;
         Managers.StageM.dungeonEvent -= OnDungeon;
+        Managers.StageM.dungeonClearEvent -= OnDungeonClear;
     }
     protected override void OnAttackDelayEnd()
     {
+        //TODO : 스킬쓸때 무적으로 만들까?
         if (mp >= MaxMp)
         {
             UsePlayerSkill();
@@ -352,7 +361,8 @@ public class PlayerController : CreatureController
         Managers.SpawnM.players.Remove(this);
         if (Managers.SpawnM.players.Count <= 0)
         {
-            Managers.StageM.StateChange(StageState.Dead);
+            if (Managers.StageM.isDungeon) Managers.StageM.StateChange(StageState.DungeonFail);
+            else Managers.StageM.StateChange(StageState.Dead);
         }
     }
 }

@@ -246,7 +246,7 @@ public class UI_HeroPopup : UI_Popup
         }
     }
 
-    public void OnPlay()
+    public void OnPlay(Define.StageState _state)
     {
         (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
         isRemoveCharacter = false;

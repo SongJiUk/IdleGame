@@ -182,7 +182,7 @@ public class CreatureController : BaseController
 
     public virtual void AnimatorChange(Define.CreatureState _state)
     {
-        if (animator == null) animator = GetComponent<Animator>();
+        if (animator == null) return;
 
         int stateIndex = (int)_state;
         animator.SetInteger(Define.AnimState, stateIndex);

@@ -3001,7 +3001,7 @@ GameObject:
   - component: {fileID: 330377740927794292}
   - component: {fileID: 5062450614470767089}
   m_Layer: 5
-  m_Name: DungeonHpImage
+  m_Name: DungeonTimeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3078,7 +3078,7 @@ GameObject:
   - component: {fileID: 1310295003857459246}
   - component: {fileID: 4207324004719629686}
   m_Layer: 5
-  m_Name: DungeonHpText
+  m_Name: DungeonTimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5360,7 +5360,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1796ec7b4c7b4d04b9b156187945d0a9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: db96803712b3543bcabe0aa2a99a9286, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8015,10 +8015,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 44.8
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -8871,10 +8871,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 44.8
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -29087,7 +29087,7 @@ GameObject:
   - component: {fileID: 7364182242758006031}
   - component: {fileID: 5666194329539917315}
   m_Layer: 5
-  m_Name: DungeonHpBG
+  m_Name: DungeonTimeBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,7 +11,7 @@ public class StageManager
     public StageState stageState;
     public event Action OnChangeCount;
 
-    
+
     public int maxCount;
     int count = 0;
     public int COUNT
@@ -24,8 +24,9 @@ public class StageManager
         }
     }
 
-    
+
     public bool isDead = false;
+    public bool isDungeon = false;
     public OnReadyEvent readyEvent;
     public OnPlayEvent playEvent;
     public OnBossEvent bossEvent;
@@ -33,8 +34,10 @@ public class StageManager
     public OnClearEvent clearEvent;
     public OnDeadEvent deadEvent;
     public OnDungeonEvent dungeonEvent;
+    public OnDungeonClearEvent dungeonClearEvent;
+    public OnDungeonFailEvent dungeonFailEvent;
 
-    public void StateChange(StageState _state, int _value = 0)
+    public void StateChange(StageState _state, int _value = 0, StageState _prevStage = StageState.Play)
     {
         stageState = _state;
         switch (stageState)
@@ -46,7 +49,7 @@ public class StageManager
 
                 break;
             case StageState.Play:
-                playEvent?.Invoke();
+                playEvent?.Invoke(_prevStage);
                 break;
             case StageState.Boss:
                 count = 0;
@@ -68,9 +71,22 @@ public class StageManager
                 break;
 
             case StageState.Dungeon:
+                isDungeon = true;
                 dungeonEvent?.Invoke(_value);
-                //TODO : 이걸 해주면 UI_GameScene에서 초기화 돼서 안됌. 고치던가 수정해야됌
-                //AsyncAction(() => StateChange(StageState.Play), 1f).Forget();
+                count = 0;
+                if (_value == 0) AsyncAction(() => StateChange(StageState.Play, _prevStage: StageState.Dungeon), 1f).Forget();
+                break;
+
+            case StageState.DungeonClear:
+                isDungeon = false;
+                count = 0;
+                dungeonClearEvent?.Invoke(_value);
+                break;
+
+            case StageState.DungeonFail:
+                isDungeon = false;
+                count = 0;
+                dungeonFailEvent?.Invoke(_value);
                 break;
         }
     }

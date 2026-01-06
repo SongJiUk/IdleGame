@@ -23,8 +23,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         StageMonsterCountObject,
         BossBoardObject,
         DungeonBoardObject,
-        GoldDungeonObject,
         TreasureTroveObject,
+        GoldDungeonObject,
 
 
         DeadFrameHandObject,
@@ -111,9 +111,10 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         BossHPText,
         BossText,
         BossBoardStageText,
-        DungeonHpText,
+        DungeonTimeText,
         DungeonBoardStageText,
-
+        GoldDungeonHpText,
+        TreasureTroveCountText,
         ItemPopupText,
         ItemText1,
         ItemText2,
@@ -170,7 +171,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         FadeImage,
         StageMonsterCountImage,
         BossHpImage,
-        DungeonHpImage,
+        DungeonTimeImage,
+        GoldDungeonHpImage,
 
         ItemPopupFrameImage,
         ItemPopupItemImage,
@@ -256,9 +258,12 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Managers.StageM.clearEvent += OnClear;
         Managers.StageM.deadEvent += OnDead;
         Managers.StageM.dungeonEvent += OnDungeon;
+        Managers.StageM.dungeonClearEvent += OnDungeonClear;
+        Managers.StageM.dungeonFailEvent += OnDungeonFail;
 
         Managers.GameM.OnGoodsChanged += OnRefreshGoods;
         Managers.StageM.OnChangeCount += OnCheckStageMonsterCount;
+        Managers.StageM.OnChangeCount += OnCheckTreasureTroveMonsterCount;
         Managers.CharacterM.OnCharacterAdd += OnRegisterCharacterEvents;
 
         //TODO :여기선 mPlayer가 null값이 떠서 사용 x(나중에 메인 플레이어를 알고 있는 상태면 미리 생성해놓고 사용? 어떡할지 고민좀해보자)
@@ -341,9 +346,12 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Managers.StageM.clearEvent -= OnClear;
         Managers.StageM.deadEvent -= OnDead;
         Managers.StageM.dungeonEvent -= OnDungeon;
+        Managers.StageM.dungeonClearEvent -= OnDungeonClear;
+        Managers.StageM.dungeonFailEvent -= OnDungeonFail;
 
         Managers.GameM.OnGoodsChanged -= OnRefreshGoods;
         Managers.StageM.OnChangeCount -= OnCheckStageMonsterCount;
+        Managers.StageM.OnChangeCount -= OnCheckTreasureTroveMonsterCount;
 
         if (Managers.CharacterM != null)
         {
@@ -357,6 +365,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.DungeonBoardObject).SetActive(false);
+        // GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject).SetActive(false);
+        // GetObject(GameObjectsType, (int)GameObjects.GoldDungeonObject).SetActive(false);
+
         GetButton(ButtonsType, (int)Buttons.DeadFrameButton).gameObject.SetActive(false);
 
         GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).SetActive(false);
@@ -605,6 +616,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
     void OnCheckStageMonsterCount()
     {
+        if (Managers.StageM.isDungeon) return;
+
         float value = (float)Managers.StageM.COUNT / (float)Managers.StageM.maxCount;
         if (value >= 1.0f)
         {
@@ -619,6 +632,21 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetText(TextsType, (int)Texts.StageMonsterCountText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
     }
 
+    //NOTE : 던전1
+    void OnCheckTreasureTroveMonsterCount()
+    {
+        if (Managers.StageM.isDungeon)
+        {
+            int value = Managers.SpawnM.SpawnMaxCount - Managers.StageM.COUNT;
+            GetText(TextsType, (int)Texts.TreasureTroveCountText).text = $"({value})";
+
+            if (value <= 0)
+            {
+                Managers.StageM.StateChange(Define.StageState.DungeonClear);
+            }
+        }
+    }
+
     void OnRegisterCharacterEvents(PlayerController _pc)
     {
         _pc.OnPlayerDataUpdate -= OnPlayerStatChange;
@@ -630,19 +658,30 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     public void UpdateBossInfo(MonsterController _cc)
     {
         float value = (float)_cc.HP / (float)_cc.MaxHP;
-
         if (value <= 0.0f)
         {
             value = 0f;
         }
-        GetImage(ImagesType, (int)Images.BossHpImage).fillAmount = (float)value;
-        GetText(TextsType, (int)Texts.BossHPText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
 
-        int stageValue = Managers.GameM.Stage;
-        int stageForward = (stageValue / 20) + 1;
-        int stageBack = stageValue % 20;
+        if (Managers.StageM.isDungeon)
+        {
+            GetImage(ImagesType, (int)Images.GoldDungeonHpImage).fillAmount = (float)value;
+            GetText(TextsType, (int)Texts.GoldDungeonHpText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
+        }
+        else
+        {
+            GetImage(ImagesType, (int)Images.BossHpImage).fillAmount = (float)value;
+            GetText(TextsType, (int)Texts.BossHPText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
 
-        GetText(TextsType, (int)Texts.BossBoardStageText).text = stageForward.ToString() + " - " + stageBack.ToString();
+            int stageValue = Managers.GameM.Stage;
+            int stageForward = (stageValue / 20) + 1;
+            int stageBack = stageValue % 20;
+
+            GetText(TextsType, (int)Texts.BossBoardStageText).text = stageForward.ToString() + " - " + stageBack.ToString();
+        }
+
+
+
     }
 
 
@@ -654,22 +693,27 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         var cts = this.GetCancellationTokenOnDestroy();
         try
         {
-            
+
             while (currentTime >= 0.0f)
             {
                 currentTime -= Time.deltaTime;
                 float ratio = currentTime / totalTime;
 
-                GetImage(ImagesType, (int)Images.DungeonHpImage).fillAmount = ratio;
-                GetText(TextsType, (int)Texts.DungeonHpText).text = string.Format("{0:0.00}/s", ratio);
+                int seconds = Mathf.CeilToInt(currentTime);
+
+                GetImage(ImagesType, (int)Images.DungeonTimeImage).fillAmount = ratio;
+                GetText(TextsType, (int)Texts.DungeonTimeText).text = seconds.ToString() + "/s";
 
                 await UniTask.Yield(PlayerLoopTiming.Update, cts);
             }
 
-            GetText(TextsType, (int)Texts.DungeonHpText).text = "0.0";
+            GetText(TextsType, (int)Texts.DungeonTimeText).text = "0.0";
+
+            //TODO : 실패지점
+            Managers.StageM.StateChange(Define.StageState.DungeonFail);
+
         }
         catch (Exception e) { }
-        
     }
 
     public void ResetStageBoard()
@@ -686,8 +730,15 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
     public void ResetDungeonBoard()
     {
-        GetImage(ImagesType, (int)Images.DungeonHpImage).fillAmount = 1f;
-        GetText(TextsType, (int)Texts.DungeonHpText).text = "100%";
+        GetImage(ImagesType, (int)Images.DungeonTimeImage).fillAmount = 1f;
+        GetText(TextsType, (int)Texts.DungeonTimeText).text = "30/s";
+
+        GetImage(ImagesType, (int)Images.GoldDungeonHpImage).fillAmount = 1f;
+        GetText(TextsType, (int)Texts.GoldDungeonHpText).text = "100%";
+
+        GetText(TextsType, (int)Texts.TreasureTroveCountText).text = "30";
+
+
     }
     public async void OnClickInventory()
     {
@@ -765,17 +816,27 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
         CheckCharactersState();
     }
-    public void OnPlay()
+    public void OnPlay(Define.StageState _state)
     {
-        AllOff();
-        if (Managers.StageM.isDead)
+        switch (_state)
         {
-            GetButton(ButtonsType, (int)Buttons.DeadFrameButton).gameObject.SetActive(true);
-        }
-        else
-        {
-            GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(true);
-            ResetStageBoard();
+            case Define.StageState.Play:
+                AllOff();
+                if (Managers.StageM.isDead)
+                {
+                    GetButton(ButtonsType, (int)Buttons.DeadFrameButton).gameObject.SetActive(true);
+                }
+                else
+                {
+                    GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(true);
+                    ResetStageBoard();
+                }
+
+                break;
+
+            case Define.StageState.Dungeon:
+                UpdateDungeonInfo().Forget();
+                break;
         }
 
     }
@@ -783,8 +844,19 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     public void OnBossPlay()
     {
         AllOff();
-        GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(true);
-        ResetBossBoard();
+
+        if (Managers.StageM.isDungeon)
+        {
+            GetObject(GameObjectsType, (int)GameObjects.DungeonBoardObject).SetActive(true);
+            UpdateDungeonInfo().Forget();
+        }
+        else
+        {
+            GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(true);
+            ResetBossBoard();
+        }
+
+
 
     }
 
@@ -796,19 +868,28 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     public void OnDead()
     {
         AllOff();
-
     }
 
     public void OnDungeon(int _value)
     {
         OnReady();
         AllOff();
-        GetObject(GameObjectsType, (int)GameObjects.DungeonBoardObject).SetActive(true);
 
-        GetObject(GameObjectsType, (int)GameObjects.GoldDungeonObject + _value).SetActive(true);
+        GetObject(GameObjectsType, (int)GameObjects.DungeonBoardObject).SetActive(true);
+        GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject + _value).SetActive(true);
 
         ResetDungeonBoard();
-        UpdateDungeonInfo().Forget();
+    }
+
+    public void OnDungeonClear(int _value)
+    {
+        Managers.GameM.gameData.DungeonClearLevel[_value]++;
+        OnClear();
+    }
+
+    public void OnDungeonFail(int _value)
+    {
+        OnDead();
     }
 
     #endregion

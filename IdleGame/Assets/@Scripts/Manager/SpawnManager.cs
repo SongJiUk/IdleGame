@@ -11,7 +11,12 @@ public class SpawnManager : MonoBehaviour, ITickable
 {
 
     int spawnMaxCount;
-    float spawnInterval = 2f;
+    public int SpawnMaxCount
+    {
+        get => spawnMaxCount;
+    }
+    float spawnInterval;
+
     float spawnTime = 0f;
 
     public bool isStop { get; set; } = false;
@@ -19,6 +24,7 @@ public class SpawnManager : MonoBehaviour, ITickable
     public List<PlayerController> players;
     List<MonsterController> monsters;
     UI_GameScene scene = null;
+    int value = -1;
 
 
     //TODO : 처음 시작할땐 플레이어 스폰이 되있어야될거같긴함
@@ -30,6 +36,8 @@ public class SpawnManager : MonoBehaviour, ITickable
         Managers.StageM.clearEvent += OnClear;
         Managers.StageM.deadEvent += OnDead;
         Managers.StageM.dungeonEvent += OnDungeon;
+        Managers.StageM.dungeonClearEvent += OnDungeonClear;
+        Managers.StageM.dungeonFailEvent += OnDungeonFail;
 
         scene = Managers.UIM.SceneUI as UI_GameScene;
     }
@@ -43,16 +51,13 @@ public class SpawnManager : MonoBehaviour, ITickable
     public void OnReady()
     {
         spawnMaxCount = Managers.DataM.StageDataDic[Managers.GameM.Stage].SpawnMaxCount;
-        spawnTime = Managers.DataM.StageDataDic[Managers.GameM.Stage].SpawnTimer;
-        spawnInterval = 2f;
+        spawnInterval = Managers.DataM.StageDataDic[Managers.GameM.Stage].SpawnTimer;
         if (scene != null) scene.CheckTexts();
     }
 
-    public void OnPlay()
+    public void OnPlay(Define.StageState _state)
     {
-
-        spawnTime = 0f;
-        Managers.UpdateM.Register(this);
+        StartSpawn();
     }
 
     public void OnBoss()
@@ -60,13 +65,9 @@ public class SpawnManager : MonoBehaviour, ITickable
         StopSpawn();
 
         //보스전 잔몹들 삭제
-        List<MonsterController> monsetrs = Managers.ObjectM.mcList.ToList();
-        foreach (var monster in monsetrs)
-        {
-            Managers.ObjectM.DeSpawn(monster);
-        }
+        DeSpawnMonster();
 
-        //TODO : 수정
+
         BossSet().Forget();
     }
 
@@ -74,24 +75,7 @@ public class SpawnManager : MonoBehaviour, ITickable
     {
         await UniTask.WaitForSeconds(2f);
 
-        //TODO : 하드코딩 삭제
-        boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero, 10001);
-        if (scene == null) scene = Managers.UIM.SceneUI as UI_GameScene;
-        boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
-
-        //players = Managers.ObjectM.pcList.ToList();
-
-        Vector3 Pos = boss.transform.position;
-        foreach (var player in players)
-        {
-            if (player.IsDead) continue;
-
-            if (Vector3.Distance(Pos, player.transform.position) <= 2.0f)
-            {
-                player.transform.LookAt(Pos);
-                player.KnockBack(3.0f, 0.3f).Forget();
-            }
-        }
+        SpawnBoss(Managers.StageM.isDungeon);
 
         await UniTask.WaitForSeconds(1.5f);
 
@@ -124,27 +108,37 @@ public class SpawnManager : MonoBehaviour, ITickable
 
     public async void OnDungeon(int _value)
     {
-        await scene.AsyncFadeInOut(true);
+        value = _value;
         StopSpawn();
 
-        for (int i = Managers.ObjectM.mcList.Count - 1; i >= 0; i--)
-        {
-            Managers.ObjectM.mcList[i].ClearChildVFXs();
-            Managers.ObjectM.DeSpawn(Managers.ObjectM.mcList[i]);
-        }
 
-        Managers.ObjectM.mcList.Clear();
-
-        
-        if (_value == 0)
+        if (value == 0)
         {
-            StartSpawn();
             spawnMaxCount = 30;
             spawnInterval = 3f;
         }
+        else if (value == 1)
+        {
+            OnBoss();
+        }
+
+        await scene.AsyncFadeInOut(true);
+
     }
 
-    
+    public void OnDungeonClear(int _value)
+    {
+        value = -1;
+        OnClear();
+    }
+
+    public void OnDungeonFail(int _value)
+    {
+        value = -1;
+        OnDead();
+    }
+
+
     async UniTask ClearDelay()
     {
         StopSpawn();
@@ -152,12 +146,7 @@ public class SpawnManager : MonoBehaviour, ITickable
 
         await scene.AsyncFadeInOut(false);
 
-        for (int i = Managers.ObjectM.mcList.Count - 1; i >= 0; i--)
-        {
-            //TODO : 여기서 해주는게 맞나 싶긴한데
-            Managers.ObjectM.mcList[i].ClearChildVFXs();
-            Managers.ObjectM.DeSpawn(Managers.ObjectM.mcList[i]);
-        }
+        DeSpawnMonster();
 
         for (int i = Managers.ObjectM.pcList.Count - 1; i >= 0; i--)
         {
@@ -177,6 +166,7 @@ public class SpawnManager : MonoBehaviour, ITickable
     public void StartSpawn()
     {
         Managers.UpdateM.Register(this);
+        spawnTime = 0f;
     }
     public void StopSpawn()
     {
@@ -194,6 +184,45 @@ public class SpawnManager : MonoBehaviour, ITickable
         }
     }
 
+    void SpawnBoss(bool _isDungeon)
+    {
+        if (_isDungeon)
+        {
+
+            boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero, 12000);
+            if (scene == null) scene = Managers.UIM.SceneUI as UI_GameScene;
+            boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
+        }
+        else
+        {
+            boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero, 10001);
+            if (scene == null) scene = Managers.UIM.SceneUI as UI_GameScene;
+            boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
+        }
+
+        Vector3 Pos = boss.transform.position;
+        foreach (var player in players)
+        {
+            if (player.IsDead) continue;
+
+            if (Vector3.Distance(Pos, player.transform.position) <= 2.0f)
+            {
+                player.transform.LookAt(Pos);
+                player.KnockBack(3.0f, 0.3f).Forget();
+            }
+        }
+    }
+
+    void DeSpawnMonster()
+    {
+        var monsters = Managers.ObjectM.mcList.ToList();
+        foreach (var monster in monsters)
+        {
+            monster.ClearChildVFXs();
+            Managers.ObjectM.DeSpawn(monster);
+        }
+        Managers.ObjectM.mcList.Clear();
+    }
 
     public void Tick(float _deltaTime)
     {

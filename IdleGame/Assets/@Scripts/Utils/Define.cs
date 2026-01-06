@@ -51,6 +51,7 @@ public static class Define
         Player,
         Monster,
         Boss,
+        DungeonBoss
     }
 
     public enum ItemGrade
@@ -99,7 +100,9 @@ public static class Define
         BossPlay,
         Clear,
         Dead,
-        Dungeon
+        Dungeon,
+        DungeonClear,
+        DungeonFail
     }
 
     public enum CircleButtons
@@ -126,6 +129,7 @@ public static class Define
         Enchantress,
         Monster,
         Boss,
+        DungeonBoss,
     }
 
     public enum SkillEffectType

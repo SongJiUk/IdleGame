@@ -8,6 +8,20 @@ using System.Runtime.InteropServices;
 using UnityEngine.EventSystems;
 using System.Linq;
 
+/* NOTE : 데이터 번호
+1 ~10 플레이어
+100 ~ buffTypeData 
+10000 ~ 몬스터 
+20000 ~ projectile
+30000 ~ itemData
+40000 ~ skillData
+50000 ~ buffData
+60000 ~ VfxData
+70000 ~ MissionData
+80000 ~ QuestData
+*/
+
+
 public static class Utils
 {
     public const int GachaMaxLevel = 10;

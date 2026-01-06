@@ -17,9 +17,10 @@ public class Assassin_Skill : SkillBase
         if (_target != null) target = _target;
         else target = Utils.FindNearEnemy(_caster);
 
-        _caster.transform.LookAt(target.transform);
+
         if (target != null)
         {
+            _caster.transform.LookAt(target.transform);
             //TODO : 그럼 이건, 여러번 공격으로 바꾸자
             SetDamage(_caster, target);
 

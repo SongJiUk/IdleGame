@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 public class RangeAttackController : ProjectileController
 {
     Dictionary<string, GameObject> Projectiles = new Dictionary<string, GameObject>();
@@ -24,10 +25,21 @@ public class RangeAttackController : ProjectileController
 
     public override void AttackInit(CreatureController _cc, double _dmg, CreatureController _owner, bool _isSkillProjectile = false)
     {
+        if (_cc == null || !_cc.gameObject.activeInHierarchy)
+        {
+            Managers.ObjectM.DeSpawn(this);
+            return;
+        }
+
         owner = _owner;
         isSkillProjectile = _isSkillProjectile;
         base.AttackInit(_cc, _dmg, owner);
         //TODO : 여기에서 null값뜸 똑같은 상황나오면 체크하기
+        if (target == null)
+        {
+            Managers.ObjectM.DeSpawn(this);
+            return;
+        }
         transform.LookAt(target.transform);
 
 

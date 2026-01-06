@@ -7,7 +7,7 @@ public class UI_DungeonPopup : UI_Popup
 {
     #region Enum
 
- 
+
     enum Texts
     {
         TimeText,
@@ -56,7 +56,7 @@ public class UI_DungeonPopup : UI_Popup
         GetButton(ButtonsType, (int)Buttons.TreasureTrovePlusButton).gameObject.BindEvent(() => OnClickPlusButton(Buttons.TreasureTrovePlusButton));
         GetButton(ButtonsType, (int)Buttons.GoldDungeonPlusButton).gameObject.BindEvent(() => OnClickPlusButton(Buttons.GoldDungeonPlusButton));
 
-        
+
         return true;
 
 
@@ -64,7 +64,7 @@ public class UI_DungeonPopup : UI_Popup
 
     public override void SetInfo()
     {
-        for(int i =0; i<Managers.GameM.gameData.DungeonKey.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.DungeonKey.Length; i++)
         {
             GetText(TextsType, (int)Texts.CrystalCountText + i).text = $"({Managers.GameM.gameData.DungeonKey[i]} / 2)";
             GetText(TextsType, (int)Texts.TreasureTroveLevelCountText + i).text = $"{Managers.GameM.gameData.DungeonClearLevel[i] + 1}";
@@ -87,7 +87,15 @@ public class UI_DungeonPopup : UI_Popup
 
     void OnClickDungeonStartButton(Buttons _btn)
     {
-        switch(_btn)
+
+        StartDungeonButtonPress(_btn).Forget();
+
+    }
+
+    async UniTaskVoid StartDungeonButtonPress(Buttons _btn)
+    {
+
+        switch (_btn)
         {
             //TODO : 어떤 버튼 누른지 알려줘야함
             case Buttons.TreasureTroveStartButton:
@@ -98,12 +106,14 @@ public class UI_DungeonPopup : UI_Popup
                 Managers.StageM.StateChange(Define.StageState.Dungeon, 1);
                 break;
         }
-        TriggerClose(this, true).Forget();
+
+        await TriggerClose(this, true);
+
     }
 
     void OnClickMinusButton(Buttons _btn)
     {
-        switch(_btn)
+        switch (_btn)
         {
 
             case Buttons.TreasureTroveMinusButton:

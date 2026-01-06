@@ -18,18 +18,19 @@ public class CharacterSpawnPoint : MonoBehaviour
     private void Start()
     {
         //TODO : 드래그앤 드랍인데 굳이 이게 필요한가..?
-        if (SpawnTr == null)
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                SpawnTr[i] = transform.GetChild(i);
-            }
-        }
+        // if (SpawnTr == null)
+        // {
+        //     for (int i = 0; i < transform.childCount; i++)
+        //     {
+        //         SpawnTr[i] = transform.GetChild(i);
+        //     }
+        // }
 
     }
 
     public void OnReady()
     {
+        for (int i = 0; i < Maps.Length; i++) Maps[i].SetActive(false);
         PlayerSpawn();
     }
 
@@ -39,14 +40,13 @@ public class CharacterSpawnPoint : MonoBehaviour
     }
     public void PlayerSpawn()
     {
-        // TODO : 이거 초기값이 이건거고, 데이터 저장 되면 수정해야됌(메인캐릭터 바꾸려고 할거면)
         Vector3 pos = Vector3.zero;
-        Managers.CharacterM.players[0] = Managers.ObjectM.Spawn<PlayerController>(pos, 2);
+        //TODO: 메인캐릭터는 클레릭 고정임(지금은 테스트한다고 바꿔놓은거.)
+        Managers.CharacterM.players[0] = Managers.ObjectM.Spawn<PlayerController>(pos, 3);
         for (int i = 1; i < Managers.CharacterM.Characters.Length; i++)
         {
 
             if (Managers.CharacterM.Characters[i] == null) continue;
-
             int dataID = Managers.CharacterM.Characters[i].data.DataID;
 
             Vector3 spawnPos = SpawnTr[i].position;
