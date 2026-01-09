@@ -34,9 +34,12 @@ public class CharacterSpawnPoint : MonoBehaviour
         PlayerSpawn();
     }
 
-    public void OnDungeon(int _value)
+    public void OnDungeon(int _dungeonData)
     {
-        Maps[_value].SetActive(true);
+        int value = 0;
+        if (_dungeonData == 70001) value = 1;
+
+        Maps[value].SetActive(true);
     }
     public void PlayerSpawn()
     {

@@ -248,6 +248,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     public bool[] isCharacterReady;
     private Tween blinkTween = null;
     public float FastremainTime = 0.0f;
+    int value;
+    int dungeonDataID;
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -637,10 +639,10 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         if (Managers.StageM.isDungeon)
         {
-            int value = Managers.SpawnM.SpawnMaxCount - Managers.StageM.COUNT;
-            GetText(TextsType, (int)Texts.TreasureTroveCountText).text = $"({value})";
+            int count = Managers.SpawnM.SpawnMaxCount - Managers.StageM.COUNT;
+            GetText(TextsType, (int)Texts.TreasureTroveCountText).text = $"({count})";
 
-            if (value <= 0)
+            if (count <= 0)
             {
                 Managers.StageM.StateChange(Define.StageState.DungeonClear);
             }
@@ -657,21 +659,21 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     }
     public void UpdateBossInfo(MonsterController _cc)
     {
-        float value = (float)_cc.HP / (float)_cc.MaxHP;
-        if (value <= 0.0f)
+        float hp = (float)_cc.HP / (float)_cc.MaxHP;
+        if (hp <= 0.0f)
         {
-            value = 0f;
+            hp = 0f;
         }
 
         if (Managers.StageM.isDungeon)
         {
-            GetImage(ImagesType, (int)Images.GoldDungeonHpImage).fillAmount = (float)value;
-            GetText(TextsType, (int)Texts.GoldDungeonHpText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
+            GetImage(ImagesType, (int)Images.GoldDungeonHpImage).fillAmount = (float)hp;
+            GetText(TextsType, (int)Texts.GoldDungeonHpText).text = string.Format("{0:0.0}", hp * 100.0f) + "%";
         }
         else
         {
-            GetImage(ImagesType, (int)Images.BossHpImage).fillAmount = (float)value;
-            GetText(TextsType, (int)Texts.BossHPText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
+            GetImage(ImagesType, (int)Images.BossHpImage).fillAmount = (float)hp;
+            GetText(TextsType, (int)Texts.BossHPText).text = string.Format("{0:0.0}", hp * 100.0f) + "%";
 
             int stageValue = Managers.GameM.Stage;
             int stageForward = (stageValue / 20) + 1;
@@ -696,6 +698,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
             while (currentTime >= 0.0f)
             {
+
+                if (!Managers.StageM.isDungeon) break;
+
                 currentTime -= Time.deltaTime;
                 float ratio = currentTime / totalTime;
 
@@ -707,10 +712,12 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 await UniTask.Yield(PlayerLoopTiming.Update, cts);
             }
 
-            GetText(TextsType, (int)Texts.DungeonTimeText).text = "0.0";
 
-            //TODO : 실패지점
-            Managers.StageM.StateChange(Define.StageState.DungeonFail);
+            if (Managers.StageM.isDungeon)
+            {
+                GetText(TextsType, (int)Texts.DungeonTimeText).text = "0.0";
+                Managers.StageM.StateChange(Define.StageState.DungeonFail);
+            }
 
         }
         catch (Exception e) { }
@@ -870,25 +877,36 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         AllOff();
     }
 
-    public void OnDungeon(int _value)
+
+    public void OnDungeon(int _dungeonDataID)
     {
+
+        value = 0;
+        dungeonDataID = _dungeonDataID;
+        if (_dungeonDataID == 70000) value = 0;
+        else value = 1;
+
         OnReady();
         AllOff();
 
         GetObject(GameObjectsType, (int)GameObjects.DungeonBoardObject).SetActive(true);
-        GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject + _value).SetActive(true);
+        GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject + value).SetActive(true);
 
         ResetDungeonBoard();
     }
 
-    public void OnDungeonClear(int _value)
+    public async void OnDungeonClear()
     {
-        Managers.GameM.gameData.DungeonClearLevel[_value]++;
+        var popup = await Managers.UIM.ShowPopup<UI_DungeonResultInfoPopup>();
+        popup.SetInfo(dungeonDataID, true);
+        Managers.GameM.gameData.DungeonClearLevel[value]++;
         OnClear();
     }
 
-    public void OnDungeonFail(int _value)
+    public async void OnDungeonFail()
     {
+        var popup = await Managers.UIM.ShowPopup<UI_DungeonResultInfoPopup>();
+        popup.SetInfo(dungeonDataID, false);
         OnDead();
     }
 

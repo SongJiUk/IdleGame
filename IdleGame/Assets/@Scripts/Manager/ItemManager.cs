@@ -8,7 +8,7 @@ public class ItemManager
 
     public bool ItemCheck(string _name)
     {
-        for(int i =0; i<Managers.GameM.gameData.Items.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.Items.Length; i++)
         {
             if (Managers.GameM.gameData.Items[i].Name == _name) return true;
         }
@@ -42,7 +42,9 @@ public class ItemManager
         List<Data.ItemData> items = new List<Data.ItemData>();
         foreach (var data in Managers.GameM.gameData.Item_Data)
         {
-            if(data.Value.data.MinStage <= Managers.GameM.Stage)
+            if (data.Value.data.ItemType == Define.ItemType.Currency) continue;
+
+            if (data.Value.data.MinStage <= Managers.GameM.Stage)
             {
                 float randValue = Random.Range(0, 100);
                 if (randValue <= data.Value.data.Probability)
@@ -50,7 +52,7 @@ public class ItemManager
                     items.Add(data.Value.data);
                 }
             }
-            
+
 
         }
 

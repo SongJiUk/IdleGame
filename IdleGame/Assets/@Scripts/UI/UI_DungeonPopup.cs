@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_DungeonPopup : UI_Popup
+public class UI_DungeonPopup : UI_Popup, ITickable
 {
     #region Enum
 
@@ -36,9 +36,17 @@ public class UI_DungeonPopup : UI_Popup
     }
     #endregion
 
+    int TreasureTroveMaxLevel = 0;
+    int GoldDungeonMaxLevel = 0;
+
+    int TreasureTroveLevel = 0;
+    int GoldDungeonLevel = 0;
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
+
+        Managers.UpdateM.Register(this);
+
         TextsType = typeof(Texts);
         ButtonsType = typeof(Buttons);
 
@@ -56,7 +64,10 @@ public class UI_DungeonPopup : UI_Popup
         GetButton(ButtonsType, (int)Buttons.TreasureTrovePlusButton).gameObject.BindEvent(() => OnClickPlusButton(Buttons.TreasureTrovePlusButton));
         GetButton(ButtonsType, (int)Buttons.GoldDungeonPlusButton).gameObject.BindEvent(() => OnClickPlusButton(Buttons.GoldDungeonPlusButton));
 
-
+        TreasureTroveMaxLevel = Managers.GameM.gameData.DungeonClearLevel[0] + 1;
+        GoldDungeonMaxLevel = Managers.GameM.gameData.DungeonClearLevel[1] + 1;
+        TreasureTroveLevel = TreasureTroveMaxLevel;
+        GoldDungeonLevel = GoldDungeonMaxLevel;
         return true;
 
 
@@ -66,22 +77,21 @@ public class UI_DungeonPopup : UI_Popup
     {
         for (int i = 0; i < Managers.GameM.gameData.DungeonKey.Length; i++)
         {
+            if (Managers.GameM.gameData.DungeonKey[i] != 0)
+                GetText(TextsType, (int)Texts.TreasureTroveIngredientCountText + i).color = Color.green;
+            else
+                GetText(TextsType, (int)Texts.TreasureTroveIngredientCountText + i).color = Color.red;
+
             GetText(TextsType, (int)Texts.CrystalCountText + i).text = $"({Managers.GameM.gameData.DungeonKey[i]} / 2)";
             GetText(TextsType, (int)Texts.TreasureTroveLevelCountText + i).text = $"{Managers.GameM.gameData.DungeonClearLevel[i] + 1}";
         }
 
         GetText(TextsType, (int)Texts.TreasureTroveCompenstaionText).text = $"{(Managers.GameM.gameData.DungeonClearLevel[0] + 1) * 50}";
 
-        int level = (Managers.GameM.gameData.DungeonClearLevel[1] + 1) * 5;
-        var value = Utils.CalculatedValue(Utils.Datas.stageData.Base_Gold, Managers.GameM.Stage, Utils.Datas.stageData.Monster_Gold);
-        GetText(TextsType, (int)Texts.GoldDungeonCompenstaionText).text = Utils.ToCurrencyString(value * level);
+        int level = Managers.GameM.gameData.DungeonClearLevel[1] + 1;
+        double money = Utils.Money() * level * 10;
+        GetText(TextsType, (int)Texts.GoldDungeonCompenstaionText).text = Utils.ToCurrencyString(money);
 
-
-    }
-
-
-    void CheckTime()
-    {
 
     }
 
@@ -97,31 +107,78 @@ public class UI_DungeonPopup : UI_Popup
 
         switch (_btn)
         {
-            //TODO : 어떤 버튼 누른지 알려줘야함
             case Buttons.TreasureTroveStartButton:
-                Managers.StageM.StateChange(Define.StageState.Dungeon, 0);
+                if (Managers.GameM.gameData.DungeonKey[0] != 0)
+                {
+                    GetText(TextsType, (int)Texts.CrystalCountText).text = $"({Managers.GameM.gameData.DungeonKey[0]--} / 2)";
+                    Managers.StageM.StateChange(Define.StageState.Dungeon, 70000);
+                }
+                else
+                {
+                    Managers.UIM.ShowToast("보석이 부족합니다.");
+                    return;
+                }
+
+
                 break;
 
             case Buttons.GoldDungeonStartButton:
-                Managers.StageM.StateChange(Define.StageState.Dungeon, 1);
+                if (Managers.GameM.gameData.DungeonKey[1] != 0)
+                {
+                    GetText(TextsType, (int)Texts.SapphireCountText).text = $"({Managers.GameM.gameData.DungeonKey[1]--} / 2)";
+                    Managers.StageM.StateChange(Define.StageState.Dungeon, 70001);
+                }
+                else
+                {
+                    Managers.UIM.ShowToast("보석이 부족합니다.");
+                    return;
+                }
+
                 break;
         }
 
+
+        Managers.UpdateM.UnRegister(this);
         await TriggerClose(this, true);
+
 
     }
 
     void OnClickMinusButton(Buttons _btn)
     {
+
         switch (_btn)
         {
-
             case Buttons.TreasureTroveMinusButton:
-                // TODO : 난이도 별로 나눠서 텍스트 초기화
+                if (TreasureTroveLevel - 1 > 0)
+                {
+                    TreasureTroveLevel--;
+                    GetText(TextsType, (int)Texts.TreasureTroveLevelCountText).text = $"{TreasureTroveLevel}";
+                    GetText(TextsType, (int)Texts.TreasureTroveCompenstaionText).text = $"{TreasureTroveLevel * 50}";
+                }
+                else
+                {
+                    Managers.UIM.ShowToast("최저레벨입니다.");
+                }
+
                 break;
 
 
             case Buttons.GoldDungeonMinusButton:
+                if (GoldDungeonLevel - 1 > 0)
+                {
+                    GoldDungeonLevel--;
+                    GetText(TextsType, (int)Texts.GoldDungeonLevelCountText).text = $"{GoldDungeonLevel}";
+
+                    double money = Utils.Money() * GoldDungeonLevel * 10;
+                    GetText(TextsType, (int)Texts.GoldDungeonCompenstaionText).text = Utils.ToCurrencyString(money);
+
+
+                }
+                else
+                {
+                    Managers.UIM.ShowToast("최저레벨입니다.");
+                }
                 break;
         }
     }
@@ -131,11 +188,39 @@ public class UI_DungeonPopup : UI_Popup
         switch (_btn)
         {
             case Buttons.TreasureTrovePlusButton:
+                if (TreasureTroveLevel + 1 <= TreasureTroveMaxLevel)
+                {
+                    TreasureTroveLevel++;
+                    GetText(TextsType, (int)Texts.TreasureTroveLevelCountText).text = $"{TreasureTroveLevel}";
+                    GetText(TextsType, (int)Texts.TreasureTroveCompenstaionText).text = $"{TreasureTroveLevel * 50}";
+                }
+                else
+                {
+                    Managers.UIM.ShowToast("스테이지가 잠겨있습니다.");
+                }
                 break;
 
 
             case Buttons.GoldDungeonPlusButton:
+                if (GoldDungeonLevel + 1 <= GoldDungeonMaxLevel)
+                {
+                    GoldDungeonLevel++;
+                    GetText(TextsType, (int)Texts.GoldDungeonLevelCountText).text = $"{GoldDungeonLevel}";
+
+
+                    double money = Utils.Money() * GoldDungeonLevel * 10;
+                    GetText(TextsType, (int)Texts.GoldDungeonCompenstaionText).text = Utils.ToCurrencyString(money);
+                }
+                else
+                {
+                    Managers.UIM.ShowToast("스테이지가 잠겨있습니다.");
+                }
                 break;
         }
+    }
+
+    public void Tick(float _deltaTime)
+    {
+        GetText(TextsType, (int)Texts.TimeText).text = Utils.NextDayTimer();
     }
 }

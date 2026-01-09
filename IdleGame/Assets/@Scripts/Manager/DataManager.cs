@@ -28,6 +28,8 @@ public class DataManager
     public Dictionary<int, Data.BuffTypeData> BuffTypeDataDic = new Dictionary<int, Data.BuffTypeData>();
     public Dictionary<int, Data.VFXData> VFXDataDic = new Dictionary<int, Data.VFXData>();
     public Dictionary<int, Data.GachaData> GachaDataDic = new Dictionary<int, Data.GachaData>();
+    public Dictionary<int, Data.DungeonData> DungeonDataDic = new Dictionary<int, Data.DungeonData>();
+
     public void Init()
     {
         TextAsset jsonAsset = Managers.ResourceM.Load<TextAsset>("Datas.json");
@@ -49,6 +51,7 @@ public class DataManager
         BuffTypeDataDic = LoadJson<Data.BuffTypeDataLoader, int, Data.BuffTypeData>(jsonObj, "BuffTypeData").MakeDict();
         VFXDataDic = LoadJson<Data.VFXDataLoader, int, Data.VFXData>(jsonObj, "VFXData").MakeDict();
         GachaDataDic = LoadJson<Data.GachaDataLoader, int, Data.GachaData>(jsonObj, "GachaData").MakeDict();
+        DungeonDataDic = LoadJson<Data.DungeonDataLoader, int, Data.DungeonData>(jsonObj, "DungeonData").MakeDict();
     }
 
     Loader LoadJson<Loader, Tkey, TValue>(JObject _jsonObj, string _dataName) where Loader : ILoader<Tkey, TValue> where TValue : class

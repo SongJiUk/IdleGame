@@ -81,17 +81,23 @@ public class UIManager
             await scene.AsyncFadeInOut(false, true);
         }
         T popup = GetPopupUI<T>(_name);
-        if (_parent != null) popup.gameObject.SetActive(false);
-        await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+        if (_parent != null)
+        {
+            popup.gameObject.SetActive(false);
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+        }
 
-        if (_parent != null) popup.gameObject.transform.SetParent(_parent);
-        await UniTask.Yield();
+        if (_parent != null)
+        {
+            popup.gameObject.transform.SetParent(_parent);
+            await UniTask.Yield();
+        }
 
         if (_parent != null) popup.gameObject.SetActive(true);
         popup.Init().Forget();
         popup.SetInfo();
 
-        await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+        await UniTask.Yield();
         if (_isFade)
         {
             UI_GameScene scene = (sceneUI as UI_GameScene);

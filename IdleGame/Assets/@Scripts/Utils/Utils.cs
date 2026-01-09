@@ -17,8 +17,9 @@ using System.Linq;
 40000 ~ skillData
 50000 ~ buffData
 60000 ~ VfxData
-70000 ~ MissionData
-80000 ~ QuestData
+70000 ~ DungeonData
+80000 ~ MissionData
+90000 ~ QuestData
 */
 
 
@@ -544,6 +545,17 @@ public static class Utils
         double timeCount = timer.TotalSeconds;
 
         return timeCount;
+    }
+
+    public static string NextDayTimer()
+    {
+        DateTime nowDate = DateTime.Now;
+        DateTime nextDate = nowDate.AddDays(1);
+        nextDate = new DateTime(nextDate.Year, nextDate.Month, nextDate.Day, 0, 0, 0);
+        TimeSpan timer = nextDate - nowDate;
+
+        return timer.Hours + " : " + timer.Minutes + " : " + timer.Seconds;
+
     }
 
     public static string StringToColorGradeImage(Define.ItemGrade _grade)

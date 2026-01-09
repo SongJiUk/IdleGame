@@ -92,7 +92,7 @@ public class MonsterController : CreatureController
         {
             isBoss = true;
             int level = (Managers.GameM.gameData.DungeonClearLevel[1] + 1) * 5;
-            maxHp = 9999999999;
+            maxHp = 200000;
             hp = maxHp;
         }
     }
@@ -174,7 +174,7 @@ public class MonsterController : CreatureController
         if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
         if (isDead) return;
         if (isAttacking) return;
-        if (Managers.StageM.isDungeon) return;
+        if (Managers.StageM.isDungeon && isBoss) return;
 
 
         UpdateSkillCoolTime(_deltaTime);
@@ -250,8 +250,18 @@ public class MonsterController : CreatureController
         base.Dead();
         if (isBoss)
         {
-            Managers.ObjectM.DeSpawn(this);
-            Managers.StageM.StateChange(StageState.Clear);
+            if (Managers.StageM.isDungeon)
+            {
+                Managers.ObjectM.DeSpawn(this);
+                Managers.StageM.StateChange(StageState.DungeonClear);
+                return;
+            }
+            else
+            {
+                Managers.ObjectM.DeSpawn(this);
+                Managers.StageM.StateChange(StageState.Clear);
+            }
+
         }
         else
         {

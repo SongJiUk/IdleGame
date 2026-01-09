@@ -102,7 +102,8 @@ public static class Define
         Dead,
         Dungeon,
         DungeonClear,
-        DungeonFail
+        DungeonFail,
+        DungeonOut
     }
 
     public enum CircleButtons
@@ -153,6 +154,7 @@ public static class Define
 
     public enum ItemType
     {
+        Currency,
         Consumable,
         Equipment,
         Other

@@ -209,7 +209,7 @@ public class PlayerController : CreatureController
 
     }
 
-    void OnDungeonClear(int _value)
+    void OnDungeonClear()
     {
         OnDead();
     }

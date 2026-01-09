@@ -371,4 +371,33 @@ namespace Data
     // }
 
     #endregion
+
+    #region DungeonData
+
+    [Serializable]
+    public class DungeonData
+    {
+        public int DataID;
+        public string DungeonName;
+        public string DungeonNameKR;
+        public int ResultDataID;
+
+    }
+
+    public class DungeonDataLoader : ILoader<int, DungeonData>
+    {
+        public List<DungeonData> dataList = new List<DungeonData>();
+
+        public Dictionary<int, DungeonData> MakeDict()
+        {
+            Dictionary<int, DungeonData> dic = new Dictionary<int, DungeonData>();
+            foreach (var data in dataList)
+            {
+                dic.Add(data.DataID, data);
+            }
+
+            return dic;
+        }
+    }
+    #endregion
 }

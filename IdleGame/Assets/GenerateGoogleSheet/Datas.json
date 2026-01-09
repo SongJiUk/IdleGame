@@ -395,7 +395,27 @@
   ],
   "ItemData": [
     {
+      "DataID": 30000,
+      "Name": "Coin",
+      "NameKR": "코인",
+      "Description": "게임 내 사용되는 코인이다",
+      "ItemGrade": "Legendary",
+      "Probability": 0,
+      "ItemType": "Currency",
+      "MinStage": 0
+    },
+    {
       "DataID": 30001,
+      "Name": "Dia",
+      "NameKR": "다이아",
+      "Description": "상점아이템을 구매하는 다이아이다.",
+      "ItemGrade": "Legendary",
+      "Probability": 0,
+      "ItemType": "Currency",
+      "MinStage": 0
+    },
+    {
+      "DataID": 30002,
       "Name": "Crystal",
       "NameKR": "크리스탈",
       "Description": "크리스탈",
@@ -405,7 +425,7 @@
       "MinStage": 10
     },
     {
-      "DataID": 30002,
+      "DataID": 30003,
       "Name": "Feather",
       "NameKR": "깃털",
       "Description": "깃털",
@@ -415,7 +435,7 @@
       "MinStage": 0
     },
     {
-      "DataID": 30003,
+      "DataID": 30004,
       "Name": "Leather",
       "NameKR": "가죽",
       "Description": "가죽",
@@ -425,7 +445,7 @@
       "MinStage": 0
     },
     {
-      "DataID": 30004,
+      "DataID": 30005,
       "Name": "Monster_Energy",
       "NameKR": "몬스터에너지",
       "Description": "몬스터에너지",
@@ -435,7 +455,7 @@
       "MinStage": 10
     },
     {
-      "DataID": 30005,
+      "DataID": 30006,
       "Name": "Piece_Of_Scroll",
       "NameKR": "스크롤",
       "Description": "스크롤",
@@ -445,7 +465,7 @@
       "MinStage": 5
     },
     {
-      "DataID": 30006,
+      "DataID": 30007,
       "Name": "Piece_Of_Stone",
       "NameKR": "돌",
       "Description": "돌",
@@ -455,7 +475,7 @@
       "MinStage": 0
     },
     {
-      "DataID": 30007,
+      "DataID": 30008,
       "Name": "Gold_Dice",
       "NameKR": "황금주사위",
       "Description": "획득 골드 추가",
@@ -465,7 +485,7 @@
       "MinStage": 50
     },
     {
-      "DataID": 30008,
+      "DataID": 30009,
       "Name": "Axe",
       "NameKR": "도끼",
       "Description": "근접 공격시 주변적 스플래시 데미지",
@@ -475,7 +495,7 @@
       "MinStage": 50
     },
     {
-      "DataID": 30009,
+      "DataID": 30010,
       "Name": "GoddessTears",
       "NameKR": "여신의 눈물",
       "Description": "피격시 마나 회복",
@@ -485,7 +505,7 @@
       "MinStage": 50
     },
     {
-      "DataID": 30010,
+      "DataID": 30011,
       "Name": "BronzeRing",
       "NameKR": "동반지",
       "Description": "효과 없음",
@@ -495,7 +515,7 @@
       "MinStage": 0
     },
     {
-      "DataID": 30011,
+      "DataID": 30012,
       "Name": "SilverRing",
       "NameKR": "은반지",
       "Description": "효과 또 없음",
@@ -505,7 +525,7 @@
       "MinStage": 0
     },
     {
-      "DataID": 30012,
+      "DataID": 30013,
       "Name": "GoldenRing",
       "NameKR": "금반지",
       "Description": "효과 더 없음",
@@ -1026,6 +1046,20 @@
     {
       "DataID": 69000,
       "PrefabName": "Boss_Electric"
+    }
+  ],
+  "DungeonData": [
+    {
+      "DataID": 70000,
+      "DungeonName": "TreasureTrove",
+      "DungeonNameKR": "보물창고",
+      "ResultDataID": 30000
+    },
+    {
+      "DataID": 70001,
+      "DungeonName": "GoldDungeon",
+      "DungeonNameKR": "황금던전",
+      "ResultDataID": 30001
     }
   ],
   "MissionData": [],

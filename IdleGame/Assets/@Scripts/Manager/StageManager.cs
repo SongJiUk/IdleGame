@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using static Define;
+using System.Threading;
 
 //State Pattern
 public class StageManager
@@ -27,6 +28,7 @@ public class StageManager
 
     public bool isDead = false;
     public bool isDungeon = false;
+    bool isChangingState = false;
     public OnReadyEvent readyEvent;
     public OnPlayEvent playEvent;
     public OnBossEvent bossEvent;
@@ -36,65 +38,98 @@ public class StageManager
     public OnDungeonEvent dungeonEvent;
     public OnDungeonClearEvent dungeonClearEvent;
     public OnDungeonFailEvent dungeonFailEvent;
+    public OnDungeonOutEvent dungeonOutEvent;
 
-    public void StateChange(StageState _state, int _value = 0, StageState _prevStage = StageState.Play)
+    private CancellationTokenSource stateCts;
+
+    public void StateChange(StageState _state, int _dungeonDataID = 0, StageState _prevStage = StageState.Play)
     {
-        stageState = _state;
-        switch (stageState)
+        if (isChangingState) return;
+        isChangingState = true;
+
+        try
         {
-            case StageState.Ready:
-                maxCount = Managers.DataM.StageDataDic[Managers.GameM.Stage].StageClearMaxCount;
-                readyEvent?.Invoke();
-                AsyncAction(() => StateChange(StageState.Play), 1f).Forget();
+            stateCts?.Cancel();
+            stateCts?.Dispose();
+            stateCts = new CancellationTokenSource();
+            var token = stateCts.Token;
 
-                break;
-            case StageState.Play:
-                playEvent?.Invoke(_prevStage);
-                break;
-            case StageState.Boss:
-                count = 0;
-                bossEvent?.Invoke();
-                break;
-            case StageState.BossPlay:
-                bossPlayEvent?.Invoke();
-                break;
-            case StageState.Clear:
-                count = 0;
-                clearEvent?.Invoke();
-                Managers.GameM.Stage++;
-                isDead = false;
-                break;
-            case StageState.Dead:
-                count = 0;
-                deadEvent?.Invoke();
-                isDead = true;
-                break;
+            stageState = _state;
+            switch (stageState)
+            {
+                case StageState.Ready:
+                    maxCount = Managers.DataM.StageDataDic[Managers.GameM.Stage].StageClearMaxCount;
+                    readyEvent?.Invoke();
+                    AsyncAction(() => StateChange(StageState.Play), 1f, token).Forget();
 
-            case StageState.Dungeon:
-                isDungeon = true;
-                dungeonEvent?.Invoke(_value);
-                count = 0;
-                if (_value == 0) AsyncAction(() => StateChange(StageState.Play, _prevStage: StageState.Dungeon), 1f).Forget();
-                break;
+                    break;
+                case StageState.Play:
+                    playEvent?.Invoke(_prevStage);
+                    break;
+                case StageState.Boss:
+                    count = 0;
+                    bossEvent?.Invoke();
+                    break;
+                case StageState.BossPlay:
+                    bossPlayEvent?.Invoke();
+                    break;
+                case StageState.Clear:
+                    count = 0;
+                    clearEvent?.Invoke();
+                    Managers.GameM.Stage++;
+                    isDead = false;
+                    break;
+                case StageState.Dead:
+                    count = 0;
+                    deadEvent?.Invoke();
+                    isDead = true;
+                    break;
 
-            case StageState.DungeonClear:
-                isDungeon = false;
-                count = 0;
-                dungeonClearEvent?.Invoke(_value);
-                break;
+                case StageState.Dungeon:
+                    Debug.Log("던전 진입");
+                    isDungeon = true;
+                    dungeonEvent?.Invoke(_dungeonDataID);
+                    count = 0;
+                    if (_dungeonDataID == 70000) AsyncAction(() => StateChange(StageState.Play, _prevStage: StageState.Dungeon), 1f, token).Forget();
+                    break;
 
-            case StageState.DungeonFail:
-                isDungeon = false;
-                count = 0;
-                dungeonFailEvent?.Invoke(_value);
-                break;
+                case StageState.DungeonClear:
+                    Debug.Log("던전 클리어");
+                    isDungeon = false;
+                    count = 0;
+                    dungeonClearEvent?.Invoke();
+                    break;
+
+                case StageState.DungeonFail:
+                    isDungeon = false;
+                    Debug.Log("던전 실패");
+                    count = 0;
+                    dungeonFailEvent?.Invoke();
+                    break;
+
+                case StageState.DungeonOut:
+                    dungeonOutEvent?.Invoke();
+                    break;
+            }
         }
+        finally
+        {
+            isChangingState = false;
+        }
+
     }
 
 
-    async UniTask AsyncAction(Action _action, float _timer)
+    async UniTask AsyncAction(Action _action, float _timer, CancellationToken _token)
     {
-        await UniTask.WaitForSeconds(_timer);
-        _action?.Invoke();
+        try
+        {
+            await UniTask.WaitForSeconds(_timer, cancellationToken: _token);
+            _action?.Invoke();
+        }
+        catch (OperationCanceledException) { }
+        catch (Exception e) { }
     }
+
 }
+

@@ -24,7 +24,8 @@ public class SpawnManager : MonoBehaviour, ITickable
     public List<PlayerController> players;
     List<MonsterController> monsters;
     UI_GameScene scene = null;
-    int value = -1;
+    int dungeonDataID;
+    bool isDelay = true;
 
 
     //TODO : 처음 시작할땐 플레이어 스폰이 되있어야될거같긴함
@@ -38,6 +39,7 @@ public class SpawnManager : MonoBehaviour, ITickable
         Managers.StageM.dungeonEvent += OnDungeon;
         Managers.StageM.dungeonClearEvent += OnDungeonClear;
         Managers.StageM.dungeonFailEvent += OnDungeonFail;
+        Managers.StageM.dungeonOutEvent += OnDungeonOut;
 
         scene = Managers.UIM.SceneUI as UI_GameScene;
     }
@@ -83,7 +85,7 @@ public class SpawnManager : MonoBehaviour, ITickable
         Managers.StageM.StateChange(Define.StageState.BossPlay);
     }
 
-    //TODO : 사용하지 않으면 지우기
+
     public void OnClear()
     {
         ClearDelay().Forget();
@@ -106,18 +108,18 @@ public class SpawnManager : MonoBehaviour, ITickable
         }
     }
 
-    public async void OnDungeon(int _value)
+    public async void OnDungeon(int _dungeonDataID)
     {
-        value = _value;
+        dungeonDataID = _dungeonDataID;
         StopSpawn();
+        DeSpawnMonster();
 
-
-        if (value == 0)
+        if (dungeonDataID == 70000)
         {
             spawnMaxCount = 30;
             spawnInterval = 3f;
         }
-        else if (value == 1)
+        else if (dungeonDataID == 70001)
         {
             OnBoss();
         }
@@ -126,23 +128,26 @@ public class SpawnManager : MonoBehaviour, ITickable
 
     }
 
-    public void OnDungeonClear(int _value)
+    public void OnDungeonClear()
     {
-        value = -1;
+        dungeonDataID = 0;
+    }
+
+    public void OnDungeonFail()
+    {
+        dungeonDataID = 0;
+    }
+
+    public void OnDungeonOut()
+    {
+        isDelay = false;
         OnClear();
     }
-
-    public void OnDungeonFail(int _value)
-    {
-        value = -1;
-        OnDead();
-    }
-
 
     async UniTask ClearDelay()
     {
         StopSpawn();
-        await UniTask.WaitForSeconds(2.0f);
+        if (isDelay) await UniTask.WaitForSeconds(2.0f);
 
         await scene.AsyncFadeInOut(false);
 
@@ -155,8 +160,10 @@ public class SpawnManager : MonoBehaviour, ITickable
 
         players.Clear();
         Managers.ObjectM.mcList.Clear();
+
         await UniTask.WaitForSeconds(1.0f);
 
+        if (!isDelay) isDelay = true;
         Managers.StageM.StateChange(Define.StageState.Ready);
     }
 

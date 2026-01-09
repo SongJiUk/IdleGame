@@ -53,6 +53,7 @@
      <Compile Include="Assets/@Scripts/UI/UI_Item.cs" />
      <Compile Include="Assets/@Scripts/Manager/Firebase/FirebaseLogin.cs" />
      <Compile Include="Assets/@Scripts/Controllers/ProjectileController.cs" />
+     <Compile Include="Assets/@Scripts/UI/UI_DungeonPopup.cs" />
      <Compile Include="Assets/@Scripts/UI/UI_RelicGachaIcon.cs" />
      <Compile Include="Assets/@Scripts/Controllers/CreatureController.cs" />
      <Compile Include="Assets/@Scripts/Skill/SkillController.cs" />
@@ -65,6 +66,7 @@
      <Compile Include="Assets/@Scripts/Skill/Buffs/StatDownBuff.cs" />
      <Compile Include="Assets/@Scripts/Skill/SkillRegistry.cs" />
      <Compile Include="Assets/@Scripts/LevelDesign/StageDesign.cs" />
+     <Compile Include="Assets/@Scripts/Utils/Memo.cs" />
      <Compile Include="Assets/@Scripts/Skill/Player/Knight_Skill.cs" />
      <Compile Include="Assets/@Scripts/Manager/RelicManager.cs" />
      <Compile Include="Assets/@Scripts/Manager/UpdateManager.cs" />
@@ -152,8 +154,8 @@
      <Compile Include="Assets/@Scripts/Manager/CameraManager.cs" />
      <Compile Include="Assets/@Scripts/UI/UI_RelicGachaPopup.cs" />
      <Compile Include="Assets/@Scripts/LevelDesign/LevelDesign.cs" />
-     <Compile Include="Assets/@Scripts/UI/UI_DungeonPopup.cs" />
-     <Compile Include="Assets/@Scripts/Utils/Memo.cs" />
+     <Compile Include="Assets/@Scripts/UI/UI_DungeonResultInfoPopup.cs" />
+     <Compile Include="Assets/@Scripts/UI/UI_DungeonResultIcon.cs" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets/@Resources/Prefabs/Effect/Shader/NW_Particle Rim AddSmooth 2S.shader" />
