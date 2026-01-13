@@ -441,6 +441,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 break;
             case Buttons.StatButton:
                 clickedButton = statBtn;
+                ScaleUpSelectButton();
+                UI_HeroStatPopup statPopup = await Managers.UIM.ShowPopup<UI_HeroStatPopup>(_isFade: true, _parent: GetPopUpLayer());
+                statPopup.OnThisPopupClosed = ScaleDownSelectButton;
                 break;
 
             case Buttons.HeroButton:
@@ -1338,7 +1341,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
         while (percent < 1.0f)
         {
-            current += Time.deltaTime;
+            current += Time.deltaTime * 2;
             percent = current / fadeDuration;
             float LerpPos = Mathf.Lerp(start, end, percent);
             fadeImage.color = new Color(0, 0, 0, LerpPos);

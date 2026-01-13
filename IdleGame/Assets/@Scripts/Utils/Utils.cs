@@ -443,7 +443,7 @@ public static class Utils
 
         if (partsSplit.Length < 2)
         {
-            Debug.LogWarning(string.Format("Failed - ToCurrencyString({0}) partsSplit[1] = {1}", _number));
+            Debug.LogWarning(string.Format("Failed - ToCurrencyString({0}) : No Exponent found", _number));
             return Zero;
         }
 
@@ -469,7 +469,11 @@ public static class Utils
 
         if (_currencyType == CurrencyType.Default)
         {
-            unitString = CurrencyUnits[quotient];
+            
+            if (quotient < CurrencyUnits.Length)
+                unitString = CurrencyUnits[quotient];
+            else
+                unitString = "Infinity";
         }
 
         return string.Format("{0}{1}{2}", significant, showNumber, unitString);

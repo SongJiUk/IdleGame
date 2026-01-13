@@ -60,4 +60,70 @@ public class PlayerManager
         Hp += Utils.Datas.levelData.HP();
         Managers.GameM.Exp = 0;
     }
+
+    public double MainAttack()
+    {
+        double attack = GetAttack(Managers.GameM.mPlayer.DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[Managers.GameM.mPlayer.DATA.Name]);
+        int value = 1;
+        for(int i =0; i<Managers.CharacterM.Characters.Length; i++)
+        {
+            if (Managers.CharacterM.Characters[i] != null)
+            {
+                var data = Managers.CharacterM.Characters[i].data;
+                attack += GetAttack(data.CharacterGrade, Managers.GameM.gameData.Characters_Data[data.Name]);
+                value++;
+            }
+        }
+
+        return attack / value;
+    }
+
+
+    public double MainHP()
+    {
+        double hp = GetHP(Managers.GameM.mPlayer.DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[Managers.GameM.mPlayer.DATA.Name]);
+        int value = 1;
+        for (int i = 0; i < Managers.CharacterM.Characters.Length; i++)
+        {
+            if (Managers.CharacterM.Characters[i] != null)
+            {
+                var data = Managers.CharacterM.Characters[i].data;
+                hp += GetHP(data.CharacterGrade, Managers.GameM.gameData.Characters_Data[data.Name]);
+                value++;
+            }
+        }
+
+        return hp / value;
+    }
+
+    public float GoldDrop()
+    {
+        return 0.0f;
+    }
+
+    public float ItemDrop()
+    {
+        return 0.0f;
+    }
+
+    public float AttackSpeed()
+    {
+        return 1.0f;
+    }
+
+    public float CriticalChance()
+    {
+        return 20.0f;
+    }
+
+    public float CriticalDamage()
+    {
+        return 140.0f;
+    }
+
+    public double AverageCombatPower()
+    {
+        return MainAttack() + MainHP();
+    }
+
 }

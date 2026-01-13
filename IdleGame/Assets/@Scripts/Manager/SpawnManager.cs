@@ -202,7 +202,7 @@ public class SpawnManager : MonoBehaviour, ITickable
         }
         else
         {
-            boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero, 10001);
+            boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero, 11000);
             if (scene == null) scene = Managers.UIM.SceneUI as UI_GameScene;
             boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
         }

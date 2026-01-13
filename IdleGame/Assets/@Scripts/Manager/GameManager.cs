@@ -133,4 +133,6 @@ public class GameManager
         set { gameData.relicsConfirmedLegendaryCount = value; }
     }
 
+
+    
 }

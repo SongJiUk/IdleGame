@@ -91,7 +91,7 @@ public class PlayerController : CreatureController
         attackrange = DATA.AttackRange;
         detectrange = 5f;
         ownerName = this.name;
-        CriticalRate = 0.5f;
+        CriticalRate = Managers.PlayerM.CriticalChance();
         target = null;
     }
     public void SetStat()
