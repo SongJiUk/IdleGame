@@ -17,6 +17,11 @@ public class UI_Popup : UI_Base
         return true;
     }
 
+
+    public async UniTask ClosePopup(bool _isFade = false)
+    {
+        TriggerClose(this, _isFade).Forget();
+    }
     //하단 버튼 애니메이션
     protected async UniTask TriggerClose(UI_Popup _popup, bool _isFade = false)
     {

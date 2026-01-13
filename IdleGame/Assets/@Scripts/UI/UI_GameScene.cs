@@ -60,7 +60,13 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         AttackBuffLockObject,
         DropBuffLockObject,
         CriticalBuffLockObject,
-        FastSliderObject
+        FastSliderObject,
+        StatButtonCloseObject,
+        HeroButtonCloseObject,
+        RelicsButtonCloseObject,
+        DungeonButtonCloseObject,
+        EnforceButtonCloseObject,
+        ShopButtonCloseObject,
 
     }
     enum Buttons
@@ -250,6 +256,17 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     public float FastremainTime = 0.0f;
     int value;
     int dungeonDataID;
+
+
+    #region 하단 Popup
+    private UI_HeroStatPopup ui_heroStatPopup;
+    private UI_HeroPopup ui_heroPopup;
+    private UI_RelicsPopup ui_relicsPopup;
+    private UI_DungeonPopup ui_dungeonPopup;
+    //private UI_EnforcePopup ui_enforcePopup;
+    private UI_ShopPopup ui_shopPopup;
+    private UI_Popup currentBottomPopup;
+    #endregion
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -305,6 +322,12 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             GetButton(ButtonsType, (int)buttonType).gameObject.BindEvent(() => OnClickAnyButtons(buttonType).Forget());
         }
 
+        //TDOO : 하단 버튼 CloseImage
+        for (int i = 0; i < 6; i++)
+        {
+            GetObject(GameObjectsType, (int)GameObjects.StatButtonCloseObject + i).SetActive(false);
+        }
+
         for (int i = 1; i < Managers.CharacterM.Characters.Length; i++)
         {
             GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + (i - 1)).gameObject.BindEvent(() => OnClickCharacterPlus(i - 1));
@@ -317,6 +340,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject).SetActive(false);
 
         GetButton(ButtonsType, (int)Buttons.InventoryButton).gameObject.BindEvent(OnClickInventory);
+
         statBtn = GetButton(ButtonsType, (int)Buttons.StatButton);
         heroBtn = GetButton(ButtonsType, (int)Buttons.HeroButton);
         relicsBtn = GetButton(ButtonsType, (int)Buttons.RelicsButton);
@@ -414,7 +438,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     async UniTaskVoid OnClickAnyButtons(Buttons _clickButtonType)
     {
         clickedButton = null;
-        Managers.UIM.CloseAllPopup();
+        //Managers.UIM.CloseAllPopup();
         switch (_clickButtonType)
         {
             case Buttons.SettingButton:
@@ -439,40 +463,140 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 break;
             case Buttons.QuestButton:
                 break;
+
+
             case Buttons.StatButton:
+
+                if (selectedButton != statBtn && currentBottomPopup != null)
+                {
+                    currentBottomPopup.ClosePopup(false).Forget();
+                }
+
+                if (selectedButton == statBtn && currentBottomPopup != null)
+                {
+                    if (currentBottomPopup is UI_HeroStatPopup stat)
+                    {
+                        ScaleDownSelectButton();
+                        GetObject(GameObjectsType, (int)GameObjects.StatButtonCloseObject).SetActive(false);
+                        stat.ClosePopup(true).Forget();
+                    }
+                    return;
+                }
+
                 clickedButton = statBtn;
+                GetObject(GameObjectsType, (int)GameObjects.StatButtonCloseObject).SetActive(true);
                 ScaleUpSelectButton();
+
                 UI_HeroStatPopup statPopup = await Managers.UIM.ShowPopup<UI_HeroStatPopup>(_isFade: true, _parent: GetPopUpLayer());
-                statPopup.OnThisPopupClosed = ScaleDownSelectButton;
+                currentBottomPopup = statPopup;
+                statPopup.OnThisPopupClosed = () =>
+                {
+                    ScaleDownSelectButton();
+                    GetObject(GameObjectsType, (int)GameObjects.StatButtonCloseObject).SetActive(false);
+                    if (currentBottomPopup == statPopup) currentBottomPopup = null;
+                    statPopup = null;
+                };
+
+
+
+
                 break;
 
             case Buttons.HeroButton:
+                if (selectedButton != heroBtn && currentBottomPopup != null)
+                {
+                    currentBottomPopup.ClosePopup(false).Forget();
+                }
+
+                if (selectedButton == heroBtn && currentBottomPopup != null)
+                {
+                    if (currentBottomPopup is UI_HeroPopup hero)
+                    {
+                        ScaleDownSelectButton();
+                        GetObject(GameObjectsType, (int)GameObjects.HeroButtonCloseObject).SetActive(false);
+                        hero.ClosePopup(true).Forget();
+                    }
+                    return;
+                }
+
                 clickedButton = heroBtn;
+                GetObject(GameObjectsType, (int)GameObjects.HeroButtonCloseObject).SetActive(true);
                 ScaleUpSelectButton();
 
                 UI_HeroPopup heroPopup = await Managers.UIM.ShowPopup<UI_HeroPopup>(_isFade: true, _parent: GetPopUpLayer());
-                //heroPopup.transform.SetParent(GetPopUpLayer());
-                heroPopup.OnThisPopupClosed = ScaleDownSelectButton;
-                // ui_HeroPopup.gameObject.SetActive(true);
-                // ui_HeroPopup.SetInfo();
-                // ui_HeroPopup.OnThisPopupClosed = ScaleDownSelectButton;
+                currentBottomPopup = heroPopup;
+                heroPopup.OnThisPopupClosed = () =>
+                {
+                    ScaleDownSelectButton();
+                    GetObject(GameObjectsType, (int)GameObjects.HeroButtonCloseObject).SetActive(false);
+                    if (currentBottomPopup == heroPopup) currentBottomPopup = null;
+                    statPopup = null;
+                };
 
                 break;
 
             case Buttons.RelicsButton:
+
+                if (selectedButton != relicsBtn && currentBottomPopup != null)
+                {
+                    currentBottomPopup.ClosePopup(false).Forget();
+                }
+                if (selectedButton == relicsBtn && currentBottomPopup != null)
+                {
+                    if (currentBottomPopup is UI_RelicsPopup relics)
+                    {
+                        ScaleDownSelectButton();
+                        GetObject(GameObjectsType, (int)GameObjects.RelicsButtonCloseObject).SetActive(false);
+                        relics.ClosePopup(true).Forget();
+                    }
+                    return;
+                }
+
                 clickedButton = relicsBtn;
+                GetObject(GameObjectsType, (int)GameObjects.RelicsButtonCloseObject).SetActive(true);
                 ScaleUpSelectButton();
 
                 UI_RelicsPopup relicPopup = await Managers.UIM.ShowPopup<UI_RelicsPopup>(_isFade: true, _parent: GetPopUpLayer());
-                //relicPopup.transform.SetParent(GetPopUpLayer());
-                relicPopup.OnThisPopupClosed = ScaleDownSelectButton;
+                currentBottomPopup = relicPopup;
+                relicPopup.OnThisPopupClosed = () =>
+                {
+                    ScaleDownSelectButton();
+                    GetObject(GameObjectsType, (int)GameObjects.RelicsButtonCloseObject).SetActive(false);
+                    if (currentBottomPopup == relicPopup) currentBottomPopup = null;
+                    relicPopup = null;
+                };
                 break;
 
             case Buttons.DungeonButton:
+
+                if (selectedButton != dungeonBtn && currentBottomPopup != null)
+                {
+                    currentBottomPopup.ClosePopup(false).Forget();
+                }
+                if (selectedButton == dungeonBtn && currentBottomPopup != null)
+                {
+                    if (currentBottomPopup is UI_DungeonPopup dungeon)
+                    {
+                        ScaleDownSelectButton();
+                        GetObject(GameObjectsType, (int)GameObjects.DungeonButtonCloseObject).SetActive(false);
+                        dungeon.ClosePopup(true).Forget();
+                    }
+                    return;
+                }
+
                 clickedButton = dungeonBtn;
+                GetObject(GameObjectsType, (int)GameObjects.DungeonButtonCloseObject).SetActive(true);
                 ScaleUpSelectButton();
+
                 UI_DungeonPopup dungeonPopup = await Managers.UIM.ShowPopup<UI_DungeonPopup>(_isFade: true, _parent: GetPopUpLayer());
-                dungeonPopup.OnThisPopupClosed = ScaleDownSelectButton;
+                currentBottomPopup = dungeonPopup;
+                dungeonPopup.OnThisPopupClosed = () =>
+                {
+                    GetObject(GameObjectsType, (int)GameObjects.DungeonButtonCloseObject).SetActive(false);
+                    if (currentBottomPopup == dungeonPopup) currentBottomPopup = null;
+                    dungeonPopup = null;
+                };
+
 
                 break;
 
@@ -482,13 +606,35 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 break;
 
             case Buttons.ShopButton:
+                if (selectedButton != shopBtn && currentBottomPopup != null)
+                {
+                    currentBottomPopup.ClosePopup(false).Forget();
+                }
+
+                if (selectedButton == shopBtn && currentBottomPopup != null)
+                {
+                    if (currentBottomPopup is UI_ShopPopup shop)
+                    {
+                        ScaleDownSelectButton();
+                        GetObject(GameObjectsType, (int)GameObjects.ShopButtonCloseObject).SetActive(false);
+                        shop.ClosePopup(true).Forget();
+                    }
+                    return;
+                }
+
                 clickedButton = shopBtn;
+                GetObject(GameObjectsType, (int)GameObjects.ShopButtonCloseObject).SetActive(true);
                 ScaleUpSelectButton();
 
                 UI_ShopPopup shopPopup = await Managers.UIM.ShowPopup<UI_ShopPopup>(_isFade: true, _parent: GetPopUpLayer());
-                //shopPopup.transform.SetParent(GetPopUpLayer());
-                shopPopup.OnThisPopupClosed = ScaleDownSelectButton;
-
+                currentBottomPopup = shopPopup;
+                shopPopup.OnThisPopupClosed = () =>
+                {
+                    ScaleDownSelectButton();
+                    GetObject(GameObjectsType, (int)GameObjects.ShopButtonCloseObject).SetActive(false);
+                    if (currentBottomPopup == shopPopup) currentBottomPopup = null;
+                    shopPopup = null;
+                };
 
                 break;
 
@@ -501,7 +647,21 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         }
     }
 
+    private void CloseCurrentPopup()
+    {
+        if (currentBottomPopup != null)
+        {
 
+            ScaleDownSelectButton();
+            GetObject(GameObjectsType, (int)GameObjects.StatButtonCloseObject).SetActive(false);
+            GetObject(GameObjectsType, (int)GameObjects.HeroButtonCloseObject).SetActive(false);
+            GetObject(GameObjectsType, (int)GameObjects.RelicsButtonCloseObject).SetActive(false);
+            GetObject(GameObjectsType, (int)GameObjects.DungeonButtonCloseObject).SetActive(false);
+            GetObject(GameObjectsType, (int)GameObjects.ShopButtonCloseObject).SetActive(false);
+            currentBottomPopup.ClosePopup(true).Forget();
+            currentBottomPopup = null;
+        }
+    }
     public void SetBuffs(Define.BuffType _type, bool _isLock)
     {
         switch (_type)
@@ -605,7 +765,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             selectedButton.transform.DOScale(Vector3.one, 0.2f);
         }
 
-        clickedButton.transform.DOScale(Vector3.one * 1.2f, 0.2f);
+        clickedButton.transform.DOScale(Vector3.one * 1.3f, 0.2f);
 
         selectedButton = clickedButton;
     }
