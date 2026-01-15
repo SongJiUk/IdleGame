@@ -9,10 +9,12 @@ public abstract class UI_Scene : UI_Base
     public abstract Transform WorldCoinParent { get; }
     public abstract Transform WorldJewelParent { get; }
     public abstract Transform WorldItemParent { get; }
+    public abstract Transform WorldSpeechParent { get; }
 
     protected RectTransform coinDirectingTr;
     protected RectTransform jewelDirectingTr;
     protected Transform layers;
+    protected Transform speechLayer;
     protected Transform popupLayer;
 
     public RectTransform CoinDirectingTr
@@ -43,8 +45,17 @@ public abstract class UI_Scene : UI_Base
             Debug.LogError("layers가 없어요..!!");
             return null;
         }
-
         return layers.GetChild(_num);
+    }
+    
+    public Transform GetSpeechLayer()
+    {
+        if(speechLayer == null)
+        {
+            Debug.LogError("SpeechLayer가 없음");
+            return null;
+        }
+        return speechLayer.GetChild(0);
     }
 
     public Transform GetPopUpLayer()

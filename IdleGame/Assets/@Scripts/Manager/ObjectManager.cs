@@ -19,17 +19,17 @@ public class ObjectManager
         if (typeof(T).IsSubclassOf(typeof(CreatureController)) || typeof(T) == typeof(CreatureController))
         {
             Managers.DataM.CreatureDataDic.TryGetValue(_tempID, out var data);
-            return data?.prefabName;
+            return data?.PrefabName;
         }
         else if (typeof(T).IsSubclassOf(typeof(ProjectileController)) || typeof(T) == typeof(ProjectileController))
         {
             Managers.DataM.ProjectileDataDic.TryGetValue(_tempID, out var data);
-            return data?.prefabName;
+            return data?.PrefabName;
         }
-        else if (typeof(T).IsSubclassOf(typeof(ObjectController)) || typeof(T) == typeof(ObjectController))
+        else if (typeof(T).IsSubclassOf(typeof(UIDirecting)) || typeof(T) == typeof(UIDirecting))
         {
-            //TODO : 데이터 추가해서 수정하기(스모크 나오는거 수정해줘야함)
-            return "Smoke";
+            Managers.DataM.VFXDataDic.TryGetValue(_tempID, out var data);
+            return data?.PrefabName;
         }
 
         Debug.LogError("ID에 맞는 오브젝트 타입이 없습니다.");
@@ -116,22 +116,7 @@ public class ObjectManager
             mcList.Remove(mc);
         });
         #endregion
-        //TODO : 오브젝트들은 찾을 일이 없으니까 hashset에 안넣어도 될거같긴함
-        //removeActions.Add(typeof(RangeAttackController), (baseController) =>
-        //{
-        //    var rac = baseController as RangeAttackController;
-        //    pjSet.Remove(rac);
-        //});
-        //removeActions.Add(typeof(MeleeAttackController), (baseController) =>
-        //{
-        //    var mac = baseController as MeleeAttackController;
-        //    pjSet.Remove(mac);
-        //});
-        //removeActions.Add(typeof(ObjectController), (baseController) =>
-        //{
-        //    var oc = baseController as ObjectController;
-        //    ocSet.Remove(oc);
-        //});
+       
 
 
     }
@@ -223,8 +208,9 @@ public class ObjectManager
         //Spawn<DamageFont>(_pos, );
         string prefabName = "DamageFont";
 
-        GameObject go = Managers.ResourceM.Instantiate(prefabName, _pooling: true);
-        DamageFont damageFont = go.GetOrAddComponent<DamageFont>();
+        DamageFont damageFont = Spawn<DamageFont>(_pos, Utils.DamageFontDataID);
+        // GameObject go = Managers.ResourceM.Instantiate(prefabName, _pooling: true);
+        //DamageFont damageFont = go.GetOrAddComponent<DamageFont>();
         damageFont.Init(_pos, _dmg, _isMonster, _isCritical, _isSkill);
 
     }

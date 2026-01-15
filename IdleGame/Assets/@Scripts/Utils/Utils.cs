@@ -20,11 +20,18 @@ using System.Linq;
 70000 ~ DungeonData
 80000 ~ MissionData
 90000 ~ QuestData
+100000 ~ NPCData
 */
 
 
 public static class Utils
 {
+    public const int CoinDirectingDataID = 69101;
+    public const int DamageFontDataID = 69102;
+    public const int SpeechBubbleDataID = 69103;
+    public const int DropItemDataID = 69104;
+
+
     public const int GachaMaxLevel = 10;
     public const int GradeCount = 5;
     //NOTE: 레벨 데이터 값
@@ -558,7 +565,7 @@ public static class Utils
         nextDate = new DateTime(nextDate.Year, nextDate.Month, nextDate.Day, 0, 0, 0);
         TimeSpan timer = nextDate - nowDate;
 
-        return timer.Hours + " : " + timer.Minutes + " : " + timer.Seconds;
+        return timer.ToString(@"hh\ \:\ mm\ \:\ ss");
 
     }
 

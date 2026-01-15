@@ -275,9 +275,7 @@ public class MonsterController : CreatureController
         }
 
         //TODO : 이것도 바꿔야됌
-        //Managers.ObjectM.Spawn<CoinDirecting>(transform.position, );
-        GameObject go = Managers.ResourceM.Instantiate("CoinDirecting", _pooling: true);
-        CoinDirecting coinDriecting = go.GetComponent<CoinDirecting>();
+        var coinDriecting = Managers.ObjectM.Spawn<CoinDirecting>(transform.position, Utils.CoinDirectingDataID);
         coinDriecting.Init(transform.position);
 
         var items = Managers.ItemM.GetDropItem();
@@ -285,16 +283,11 @@ public class MonsterController : CreatureController
         //TODO : 몬스터마다 아이템 개수 다르게
         for (int i = 0; i < items.Count; i++)
         {
-            GameObject obj = Managers.ResourceM.Instantiate("DropItem", _pooling: true);
-            DropItemController dc = obj.GetOrAddComponent<DropItemController>();
+            DropItemController dc = Managers.ObjectM.Spawn<DropItemController>(transform.position, Utils.DropItemDataID);
             dc.Init();
             dc.SetInfo(transform.position, items[i]);
         }
     }
-    // async UniTask WaitForTime(float _time)
-    // {
-
-    // }
 
 
     public void OnDead()

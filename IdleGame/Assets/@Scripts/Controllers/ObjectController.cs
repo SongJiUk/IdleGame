@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 
 public class ObjectController : BaseController
 {
-    //TODO : Smoke°¡ ºñÈ°¼ºÈ­ µÇ´Â ÀÌÀ¯°¡ ¹»Áö »ı°¢ÇØº¸±â¤¤
+    //TODO : Smokeê°€ ë¹„í™œì„±í™” ë˜ëŠ” ì´ìœ ê°€ ë­˜ì§€ ìƒê°í•´ë³´ê¸°ã„´
     ParticleSystem particle;
     public override bool Init()
     {

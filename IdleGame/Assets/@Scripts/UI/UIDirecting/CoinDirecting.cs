@@ -5,7 +5,7 @@ using DG.Tweening;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 
-public class CoinDirecting : BaseController
+public class CoinDirecting : UIDirecting
 {
     Vector3 targetPos;
     Camera cam;
@@ -37,7 +37,11 @@ public class CoinDirecting : BaseController
         cts = null;
     }
     #endregion
-
+    public override bool Init()
+    {
+        if (!base.Init()) return false;
+        return true;
+    }
     public void Init(Vector3 _pos)
     {
         if ((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
@@ -46,7 +50,7 @@ public class CoinDirecting : BaseController
 
 
             if (this != null && gameObject != null)
-                Managers.ResourceM.Destroy(gameObject);
+                Managers.ObjectM.DeSpawn(this);
 
             return;
         }
@@ -97,18 +101,18 @@ public class CoinDirecting : BaseController
             await UniTask.WhenAll(tasks);
 
             if (this != null && gameObject != null)
-                Managers.ResourceM.Destroy(gameObject);
+                Managers.ObjectM.DeSpawn(this);
         }
         catch (System.OperationCanceledException)
         {
             if (this != null && gameObject != null)
-                Managers.ResourceM.Destroy(gameObject);
+                Managers.ObjectM.DeSpawn(this);
         }
         catch (System.Exception e)
         {
-            Debug.Log("���� ����Ʈ ��� :" + e.Message);
+            Debug.Log(e.Message);
             if (this != null && gameObject != null)
-                Managers.ResourceM.Destroy(gameObject);
+                Managers.ObjectM.DeSpawn(this);
         }
     }
 

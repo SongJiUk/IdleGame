@@ -43,7 +43,7 @@
       "Name": "Cleric",
       "NameKR": "클레릭",
       "Description": "클레릭은 신성한 신념을 바탕으로 전장의 최전선에서 동료들을 수호하는 자입니다. 단순히 상처를 고치는 것을 넘어, 아군의 사기를 높이고 절망적인 상황에서 기적을 불러일으키는 '살아있는 성소'와 같은 역할을 수행합니다.",
-      "prefabName": "Cleric",
+      "PrefabName": "Cleric",
       "CreatureType": "Cleric",
       "ObjectType": "Player",
       "AttackRange": 2,
@@ -60,7 +60,7 @@
       "Name": "Archer",
       "NameKR": "궁수",
       "Description": "궁수는 정면 대결보다는 적의 약점을 파고드는 데 능숙합니다. 그가 쏘는 화살촉에는 연금술로 정제된 강력한 맹독이 발려 있어, 적의 갑옷을 부식시키고 신체 기능을 마비시킵니다. 적이 고통에 몸부림칠 때, 그는 이미 다음 사냥감을 향해 시위를 당기고 있습니다.",
-      "prefabName": "Archer",
+      "PrefabName": "Archer",
       "CreatureType": "Archer",
       "ObjectType": "Player",
       "AttackRange": 2,
@@ -77,7 +77,7 @@
       "Name": "Assassin",
       "NameKR": "암살자",
       "Description": "암살자는 소리 없이 다가와 단 한 번의 칼날질로 모든 상황을 종료시키는 전장의 집행자입니다. 화려한 동작보다는 효율적이고 정밀한 타격을 선호하며, 적이 가장 방심한 순간 가장 취약한 곳을 뚫고 들어갑니다. 그에게 찍힌 표적은 결코 살아서 전장을 벗어날 수 없습니다.",
-      "prefabName": "Assassin",
+      "PrefabName": "Assassin",
       "CreatureType": "Assassin",
       "ObjectType": "Player",
       "AttackRange": 1,
@@ -94,7 +94,7 @@
       "Name": "Hammer",
       "NameKR": "망치",
       "Description": "망치기사는 전장의 중심에서 거대한 망치를 휘둘러 적의 진형을 붕괴시키는 파괴의 선봉장입니다. 육중한 갑옷을 입고 묵직한 무기를 다루지만, 일단 회전력을 얻기 시작하면 그 누구도 멈출 수 없는 강철의 폭풍이 됩니다.",
-      "prefabName": "Hammer",
+      "PrefabName": "Hammer",
       "CreatureType": "Hammer",
       "ObjectType": "Player",
       "AttackRange": 1,
@@ -111,7 +111,7 @@
       "Name": "Knight",
       "NameKR": "기사",
       "Description": "기사는 전장의 선두에서 아군을 이끄는 정의의 상징입니다. 단순히 칼을 휘두르는 것에 그치지 않고, 자신의 투지와 신념을 '빛의 형상'으로 실체화하여 멀리 떨어진 적들까지 단죄합니다. 그의 검광이 번쩍일 때마다 적들은 두려움에 떨고, 동료들은 용기를 얻습니다.",
-      "prefabName": "Knight",
+      "PrefabName": "Knight",
       "CreatureType": "Knight",
       "ObjectType": "Player",
       "AttackRange": 1,
@@ -128,7 +128,7 @@
       "Name": "SpearMan",
       "NameKR": "스피어맨",
       "Description": "스피어맨은 전장의 거리감을 지배하는 달인입니다. 검보다 길고 망치보다 날카로운 창을 자유자재로 휘둘러, 적이 접근하기도 전에 가로막거나 한꺼번에 쓸어버립니다. 그의 공격은 마치 몰아치는 태풍과 같아, 전방의 수많은 적을 단 한 번의 휘두름으로 저지하는 압도적인 위용을 보여줍니다.",
-      "prefabName": "SpearMan",
+      "PrefabName": "SpearMan",
       "CreatureType": "SpearMan",
       "ObjectType": "Player",
       "AttackRange": 1,
@@ -145,7 +145,7 @@
       "Name": "TwoHandSword",
       "NameKR": "두손검사",
       "Description": "두손검사는 자신의 몸집만 한 거대한 검을 가볍게 휘두르는 완력의 소유자입니다. 속도는 느릴지언정, 그가 휘두르는 거검의 궤적은 피할 수 없는 절망을 선사합니다.",
-      "prefabName": "TwoHandSword",
+      "PrefabName": "TwoHandSword",
       "CreatureType": "TwoHandSword",
       "ObjectType": "Player",
       "AttackRange": 1,
@@ -162,7 +162,7 @@
       "Name": "Mage_M",
       "NameKR": "마법사",
       "Description": "마법사는 세상의 근원인 마나를 다스려 자연의 재해를 인위적으로 불러일으키는 자입니다. 수십 년의 연구 끝에 금지된 고위 마법인 '운석 소환'을 자유자재로 구사하게 된 그는, 적들이 전열을 가다듬기도 전에 하늘로부터 파멸을 선사합니다. 그의 지팡이가 땅을 두드리면, 전장은 곧 거대한 소멸의 장이 됩니다.",
-      "prefabName": "Mage_M",
+      "PrefabName": "Mage_M",
       "CreatureType": "Mage_M",
       "ObjectType": "Player",
       "AttackRange": 2,
@@ -179,7 +179,7 @@
       "Name": "Enchantress",
       "NameKR": "인챈트리스",
       "Description": "신비로운 별의 마력을 다루는 그녀는 전장의 조율사입니다. 그녀의 마법은 누구에게 닿을지 예측할 수 없지만, 일단 그 빛을 받은 동료는 초인적인 힘과 철벽같은 방어력을 얻게 됩니다. 불확실성조차 승리의 변수로 만드는 그녀의 존재는 동료들에게는 가장 든든한 행운의 상징입니다.",
-      "prefabName": "Enchantress",
+      "PrefabName": "Enchantress",
       "CreatureType": "Enchantress",
       "ObjectType": "Player",
       "AttackRange": 2,
@@ -196,7 +196,7 @@
       "Name": "Monster",
       "NameKR": "몬스터",
       "Description": "몬스터이다",
-      "prefabName": "Monster",
+      "PrefabName": "Monster",
       "CreatureType": "Monster",
       "ObjectType": "Monster",
       "AttackRange": 1,
@@ -213,7 +213,7 @@
       "Name": "Boss",
       "NameKR": "보스몬스터",
       "Description": "보스몬스터이다",
-      "prefabName": "Boss",
+      "PrefabName": "Boss",
       "CreatureType": "Boss",
       "ObjectType": "Boss",
       "AttackRange": 2,
@@ -230,7 +230,7 @@
       "Name": "DungeonGoldBoss",
       "NameKR": "골드석상",
       "Description": "골드석상이다",
-      "prefabName": "DungeonGoldBoss",
+      "PrefabName": "DungeonGoldBoss",
       "CreatureType": "DungeonBoss",
       "ObjectType": "DungeonBoss",
       "AttackRange": 0,
@@ -341,7 +341,7 @@
       "Name": "Cleric_Attack",
       "NameKR": "클레릭 공격",
       "Description": "클레릭의 공격",
-      "prefabName": "Cleric_EnergyBolt",
+      "PrefabName": "Cleric_EnergyBolt",
       "AttackType": "Range"
     },
     {
@@ -349,7 +349,7 @@
       "Name": "Mage_M_Attack",
       "NameKR": "남자마법사 공격",
       "Description": "남자 마법사의 공격",
-      "prefabName": "Mage_M_EnergyBolt",
+      "PrefabName": "Mage_M_EnergyBolt",
       "AttackType": "Range"
     },
     {
@@ -357,7 +357,7 @@
       "Name": "Enchantress_Attack",
       "NameKR": "여자마법사 공격",
       "Description": "여자 마법사의 공격",
-      "prefabName": "Enchantress_EnergyBolt",
+      "PrefabName": "Enchantress_EnergyBolt",
       "AttackType": "Range"
     },
     {
@@ -365,7 +365,7 @@
       "Name": "Projectile",
       "NameKR": "화살",
       "Description": "화살이다",
-      "prefabName": "Arrow",
+      "PrefabName": "Arrow",
       "AttackType": "Range"
     },
     {
@@ -373,7 +373,7 @@
       "Name": "Archer_Skill",
       "NameKR": "궁수 스킬",
       "Description": "궁수 스킬 화살이다",
-      "prefabName": "Archer_Skill_Arrow",
+      "PrefabName": "Archer_Skill_Arrow",
       "AttackType": "Range"
     },
     {
@@ -381,7 +381,7 @@
       "Name": "MeleeAttack",
       "NameKR": "근접공격",
       "Description": "근접공격이다",
-      "prefabName": "MeleeAttack",
+      "PrefabName": "MeleeAttack",
       "AttackType": "Melee"
     },
     {
@@ -389,7 +389,7 @@
       "Name": "Projectile",
       "NameKR": "보스 공격",
       "Description": "보스공격이다",
-      "prefabName": "BossAttack",
+      "PrefabName": "BossAttack",
       "AttackType": "Range"
     }
   ],
@@ -398,6 +398,7 @@
       "DataID": 30000,
       "Name": "Coin",
       "NameKR": "코인",
+      "PrefabName": "Coin",
       "Description": "게임 내 사용되는 코인이다",
       "ItemGrade": "Legendary",
       "Probability": 0,
@@ -408,6 +409,7 @@
       "DataID": 30001,
       "Name": "Dia",
       "NameKR": "다이아",
+      "PrefabName": "Dia",
       "Description": "상점아이템을 구매하는 다이아이다.",
       "ItemGrade": "Legendary",
       "Probability": 0,
@@ -418,6 +420,7 @@
       "DataID": 30002,
       "Name": "Crystal",
       "NameKR": "크리스탈",
+      "PrefabName": "Crystal",
       "Description": "크리스탈",
       "ItemGrade": "Legendary",
       "Probability": 1,
@@ -428,6 +431,7 @@
       "DataID": 30003,
       "Name": "Feather",
       "NameKR": "깃털",
+      "PrefabName": "Feather",
       "Description": "깃털",
       "ItemGrade": "UnCommon",
       "Probability": 7,
@@ -438,6 +442,7 @@
       "DataID": 30004,
       "Name": "Leather",
       "NameKR": "가죽",
+      "PrefabName": "Leather",
       "Description": "가죽",
       "ItemGrade": "UnCommon",
       "Probability": 7,
@@ -448,6 +453,7 @@
       "DataID": 30005,
       "Name": "Monster_Energy",
       "NameKR": "몬스터에너지",
+      "PrefabName": "Monster_Energy",
       "Description": "몬스터에너지",
       "ItemGrade": "Rare",
       "Probability": 3,
@@ -458,6 +464,7 @@
       "DataID": 30006,
       "Name": "Piece_Of_Scroll",
       "NameKR": "스크롤",
+      "PrefabName": "Piece_Of_Scroll",
       "Description": "스크롤",
       "ItemGrade": "Common",
       "Probability": 5,
@@ -468,6 +475,7 @@
       "DataID": 30007,
       "Name": "Piece_Of_Stone",
       "NameKR": "돌",
+      "PrefabName": "Piece_Of_Stone",
       "Description": "돌",
       "ItemGrade": "Common",
       "Probability": 5,
@@ -478,6 +486,7 @@
       "DataID": 30008,
       "Name": "Gold_Dice",
       "NameKR": "황금주사위",
+      "PrefabName": "Gold_Dice",
       "Description": "획득 골드 추가",
       "ItemGrade": "Legendary",
       "Probability": 0.2,
@@ -488,6 +497,7 @@
       "DataID": 30009,
       "Name": "Axe",
       "NameKR": "도끼",
+      "PrefabName": "Axe",
       "Description": "근접 공격시 주변적 스플래시 데미지",
       "ItemGrade": "Unique",
       "Probability": 0.7,
@@ -498,6 +508,7 @@
       "DataID": 30010,
       "Name": "GoddessTears",
       "NameKR": "여신의 눈물",
+      "PrefabName": "GoddessTears",
       "Description": "피격시 마나 회복",
       "ItemGrade": "Rare",
       "Probability": 1,
@@ -508,6 +519,7 @@
       "DataID": 30011,
       "Name": "BronzeRing",
       "NameKR": "동반지",
+      "PrefabName": "BronzeRing",
       "Description": "효과 없음",
       "ItemGrade": "Common",
       "Probability": 5,
@@ -518,6 +530,7 @@
       "DataID": 30012,
       "Name": "SilverRing",
       "NameKR": "은반지",
+      "PrefabName": "SilverRing",
       "Description": "효과 또 없음",
       "ItemGrade": "UnCommon",
       "Probability": 7,
@@ -528,6 +541,7 @@
       "DataID": 30013,
       "Name": "GoldenRing",
       "NameKR": "금반지",
+      "PrefabName": "GoldenRing",
       "Description": "효과 더 없음",
       "ItemGrade": "UnCommon",
       "Probability": 7,
@@ -1046,6 +1060,26 @@
     {
       "DataID": 69000,
       "PrefabName": "Boss_Electric"
+    },
+    {
+      "DataID": 69100,
+      "PrefabName": "Smoke"
+    },
+    {
+      "DataID": 69101,
+      "PrefabName": "CoinDirecting"
+    },
+    {
+      "DataID": 69102,
+      "PrefabName": "DamageFont"
+    },
+    {
+      "DataID": 69103,
+      "PrefabName": "SpeechBubble"
+    },
+    {
+      "DataID": 69104,
+      "PrefabName": "DropItem"
     }
   ],
   "DungeonData": [
@@ -1063,5 +1097,19 @@
     }
   ],
   "MissionData": [],
-  "QuestData": []
+  "QuestData": [],
+  "NPCData": [
+    {
+      "DataID": 100000,
+      "NPCName": "Rumi",
+      "NPCNameKR": "루미",
+      "Speech": "와! 이번 장비 정말 멋진데요?\\n오늘도 무사히 다녀오세요!/잠시 눈을 붙이고 오셔도 돼요.\\n제가 여기서 지켜보고 있을게요!/방금 얻으신 그 유물,\\n전설 속에서나 보던 건데 대단해요!/몬스터들이 무서워서 벌벌 떨고 있네요.\\n역시 모험가님이에요!/지치면 언제든 돌아오세요.\\n따뜻한 포션 한 잔 준비해둘게요!"
+    },
+    {
+      "DataID": 100001,
+      "NPCName": "Bardo",
+      "NPCNameKR": "바르도",
+      "Speech": "강해지는 데 왕도는 없지.\\n그저 묵묵히 버티는 놈이 이기는 거야./가방이 꽉 찼는지 가끔 확인해.\\n보물 흘리고 다니면 아깝잖아?/요즘 몬스터들은 예전보다 독해졌군.\\n강화는 빼먹지 않았겠지?/자고 일어났더니 이만큼이나 성장했다고?\\n세상 참 좋아졌구먼./죽지 말고 살아 돌아와라.\\n그래야 나랑 술 한잔할 거 아니냐."
+    }
+  ]
 }

@@ -5,7 +5,7 @@ using TMPro;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
-public class DropItemController : BaseController
+public class DropItemController : UIDirecting
 {
     float firingAngle = 45.0f;
     float gravity = 9.8f;
@@ -167,7 +167,7 @@ public class DropItemController : BaseController
 
             await UniTask.WaitForSeconds(0.5f);
 
-            Managers.ResourceM.Destroy(gameObject);
+            Managers.ObjectM.DeSpawn<DropItemController>(this);
         }
         catch (System.Exception e)
         {

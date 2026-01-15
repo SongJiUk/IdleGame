@@ -13,7 +13,7 @@ namespace Data
         public string Name;
         public string NameKR;
         public string Description;
-        public string prefabName;
+        public string PrefabName;
         public Define.CreatureType CreatureType;
         public Define.ObjectType ObjectType;
         public float AttackRange;
@@ -79,7 +79,7 @@ namespace Data
         public string Name;
         public string NameKR;
         public string Description;
-        public string prefabName;
+        public string PrefabName;
         public Define.AttackType AttackType;
     }
 
@@ -108,6 +108,7 @@ namespace Data
         public int DataID;
         public string Name;
         public string NameKR;
+        public string PrefabName;
         public string Description;
         public Define.ItemGrade ItemGrade;
         public float Probability;
@@ -399,5 +400,86 @@ namespace Data
             return dic;
         }
     }
+    #endregion
+
+    #region QuestData
+    [Serializable]
+    public class QuestData
+    {
+        public int DataID;
+        public int Level;
+        public string Key;
+        public int Value;
+        public int Reward;
+    }
+
+    public class QuestDataLoader : ILoader<int, QuestData>
+    {
+        public List<QuestData> dataList = new List<QuestData>();
+        public Dictionary<int, QuestData> MakeDict()
+        {
+           Dictionary<int, QuestData> dic = new Dictionary<int, QuestData>();
+
+            foreach (var data in dataList)
+            {
+                dic.Add(data.DataID, data);
+            }
+            return dic;
+        }
+        
+    }
+    #endregion
+
+    #region NPCData
+    [Serializable]
+    public class NPCData
+    {
+        public int DataID;
+        public string NPCName;
+        public string NPCNameKR;
+        public string Speech;
+
+        public List<string> SpeechList { get; private set; } = new List<string>();
+
+
+        public void ParseRawData()
+        {
+            SpeechList = ParseList(Speech);
+        }
+
+        List<string> ParseList(string _rawData)
+        {
+            List<string> result = new List<string>();
+            if (string.IsNullOrEmpty(_rawData)) return result;
+            string[] idStrings = _rawData.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string idString in idStrings)
+            {
+                result.Add(idString);
+            }
+            return result;
+        }
+    }
+
+    public class NPCDataLoader : ILoader<int, NPCData>
+    {
+        public List<NPCData> dataList = new List<NPCData>();
+        public Dictionary<int, NPCData> MakeDict()
+        {
+            Dictionary<int, NPCData> dic = new Dictionary<int, NPCData>();
+            foreach(var data in dataList)
+            {
+                data.ParseRawData();
+                dic.Add(data.DataID, data);
+            }
+
+            return dic;
+        }
+    }
+
+   
+
+   
+
     #endregion
 }

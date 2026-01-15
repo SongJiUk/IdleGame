@@ -25,6 +25,12 @@ public class UI_TitleScene : UI_Scene
     {
         get { return null; }
     }
+
+    public override Transform WorldSpeechParent
+    {
+        get { return null; }
+    }
+
     #region Enum
 
     public enum GameObjects

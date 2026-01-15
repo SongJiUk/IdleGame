@@ -17,6 +17,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     enum GameObjects
     {
         LayersObject,
+        LayerObject,
         PopupLayerObject,
         DiaObject,
         CoinObject,
@@ -237,6 +238,13 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         }
     }
 
+    public override Transform WorldSpeechParent
+    {
+        get
+        {
+            return GetSpeechLayer();
+        }
+    }
 
     #endregion
 
@@ -316,6 +324,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         }
 
         layers = GetObject(GameObjectsType, (int)GameObjects.LayersObject).GetComponent<Transform>();
+        speechLayer = GetObject(GameObjectsType, (int)GameObjects.LayerObject).GetComponent<Transform>();
         popupLayer = GetObject(GameObjectsType, (int)GameObjects.PopupLayerObject).GetComponent<Transform>();
         foreach (Buttons buttonType in Enum.GetValues(typeof(Buttons)))
         {

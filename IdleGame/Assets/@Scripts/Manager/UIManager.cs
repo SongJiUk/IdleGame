@@ -12,6 +12,9 @@ public class UIManager
 {
     public readonly Stack<UI_Base> popupStack = new();
 
+
+    public Action<bool> OnDungeonPopupState;
+
     UI_Scene sceneUI = null;
     public UI_Scene SceneUI { get { return sceneUI; } }
     public GameObject Root

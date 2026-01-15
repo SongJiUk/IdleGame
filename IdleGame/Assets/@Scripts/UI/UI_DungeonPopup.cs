@@ -46,15 +46,12 @@ public class UI_DungeonPopup : UI_Popup, ITickable
         if (!await base.Init()) return false;
 
         Managers.UpdateM.Register(this);
-
+        
         TextsType = typeof(Texts);
         ButtonsType = typeof(Buttons);
 
         BindText(TextsType);
         BindButton(ButtonsType);
-
-
-
         GetButton(ButtonsType, (int)Buttons.TreasureTroveStartButton).gameObject.BindEvent(() => OnClickDungeonStartButton(Buttons.TreasureTroveStartButton));
         GetButton(ButtonsType, (int)Buttons.GoldDungeonStartButton).gameObject.BindEvent(() => OnClickDungeonStartButton(Buttons.GoldDungeonStartButton));
 
@@ -75,6 +72,8 @@ public class UI_DungeonPopup : UI_Popup, ITickable
 
     public override void SetInfo()
     {
+        Managers.UIM.OnDungeonPopupState?.Invoke(true);
+
         for (int i = 0; i < Managers.GameM.gameData.DungeonKey.Length; i++)
         {
             if (Managers.GameM.gameData.DungeonKey[i] != 0)
@@ -140,10 +139,9 @@ public class UI_DungeonPopup : UI_Popup, ITickable
 
         Managers.UpdateM.UnRegister(this);
         await TriggerClose(this, true);
-
-
     }
 
+   
     void OnClickMinusButton(Buttons _btn)
     {
 
@@ -217,6 +215,11 @@ public class UI_DungeonPopup : UI_Popup, ITickable
                 }
                 break;
         }
+    }
+
+    private void OnDisable()
+    {
+        Managers.UIM.OnDungeonPopupState?.Invoke(false);
     }
 
     public void Tick(float _deltaTime)

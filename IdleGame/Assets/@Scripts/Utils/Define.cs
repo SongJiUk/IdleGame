@@ -84,6 +84,7 @@ public static class Define
         Coin,
         DamageFont,
         ItemRect,
+        Speech
     }
 
     public enum AttackType

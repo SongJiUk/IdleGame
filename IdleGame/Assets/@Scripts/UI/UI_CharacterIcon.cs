@@ -71,7 +71,7 @@ public class UI_CharacterIcon : UI_Base
         parent.OnValueChange += RefreshUI;
 
         GetImage(ImagesType, (int)Images.UI_CharacterIcon).sprite = Managers.ResourceM.GetAtlas(_data.CharacterGrade.ToString());
-        GetImage(ImagesType, (int)Images.CharacterImage).sprite = Managers.ResourceM.GetAtlas(_data.prefabName);
+        GetImage(ImagesType, (int)Images.CharacterImage).sprite = Managers.ResourceM.GetAtlas(_data.PrefabName);
         GetImage(ImagesType, (int)Images.CharacterImage).SetNativeSize();
 
         GetImage(ImagesType, (int)Images.PlusImage).gameObject.SetActive(false);

@@ -17,7 +17,7 @@ public class RenderGacha : MonoBehaviour
 
     public void GetHerosForEleven(int _value, Data.CreatureData _data)
     {
-        var go = Managers.ResourceM.Instantiate(_data.prefabName, _pooling:true);
+        var go = Managers.ResourceM.Instantiate(_data.PrefabName, _pooling:true);
         go.transform.position = elevenCircles[_value].position;
         go.GetComponent<PlayerController>().enabled = false;
         CharacterList.Add(go);
@@ -30,7 +30,7 @@ public class RenderGacha : MonoBehaviour
 
     public void GetHero(Data.CreatureData _data)
     {
-        var go = Managers.ResourceM.Instantiate(_data.prefabName, _pooling: true);
+        var go = Managers.ResourceM.Instantiate(_data.PrefabName, _pooling: true);
         go.transform.position = oneCircle.position;
         CharacterList.Add(go);
 

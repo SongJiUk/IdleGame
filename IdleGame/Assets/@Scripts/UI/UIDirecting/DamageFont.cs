@@ -4,8 +4,9 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 
-public class DamageFont : BaseController
+public class DamageFont : UIDirecting
 {
+    
     [SerializeField]
     TextMeshProUGUI damageText;
     [SerializeField]
@@ -14,7 +15,11 @@ public class DamageFont : BaseController
     Vector3 target;
 
 
-
+    public override bool Init()
+    {
+        if (!base.Init()) return false;
+        return true;
+    }
     public void Init(Vector3 _pos, double _dmg, bool _isMonster = false, bool _isCritical = false, bool _isSkill = false)
     {
         if ((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
@@ -82,7 +87,7 @@ public class DamageFont : BaseController
             .Join(damageText.DOFade(0, 0.3f).SetEase(Ease.InQuint))
             .OnComplete(() =>
             {
-                Managers.ResourceM.Destroy(gameObject);
+                Managers.ObjectM.DeSpawn(this);
             });
     }
 }

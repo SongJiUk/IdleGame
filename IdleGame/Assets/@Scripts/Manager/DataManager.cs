@@ -29,6 +29,8 @@ public class DataManager
     public Dictionary<int, Data.VFXData> VFXDataDic = new Dictionary<int, Data.VFXData>();
     public Dictionary<int, Data.GachaData> GachaDataDic = new Dictionary<int, Data.GachaData>();
     public Dictionary<int, Data.DungeonData> DungeonDataDic = new Dictionary<int, Data.DungeonData>();
+    public Dictionary<int, Data.QuestData> QuestDataDic = new Dictionary<int, Data.QuestData>();
+    public Dictionary<int, Data.NPCData> NPCDataDic = new Dictionary<int, Data.NPCData>();
 
     public void Init()
     {
@@ -52,6 +54,8 @@ public class DataManager
         VFXDataDic = LoadJson<Data.VFXDataLoader, int, Data.VFXData>(jsonObj, "VFXData").MakeDict();
         GachaDataDic = LoadJson<Data.GachaDataLoader, int, Data.GachaData>(jsonObj, "GachaData").MakeDict();
         DungeonDataDic = LoadJson<Data.DungeonDataLoader, int, Data.DungeonData>(jsonObj, "DungeonData").MakeDict();
+        QuestDataDic = LoadJson<Data.QuestDataLoader, int, Data.QuestData>(jsonObj, "QuestData").MakeDict();
+        NPCDataDic = LoadJson<Data.NPCDataLoader, int, Data.NPCData>(jsonObj, "NPCData").MakeDict();
     }
 
     Loader LoadJson<Loader, Tkey, TValue>(JObject _jsonObj, string _dataName) where Loader : ILoader<Tkey, TValue> where TValue : class
