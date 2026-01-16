@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class PlayerManager
 {
-
-    public double Damage;
-    public double Hp;
-
     public void ExpUp()
     {
         Managers.GameM.Exp += Utils.Datas.levelData.Exp();
-
+        Managers.GameM.UpgradeCount++;
         if (Managers.GameM.Exp >= Utils.Datas.levelData.MaxExp())
         {
             LevelUp();
@@ -56,8 +52,8 @@ public class PlayerManager
     public void LevelUp()
     {
         Managers.GameM.Level++;
-        Damage += Utils.Datas.levelData.Damage();
-        Hp += Utils.Datas.levelData.HP();
+        Managers.GameM.gameData.damage += Utils.Datas.levelData.Damage();
+        Managers.GameM.gameData.hp += Utils.Datas.levelData.HP();
         Managers.GameM.Exp = 0;
     }
 

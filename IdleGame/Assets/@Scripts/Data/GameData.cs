@@ -26,9 +26,13 @@ public class Holder
 
 public class GameData
 {
+    public double damage;
+    public double hp;
     public double gold;
     public double dia;
     public int level = 1;
+    public int upgradeCount;
+    public int questCount;
     public double exp;
     public int stage = 1;
 
@@ -42,8 +46,8 @@ public class GameData
 
     public int relicsSummonCount = 0;
     public int relicsConfirmedLegendaryCount = 0;
-    public string StartDate;
-    public string EndDate;
+    public string startDate;
+    public string endDate;
 
     public int[] DungeonKey = { 2, 2 };
     public int[] DungeonKeyAssets = { 0, 0 };

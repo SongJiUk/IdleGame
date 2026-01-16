@@ -11,6 +11,23 @@ public class GameManager
     #region 재화 이벤트
     public event Action OnGoodsChanged;
     #endregion
+    public double Damage
+    {
+        get { return gameData.damage; }
+        set
+        {
+            gameData.damage = value;
+        }
+    }
+
+    public double HP
+    {
+        get { return gameData.hp; }
+        set
+        {
+            gameData.hp = value;
+        }
+    }
 
     public double Gold
     {
@@ -40,6 +57,33 @@ public class GameManager
         }
     }
 
+    public int UpgradeCount
+    {
+        get { return gameData.upgradeCount; }
+        set { 
+            gameData.upgradeCount = value;
+            Managers.QuestM.UpdateQuest();
+        }
+    }
+
+    public int QuestCount
+    {
+        get { return gameData.questCount; }
+        set { gameData.questCount = value; }
+    }
+
+    
+    public string StartDate
+    {
+        get { return gameData.startDate; }
+        set { gameData.startDate = value; }
+    }
+    public string EndDate
+    {
+        get { return gameData.endDate; }
+        set { gameData.endDate = value; }
+    }
+
     public double Exp
     {
         get
@@ -61,6 +105,7 @@ public class GameManager
         set
         {
             gameData.stage = value;
+            Managers.QuestM.UpdateQuest();
         }
     }
 
@@ -112,6 +157,7 @@ public class GameManager
         set
         {
             gameData.heroSummonCount = value;
+            Managers.QuestM.UpdateQuest();
         }
     }
 
@@ -124,7 +170,11 @@ public class GameManager
     public int Relics_Summon_Count
     {
         get { return gameData.relicsSummonCount; }
-        set { gameData.relicsSummonCount = value; }
+        set
+        {
+            gameData.relicsSummonCount = value;
+            Managers.QuestM.UpdateQuest();
+        }
     }
 
     public int Relics_Confirmed_Legendary_Count
@@ -133,6 +183,10 @@ public class GameManager
         set { gameData.relicsConfirmedLegendaryCount = value; }
     }
 
+    public void SetDungeonClear(Define.DungeonType _type, int level)
+    {
+        gameData.DungeonClearLevel[(int)_type] = level;
+        Managers.QuestM.UpdateQuest();
+    }
 
-    
 }

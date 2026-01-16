@@ -248,6 +248,9 @@ public class MonsterController : CreatureController
     public override void Dead()
     {
         base.Dead();
+
+        if (Managers.QuestM.isGetEnemy) Managers.QuestM.MonsterIndex++;
+
         if (isBoss)
         {
             if (Managers.StageM.isDungeon)
@@ -275,8 +278,9 @@ public class MonsterController : CreatureController
         }
 
         //TODO : 이것도 바꿔야됌
-        var coinDriecting = Managers.ObjectM.Spawn<CoinDirecting>(transform.position, Utils.CoinDirectingDataID);
-        coinDriecting.Init(transform.position);
+        var GoodsDirecting = Managers.ObjectM.Spawn<GoodsDirecting>(transform.position, Utils.GoodsDirectingDataID);
+        GoodsDirecting.Init(Define.GoodsType.Gold, transform.position, Utils.Money());
+        
 
         var items = Managers.ItemM.GetDropItem();
 
@@ -295,6 +299,7 @@ public class MonsterController : CreatureController
         target = null;
         AnimatorChange(Define.CreatureState.Idle);
     }
+
     //TODO : 필요하면 사용 
     public override UniTask ReturnObject(float _time)
     {

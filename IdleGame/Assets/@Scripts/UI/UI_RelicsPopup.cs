@@ -180,7 +180,7 @@ public class UI_RelicsPopup : UI_Popup
 
         SetClickIcon(null);
         DelegateHolder.Clear();
-        Managers.relicM.Init();
+        Managers.RelicM.Init();
 
         OnValueChange?.Invoke();
         clickRelic = null;

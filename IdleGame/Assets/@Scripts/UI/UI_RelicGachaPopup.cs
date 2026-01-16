@@ -131,7 +131,7 @@ public class UI_RelicGachaPopup : UI_Popup
                 await UniTask.Delay(120);
             }
 
-            await Managers.firebaseM.WriteData();
+            await Managers.FirebaseM.WriteData();
 
             OnGachaFinished?.Invoke();
 

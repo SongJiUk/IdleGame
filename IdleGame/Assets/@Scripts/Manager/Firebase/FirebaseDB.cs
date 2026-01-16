@@ -30,16 +30,18 @@ public partial class FirebaseManager
         }
         try
         {
-            DateTime endDate = DateTime.Parse(Managers.GameM.gameData.EndDate);
-            data.EndDate = DateTime.Now.ToString();
+            if (!DateTime.TryParse(Managers.GameM.EndDate, out DateTime endDate))
+            {
+                endDate = DateTime.Now;
+            }
+
+            Managers.GameM.EndDate = DateTime.Now.ToString();
 
             if (GetDateItem(endDate, DateTime.Now))
             {
                 Managers.GameM.gameData.DungeonKey[0] = 2;
                 Managers.GameM.gameData.DungeonKey[1] = 2;
             }
-
-            string userID = currentUser.UserId;
 
             string default_json = JsonUtility.ToJson(data);
             string character_json = JsonConvert.SerializeObject(data.Character_Holder);
@@ -75,17 +77,29 @@ public partial class FirebaseManager
                 string json = dataSnap.GetRawJsonValue();
                 JsonUtility.FromJsonOverwrite(json, Managers.GameM.gameData);
             }
-
-            Managers.GameM.gameData.StartDate = DateTime.Now.ToString();
-
-            DateTime startDate = DateTime.Parse(Managers.GameM.gameData.StartDate);
-            DateTime endDate = DateTime.Parse(Managers.GameM.gameData.EndDate);
-            
-            if(GetDateItem(startDate, endDate))
+            else
             {
-                Managers.GameM.gameData.DungeonKey[0] = 2;
-                Managers.GameM.gameData.DungeonKey[1] = 2;
+                Managers.GameM.EndDate = DateTime.Now.ToString();
             }
+
+            Managers.GameM.StartDate = DateTime.Now.ToString();
+
+            if(string.IsNullOrEmpty(Managers.GameM.EndDate))
+            {
+                Managers.GameM.EndDate = DateTime.Now.ToString();
+            }
+
+            DateTime startDate = DateTime.Now;
+
+            if (DateTime.TryParse(Managers.GameM.EndDate, out DateTime endDate))
+            {
+                if (GetDateItem(startDate, endDate))
+                {
+                    Managers.GameM.gameData.DungeonKey[0] = 2;
+                    Managers.GameM.gameData.DungeonKey[1] = 2;
+                }
+            }
+                
 
             if (charSnap.Exists)
             {
@@ -124,7 +138,12 @@ public partial class FirebaseManager
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"데이터 로드 중 오류 발생: {e.Message}");
+            Debug.LogError($"데이터 로드 중 상세 오류: {e.Message}");
+
+            if (e is Firebase.FirebaseException fe)
+            {
+                Debug.LogError($"에러 코드: {fe.ErrorCode}");
+            }
         }
         finally
         {

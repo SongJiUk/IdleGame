@@ -1067,7 +1067,7 @@
     },
     {
       "DataID": 69101,
-      "PrefabName": "CoinDirecting"
+      "PrefabName": "GoodsDirecting"
     },
     {
       "DataID": 69102,
@@ -1097,7 +1097,50 @@
     }
   ],
   "MissionData": [],
-  "QuestData": [],
+  "QuestData": [
+    {
+      "Level": 0,
+      "QuestType": "Monster",
+      "Value": 5,
+      "Reward": 100
+    },
+    {
+      "Level": 1,
+      "QuestType": "Stage",
+      "Value": 5,
+      "Reward": 100
+    },
+    {
+      "Level": 2,
+      "QuestType": "Gold",
+      "Value": 1,
+      "Reward": 100
+    },
+    {
+      "Level": 3,
+      "QuestType": "Dia",
+      "Value": 1,
+      "Reward": 100
+    },
+    {
+      "Level": 4,
+      "QuestType": "Upgrade",
+      "Value": 10,
+      "Reward": 100
+    },
+    {
+      "Level": 5,
+      "QuestType": "Hero",
+      "Value": 11,
+      "Reward": 100
+    },
+    {
+      "Level": 6,
+      "QuestType": "Relic",
+      "Value": 11,
+      "Reward": 100
+    }
+  ],
   "NPCData": [
     {
       "DataID": 100000,

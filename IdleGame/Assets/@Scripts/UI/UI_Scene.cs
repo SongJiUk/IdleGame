@@ -6,13 +6,12 @@ using UnityEngine;
 public abstract class UI_Scene : UI_Base
 {
     public abstract Transform WorldFontParent { get; }
-    public abstract Transform WorldCoinParent { get; }
-    public abstract Transform WorldJewelParent { get; }
+    public abstract Transform WorldGoodsParent { get; }
     public abstract Transform WorldItemParent { get; }
     public abstract Transform WorldSpeechParent { get; }
 
     protected RectTransform coinDirectingTr;
-    protected RectTransform jewelDirectingTr;
+    protected RectTransform diaDirectingTr;
     protected Transform layers;
     protected Transform speechLayer;
     protected Transform popupLayer;
@@ -26,9 +25,9 @@ public abstract class UI_Scene : UI_Base
     {
         get { return coinDirectingTr; }
     }
-    public RectTransform JewelDirectingTr
+    public RectTransform DiaDirectingTr
     {
-        get { return jewelDirectingTr; }
+        get { return diaDirectingTr; }
     }
 
     public override async UniTask<bool> Init()

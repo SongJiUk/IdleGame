@@ -406,9 +406,8 @@ namespace Data
     [Serializable]
     public class QuestData
     {
-        public int DataID;
         public int Level;
-        public string Key;
+        public Define.QuestType QuestType;
         public int Value;
         public int Reward;
     }
@@ -422,7 +421,7 @@ namespace Data
 
             foreach (var data in dataList)
             {
-                dic.Add(data.DataID, data);
+                dic.Add(data.Level, data);
             }
             return dic;
         }

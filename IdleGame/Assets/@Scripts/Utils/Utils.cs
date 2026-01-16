@@ -26,7 +26,7 @@ using System.Linq;
 
 public static class Utils
 {
-    public const int CoinDirectingDataID = 69101;
+    public const int GoodsDirectingDataID = 69101;
     public const int DamageFontDataID = 69102;
     public const int SpeechBubbleDataID = 69103;
     public const int DropItemDataID = 69104;
@@ -544,13 +544,13 @@ public static class Utils
     public static double TimerCheck()
     {
         //TODO : 인터넷 시간으로 바꾸기
-        if (Managers.GameM.gameData.EndDate == "" || Managers.GameM.gameData.StartDate == "")
+        if (Managers.GameM.EndDate == "" || Managers.GameM.StartDate == "")
         {
             return 0.0d;
         }
 
-        DateTime startDate = DateTime.Parse(Managers.GameM.gameData.StartDate);
-        DateTime endDate = DateTime.Parse(Managers.GameM.gameData.EndDate);
+        DateTime startDate = DateTime.Parse(Managers.GameM.StartDate);
+        DateTime endDate = DateTime.Parse(Managers.GameM.EndDate);
 
         TimeSpan timer = startDate - endDate;
         double timeCount = timer.TotalSeconds;

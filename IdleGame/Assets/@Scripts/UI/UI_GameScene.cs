@@ -107,7 +107,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         UserCombatPowerText,
         QuestTitleText,
         QuestDescriptionText,
-        QueestTutorialText,
+        QuestTutorialText,
         RewardItemText,
         ExpText,
         AttackText,
@@ -208,18 +208,11 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     Button deadFrameBtn;
     #region 코인, 쥬얼리, 아이템 애니메이션 관련
     //TODO : UI_Scene에서 관리하는거임
-    public override Transform WorldCoinParent
+    public override Transform WorldGoodsParent
     {
         get
         {
-            return GetLayer((int)Define.UILayerIndex.Coin);
-        }
-    }
-    public override Transform WorldJewelParent
-    {
-        get
-        {
-            return GetLayer((int)Define.UILayerIndex.Coin);
+            return GetLayer((int)Define.UILayerIndex.Goods);
         }
     }
 
@@ -262,7 +255,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     public bool[] isCharacterReady;
     private Tween blinkTween = null;
     public float FastremainTime = 0.0f;
-    int value;
+    Define.DungeonType type;
     int dungeonDataID;
 
 
@@ -292,6 +285,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Managers.StageM.OnChangeCount += OnCheckStageMonsterCount;
         Managers.StageM.OnChangeCount += OnCheckTreasureTroveMonsterCount;
         Managers.CharacterM.OnCharacterAdd += OnRegisterCharacterEvents;
+        Managers.QuestM.OnQuestDataChanged += OnChangeQuestInfo;
 
         //TODO :여기선 mPlayer가 null값이 떠서 사용 x(나중에 메인 플레이어를 알고 있는 상태면 미리 생성해놓고 사용? 어떡할지 고민좀해보자)
         // Managers.GameM.mPlayer.OnPlayerDataUpdate += OnCheckStageMonsterCount;
@@ -312,7 +306,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
 
         coinDirectingTr = GetObject(GameObjectsType, (int)GameObjects.CoinObject).GetComponent<RectTransform>();
-        jewelDirectingTr = GetObject(GameObjectsType, (int)GameObjects.DiaObject).GetComponent<RectTransform>();
+        diaDirectingTr = GetObject(GameObjectsType, (int)GameObjects.DiaObject).GetComponent<RectTransform>();
         ItemPopupObjectRect = GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).GetComponent<RectTransform>();
         ItemPopupFrameObjectRect = GetImage(ImagesType, (int)Images.ItemPopupFrameImage).GetComponent<RectTransform>();
 
@@ -362,6 +356,16 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Time.timeScale = Managers.isFast ? 1.5f : 1.0f;
         UpdateUIState();
 
+        //TODO : 퀘스트(옮겨주기)
+        GetText(TextsType, (int)Texts.QuestTitleText).text = $"퀘스트 {Managers.GameM.gameData.questCount + 1}";
+        GetText(TextsType, (int)Texts.QuestDescriptionText).text = Managers.QuestM.Localization_Counting(Managers.QuestM.GetState());
+        GetText(TextsType, (int)Texts.QuestTutorialText).text = $"({Managers.QuestM.Counting(Managers.QuestM.GetState())} / {Managers.QuestM.Quest.Value})";
+        GetText(TextsType, (int)Texts.QuestTutorialText).color = Managers.QuestM.GetCountColor();
+        GetText(TextsType, (int)Texts.RewardItemText).text = Managers.QuestM.Quest.Reward.ToString();
+        GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(Managers.QuestM.GetReward());
+
+
+
         AllOff();
         StartSpawn();
 
@@ -387,6 +391,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Managers.GameM.OnGoodsChanged -= OnRefreshGoods;
         Managers.StageM.OnChangeCount -= OnCheckStageMonsterCount;
         Managers.StageM.OnChangeCount -= OnCheckTreasureTroveMonsterCount;
+        Managers.QuestM.OnQuestDataChanged -= OnChangeQuestInfo;
 
         if (Managers.CharacterM != null)
         {
@@ -471,6 +476,16 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
                 break;
             case Buttons.QuestButton:
+                bool isReward;
+                int rewardcount; 
+                (isReward, rewardcount) = Managers.QuestM.GetQuestButton();
+
+                if (!isReward) return;
+
+                Vector3 pos = GetButton(ButtonsType, (int)Buttons.QuestButton).transform.position;
+                var GoodsDirecting = Managers.ObjectM.Spawn<GoodsDirecting>(pos, Utils.GoodsDirectingDataID);
+                GoodsDirecting.Init(Define.GoodsType.Dia, pos, rewardcount, false);
+
                 break;
 
 
@@ -788,6 +803,17 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         }
     }
 
+    //TODO : 퀘스트
+    void OnChangeQuestInfo()
+    {
+        GetText(TextsType, (int)Texts.QuestTitleText).text = $"퀘스트 {Managers.GameM.QuestCount + 1}";
+        GetText(TextsType, (int)Texts.QuestDescriptionText).text = Managers.QuestM.Localization_Counting(Managers.QuestM.GetState());
+        GetText(TextsType, (int)Texts.QuestTutorialText).text = $"({Managers.QuestM.Counting(Managers.QuestM.GetState())} / {Managers.QuestM.Quest.Value})";
+        GetText(TextsType, (int)Texts.QuestTutorialText).color = Managers.QuestM.GetCountColor();
+        GetText(TextsType, (int)Texts.RewardItemText).text = Managers.QuestM.Quest.Reward.ToString();
+        GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(Managers.QuestM.GetReward());
+    }
+
     void OnCheckStageMonsterCount()
     {
         if (Managers.StageM.isDungeon) return;
@@ -1053,16 +1079,16 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     public void OnDungeon(int _dungeonDataID)
     {
 
-        value = 0;
+        type = Define.DungeonType.TreasureTrove;
         dungeonDataID = _dungeonDataID;
-        if (_dungeonDataID == 70000) value = 0;
-        else value = 1;
+        if (_dungeonDataID == 70000) type = Define.DungeonType.TreasureTrove;
+        else type = Define.DungeonType.GoldDungeon;
 
         OnReady();
         AllOff();
 
         GetObject(GameObjectsType, (int)GameObjects.DungeonBoardObject).SetActive(true);
-        GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject + value).SetActive(true);
+        GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject + (int)type).SetActive(true);
 
         ResetDungeonBoard();
     }
@@ -1071,7 +1097,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         var popup = await Managers.UIM.ShowPopup<UI_DungeonResultInfoPopup>();
         popup.SetInfo(dungeonDataID, true);
-        Managers.GameM.gameData.DungeonClearLevel[value]++;
+        Managers.GameM.gameData.DungeonClearLevel[(int)type]++;
+        Managers.GameM.SetDungeonClear(type, Managers.GameM.gameData.DungeonClearLevel[(int)type]);
         OnClear();
     }
 
@@ -1421,6 +1448,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     bool isLevelUpButtonPush = false;
     public void Tick(float _deltaTime)
     {
+
         if (isLevelUpButtonPush)
         {
             timer += _deltaTime;
@@ -1434,6 +1462,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         //TODO : 지울거임
         if (Input.GetKeyDown(KeyCode.G))
         {
+            Managers.GameM.gameData.DungeonKey[0]++;
+            Managers.GameM.gameData.DungeonKey[1]++;
             Managers.InventoryM.GetItem(Managers.GameM.gameData.Item_Data["Axe"].data);
             Managers.InventoryM.GetItem(Managers.GameM.gameData.Item_Data["Gold_Dice"].data);
             Managers.InventoryM.GetItem(Managers.GameM.gameData.Item_Data["GoddessTears"].data);

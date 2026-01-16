@@ -7,16 +7,12 @@ using DG.Tweening;
 
 public class UI_TitleScene : UI_Scene
 {
-    public override Transform WorldCoinParent
+    public override Transform WorldGoodsParent
     {
         get { return null; }
     }
 
     public override Transform WorldFontParent
-    {
-        get { return null; }
-    }
-    public override Transform WorldJewelParent
     {
         get { return null; }
     }
@@ -147,7 +143,8 @@ public class UI_TitleScene : UI_Scene
         Managers.DataM.Init();
         Managers.ObjectM.Init();
         Managers.AdM.Init();
-        await Managers.firebaseM.Init();
+        Managers.QuestM.Init();
+        await Managers.FirebaseM.Init();
 
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);
         GetText(TextsType, (int)Texts.DataLoadText).text = "데이터가 정상적으로 로딩되었습니다,";

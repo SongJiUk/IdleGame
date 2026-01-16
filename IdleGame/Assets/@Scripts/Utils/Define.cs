@@ -79,9 +79,15 @@ public static class Define
         TitleScene,
         GameScene
     }
+
+    public enum GoodsType
+    {
+        Gold,
+        Dia
+    }
     public enum UILayerIndex
     {
-        Coin,
+        Goods,
         DamageFont,
         ItemRect,
         Speech
@@ -159,5 +165,22 @@ public static class Define
         Consumable,
         Equipment,
         Other
+    }
+
+    public enum QuestType
+    {
+        Monster,
+        Stage,
+        Gold,
+        Dia,
+        Upgrade,
+        Hero,
+        Relic
+    }
+
+    public enum DungeonType
+    {
+        TreasureTrove,
+        GoldDungeon
     }
 }

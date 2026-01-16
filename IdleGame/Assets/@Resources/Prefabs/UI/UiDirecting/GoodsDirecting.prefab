@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 6414662033968437530}
   - component: {fileID: 6414662033968437525}
   m_Layer: 5
-  m_Name: CoinDirecting
+  m_Name: GoodsDirecting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,6 +130,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea4a8315a30d954b89cdcbc5abd1af6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  childs:
+  - {fileID: 6414662034035166102}
+  - {fileID: 6414662034412720649}
+  - {fileID: 6414662034557010834}
+  - {fileID: 6414662033665897657}
+  - {fileID: 6414662034749914125}
 --- !u!1 &6414662034035166103
 GameObject:
   m_ObjectHideFlags: 0

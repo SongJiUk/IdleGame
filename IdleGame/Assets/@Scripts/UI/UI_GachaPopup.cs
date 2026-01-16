@@ -138,7 +138,7 @@ public class UI_GachaPopup : UI_Popup
                 await UniTask.Delay(120);
             }
 
-            await Managers.firebaseM.WriteData();
+            await Managers.FirebaseM.WriteData();
             OnGachaFinished?.Invoke();
         }
         catch (Exception e) { }

@@ -235,13 +235,6 @@ public class PlayerController : CreatureController
 
         if (isUsingSkill || isDead || isAttacking) return;
 
-        //if (searchDelayTimer > 0)
-        //{
-        //    searchDelayTimer -= _deltaTime;
-        //    base.AnimatorChange(CreatureState.Idle);
-        //    return;
-        //}
-
         if (target == null || target.IsDead)
         {
             FindClosetTarget(Managers.ObjectM.mcList);
@@ -342,6 +335,8 @@ public class PlayerController : CreatureController
     {
         if (isDead) return;
         if (Managers.StageM.isDead) return;
+        if (isUsingSkill) return;
+
         base.GetDamage(_dmg, _attacker, _attacker.GetCritical());
         DelegateHolder.PlayerHit(this);
 

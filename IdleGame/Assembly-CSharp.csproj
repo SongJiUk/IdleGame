@@ -110,6 +110,7 @@
     <Compile Include="Assets\@Scripts\Skill\BuffController.cs" />
     <Compile Include="Assets\@Scripts\Manager\PlayerManager.cs" />
     <Compile Include="Assets\@Scripts\Manager\GoogleSheetManager.cs" />
+    <Compile Include="Assets\@Scripts\Controllers\DungeonNPCController.cs" />
     <Compile Include="Assets\@Scripts\Skill\Buffs\AttackBuff.cs" />
     <Compile Include="Assets\@Scripts\Utils\DelegateHolder.cs" />
     <Compile Include="Assets\@Scripts\Controllers\ObjectController.cs" />
@@ -123,14 +124,16 @@
     <Compile Include="Assets\@Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\SpearMan_Skill.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_RelicInfoPopup.cs" />
-    <Compile Include="Assets\@Scripts\UI\UIDirecting\CoinDirecting.cs" />
+    <Compile Include="Assets\@Scripts\UI\UIDirecting\GoodsDirecting.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_HeroStatPopup.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Toast.cs" />
+    <Compile Include="Assets\@Scripts\UI\UIDirecting\UIDirecting.cs" />
     <Compile Include="Assets\@Scripts\Controllers\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Scene.cs" />
     <Compile Include="Assets\@Scripts\Skill\DamageEffect.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign\LevelDesignEditor.cs" />
     <Compile Include="Assets\@Scripts\Manager\ADManager.cs" />
+    <Compile Include="Assets\@Scripts\Manager\QuestManager.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_GachaListPopup.cs" />
     <Compile Include="Assets\@Scripts\Skill\Buffs\SpinAttackBuff.cs" />
     <Compile Include="Assets\@Scripts\Manager\ObjectManager.cs" />
@@ -178,8 +181,6 @@
     <Compile Include="Assets\@Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_RelicGachaPopup.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign\LevelDesign.cs" />
-    <Compile Include="Assets\@Scripts\Controllers\DungeonNPCController.cs" />
-    <Compile Include="Assets\@Scripts\UI\UIDirecting\UIDirecting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
