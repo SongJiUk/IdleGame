@@ -5,6 +5,19 @@ using UnityEngine;
 using Data;
 using Newtonsoft.Json;
 
+
+public class Percentage
+{
+    public Define.Grade grade;
+    int min, max;
+}
+
+public class SmeltHolder
+{
+    public Define.Status_Holder holder;
+    public float value;
+}
+
 public class CharacterHolder
 {
     public Data.CreatureData data;
@@ -33,6 +46,7 @@ public class GameData
     public int level = 1;
     public int upgradeCount;
     public int questCount;
+    public int questLevel;
     public double exp;
     public int stage = 1;
 
@@ -58,7 +72,11 @@ public class GameData
 
     public Dictionary<string, ItemHolder> Item_Data = new Dictionary<string, ItemHolder>();
     public Dictionary<string, Holder> Item_Holder = new Dictionary<string, Holder>();
+
+    public List<SmeltHolder> Smelts = new List<SmeltHolder>();
     public Data.ItemData[] Items = new Data.ItemData[7];
+
+
 
 
     public void Init()

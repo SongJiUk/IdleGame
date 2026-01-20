@@ -3822,7 +3822,7 @@ GameObject:
   - component: {fileID: 2486953806534021724}
   - component: {fileID: 2486953806534021727}
   m_Layer: 5
-  m_Name: EnforceButtonText
+  m_Name: SmeltingButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5077,7 +5077,7 @@ GameObject:
   - component: {fileID: 2486953806845109492}
   - component: {fileID: 4209698958484679367}
   m_Layer: 5
-  m_Name: EnforceButton
+  m_Name: SmeltingButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13138,7 +13138,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &2486953808480324187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31550,7 +31550,7 @@ GameObject:
   - component: {fileID: 2484789414981445900}
   - component: {fileID: 2085915802856073029}
   m_Layer: 5
-  m_Name: EnforceButtonCloseObject
+  m_Name: SmeltingButtonCloseObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

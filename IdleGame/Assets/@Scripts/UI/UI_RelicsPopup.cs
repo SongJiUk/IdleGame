@@ -204,7 +204,7 @@ public class UI_RelicsPopup : UI_Popup
 
     async void OnClickCloseButton()
     {
-        await TriggerClose(this, true);
+        await TriggerClose(this, false);
 
         ClearIcons();
     }

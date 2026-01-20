@@ -66,7 +66,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         HeroButtonCloseObject,
         RelicsButtonCloseObject,
         DungeonButtonCloseObject,
-        EnforceButtonCloseObject,
+        SmeltingButtonCloseObject,
         ShopButtonCloseObject,
 
     }
@@ -81,7 +81,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         HeroButton,
         RelicsButton,
         DungeonButton,
-        EnforceButton,
+        SmeltingButton,
         ShopButton,
         MainSkillButton,
         LevelUpButton,
@@ -202,7 +202,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     Button heroBtn;
     Button relicsBtn;
     Button dungeonBtn;
-    Button enforceBtn;
+    Button smeltingBtn;
     Button shopBtn;
     Button levelUpBtn;
     Button deadFrameBtn;
@@ -264,7 +264,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     private UI_HeroPopup ui_heroPopup;
     private UI_RelicsPopup ui_relicsPopup;
     private UI_DungeonPopup ui_dungeonPopup;
-    //private UI_EnforcePopup ui_enforcePopup;
+    private UI_SmeltingPopup ui_smeltingPopup;
     private UI_ShopPopup ui_shopPopup;
     private UI_Popup currentBottomPopup;
     #endregion
@@ -348,7 +348,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         heroBtn = GetButton(ButtonsType, (int)Buttons.HeroButton);
         relicsBtn = GetButton(ButtonsType, (int)Buttons.RelicsButton);
         dungeonBtn = GetButton(ButtonsType, (int)Buttons.DungeonButton);
-        enforceBtn = GetButton(ButtonsType, (int)Buttons.EnforceButton);
+        smeltingBtn = GetButton(ButtonsType, (int)Buttons.SmeltingButton);
         shopBtn = GetButton(ButtonsType, (int)Buttons.ShopButton);
         levelUpBtn = GetButton(ButtonsType, (int)Buttons.LevelUpButton);
 
@@ -361,8 +361,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetText(TextsType, (int)Texts.QuestDescriptionText).text = Managers.QuestM.Localization_Counting(Managers.QuestM.GetState());
         GetText(TextsType, (int)Texts.QuestTutorialText).text = $"({Managers.QuestM.Counting(Managers.QuestM.GetState())} / {Managers.QuestM.Quest.Value})";
         GetText(TextsType, (int)Texts.QuestTutorialText).color = Managers.QuestM.GetCountColor();
-        GetText(TextsType, (int)Texts.RewardItemText).text = Managers.QuestM.Quest.Reward.ToString();
-        GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(Managers.QuestM.GetReward());
+        GetText(TextsType, (int)Texts.RewardItemText).text = Managers.QuestM.GetReward().ToString();
+        GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(Managers.QuestM.isGetReward());
 
 
 
@@ -477,7 +477,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 break;
             case Buttons.QuestButton:
                 bool isReward;
-                int rewardcount; 
+                int rewardcount;
                 (isReward, rewardcount) = Managers.QuestM.GetQuestButton();
 
                 if (!isReward) return;
@@ -571,7 +571,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                     {
                         ScaleDownSelectButton();
                         GetObject(GameObjectsType, (int)GameObjects.RelicsButtonCloseObject).SetActive(false);
-                        relics.ClosePopup(true).Forget();
+                        relics.ClosePopup(false).Forget();
                     }
                     return;
                 }
@@ -580,7 +580,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 GetObject(GameObjectsType, (int)GameObjects.RelicsButtonCloseObject).SetActive(true);
                 ScaleUpSelectButton();
 
-                UI_RelicsPopup relicPopup = await Managers.UIM.ShowPopup<UI_RelicsPopup>(_isFade: true, _parent: GetPopUpLayer());
+                UI_RelicsPopup relicPopup = await Managers.UIM.ShowPopup<UI_RelicsPopup>(_isFade: false, _parent: GetPopUpLayer());
                 currentBottomPopup = relicPopup;
                 relicPopup.OnThisPopupClosed = () =>
                 {
@@ -625,8 +625,35 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
                 break;
 
-            case Buttons.EnforceButton:
-                clickedButton = enforceBtn;
+            case Buttons.SmeltingButton:
+                if (selectedButton != smeltingBtn && currentBottomPopup != null)
+                {
+                    currentBottomPopup.ClosePopup(false).Forget();
+                }
+                if (selectedButton == smeltingBtn && currentBottomPopup != null)
+                {
+                    if (currentBottomPopup is UI_SmeltingPopup smelting)
+                    {
+                        ScaleDownSelectButton();
+                        GetObject(GameObjectsType, (int)GameObjects.SmeltingButtonCloseObject).SetActive(false);
+                        smelting.ClosePopup(false).Forget();
+                    }
+                    return;
+                }
+
+                clickedButton = smeltingBtn;
+                GetObject(GameObjectsType, (int)GameObjects.SmeltingButtonCloseObject).SetActive(true);
+                ScaleUpSelectButton();
+
+                UI_SmeltingPopup smeltingPopup = await Managers.UIM.ShowPopup<UI_SmeltingPopup>(_isFade: false, _parent: GetPopUpLayer());
+                currentBottomPopup = smeltingPopup;
+                smeltingPopup.OnThisPopupClosed = () =>
+                {
+                    ScaleDownSelectButton();
+                    GetObject(GameObjectsType, (int)GameObjects.SmeltingButtonCloseObject).SetActive(false);
+                    if (currentBottomPopup == smeltingPopup) currentBottomPopup = null;
+                    smeltingPopup = null;
+                };
 
                 break;
 
@@ -809,10 +836,10 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         GetText(TextsType, (int)Texts.QuestTitleText).text = $"퀘스트 {Managers.GameM.QuestCount + 1}";
         GetText(TextsType, (int)Texts.QuestDescriptionText).text = Managers.QuestM.Localization_Counting(Managers.QuestM.GetState());
-        GetText(TextsType, (int)Texts.QuestTutorialText).text = $"({Managers.QuestM.Counting(Managers.QuestM.GetState())} / {Managers.QuestM.Quest.Value})";
+        GetText(TextsType, (int)Texts.QuestTutorialText).text = $"({Managers.QuestM.Counting(Managers.QuestM.GetState())} / {Managers.QuestM.GetQuestValue()})";
         GetText(TextsType, (int)Texts.QuestTutorialText).color = Managers.QuestM.GetCountColor();
-        GetText(TextsType, (int)Texts.RewardItemText).text = Managers.QuestM.Quest.Reward.ToString();
-        GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(Managers.QuestM.GetReward());
+        GetText(TextsType, (int)Texts.RewardItemText).text = Managers.QuestM.GetReward().ToString();
+        GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(Managers.QuestM.isGetReward());
     }
 
     void OnCheckStageMonsterCount()
@@ -833,7 +860,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetText(TextsType, (int)Texts.StageMonsterCountText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
     }
 
-    //NOTE : 던전1
     void OnCheckTreasureTroveMonsterCount()
     {
         if (Managers.StageM.isDungeon)

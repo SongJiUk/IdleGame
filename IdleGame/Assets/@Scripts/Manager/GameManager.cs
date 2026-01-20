@@ -60,7 +60,8 @@ public class GameManager
     public int UpgradeCount
     {
         get { return gameData.upgradeCount; }
-        set { 
+        set
+        {
             gameData.upgradeCount = value;
             Managers.QuestM.UpdateQuest();
         }
@@ -71,8 +72,13 @@ public class GameManager
         get { return gameData.questCount; }
         set { gameData.questCount = value; }
     }
+    public int QuestLevel
+    {
+        get { return gameData.questLevel; }
+        set { gameData.questLevel = value; }
+    }
 
-    
+
     public string StartDate
     {
         get { return gameData.startDate; }

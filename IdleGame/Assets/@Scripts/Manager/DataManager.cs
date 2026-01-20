@@ -31,6 +31,7 @@ public class DataManager
     public Dictionary<int, Data.DungeonData> DungeonDataDic = new Dictionary<int, Data.DungeonData>();
     public Dictionary<int, Data.QuestData> QuestDataDic = new Dictionary<int, Data.QuestData>();
     public Dictionary<int, Data.NPCData> NPCDataDic = new Dictionary<int, Data.NPCData>();
+    public Dictionary<int, Data.SmeltData> SmeltDataDic = new Dictionary<int, Data.SmeltData>();
 
     public void Init()
     {
@@ -56,6 +57,7 @@ public class DataManager
         DungeonDataDic = LoadJson<Data.DungeonDataLoader, int, Data.DungeonData>(jsonObj, "DungeonData").MakeDict();
         QuestDataDic = LoadJson<Data.QuestDataLoader, int, Data.QuestData>(jsonObj, "QuestData").MakeDict();
         NPCDataDic = LoadJson<Data.NPCDataLoader, int, Data.NPCData>(jsonObj, "NPCData").MakeDict();
+        SmeltDataDic = LoadJson<Data.SmeltDataLoader, int, Data.SmeltData>(jsonObj, "SmeltData").MakeDict();
     }
 
     Loader LoadJson<Loader, Tkey, TValue>(JObject _jsonObj, string _dataName) where Loader : ILoader<Tkey, TValue> where TValue : class

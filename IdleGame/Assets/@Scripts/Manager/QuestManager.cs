@@ -18,12 +18,13 @@ public class QuestManager
         }
     }
 
-    
+
     Data.QuestData quest;
     public Data.QuestData Quest
     {
         get { return quest; }
     }
+
 
     Define.QuestType questType;
     public bool isGetEnemy = false;
@@ -36,7 +37,7 @@ public class QuestManager
     }
     public void UpdateQuest()
     {
-        GetReward();
+        isGetReward();
         OnQuestDataChanged?.Invoke();
     }
     public int Counting(Define.QuestType _questType)
@@ -53,15 +54,22 @@ public class QuestManager
         }
         return 0;
     }
-    
+
     public void NextQuest()
     {
         monsterIndex = 0;
+        int questCount = Managers.GameM.QuestCount % Managers.DataM.QuestDataDic.Count;
+        int questAllClearCount = Managers.GameM.QuestCount / Managers.DataM.QuestDataDic.Count;
+        if (questAllClearCount != Managers.GameM.QuestLevel)
+        {
+            Managers.GameM.QuestLevel++;
+        }
 
-        quest = Managers.DataM.QuestDataDic[Managers.GameM.QuestCount];
+
+        quest = Managers.DataM.QuestDataDic[questCount];
         questType = quest.QuestType;
 
-        if(questType == Define.QuestType.Monster)
+        if (questType == Define.QuestType.Monster)
         {
             isGetEnemy = true;
         }
@@ -70,15 +78,15 @@ public class QuestManager
 
     public Color GetCountColor()
     {
-        Color color = Counting(questType) >= quest.Value ? Color.green : Color.red;
+        Color color = Counting(questType) >= quest.Value * Managers.GameM.QuestLevel ? Color.green : Color.red;
 
-        
+
         return color;
     }
 
-    public bool GetReward()
+    public bool isGetReward()
     {
-        isReward = Counting(questType) >= quest.Value ? true : false;
+        isReward = Counting(questType) >= quest.Value * Managers.GameM.QuestLevel;
 
         return isReward;
     }
@@ -100,7 +108,9 @@ public class QuestManager
 
     public Define.QuestType GetState()
     {
-        quest = Managers.DataM.QuestDataDic[Managers.GameM.QuestCount];
+        //TODO ; 여기서 계속 높여가면 될거같음(레벨로 높이면 이거 스테이지나 뽑기 이런거 답 없기때문에, 그냥 데이터로 몇배 해줄지 정해놔야할거같음)
+        int questCount = Managers.GameM.QuestCount % Managers.DataM.QuestDataDic.Count;
+        quest = Managers.DataM.QuestDataDic[questCount];
         questType = quest.QuestType;
 
         return questType;
@@ -109,12 +119,23 @@ public class QuestManager
     public (bool, int) GetQuestButton()
     {
         if (!isReward) return (false, 0);
-        int count = quest.Reward;
+        int count = quest.Reward * Managers.GameM.QuestLevel / 2;
 
         Managers.GameM.QuestCount++;
         NextQuest();
 
-        return (true,count);
+        return (true, count);
 
     }
-}   
+
+    public int GetQuestValue()
+    {
+        return quest.Value * Managers.GameM.QuestLevel;
+    }
+
+    public int GetReward()
+    {
+        return quest.Reward * Managers.GameM.QuestLevel / 2;
+    }
+}
+

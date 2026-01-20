@@ -417,7 +417,7 @@ namespace Data
         public List<QuestData> dataList = new List<QuestData>();
         public Dictionary<int, QuestData> MakeDict()
         {
-           Dictionary<int, QuestData> dic = new Dictionary<int, QuestData>();
+            Dictionary<int, QuestData> dic = new Dictionary<int, QuestData>();
 
             foreach (var data in dataList)
             {
@@ -425,7 +425,7 @@ namespace Data
             }
             return dic;
         }
-        
+
     }
     #endregion
 
@@ -466,7 +466,7 @@ namespace Data
         public Dictionary<int, NPCData> MakeDict()
         {
             Dictionary<int, NPCData> dic = new Dictionary<int, NPCData>();
-            foreach(var data in dataList)
+            foreach (var data in dataList)
             {
                 data.ParseRawData();
                 dic.Add(data.DataID, data);
@@ -475,10 +475,32 @@ namespace Data
             return dic;
         }
     }
+    #endregion
 
-   
+    #region SmeltData
+    [Serializable]
+    public class SmeltData
+    {
+        public int DataID;
+        public string Name;
+        public Define.Grade Grade;
+        public int Min;
+        public int Max;
+    }
 
-   
+    public class SmeltDataLoader : ILoader<int, SmeltData>
+    {
+        public List<SmeltData> dataList = new List<SmeltData>();
 
+        public Dictionary<int, SmeltData> MakeDict()
+        {
+            Dictionary<int, SmeltData> dic = new Dictionary<int, SmeltData>();
+            foreach (var data in dataList)
+            {
+                dic.Add(data.DataID, data);
+            }
+            return dic;
+        }
+    }
     #endregion
 }

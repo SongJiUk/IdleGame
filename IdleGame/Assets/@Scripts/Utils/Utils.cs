@@ -21,6 +21,7 @@ using System.Linq;
 80000 ~ MissionData
 90000 ~ QuestData
 100000 ~ NPCData
+110000 ~ SmeltData
 */
 
 
@@ -476,7 +477,7 @@ public static class Utils
 
         if (_currencyType == CurrencyType.Default)
         {
-            
+
             if (quotient < CurrencyUnits.Length)
                 unitString = CurrencyUnits[quotient];
             else
