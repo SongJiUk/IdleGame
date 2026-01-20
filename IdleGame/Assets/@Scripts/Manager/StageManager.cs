@@ -59,6 +59,7 @@ public class StageManager
             {
                 case StageState.Ready:
                     maxCount = Managers.DataM.StageDataDic[Managers.GameM.Stage].StageClearMaxCount;
+                    count = 0;
                     readyEvent?.Invoke();
                     AsyncAction(() => StateChange(StageState.Play), 1f, token).Forget();
 
@@ -86,7 +87,6 @@ public class StageManager
                     break;
 
                 case StageState.Dungeon:
-                    Debug.Log("던전 진입");
                     isDungeon = true;
                     dungeonEvent?.Invoke(_dungeonDataID);
                     count = 0;
@@ -94,7 +94,6 @@ public class StageManager
                     break;
 
                 case StageState.DungeonClear:
-                    Debug.Log("던전 클리어");
                     isDungeon = false;
                     count = 0;
                     dungeonClearEvent?.Invoke();
@@ -102,7 +101,6 @@ public class StageManager
 
                 case StageState.DungeonFail:
                     isDungeon = false;
-                    Debug.Log("던전 실패");
                     count = 0;
                     dungeonFailEvent?.Invoke();
                     break;

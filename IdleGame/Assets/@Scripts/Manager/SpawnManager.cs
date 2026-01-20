@@ -21,8 +21,8 @@ public class SpawnManager : MonoBehaviour, ITickable
 
     public bool isStop { get; set; } = false;
     MonsterController boss = null;
-    public List<PlayerController> players;
-    List<MonsterController> monsters;
+    //public List<PlayerController> players = new List<PlayerController>();
+    //List<MonsterController> monsters;
     UI_GameScene scene = null;
     int dungeonDataID;
     bool isDelay = true;
@@ -54,6 +54,8 @@ public class SpawnManager : MonoBehaviour, ITickable
     {
         spawnMaxCount = Managers.DataM.StageDataDic[Managers.GameM.Stage].SpawnMaxCount;
         spawnInterval = Managers.DataM.StageDataDic[Managers.GameM.Stage].SpawnTimer;
+        StopSpawn();
+        DeSpawnMonster();
         if (scene != null) scene.CheckTexts();
     }
 
@@ -65,11 +67,7 @@ public class SpawnManager : MonoBehaviour, ITickable
     public void OnBoss()
     {
         StopSpawn();
-
-        //보스전 잔몹들 삭제
         DeSpawnMonster();
-
-
         BossSet().Forget();
     }
 
@@ -117,7 +115,7 @@ public class SpawnManager : MonoBehaviour, ITickable
         if (dungeonDataID == 70000)
         {
             spawnMaxCount = 30;
-            spawnInterval = 3f;
+            spawnInterval = 30f;
         }
         else if (dungeonDataID == 70001)
         {
@@ -157,8 +155,8 @@ public class SpawnManager : MonoBehaviour, ITickable
         {
             Managers.ObjectM.DeSpawn(Managers.ObjectM.pcList[i]);
         }
+        Managers.CharacterM.ClearAllPlayers();
 
-        players.Clear();
         Managers.ObjectM.mcList.Clear();
 
         await UniTask.WaitForSeconds(1.0f);
@@ -193,25 +191,15 @@ public class SpawnManager : MonoBehaviour, ITickable
 
     void SpawnBoss(bool _isDungeon)
     {
-        if (_isDungeon)
-        {
-
-            boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero, 12000);
-            if (scene == null) scene = Managers.UIM.SceneUI as UI_GameScene;
-            boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
-        }
-        else
-        {
-            boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero, 11000);
-            if (scene == null) scene = Managers.UIM.SceneUI as UI_GameScene;
-            boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
-        }
+        int bossID = _isDungeon ? 12000 : 11000;
+        boss = Managers.ObjectM.Spawn<MonsterController>(Vector3.zero, bossID);
+        if (scene == null) scene = Managers.UIM.SceneUI as UI_GameScene;
+        boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
 
         Vector3 Pos = boss.transform.position;
-        foreach (var player in players)
-        {
-            if (player.IsDead) continue;
 
+        foreach (var player in Managers.CharacterM.AlivePlayers)
+        {
             if (Vector3.Distance(Pos, player.transform.position) <= 2.0f)
             {
                 player.transform.LookAt(Pos);
@@ -220,6 +208,14 @@ public class SpawnManager : MonoBehaviour, ITickable
         }
     }
 
+
+    void DeSpawnPlayer()
+    {
+        for (int i = Managers.ObjectM.pcList.Count - 1; i >= 0; i--)
+        {
+            Managers.ObjectM.DeSpawn(Managers.ObjectM.pcList[i]);
+        }
+    }
     void DeSpawnMonster()
     {
         var monsters = Managers.ObjectM.mcList.ToList();

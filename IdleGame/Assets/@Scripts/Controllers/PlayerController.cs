@@ -119,41 +119,80 @@ public class PlayerController : CreatureController
 
     public override void Projectile()
     {
-        if (!isAttacking || currentTarget == null || currentTarget.IsDead)
+        Debug.Log($"<color=cyan>[Projectile Step 1] 이벤트 호출됨 - {gameObject.name}</color>");
+        isAttacking = true;
+
+        if (currentTarget == null || currentTarget.IsDead)
         {
+            FindClosetTarget(Managers.ObjectM.mcList);
+            currentTarget = target;
+        }
+       
+        if ( currentTarget == null)
+        {
+            Debug.LogWarning($"[Projectile Step 1-Error] 주변에 타겟이 없음");
             StopAttack();
             return;
         }
-        Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
-        GetMp(30);
+        if (DATA == null) { Debug.LogError("DATA가 Null입니다!"); return; }
+
+        if (DATA.ProjectileDataID == 0)
+        {
+            Debug.LogError($"{gameObject.name}의 Range ProjectileDataID가 0입니다!");
+        }
+        Debug.Log($"[Projectile Step 2] 발사 시도 - ID: {DATA.ProjectileDataID}, 타겟: {currentTarget.name}");
+        transform.LookAt(currentTarget.transform);
+        var go = Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, currentTarget);
+
+        if (go != null)
+        {
+            Debug.Log("<color=white>[Projectile Step 3-Success] 원거리 투사체 생성 완료!</color>");
+            GetMp(30);
+        }
 
     }
 
     public override void Attack()
     {
-        if (!isAttacking) return;
+        // 지점 1: 이벤트 호출 확인
+        Debug.Log($"[Step 1] Attack 이벤트 발생 - {gameObject.name}");
+        isAttacking = true;
 
         if (currentTarget == null || currentTarget.IsDead)
         {
+            FindClosetTarget(Managers.ObjectM.mcList);
+            currentTarget = target;
+        }
+
+        if (currentTarget == null)
+        {
+            Debug.LogWarning("[Step 1-Error] 타겟 찾기 실패");
             StopAttack();
             return;
         }
 
-        MonsterController monsterTarget = target as MonsterController;
-        if (monsterTarget == null) return;
+        // 지점 2: 데이터 확인
+        if (DATA == null) { Debug.LogError("DATA가 Null입니다!"); return; }
+
+        // 지점 3: 스폰 직전
+        Debug.Log($"[Step 2] 스폰 시도 - ID: {DATA.ProjectileDataID}, Target: {currentTarget.name}");
 
 
+        Debug.Log("<color=yellow>[Step 3-Success] 공격 오브젝트 생성 완료!</color>");
 
         if (trails != null)
         {
             foreach (var trail in trails) trail.SetActive(true);
         }
+        var go = Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, DATA.ProjectileDataID, this, currentTarget);
 
-        Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, DATA.ProjectileDataID, this, monsterTarget);
-        DelegateHolder.PlayerAttack(this, monsterTarget);
+        if (go != null)
+        {
+            DelegateHolder.PlayerAttack(this, currentTarget);
+            GetMp(5);
+        }
+
         TrailDisable().Forget();
-
-        GetMp(5);
     }
 
     private void StopAttack()
@@ -173,6 +212,12 @@ public class PlayerController : CreatureController
                 trails[i].SetActive(false);
             }
         }
+    }
+
+    void OnReady()
+    {
+        base.AnimatorChange(CreatureState.Idle);
+        target = null;
     }
 
     private void OnPlay(Define.StageState _state)
@@ -271,6 +316,7 @@ public class PlayerController : CreatureController
 
     void ConnectEvent()
     {
+        Managers.StageM.readyEvent += OnReady;
         Managers.StageM.playEvent += OnPlay;
         Managers.StageM.bossEvent += OnBoss;
         Managers.StageM.clearEvent += OnClear;
@@ -281,6 +327,7 @@ public class PlayerController : CreatureController
 
     void UnConnectEvent()
     {
+        Managers.StageM.readyEvent -= OnReady;
         Managers.StageM.playEvent -= OnPlay;
         Managers.StageM.bossEvent -= OnBoss;
         Managers.StageM.clearEvent -= OnClear;
@@ -311,12 +358,13 @@ public class PlayerController : CreatureController
 
     void UsePlayerSkill()
     {
+        isAttacking = false;
         if (skillController.UseSkill(_target: target))
         {
             mp = 0;
             isUsingSkill = true;
-            isAttacking = false;
 
+            HandleSkillEnd().Forget();
             OnPlayerDataUpdate?.Invoke(this);
         }
         else
@@ -325,6 +373,21 @@ public class PlayerController : CreatureController
             target = null;
             AnimatorChange(CreatureState.Idle);
         }
+    }
+
+    private async UniTaskVoid HandleSkillEnd()
+    {
+        float duration = GetCurrentPlayingClipDuration(animator);
+        if (duration <= 0) duration = 2f; 
+
+        await UniTask.Delay(TimeSpan.FromSeconds(duration));
+
+        isUsingSkill = false;
+        isAttacking = false;
+
+        AnimatorChange(CreatureState.Idle);
+
+        Debug.Log($"[Skill] {gameObject.name} 스킬 종료 및 상태 복구 완료");
     }
 
     public void SkillEnd()
@@ -353,8 +416,7 @@ public class PlayerController : CreatureController
         base.Dead();
         isUsingSkill = false;
         AnimatorChange(CreatureState.Dead);
-        Managers.SpawnM.players.Remove(this);
-        if (Managers.SpawnM.players.Count <= 0)
+        if (Managers.CharacterM.AlivePlayers.Count <= 0)
         {
             if (Managers.StageM.isDungeon) Managers.StageM.StateChange(StageState.DungeonFail);
             else Managers.StageM.StateChange(StageState.Dead);

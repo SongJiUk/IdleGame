@@ -181,6 +181,7 @@ public class UI_HeroPopup : UI_Popup
             Managers.RenderM.renderCharacter.ChangeCharacter();
             OnValueChange?.Invoke();
             clickCharacter = null;
+            Managers.StageM.StateChange(Define.StageState.Ready);
         }
         else
         {
@@ -199,7 +200,10 @@ public class UI_HeroPopup : UI_Popup
             Managers.RenderM.renderCharacter.InitCharacter();
             OnValueChange?.Invoke();
             clickCharacter = null;
+            Managers.StageM.StateChange(Define.StageState.Ready);
         }
+
+        
     }
 
 

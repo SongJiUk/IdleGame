@@ -8,15 +8,23 @@ public class PlayerManager
     {
         Managers.GameM.Exp += Utils.Datas.levelData.Exp();
         Managers.GameM.UpgradeCount++;
+        Managers.GameM.gameData.damage += Utils.Datas.levelData.Damage();
+        Managers.GameM.gameData.hp += Utils.Datas.levelData.HP();
+
         if (Managers.GameM.Exp >= Utils.Datas.levelData.MaxExp())
         {
             LevelUp();
         }
 
-        for (int i = 0; i < Managers.SpawnM.players.Count; i++) Managers.SpawnM.players[i].InitStat();
+        for (int i = 0; i < Managers.CharacterM.players.Length; i++)
+        {
+            if (Managers.CharacterM.players[i] == null) continue;
+
+            Managers.CharacterM.players[i].InitStat();
+        }
     }
 
-    public float ExpPercent()
+        public float ExpPercent()
     {
         float exp = (float)Utils.Datas.levelData.MaxExp();
         double myExp = Managers.GameM.Exp;
@@ -52,8 +60,6 @@ public class PlayerManager
     public void LevelUp()
     {
         Managers.GameM.Level++;
-        Managers.GameM.gameData.damage += Utils.Datas.levelData.Damage();
-        Managers.GameM.gameData.hp += Utils.Datas.levelData.HP();
         Managers.GameM.Exp = 0;
     }
 

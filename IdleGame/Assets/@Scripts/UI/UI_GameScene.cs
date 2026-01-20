@@ -616,6 +616,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 currentBottomPopup = dungeonPopup;
                 dungeonPopup.OnThisPopupClosed = () =>
                 {
+                    ScaleDownSelectButton();
                     GetObject(GameObjectsType, (int)GameObjects.DungeonButtonCloseObject).SetActive(false);
                     if (currentBottomPopup == dungeonPopup) currentBottomPopup = null;
                     dungeonPopup = null;
@@ -960,15 +961,15 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     public void CheckCharactersState()
     {
         int index = 1;
-        for (int i = 1; i < Managers.CharacterM.Characters.Length; i++)
+        for (int i = 0; i < Managers.CharacterM.Characters.Length - 1; i++)
         {
             //TODO : 메인캐릭터가 0이기 떄문에, -1
             if (Managers.CharacterM.Characters[i] != null)
             {
-                GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + (i - 1)).gameObject.SetActive(false);
-                GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).gameObject.SetActive(true);
-                GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).sprite = Managers.ResourceM.GetAtlas(Managers.CharacterM.Characters[i].data.Name);
-                GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).SetNativeSize();
+                GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + i).gameObject.SetActive(false);
+                GetImage(ImagesType, (int)Images.Character1_Icon + i).gameObject.SetActive(true);
+                GetImage(ImagesType, (int)Images.Character1_Icon + i).sprite = Managers.ResourceM.GetAtlas(Managers.CharacterM.Characters[i].data.Name);
+                GetImage(ImagesType, (int)Images.Character1_Icon + i).SetNativeSize();
                 //GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).rectTransform.localScale = GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).rectTransform.localScale / 6;
 
 
@@ -976,40 +977,41 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 if (Managers.CharacterM.players[i] != null)
                 {
                     //만약 생성되어있다면.
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + (i - 1)).gameObject.SetActive(false);
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + (i - 1)).gameObject.SetActive(true);
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + (i - 1)).gameObject.SetActive(true);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i).gameObject.SetActive(false);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + i).gameObject.SetActive(true);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i).gameObject.SetActive(true);
                 }
                 else
                 {
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + (i - 1)).gameObject.SetActive(true);
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + (i - 1)).gameObject.SetActive(false);
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + (i - 1)).gameObject.SetActive(false);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i).gameObject.SetActive(true);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + i).gameObject.SetActive(false);
+                    GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i).gameObject.SetActive(false);
                 }
 
-                GetObject(GameObjectsType, (int)GameObjects.Character1_Object + (i - 1)).transform.SetSiblingIndex(index);
+                GetObject(GameObjectsType, (int)GameObjects.Character1_Object + i).transform.SetSiblingIndex(index);
                 index++;
             }
             //TODO : 이거 나중에 오류나면 Icon으로 뺀것빼문임. 
             else
             {
-                GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + (i - 1)).gameObject.SetActive(true);
-                GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).gameObject.SetActive(false);
-                GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).sprite = null;
-                GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + (i - 1)).gameObject.SetActive(false);
-                GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + (i - 1)).gameObject.SetActive(false);
-                GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + (i - 1)).gameObject.SetActive(false);
+                GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + i).gameObject.SetActive(true);
+                GetImage(ImagesType, (int)Images.Character1_Icon + i).gameObject.SetActive(false);
+                GetImage(ImagesType, (int)Images.Character1_Icon + i).sprite = null;
+                GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i).gameObject.SetActive(false);
+                GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + i).gameObject.SetActive(false);
+                GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i).gameObject.SetActive(false);
             }
         }
     }
 
     public void OnPlayerStatChange(PlayerController _pc)
     {
-        //TODO : HP도 
-        GetImage(ImagesType, (int)Images.Character1_HpFillImage + (_pc.index - 1)).fillAmount = (float)_pc.HP / (float)_pc.MaxHP;
-        GetText(TextsType, (int)Texts.Character1_HpText + (_pc.index - 1)).text = $"{Utils.ToCurrencyString(_pc.HP)} / {Utils.ToCurrencyString(_pc.MaxHP)}";
-        GetImage(ImagesType, (int)Images.Character1_MpFillImage + (_pc.index - 1)).fillAmount = (float)_pc.MP / (float)_pc.MaxMp;
-        GetText(TextsType, (int)Texts.Character1_MpText + (_pc.index - 1)).text = _pc.MP.ToString() + " / " + _pc.MaxMp.ToString();
+        if (_pc.index == Managers.CharacterM.Characters.Length - 1) return;
+
+        GetImage(ImagesType, (int)Images.Character1_HpFillImage + (_pc.index)).fillAmount = (float)_pc.HP / (float)_pc.MaxHP;
+        GetText(TextsType, (int)Texts.Character1_HpText + (_pc.index)).text = $"{Utils.ToCurrencyString(_pc.HP)} / {Utils.ToCurrencyString(_pc.MaxHP)}";
+        GetImage(ImagesType, (int)Images.Character1_MpFillImage + (_pc.index)).fillAmount = (float)_pc.MP / (float)_pc.MaxMp;
+        GetText(TextsType, (int)Texts.Character1_MpText + (_pc.index)).text = _pc.MP.ToString() + " / " + _pc.MaxMp.ToString();
     }
 
     #endregion
@@ -1148,8 +1150,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.Level, Utils.Datas.levelData.Player_Gold);
 
-        //TODO : 스테이지 수정방식
-
         GetText(TextsType, (int)Texts.StageStateText).text = Managers.StageM.isDead ? "반복중..." : "진행중...";
         GetText(TextsType, (int)Texts.StageStateText).color = Managers.StageM.isDead ? Color.yellow : Color.blue;
 
@@ -1172,6 +1172,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
         CheckPlayer();
     }
+
     void CheckPlayer()
     {
         //GetImage(ImagesType, (int)Images.CharacterImage).sprite = "";
@@ -1208,7 +1209,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         GetImage(ImagesType, (int)Images.ItemPopupFrameImage).sprite = Managers.ResourceM.GetAtlas(_data.ItemGrade.ToString());
         GetImage(ImagesType, (int)Images.ItemPopupItemImage).sprite = Managers.ResourceM.GetAtlas(_data.Name);
-        GetText(TextsType, (int)Texts.ItemPopupText).text = Utils.StringToColorGrade(_data.ItemGrade) + _data.Name + "</color>을 획득하였습니다";
+        GetText(TextsType, (int)Texts.ItemPopupText).text = Utils.StringToColorGrade(_data.ItemGrade) + _data.NameKR + "</color>을 획득하였습니다";
 
         PlayLegendaryPopupAnim();
     }

@@ -19,6 +19,9 @@ public class Memo
     TODO : 던전팝업에 남은 시간 체크하기 => 완료
     난이도 선택버튼 활성화(Toast) => 완료
     TODO : 렌더 카메라 되어있는것들 꾸며주기(다 하고 꾸미자)
-    TODO : UI_HeroStatPopup 완성하기
+    UI_HeroStatPopup 완성하기
+
+
+    
     */
 }

@@ -37,7 +37,7 @@ public class RelicManager
         go.transform.position = pos;
     }
 
-    public void Axe(PlayerController _pc, MonsterController _mc)
+    public void Axe(PlayerController _pc, CreatureController _mc)
     {
         Vector3 pos = _mc.transform.position;
         GameObject go = Managers.ResourceM.Instantiate("Axe", _pooling: true);

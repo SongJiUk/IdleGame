@@ -68,7 +68,7 @@ public abstract class SkillBase
         {
             if (!Managers.DataM.BuffDataDic.TryGetValue(buff, out var effectData))
             {
-                Debug.Log($"{_caster.name} : 해당 스킬에는 버프가 없음");
+                
                 return;
             }
 
@@ -81,7 +81,7 @@ public abstract class SkillBase
             {
                 if (!Managers.DataM.BuffTypeDataDic.TryGetValue(effectData.BuffTypeID, out var buffType))
                 {
-                    Debug.LogError($"[SkillBase] : 버프 이펙트에 해당 번호가 없음");
+                    
                     return;
                 }
 

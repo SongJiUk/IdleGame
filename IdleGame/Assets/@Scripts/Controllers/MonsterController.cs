@@ -76,6 +76,7 @@ public class MonsterController : CreatureController
         if (DATA.CreatureType == CreatureType.Boss)
         {
             isBoss = true;
+            
             maxHp *= 10;
             hp *= 10;
 
@@ -183,7 +184,7 @@ public class MonsterController : CreatureController
         {
             ResetTarget();
 
-            FindClosetTarget(Managers.SpawnM.players);
+            FindClosetTarget(Managers.CharacterM.players);
 
             if (target == null)
             {

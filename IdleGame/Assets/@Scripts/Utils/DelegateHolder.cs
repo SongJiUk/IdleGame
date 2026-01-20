@@ -4,7 +4,7 @@ using UnityEngine;
 
 #region Relic
 public delegate void MonsterDead(MonsterController _mc);
-public delegate void PlayerAttack(PlayerController _pc, MonsterController _mc);
+public delegate void PlayerAttack(PlayerController _pc, CreatureController _mc);
 public delegate void PlayerHit(PlayerController _pc);
 #endregion
 
@@ -39,7 +39,7 @@ public class DelegateHolder
         MonsterDeadEvent?.Invoke(_mc);
     }
 
-    public static void PlayerAttack(PlayerController _pc, MonsterController _mc)
+    public static void PlayerAttack(PlayerController _pc, CreatureController _mc)
     {
         PlayerAttackEvent?.Invoke(_pc, _mc);
     }

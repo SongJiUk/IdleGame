@@ -43,11 +43,12 @@ public class Boss_Electric : SkillBase
     async UniTask Skills()
     {
 
-        players = Managers.SpawnM.players.ToList();
+        players = Managers.CharacterM.AlivePlayers;
         if (players.Count == 0) return;
+
         for (int i = 0; i < 5; i++)
         {
-            players = Managers.SpawnM.players.ToList();
+            players = Managers.CharacterM.AlivePlayers;
             if (players.Count == 0) break;
 
             PlayerController player = players[Random.Range(0, players.Count)];
@@ -59,9 +60,11 @@ public class Boss_Electric : SkillBase
 
             await Managers.CameraM.CameraShake();
 
-            if (player == null || player.IsDead) continue;
+            if (player != null && !player.IsDead)
+            {
 
-            player.GetDamage(cc.Damage * 1.2, cc);
+                player.GetDamage(cc.Damage * 1.2, cc);
+            }
             await UniTask.WaitForSeconds(0.2f);
 
         }

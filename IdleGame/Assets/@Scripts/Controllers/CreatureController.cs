@@ -144,17 +144,13 @@ public class CreatureController : BaseController
 
     public float GetCurrentPlayingClipDuration(Animator anim)
     {
-        // 0번 레이어(Base Layer)의 클립 정보를 가져옵니다.
         AnimatorClipInfo[] clipInfo = anim.GetCurrentAnimatorClipInfo(0);
 
         if (clipInfo.Length > 0)
         {
-            // 현재 가중치(Weight)가 가장 높은 (또는 첫 번째) 클립의 길이를 반환합니다.
-            // 블렌딩 중이라면 정확하지 않을 수 있습니다.
             return clipInfo[0].clip.length;
         }
 
-        // 재생 중인 클립이 없을 경우
         return 0f;
     }
     protected async UniTask WaitForAttackDelay()
@@ -211,7 +207,11 @@ public class CreatureController : BaseController
 
     public virtual async UniTask StartAttack()
     {
-        if (target == null || !target.IsValid()) return;
+        if (target == null || !target.IsValid())
+        {
+            isAttacking = false;
+            return;
+        }
         currentTarget = target;
         isAttacking = true;
         AnimatorChange(Define.CreatureState.Attack);
@@ -226,31 +226,37 @@ public class CreatureController : BaseController
         isTargetLocked = false;
     }
 
-
     protected void FindClosetTarget<T>(List<T> _targets) where T : Component
     {
+        if (_targets == null) return;
+        FindClosetTarget(_targets.ToArray());
+    }
 
-        float minDistance = float.MaxValue;
+    protected void FindClosetTarget<T>(T[] _targets) where T : Component
+    {
+
+        if (_targets == null || _targets.Length == 0) return;
+
+        float minDist = float.MaxValue;
 
         if (target != null)
             target.OnTargetDead -= OnTargetDeadCallBack;
 
         CreatureController closetTarget = null;
 
-        foreach (var t in _targets)
+        for(int i =0; i< _targets.Length; i++)
         {
-            if (t == null) continue;
+            if (_targets[i] == null) continue;
 
-            CreatureController cc = t as CreatureController;
+            CreatureController cc = _targets[i] as CreatureController;
             if (cc == null || cc.isDead) continue;
 
-            float dist = Vector3.Distance(this.transform.position, t.transform.position);
-
+            float dist = Vector3.Distance(this.transform.position, cc.transform.position);
             if (dist > detectrange) continue;
 
-            if (dist < minDistance)
+            if(dist < minDist)
             {
-                minDistance = dist;
+                minDist = dist;
                 closetTarget = cc;
             }
         }
@@ -264,6 +270,7 @@ public class CreatureController : BaseController
         }
         else isTargetLocked = false;
     }
+
     protected void OnTargetDeadCallBack()
     {
         ResetTarget();
@@ -296,7 +303,8 @@ public class CreatureController : BaseController
 
     public virtual bool GetCritical()
     {
-        if (UnityEngine.Random.value <= this.CriticalRate) return true;
+        float rand = UnityEngine.Random.Range(0, 100f);
+        if (rand <= this.CriticalRate) return true;
 
         return false;
     }

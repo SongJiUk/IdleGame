@@ -7,15 +7,29 @@ using UnityEngine;
 
 public class CharacterManager
 {
-    //TODO : 현재 착용중인 캐릭터.
+    //TODO : 현재 착용중인 캐릭터(렌더텍스쳐에서만 보여지는것)
     public CharacterHolder[] Characters = new CharacterHolder[7];
     public PlayerController[] players = new PlayerController[7];
-    public Dictionary<string, CharacterHolder> CharacterDic = new Dictionary<string, CharacterHolder>();
+    //public Dictionary<string, CharacterHolder> CharacterDic = new Dictionary<string, CharacterHolder>();
 
 
     public event Action<PlayerController> OnCharacterAdd;
-    public event Action<PlayerController> OnCharacterRemove;
+    //public event Action<PlayerController> OnCharacterRemove;
 
+    public List<PlayerController> AlivePlayers => players.Where(p => p != null && !p.IsDead).ToList();
+    public void AddPlayerReference(int _index, PlayerController _pc)
+    {
+        players[_index] = _pc;
+        OnCharacterAdd?.Invoke(_pc);
+    }
+
+    public void ClearAllPlayers()
+    {
+        for(int i =0; i< players.Length; i++)
+        {
+            players[i] = null;
+        }
+    }
     public void SetCharacter(int _value, string _name)
     {
         Characters[_value] = Managers.GameM.gameData.Characters_Data[_name];

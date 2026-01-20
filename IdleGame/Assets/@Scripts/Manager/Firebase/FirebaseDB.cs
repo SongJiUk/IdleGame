@@ -52,7 +52,6 @@ public partial class FirebaseManager
                 reference.Child("USER").Child(currentUser.UserId).Child("CHARACTER").SetRawJsonValueAsync(character_json).AsUniTask(),
                 reference.Child("USER").Child(currentUser.UserId).Child("ITEM").SetRawJsonValueAsync(item_json).AsUniTask());
 
-            Debug.Log("모든 게임 데이터 통합 저장 완료");
         }
         catch (Exception e)
         {
