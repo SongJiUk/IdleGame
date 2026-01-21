@@ -24,7 +24,7 @@ public class PlayerManager
         }
     }
 
-        public float ExpPercent()
+    public float ExpPercent()
     {
         float exp = (float)Utils.Datas.levelData.MaxExp();
         double myExp = Managers.GameM.Exp;
@@ -40,7 +40,7 @@ public class PlayerManager
         return (myExp / exp) * 100.0f;
     }
 
-    public double GetAttack(Define.CharacterGrade _grade, CharacterHolder _holder)
+    public double GetAttack(Define.Grade _grade, CharacterHolder _holder)
     {
         var damage = Utils.Datas.levelData.Damage() * ((int)_grade + 1);
         float level = (float)_holder.holder.Level * 10 / (float)100;
@@ -49,7 +49,7 @@ public class PlayerManager
         return realDamage;
     }
 
-    public double GetHP(Define.CharacterGrade _grade, CharacterHolder _holder)
+    public double GetHP(Define.Grade _grade, CharacterHolder _holder)
     {
         var hp = Utils.Datas.levelData.HP() * ((int)_grade + 1);
         float level = (float)_holder.holder.Level * 10 / (float)100;
@@ -67,7 +67,7 @@ public class PlayerManager
     {
         double attack = GetAttack(Managers.GameM.mPlayer.DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[Managers.GameM.mPlayer.DATA.Name]);
         int value = 1;
-        for(int i =0; i<Managers.CharacterM.Characters.Length; i++)
+        for (int i = 0; i < Managers.CharacterM.Characters.Length; i++)
         {
             if (Managers.CharacterM.Characters[i] != null)
             {

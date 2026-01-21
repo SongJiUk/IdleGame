@@ -17,7 +17,7 @@ namespace Data
         public Define.CreatureType CreatureType;
         public Define.ObjectType ObjectType;
         public float AttackRange;
-        public Define.CharacterGrade CharacterGrade;
+        public Define.Grade CharacterGrade;
         public double BaseHp;
         public double BaseDamage;
         public int MaxMp;
@@ -51,7 +51,7 @@ namespace Data
         public int DataID;
         public string Name;
         public float Damage;
-        public Define.ItemGrade Type;
+        public Define.Grade Type;
     }
 
     public class WeaponDataLoader : ILoader<int, WeaponData>
@@ -110,7 +110,7 @@ namespace Data
         public string NameKR;
         public string PrefabName;
         public string Description;
-        public Define.ItemGrade ItemGrade;
+        public Define.Grade ItemGrade;
         public float Probability;
         public Define.ItemType ItemType;
         public int MinStage;
@@ -484,8 +484,10 @@ namespace Data
         public int DataID;
         public string Name;
         public Define.Grade Grade;
-        public int Min;
-        public int Max;
+        public string Description;
+        public float Min;
+        public float Max;
+        public float Probability;
     }
 
     public class SmeltDataLoader : ILoader<int, SmeltData>

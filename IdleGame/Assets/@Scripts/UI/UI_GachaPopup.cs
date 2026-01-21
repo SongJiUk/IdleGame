@@ -81,7 +81,7 @@ public class UI_GachaPopup : UI_Popup
                 Managers.GameM.Hero_Summon_Count++;
                 Managers.GameM.Hero_Confirmed_Legendary_Count++;
 
-                Define.CharacterGrade grade = Define.CharacterGrade.Common;
+                Define.Grade grade = Define.Grade.Common;
 
 
                 if (i % horizontal_limit == 0 && i != 0)
@@ -95,17 +95,17 @@ public class UI_GachaPopup : UI_Popup
                 if (Managers.GameM.Hero_Confirmed_Legendary_Count >= Managers.DataM.GachaDataDic[Utils.GachaMaxLevel].SummonCount)
                 {
                     Managers.GameM.Hero_Confirmed_Legendary_Count = 0;
-                    grade = Define.CharacterGrade.Legendary;
+                    grade = Define.Grade.Legendary;
                 }
 
-                if (grade != Define.CharacterGrade.Legendary)
+                if (grade != Define.Grade.Legendary)
                 {
                     for (int j = 0; j < Utils.GradeCount; j++)
                     {
                         r_Percentage += Utils.Gacha_Percentage(Define.GachaType.HeroGacha)[j];
                         if (percentage <= r_Percentage)
                         {
-                            grade = (Define.CharacterGrade)j;
+                            grade = (Define.Grade)j;
                             break;
                         }
                     }

@@ -1368,7 +1368,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         PlayTextFadeOut(slotToUse).Forget();
 
 
-        if ((int)_data.ItemGrade >= (int)Define.ItemGrade.Rare)
+        if ((int)_data.ItemGrade >= (int)Define.Grade.Rare)
         {
             SetHighGradeItem(_data);
 

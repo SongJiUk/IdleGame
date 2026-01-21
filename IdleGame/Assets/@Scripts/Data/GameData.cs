@@ -15,7 +15,9 @@ public class Percentage
 public class SmeltHolder
 {
     public Define.Status_Holder holder;
+    public Define.Grade grade;
     public float value;
+    public bool isLock;
 }
 
 public class CharacterHolder
@@ -135,7 +137,7 @@ public class GameData
         }
 
     }
-    public Data.CreatureData GetGradeCharacter(Define.CharacterGrade _grade)
+    public Data.CreatureData GetGradeCharacter(Define.Grade _grade)
     {
         List<Data.CreatureData> holder = new List<Data.CreatureData>();
         foreach (var data in Characters_Data)
@@ -149,7 +151,7 @@ public class GameData
         return holder[UnityEngine.Random.Range(0, holder.Count)];
     }
 
-    public Data.ItemData GetGradeRelic(Define.ItemGrade _grade)
+    public Data.ItemData GetGradeRelic(Define.Grade _grade)
     {
         List<Data.ItemData> holder = new List<Data.ItemData>();
         foreach (var data in Item_Data)

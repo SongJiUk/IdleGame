@@ -1,16 +1,25 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using DG.Tweening;
 
 public class UI_SmeltingPopup : UI_Popup
 {
     #region Enum
 
-
+    const int SmeltingMaxCount = 5;
+    const string UseItemName = "Monster_Energy";
+    const int NeedCount = 10;
     enum GameObjects
     {
-        Horizontal,
+        Smelting_1_Object,
+        Smelting_2_Object,
+        Smelting_3_Object,
+        Smelting_4_Object,
+        Smelting_5_Object,
     }
     enum Texts
     {
@@ -24,6 +33,7 @@ public class UI_SmeltingPopup : UI_Popup
         Smelting_3_ProbabilityText,
         Smelting_4_ProbabilityText,
         Smelting_5_ProbabilityText,
+        NeedItemCountText,
     }
 
     enum Buttons
@@ -39,7 +49,7 @@ public class UI_SmeltingPopup : UI_Popup
 
     #endregion
 
-    Transform parent;
+    readonly int statusCount = Enum.GetNames(typeof(Define.Status_Holder)).Length;
 
     Data.SmeltData data;
     public override async UniTask<bool> Init()
@@ -57,16 +67,174 @@ public class UI_SmeltingPopup : UI_Popup
 
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
         GetButton(ButtonsType, (int)Buttons.SmeltingButton).gameObject.BindEvent(OnClickSmeltingButton);
+        GetImage(ImagesType, (int)Images.LockImage).gameObject.SetActive(false);
 
-        parent = GetObject(GameObjectsType, (int)GameObjects.Horizontal).transform;
 
+        for (int i = 0; i < SmeltingMaxCount; i++)
+        {
+            GetObject(GameObjectsType, (int)GameObjects.Smelting_1_Object + i).SetActive(false);
+        }
+
+        if (Managers.GameM.gameData.Smelts.Count > 0)
+        {
+            for (int i = 0; i < Managers.GameM.gameData.Smelts.Count; i++)
+            {
+                var saveData = Managers.GameM.gameData.Smelts[i];
+                RestoreSlot(saveData, i);
+            }
+        }
+
+        RefreshUI();
         return true;
     }
 
-    public void SetInfo()
+
+    public void RestoreSlot(SmeltHolder _holder, int _count)
     {
+        GameObject slot = GetObject(GameObjectsType, (int)GameObjects.Smelting_1_Object + _count);
+        slot.SetActive(true);
+
+        string statusName = _holder.holder.ToString();
+
+        var dataInSheet = Managers.DataM.SmeltDataDic.Values
+            .FirstOrDefault(d => d.Name == statusName && d.Grade == _holder.grade);
+
+        if (dataInSheet == null) return;
+
+        string colorTag = Utils.StringToColorGrade(_holder.grade);
+
+
+        GetText(TextsType, (int)Texts.Smelting_1_ContentText + _count).text = $"{colorTag}{dataInSheet.Description}</color>";
+        GetText(TextsType, (int)Texts.Smelting_1_ProbabilityText + _count).text = $"{colorTag}{_holder.value:F2}%</color>";
+
     }
 
+
+    public void SetSmelt()
+    {
+        Managers.GameM.gameData.Smelts.Clear();
+        for (int i = 0; i < SmeltingMaxCount; i++)
+        {
+            GetObject(GameObjectsType, (int)GameObjects.Smelting_1_Object + i).SetActive(false);
+        }
+
+        SetSmeltSlot(GetPercentage());
+
+        Managers.FirebaseM.WriteData().Forget();
+    }
+
+    public void SetSmeltSlot(int _slotCount)
+    {
+
+        for (int i = 0; i < _slotCount; i++)
+        {
+            Define.Status_Holder statusNum = (Define.Status_Holder)UnityEngine.Random.Range(0, statusCount);
+
+            SetSlot(statusNum, i);
+        }
+    }
+
+
+    public void SetSlot(Define.Status_Holder _statusName, int _count)
+    {
+
+
+        GameObject slot = GetObject(GameObjectsType, (int)GameObjects.Smelting_1_Object + _count);
+        slot.transform.DOKill();
+        slot.SetActive(true);
+
+        string statusName = _statusName.ToString();
+        var candidate = Managers.DataM.SmeltDataDic.Values
+        .Where(d => d.Name == statusName)
+        .ToList();
+
+        Data.SmeltData localData = null;
+        int randNum = UnityEngine.Random.Range(0, 100);
+        float sum = 0;
+        for (int i = 0; i < candidate.Count; i++)
+        {
+            sum += candidate[i].Probability;
+            if (sum >= randNum)
+            {
+                localData = candidate[i];
+                break;
+            }
+        }
+        if (localData == null) return;
+
+        float targetStat = UnityEngine.Random.Range(localData.Min, localData.Max);
+        targetStat = Mathf.Floor(targetStat * 100f) / 100f;
+
+        string colorTag = Utils.StringToColorGrade(localData.Grade);
+
+        slot.transform.localScale = Vector3.zero;
+        slot.transform.DOScale(1.0f, 0.5f)
+        .SetDelay(_count * 0.1f)
+        .SetEase(Ease.OutBack);
+
+        GetText(TextsType, (int)Texts.Smelting_1_ContentText + _count).text = $"{colorTag}{localData.Description}</color>";
+
+        float startValue = 0;
+
+        DOTween.To(() => startValue, x =>
+        {
+            GetText(TextsType, (int)Texts.Smelting_1_ProbabilityText + _count).text =
+            $"{colorTag}{x:F2}%</color>";
+        }, targetStat, 0.5f)
+        .SetDelay(_count * 0.1f)
+        .OnComplete(() =>
+        {
+            if (localData.Grade >= Define.Grade.Unique)
+            {
+                slot.transform.DOShakePosition(0.4f, 10.0f, 20);
+                slot.transform.DOPunchScale(new Vector3(0.15f, 0.15f, 0.15f), 0.5f, 5);
+            }
+        });
+
+        Managers.GameM.gameData.Smelts.Add(new SmeltHolder
+        {
+            holder = _statusName,
+            grade = localData.Grade,
+            value = targetStat
+        });
+    }
+
+
+    public int GetPercentage()
+    {
+        int randNum = UnityEngine.Random.Range(0, 100);
+        int slotCount = 1;
+        int sum = 0;
+        for (int i = 0; i < Utils.SmeltSlotCountWeights.Length; i++)
+        {
+            sum += Utils.SmeltSlotCountWeights[i];
+            if (sum < randNum)
+            {
+                slotCount++;
+            }
+            else return slotCount;
+        }
+
+        return -1;
+    }
+
+    public void RefreshUI()
+    {
+        int currentCount = Managers.InventoryM.GetItemCount(UseItemName);
+        var text = GetText(TextsType, (int)Texts.NeedItemCountText);
+        text.text = $"({currentCount} / {NeedCount})";
+
+        if (currentCount >= NeedCount)
+        {
+            text.color = Color.green;
+            GetImage(ImagesType, (int)Images.LockImage).gameObject.SetActive(false);
+        }
+        else
+        {
+            text.color = Color.red;
+            GetImage(ImagesType, (int)Images.LockImage).gameObject.SetActive(true);
+        }
+    }
 
     async void OnClickCloseButton()
     {
@@ -75,5 +243,10 @@ public class UI_SmeltingPopup : UI_Popup
 
     void OnClickSmeltingButton()
     {
+        if (Managers.InventoryM.UseItem(UseItemName, NeedCount))
+        {
+            SetSmelt();
+            RefreshUI();
+        }
     }
 }

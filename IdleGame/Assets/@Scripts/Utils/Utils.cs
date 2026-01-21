@@ -27,6 +27,7 @@ using System.Linq;
 
 public static class Utils
 {
+
     public const int GoodsDirectingDataID = 69101;
     public const int DamageFontDataID = 69102;
     public const int SpeechBubbleDataID = 69103;
@@ -55,6 +56,8 @@ public static class Utils
             return datas;
         }
     }
+
+
 
     public static T GetOrAddComponent<T>(this GameObject _go) where T : Component
     {
@@ -540,8 +543,37 @@ public static class Utils
         return parsedColor;
     }
 
+    public static string StringToColorGrade(Define.Grade _grade)
+    {
+        switch (_grade)
+        {
+            case Define.Grade.Common: return "<color=#FFFFFF>";
+            case Define.Grade.UnCommon: return "<color=#00FF00>";
+            case Define.Grade.Rare: return "<color=#0000FF>";
+            case Define.Grade.Unique: return "<color=#BB45FF>";
+            case Define.Grade.Legendary: return "<color=#FF9A45>";
+        }
+
+        return "<color=#FFFFFF>";
+    }
+
+    public static string StringToColorGradeImage(Define.Grade _grade)
+    {
+        switch (_grade)
+        {
+            case Define.Grade.Common: return "#FFFFFF";
+            case Define.Grade.UnCommon: return "#00FF00";
+            case Define.Grade.Rare: return "#0000FF";
+            case Define.Grade.Unique: return "#BB45FF";
+            case Define.Grade.Legendary: return "#FF9A45";
+        }
+
+        return "#FFFFFF";
+    }
+
     #endregion
 
+    #region Time
     public static double TimerCheck()
     {
         //TODO : 인터넷 시간으로 바꾸기
@@ -569,48 +601,8 @@ public static class Utils
         return timer.ToString(@"hh\ \:\ mm\ \:\ ss");
 
     }
+    #endregion
 
-    public static string StringToColorGradeImage(Define.ItemGrade _grade)
-    {
-        switch (_grade)
-        {
-            case Define.ItemGrade.Common: return "#FFFFFF";
-            case Define.ItemGrade.UnCommon: return "#00FF00";
-            case Define.ItemGrade.Rare: return "#0000FF";
-            case Define.ItemGrade.Unique: return "#BB45FF";
-            case Define.ItemGrade.Legendary: return "#FF9A45";
-        }
-
-        return "#FFFFFF";
-    }
-
-    public static string StringToColorGrade(Define.ItemGrade _grade)
-    {
-        switch (_grade)
-        {
-            case Define.ItemGrade.Common: return "<color=#FFFFFF>";
-            case Define.ItemGrade.UnCommon: return "<color=#00FF00>";
-            case Define.ItemGrade.Rare: return "<color=#0000FF>";
-            case Define.ItemGrade.Unique: return "<color=#BB45FF>";
-            case Define.ItemGrade.Legendary: return "<color=#FF9A45>";
-        }
-
-        return "<color=#FFFFFF>";
-    }
-
-    public static string StringToColorGrade(Define.CharacterGrade _grade)
-    {
-        switch (_grade)
-        {
-            case Define.CharacterGrade.Common: return "<color=#FFFFFF>";
-            case Define.CharacterGrade.UnCommon: return "<color=#00FF00>";
-            case Define.CharacterGrade.Rare: return "<color=#0000FF>";
-            case Define.CharacterGrade.Unique: return "<color=#BB45FF>";
-            case Define.CharacterGrade.Legendary: return "<color=#FF9A45>";
-        }
-
-        return "<color=#FFFFFF>";
-    }
 
 
     public static void Shuffle<T>(this List<T> _list)
@@ -662,204 +654,8 @@ public static class Utils
         return valueCount;
     }
 
-    //// DamageEffect.cs
+    #region Smelt
+    public static readonly int[] SmeltSlotCountWeights = { 50, 25, 15, 9, 1 };
 
-    //public class DamageEffect : ISkillEffect
-    //{
-    //    private float damageMultiplier; // 피해 배율 (예: 1.0f = 100%)
-    //    private float splashRadius = 0f; // 광역 피해 반경 (0이면 단일 타겟)
-    //    private float splashMultiplier = 0f; // 광역 피해 배율
-
-    //    public DamageEffect(float multiplier, float radius = 0f, float splashM = 0f)
-    //    {
-    //        this.damageMultiplier = multiplier;
-    //        this.splashRadius = radius;
-    //        this.splashMultiplier = splashM;
-    //    }
-
-    //    public void Excute(CreatureController _caster, CreatureController _target)
-    //    {
-    //        if (_target == null) return;
-
-    //        // 1. 메인 타겟에게 피해 적용
-    //        float baseDamage = _caster.Damage * damageMultiplier;
-    //        _target.TakeDamage(baseDamage); // CreatureController에 TakeDamage 함수가 있다고 가정
-
-    //        // 2. 광역 피해 (Splash Damage) 처리
-    //        if (splashRadius > 0 && splashMultiplier > 0)
-    //        {
-    //            ApplySplashDamage(_caster, _target.transform.position, splashRadius, splashMultiplier);
-    //        }
-    //    }
-
-    //    private void ApplySplashDamage(CreatureController _caster, Vector3 center, float radius, float multiplier)
-    //    {
-    //        // ⭐️ Physics.OverlapSphere 등을 사용하여 주변 적들을 찾습니다.
-    //        // (Managers.ObjectM 또는 유니티 Physics API 사용)
-    //        Collider[] hitColliders = Physics.OverlapSphere(center, radius, LayerMask.GetMask("Enemy"));
-
-    //        float splashDamage = _caster.Damage * multiplier;
-
-    //        foreach (var hit in hitColliders)
-    //        {
-    //            CreatureController target = hit.GetComponent<CreatureController>();
-    //            // 메인 타겟에게는 광역 피해를 중복으로 주지 않도록 제외 로직 필요
-    //            if (target != null && target != _caster)
-    //            {
-    //                target.TakeDamage(splashDamage);
-    //            }
-    //        }
-    //    }
-    //}
-
-
-    //// WizardMale_Meteor.cs
-
-    //public class WizardMale_Meteor : SkillBase
-    //{
-    //    public WizardMale_Meteor() { SetUpEffect(); }
-
-    //    protected override void SetUpEffect()
-    //    {
-    //        // 피해량 = 150% (main) + 60% (splash)
-    //        // DamageEffect(배율, 광역반경, 광역배율)
-    //        // 광역반경: 5.0f (가정)
-    //        effects.Add(new DamageEffect(1.5f, 5.0f, 0.6f));
-    //    }
-
-    //    // ⭐️ 광역 스킬이므로 UseSkill을 오버라이드하여 타겟 위치를 활용합니다.
-    //    public override void UseSkill(CreatureController _caster, CreatureController _target)
-    //    {
-    //        // 메테오는 단일 타겟(_target)을 메인 타겟으로 삼아 그 주변에 광역 피해를 줍니다.
-    //        if (_target != null)
-    //        {
-    //            foreach (var effect in effects)
-    //            {
-    //                // DamageEffect.Excute()가 호출되어 메인 타겟 및 주변에 피해를 줍니다.
-    //                effect.Excute(_caster, _target);
-    //            }
-    //        }
-    //        // ... (쿨타임 처리)
-    //    }
-    //}
-
-    //// WizardFemale_RandomBuff.cs
-
-    //public class WizardFemale_RandomBuff : SkillBase
-    //{
-    //    public WizardFemale_RandomBuff() { SetUpEffect(); }
-
-    //    // 공격력 버프와 방어력 버프를 미리 준비합니다.
-    //    // (AttackBuff와 DefenseBuff 클래스가 있다고 가정)
-    //    private BuffEffect attackBuffEffect;
-    //    private BuffEffect defenseBuffEffect;
-
-    //    protected override void SetUpEffect()
-    //    {
-    //        // ⭐️ 효과는 여기서 정의하되, 적용은 UseSkill에서 랜덤으로 선택
-    //        attackBuffEffect = new BuffEffect(duration => new AttackBuff(10f), 10f); // 10초 공격력 버프
-    //        defenseBuffEffect = new BuffEffect(duration => new DefenseBuff(10f), 10f); // 10초 방어력 버프
-    //    }
-
-    //    public override void UseSkill(CreatureController _caster, CreatureController _target = null)
-    //    {
-    //        // 1. 체력이 가장 낮은 아군 찾는 로직 (Cleric과 유사)
-    //        CreatureController randomAlly = GetRandomAlly(); // 아군 목록에서 랜덤 선택하는 함수
-
-    //        if (randomAlly != null)
-    //        {
-    //            // 2. 랜덤 버프 선택 (0: 공격력, 1: 방어력)
-    //            BuffEffect chosenEffect = (UnityEngine.Random.Range(0, 2) == 0) ? attackBuffEffect : defenseBuffEffect;
-
-    //            // 3. 선택된 아군에게 버프 적용
-    //            chosenEffect.Excute(_caster, randomAlly);
-    //        }
-    //    }
-
-    //    private CreatureController GetRandomAlly()
-    //    {
-    //        // Managers.SpawnM.players 등 아군 목록에서 랜덤 플레이어를 찾아 반환
-    //        // ...
-    //        return null;
-    //    }
-    //}
-
-    //// Spearman_ForwardAttack.cs
-
-    //public class Spearman_ForwardAttack : SkillBase
-    //{
-    //    private const float RANGE = 5f; // 사거리 5m 가정
-
-    //    public Spearman_ForwardAttack() { SetUpEffect(); }
-    //    protected override void SetUpEffect()
-    //    {
-    //        // 단일 피해 (예: 120%)
-    //        effects.Add(new DamageEffect(1.2f));
-    //    }
-
-    //    public override void UseSkill(CreatureController _caster, CreatureController _target = null)
-    //    {
-    //        // ⭐️ 전방 범위 내의 몬스터를 찾습니다.
-    //        CreatureController nearestEnemy = FindForwardEnemy(_caster, RANGE); // 헬퍼 함수
-
-    //        if (nearestEnemy != null)
-    //        {
-    //            // 찾은 타겟에게 효과 적용
-    //            foreach (var effect in effects)
-    //            {
-    //                effect.Excute(_caster, nearestEnemy);
-    //            }
-    //        }
-    //        // ...
-    //    }
-
-    //    // (헬퍼 함수) 시전자의 전방을 기준으로 가장 가까운 적을 찾는 함수
-    //    private CreatureController FindForwardEnemy(CreatureController caster, float range)
-    //    {
-    //        // Physics.SphereCast 또는 Linecast를 사용하여 구현
-    //        // ...
-    //        return null;
-    //    }
-    //}
-
-
-    //// Knight_ChargeAttack.cs
-
-    //public class Knight_ChargeAttack : SkillBase
-    //{
-    //    private const float LENGTH = 8f; // 공격 길이 8m 가정
-    //    private const float WIDTH = 2f;  // 공격 폭 2m 가정
-
-    //    public Knight_ChargeAttack() { SetUpEffect(); }
-    //    protected override void SetUpEffect()
-    //    {
-    //        // 단일 피해 (예: 150%)
-    //        effects.Add(new DamageEffect(1.5f));
-    //    }
-
-    //    public override void UseSkill(CreatureController _caster, CreatureController _target = null)
-    //    {
-    //        // ⭐️ 특정 위치에 타겟팅하는 대신, 시전자의 전방 부채꼴/박스 범위 내의 모든 몬스터를 찾습니다.
-
-    //        List<CreatureController> enemiesInArea = FindEnemiesInForwardArea(_caster, LENGTH, WIDTH);
-
-    //        foreach (var enemy in enemiesInArea)
-    //        {
-    //            // 범위 내 모든 적에게 개별적으로 효과 적용
-    //            foreach (var effect in effects)
-    //            {
-    //                effect.Excute(_caster, enemy);
-    //            }
-    //        }
-    //        // ...
-    //    }
-
-    //    // (헬퍼 함수) 시전자의 전방 박스 범위 내의 모든 적을 찾는 함수
-    //    private List<CreatureController> FindEnemiesInForwardArea(CreatureController caster, float length, float width)
-    //    {
-    //        // Physics.OverlapBox 등을 사용하여 구현
-    //        // ...
-    //        return new List<CreatureController>();
-    //    }
-    //}
+    #endregion
 }

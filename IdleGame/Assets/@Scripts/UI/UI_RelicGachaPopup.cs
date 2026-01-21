@@ -79,7 +79,7 @@ public class UI_RelicGachaPopup : UI_Popup
                 Managers.GameM.Relics_Summon_Count++;
                 Managers.GameM.Relics_Confirmed_Legendary_Count++;
 
-                Define.ItemGrade grade = Define.ItemGrade.Common;
+                Define.Grade grade = Define.Grade.Common;
 
                 if (i % horizontal_limit == 0 && i != 0) horizontalCount++;
 
@@ -88,17 +88,17 @@ public class UI_RelicGachaPopup : UI_Popup
                 if (Managers.GameM.Relics_Confirmed_Legendary_Count >= Managers.DataM.GachaDataDic[Utils.GachaMaxLevel].SummonCount)
                 {
                     Managers.GameM.Relics_Confirmed_Legendary_Count = 0;
-                    grade = Define.ItemGrade.Legendary;
+                    grade = Define.Grade.Legendary;
                 }
 
-                if (grade != Define.ItemGrade.Legendary)
+                if (grade != Define.Grade.Legendary)
                 {
                     for (int j = 0; j < Utils.GradeCount; j++)
                     {
                         r_percentage += Utils.Gacha_Percentage(Define.GachaType.RelicGacha)[j];
                         if (percentage <= r_percentage)
                         {
-                            grade = (Define.ItemGrade)j;
+                            grade = (Define.Grade)j;
                             break;
                         }
                     }

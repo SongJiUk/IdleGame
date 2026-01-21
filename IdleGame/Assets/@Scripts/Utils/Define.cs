@@ -54,14 +54,6 @@ public static class Define
         DungeonBoss
     }
 
-    public enum ItemGrade
-    {
-        Common,
-        UnCommon,
-        Rare,
-        Unique,
-        Legendary
-    }
 
     public enum Grade
     {
@@ -72,15 +64,6 @@ public static class Define
         Legendary
     }
 
-    public enum CharacterGrade
-    {
-        None = -1,
-        Common,
-        UnCommon,
-        Rare,
-        Unique,
-        Legendary
-    }
 
     public enum SceneType
     {

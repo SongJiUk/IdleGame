@@ -31,6 +31,7 @@ public class ItemManager
         }
     }
 
+
     public void DisableItem(int _value)
     {
         Managers.GameM.gameData.Items[_value] = null;
@@ -39,23 +40,24 @@ public class ItemManager
 
     public List<Data.ItemData> GetDropItem()
     {
-        List<Data.ItemData> items = new List<Data.ItemData>();
+        List<Data.ItemData> dropitems = new List<Data.ItemData>();
+        int currentStage = Managers.GameM.Stage;
+
         foreach (var data in Managers.GameM.gameData.Item_Data)
         {
+            var item = data.Value.data;
+
             if (data.Value.data.ItemType == Define.ItemType.Currency) continue;
+            if (item.MinStage > currentStage) continue;
 
-            if (data.Value.data.MinStage <= Managers.GameM.Stage)
+            float randValue = Random.Range(0, 100f);
+
+            if (randValue <= item.Probability)
             {
-                float randValue = Random.Range(0, 100);
-                if (randValue <= data.Value.data.Probability)
-                {
-                    items.Add(data.Value.data);
-                }
+                dropitems.Add(data.Value.data);
             }
-
-
         }
 
-        return items;
+        return dropitems;
     }
 }
