@@ -67,8 +67,8 @@ public class MonsterController : CreatureController
         //hp = Utils.Datas.stageData.HP((float)baseHp) * 1000;
         damage = Utils.Datas.stageData.Damage((float)baseDamage, Managers.GameM.Stage);
 
-        attackrange = DATA.AttackRange;
-        detectrange = Mathf.Infinity;
+        attackRange = DATA.AttackRange;
+        detectRange = Mathf.Infinity;
         CriticalRate = 0f;
         isBoss = false;
         target = null;
@@ -76,7 +76,7 @@ public class MonsterController : CreatureController
         if (DATA.CreatureType == CreatureType.Boss)
         {
             isBoss = true;
-            
+
             maxHp *= 10;
             hp *= 10;
 
@@ -194,7 +194,7 @@ public class MonsterController : CreatureController
         }
         float targetDist = Vector3.Distance(transform.position, target.transform.position);
 
-        if (targetDist > attackrange)
+        if (targetDist > attackRange)
         {
             if (!isAttacking)
             {
@@ -281,7 +281,7 @@ public class MonsterController : CreatureController
         //TODO : 이것도 바꿔야됌
         var GoodsDirecting = Managers.ObjectM.Spawn<GoodsDirecting>(transform.position, Utils.GoodsDirectingDataID);
         GoodsDirecting.Init(Define.GoodsType.Gold, transform.position, Utils.Money());
-        
+
 
         var items = Managers.ItemM.GetDropItem();
 

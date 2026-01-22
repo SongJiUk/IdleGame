@@ -12,7 +12,7 @@ public class UI_SmeltingPopup : UI_Popup
 
     const int SmeltingMaxCount = 5;
     const string UseItemName = "Monster_Energy";
-    const int NeedCount = 10;
+    const int NeedCount = 100;
     enum GameObjects
     {
         Smelting_1_Object,
@@ -197,6 +197,13 @@ public class UI_SmeltingPopup : UI_Popup
             grade = localData.Grade,
             value = targetStat
         });
+
+        for (int i = 0; i < Managers.CharacterM.players.Length; i++)
+        {
+            if (Managers.CharacterM.players[i] != null)
+                Managers.CharacterM.players[i].SetStat();
+        }
+
     }
 
 

@@ -76,7 +76,6 @@ public class PlayerController : CreatureController
         DATA = _data;
         baseHp = _data.BaseHp;
         baseDamage = _data.BaseDamage;
-
         base.SetSkill();
 
 
@@ -84,14 +83,11 @@ public class PlayerController : CreatureController
         isDead = false;
         isAttacking = false;
         SpawnPos = transform.position;
-        //TODO : 지우기
+
         SetStat();
         mp = 0;
         maxMp = DATA.MaxMp;
-        attackrange = DATA.AttackRange;
-        detectrange = 5f;
         ownerName = this.name;
-        CriticalRate = Managers.PlayerM.CriticalChance();
         target = null;
     }
     public void SetStat()
@@ -99,7 +95,10 @@ public class PlayerController : CreatureController
         hp = Managers.PlayerM.GetHP(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name]);
         maxHp = hp;
         damage = Managers.PlayerM.GetAttack(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name]);
+        CriticalRate = Managers.PlayerM.CriticalChance();
 
+        attackRange = DATA.AttackRange;
+        detectRange = 5f;
         if (animator != null)
         {
             animator.speed = 1.0f;
@@ -127,8 +126,8 @@ public class PlayerController : CreatureController
             FindClosetTarget(Managers.ObjectM.mcList);
             currentTarget = target;
         }
-       
-        if ( currentTarget == null)
+
+        if (currentTarget == null)
         {
             Debug.LogWarning($"[Projectile Step 1-Error] 주변에 타겟이 없음");
             StopAttack();
@@ -292,14 +291,14 @@ public class PlayerController : CreatureController
 
         float targetDist = Vector3.Distance(transform.position, target.transform.position);
 
-        if (targetDist > detectrange)
+        if (targetDist > detectRange)
         {
             //ResetTarget();
             GoBackToSpawn(_deltaTime);
             return;
         }
 
-        if (targetDist > attackrange)
+        if (targetDist > attackRange)
         {
             if (!isAttacking)
                 MoveToTarget(_deltaTime);
@@ -378,7 +377,7 @@ public class PlayerController : CreatureController
     private async UniTaskVoid HandleSkillEnd()
     {
         float duration = GetCurrentPlayingClipDuration(animator);
-        if (duration <= 0) duration = 2f; 
+        if (duration <= 0) duration = 2f;
 
         await UniTask.Delay(TimeSpan.FromSeconds(duration));
 

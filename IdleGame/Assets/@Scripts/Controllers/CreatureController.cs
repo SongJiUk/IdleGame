@@ -46,10 +46,10 @@ public class CreatureController : BaseController
         set { speed = value; }
 
     }
-    protected virtual float attackrange { get; set; }
-    public float AttackRange { get { return attackrange; } }
-    protected virtual float detectrange { get; set; }
-
+    protected virtual float attackRange { get; set; }
+    public float AttackRange { get { return attackRange; } }
+    protected virtual float detectRange { get; set; }
+    public float DetectRange { get { return detectRange; } }
     protected CreatureController target;
     protected CreatureController currentTarget;
     protected Vector3 SpawnPos;
@@ -244,7 +244,7 @@ public class CreatureController : BaseController
 
         CreatureController closetTarget = null;
 
-        for(int i =0; i< _targets.Length; i++)
+        for (int i = 0; i < _targets.Length; i++)
         {
             if (_targets[i] == null) continue;
 
@@ -252,9 +252,9 @@ public class CreatureController : BaseController
             if (cc == null || cc.isDead) continue;
 
             float dist = Vector3.Distance(this.transform.position, cc.transform.position);
-            if (dist > detectrange) continue;
+            if (dist > detectRange) continue;
 
-            if(dist < minDist)
+            if (dist < minDist)
             {
                 minDist = dist;
                 closetTarget = cc;
@@ -285,8 +285,7 @@ public class CreatureController : BaseController
         isCritical = _isCritical;
         if (isCritical)
         {
-            //TODO : 수정 
-            finalDamage = _dmg * 1.5f;
+            finalDamage = _dmg * Managers.PlayerM.CriticalDamage() / 100f;
         }
 
         if (_isSkill)

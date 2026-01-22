@@ -45,7 +45,7 @@ public class PlayerManager
         var damage = Utils.Datas.levelData.Damage() * ((int)_grade + 1);
         float level = (float)_holder.holder.Level * 10 / (float)100;
         var realDamage = damage + damage * level;
-
+        realDamage += realDamage * (Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Damage) / 100f);
         return realDamage;
     }
 
@@ -54,7 +54,7 @@ public class PlayerManager
         var hp = Utils.Datas.levelData.HP() * ((int)_grade + 1);
         float level = (float)_holder.holder.Level * 10 / (float)100;
         var realHp = hp + hp * level;
-
+        realHp += realHp * (Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Hp) / 100f);
         return realHp;
     }
     public void LevelUp()
@@ -100,27 +100,27 @@ public class PlayerManager
 
     public float GoldDrop()
     {
-        return 0.0f;
+        return 0.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Money);
     }
 
     public float ItemDrop()
     {
-        return 0.0f;
+        return 0.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Item); ;
     }
 
     public float AttackSpeed()
     {
-        return 1.0f;
+        return 1.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.AttackSpeed);
     }
 
     public float CriticalChance()
     {
-        return 20.0f;
+        return 20.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.CriticalP); ;
     }
 
     public float CriticalDamage()
     {
-        return 140.0f;
+        return 140.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.CriticalD); ;
     }
 
     public double AverageCombatPower()

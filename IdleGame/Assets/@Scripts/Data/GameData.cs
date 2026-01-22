@@ -197,4 +197,19 @@ public class GameData
         item.holder = holder;
         Item_Data[_data.Name] = item;
     }
+
+    public float GetValueSmelt(Define.Status_Holder _status)
+    {
+        float value = 0.0f;
+
+        for (int i = 0; i < Smelts.Count; i++)
+        {
+            if (Smelts[i].holder == _status)
+            {
+                value += Smelts[i].value;
+            }
+        }
+
+        return value;
+    }
 }
