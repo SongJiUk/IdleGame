@@ -1141,6 +1141,50 @@
       <Project>{01f8f65b-c56b-1756-8189-0ff2e73f2496}</Project>
       <Name>Unity.VisualScripting.State</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Purchasing.SecurityStub.csproj">
+      <Project>{21f1bf8e-e9e0-57a2-5bec-df7827c2d53a}</Project>
+      <Name>Unity.Purchasing.SecurityStub</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Core.Components.csproj">
+      <Project>{68353db3-b1a4-a8dd-f913-d5223ee38652}</Project>
+      <Name>Unity.Services.Core.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Core.Analytics.csproj">
+      <Project>{c81cc344-623c-d854-5f63-f9f30d76343b}</Project>
+      <Name>Unity.Services.Core.Analytics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Purchasing.Utilities.csproj">
+      <Project>{3783716b-035f-280c-4e67-492c09835743}</Project>
+      <Name>Unity.Purchasing.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Purchasing.Codeless.csproj">
+      <Project>{f033745a-a318-222f-61d9-a5fe7a80e12c}</Project>
+      <Name>Unity.Purchasing.Codeless</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Purchasing.csproj">
+      <Project>{3b353a27-fe62-ae3e-61d8-f0c421956b6a}</Project>
+      <Name>Unity.Purchasing</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Core.csproj">
+      <Project>{1a4bab46-09f5-036b-e45c-d693b17e6647}</Project>
+      <Name>Unity.Services.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Services.Core.Environments.csproj">
+      <Project>{d5db9f87-ea7f-c225-8768-92b393c8b4a5}</Project>
+      <Name>Unity.Services.Core.Environments</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Purchasing.SecurityCore.csproj">
+      <Project>{b6ac259c-8eb2-0307-a65e-9b8f38f3035c}</Project>
+      <Name>Unity.Purchasing.SecurityCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Purchasing.Stores.csproj">
+      <Project>{b560c76a-ce43-945b-2f7c-62aab7c75dd0}</Project>
+      <Name>Unity.Purchasing.Stores</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEditor.Purchasing.csproj">
+      <Project>{942f0f5f-0cd8-822e-04e2-2cd9b3f31788}</Project>
+      <Name>UnityEditor.Purchasing</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
