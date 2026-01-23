@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class UI_Popup : UI_Base

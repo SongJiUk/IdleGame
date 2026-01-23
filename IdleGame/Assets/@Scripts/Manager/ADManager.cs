@@ -34,11 +34,12 @@ public class ADManager
             Debug.Log("광고 초기화 완료");
         });
 
-        
+
     }
 
     public void SetAdID()
     {
+
         if (TestMode || Application.isEditor)
         {
             BannderID = Test_Banner_ID;
@@ -48,15 +49,20 @@ public class ADManager
         else
         {
 #if UNITY_ANDROID
-    public readonly string BannderID = "ca-app-pub-7745197509342356/9199251409";
-    public readonly string IntersititialID = "ca-app-pub-7745197509342356/3363830166";
-    public readonly string RewardID = "ca-app-pub-7745197509342356/3691133226";
+            BannderID = "ca-app-pub-7745197509342356/9199251409";
+            IntersititialID = "ca-app-pub-7745197509342356/3363830166";
+            RewardID = "ca-app-pub-7745197509342356/3691133226";
 #elif UNITY_IOS
-    public readonly string BannderID = "ca-app-pub-7745197509342356/4090394957";
-    public readonly string IntersititialID = "ca-app-pub-7745197509342356/8132763505";
-    public readonly string RewardID = "ca-app-pub-7745197509342356/5506600169";
+                BannderID = "ca-app-pub-7745197509342356/4090394957";
+                IntersititialID = "ca-app-pub-7745197509342356/8132763505";
+                RewardID = "ca-app-pub-7745197509342356/5506600169";
+#else
+                BannderID = Test_Banner_ID;
+                IntersititialID = Test_Interstitial_ID;
+                RewardID = Test_Reward_ID;
 #endif
         }
+
     }
 
     public void OnAdRewardCallback(RewardedAd _ad, LoadAdError _error)

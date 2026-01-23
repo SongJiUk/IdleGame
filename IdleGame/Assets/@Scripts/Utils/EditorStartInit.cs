@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -25,3 +26,4 @@ public class EditorStartInit
         UnityEditor.EditorApplication.isPlaying = true;
     }
 }
+#endif
