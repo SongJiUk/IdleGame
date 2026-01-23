@@ -15,22 +15,23 @@ public partial class FirebaseManager
     {
 
         var status = await FirebaseApp.CheckAndFixDependenciesAsync();
-        if (status == DependencyStatus.Available)
-        {
-            auth = FirebaseAuth.DefaultInstance;
-            currentUser = auth.CurrentUser;
-            //NOTE : realTimeDB 참조 얻는거
-            reference = FirebaseDatabase.DefaultInstance.RootReference;
 
-            await GuestLogin();
-            Managers.UpdateM.isStartFirebase = true;
-            Debug.Log("Firebase 초기화 성공");
-
-        }
-        else
+        if (status != DependencyStatus.Available)
         {
             Debug.Log("Firebase 초기화 실패");
+            return;
         }
+
+        auth = FirebaseAuth.DefaultInstance;
+        currentUser = auth.CurrentUser;
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
+        Debug.Log("Firebase 초기화 성공");
+
+        await GuestLogin();
+        Managers.UpdateM.isStartFirebase = true;
+       
+
+
         // //NOTE : 초기화 작업
         // await FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         // {

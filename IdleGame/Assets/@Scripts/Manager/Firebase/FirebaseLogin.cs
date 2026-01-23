@@ -9,8 +9,10 @@ public partial class FirebaseManager
     {
         try
         {
-            Firebase.Auth.AuthResult authResult = await auth.SignInAnonymouslyAsync().AsUniTask();
-            FirebaseUser user = authResult.User;
+            //Firebase.Auth.AuthResult authResult = await auth.SignInAnonymouslyAsync().AsUniTask();
+            //FirebaseUser user = authResult.User;
+            FirebaseUser user = await auth.SignInAnonymouslyAsync();
+            currentUser = user;
             Debug.Log("게스트 로그인 성공 ! 사용자 ID : " + user.UserId);
             await ReadData();
         }

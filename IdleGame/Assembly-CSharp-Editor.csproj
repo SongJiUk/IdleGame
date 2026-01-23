@@ -62,10 +62,9 @@
     <Compile Include="Assets\_ExternalModule\Favorites\FavoritesTab\Editor\Scripts\FavoritesTab.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Firebase\Editor\FirebaseDatabase_version-13.6.0_manifest.txt" />
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.186\Google.IOSResolver.dll" />
-    <None Include="Assets\Firebase\Editor\FirebaseAuth_version-13.6.0_manifest.txt" />
     <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll" />
+    <None Include="Assets\Firebase\Editor\FirebaseAuth_version-10.2.0_manifest.txt" />
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.186\Google.PackageManagerResolver.dll" />
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.186\Google.VersionHandlerImpl.dll" />
     <None Include="Assets\ExternalDependencyManager\Editor\external-dependency-manager_version-1.2.186_manifest.txt" />
@@ -74,6 +73,7 @@
     <None Include="Assets\Firebase\Editor\AppDependencies.xml" />
     <None Include="Assets\Firebase\Editor\DatabaseDependencies.xml" />
     <None Include="Assets\Firebase\Editor\Firebase.Editor.dll" />
+    <None Include="Assets\Firebase\Editor\FirebaseDatabase_version-10.2.0_manifest.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
