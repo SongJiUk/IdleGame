@@ -10,6 +10,10 @@ public partial class FirebaseManager
 {
     private FirebaseAuth auth;
     private FirebaseUser currentUser;
+    public FirebaseUser CurrentUser
+    {
+        get => currentUser;
+    }
     private DatabaseReference reference;
     public async UniTask Init()
     {
@@ -27,7 +31,7 @@ public partial class FirebaseManager
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         Debug.Log("Firebase 초기화 성공");
 
-        await GuestLogin();
+        await CheckOrLogin();
         Managers.UpdateM.isStartFirebase = true;
        
 

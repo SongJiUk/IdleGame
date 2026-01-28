@@ -9,10 +9,12 @@ public partial class FirebaseManager
     {
         try
         {
-            //Firebase.Auth.AuthResult authResult = await auth.SignInAnonymouslyAsync().AsUniTask();
-            //FirebaseUser user = authResult.User;
             FirebaseUser user = await auth.SignInAnonymouslyAsync();
             currentUser = user;
+
+            PlayerPrefs.SetFloat("BGM", 1.0f);
+            PlayerPrefs.SetFloat("EFFECT", 1.0f);
+
             Debug.Log("게스트 로그인 성공 ! 사용자 ID : " + user.UserId);
             await ReadData();
         }
@@ -20,20 +22,21 @@ public partial class FirebaseManager
         {
             Debug.LogError($"로그인 실패 : {e.Message}");
         }
+    }
 
-        // auth.SignInAnonymouslyAsync().ContinueWithOnMainThread(task =>
-        // {
+    public async UniTask CheckOrLogin()
+    {
+        if(auth.CurrentUser != null)
+        {
+            currentUser = auth.CurrentUser;
+            Debug.Log("자동 로그인 성공! 사용자 ID : " + currentUser.UserId);
 
-        //     if (task.IsCanceled || task.IsFaulted)
-        //     {
-        //         Debug.Log("게스트 로그인 실패");
-        //         return;
-        //     }
-
-        //     FirebaseUser user = task.Result.User;
-        //     Debug.Log("게스트 로그인 성공 ! 사용자 ID : " + user.UserId);
-        //     ReadDataAsync().Forget();
-        // });
+            await ReadData();
+        }
+        else
+        {
+            await GuestLogin();
+        }
     }
 
 }

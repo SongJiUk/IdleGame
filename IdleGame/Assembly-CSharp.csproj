@@ -103,6 +103,7 @@
     <Compile Include="Assets\@Scripts\Skill\Player\Mage_M_Skill.cs" />
     <Compile Include="Assets\@Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\@Scripts\Manager\UpdateManager.cs" />
+    <Compile Include="Assets\@Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\@Scripts\Utils\DelegateHolder.cs" />
     <Compile Include="Assets\@Scripts\Manager\FirebaseManager.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_EventHandler.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Assets\@Scripts\Manager\IAPManager.cs" />
     <Compile Include="Assets\@Scripts\Skill\IBuff.cs" />
     <Compile Include="Assets\@Scripts\Controllers\RangeAttackController.cs" />
+    <Compile Include="Assets\@Scripts\UI\UI_SettingPopup.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\TwoHandSword_Skill.cs" />
     <Compile Include="Assets\@Scripts\Skill\SkillRegistry.cs" />
     <Compile Include="Assets\@Scripts\Scenes\BaseScene.cs" />

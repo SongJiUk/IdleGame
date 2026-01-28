@@ -456,6 +456,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         switch (_clickButtonType)
         {
             case Buttons.SettingButton:
+                var settingPopup = await Managers.UIM.ShowPopup<UI_SettingPopup>();
                 break;
 
             case Buttons.MailBoxButton:
@@ -466,6 +467,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 break;
 
             case Buttons.InventoryButton:
+                //await Managers.UIM.ShowPopup<UI_Inventory>();
                 break;
 
             case Buttons.FastButton:

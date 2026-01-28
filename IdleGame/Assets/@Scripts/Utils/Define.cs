@@ -194,4 +194,12 @@ public static class Define
         dia300,
     }
 
+    public enum Sound
+    {
+        Bgm,
+        Effect,
+        Max
+    }
+
+
 }

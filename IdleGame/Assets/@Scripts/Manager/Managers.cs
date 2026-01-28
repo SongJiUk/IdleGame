@@ -32,7 +32,7 @@ public class Managers : MonoBehaviour
     readonly RelicManager relicManager = new();
     readonly QuestManager questManager = new();
     readonly IAPManager iapMamager = new();
-
+    readonly SoundManager soundManager = new();
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
     public static ResourceManager ResourceM { get { return Instance?.resourceManager; } }
     public static UIManager UIM { get { return Instance?.uIManager; } }
@@ -54,7 +54,7 @@ public class Managers : MonoBehaviour
     public static RelicManager RelicM { get { return Instance?.relicManager; } }
     public static QuestManager QuestM { get { return Instance?.questManager; } }
     public static IAPManager IAPM { get { return Instance?.iapMamager; } }
-
+    public static SoundManager SoundM { get { return Instance?.soundManager; } }
     public static bool isFast = false;
     public static float save_Timer = 0.0f;
 
