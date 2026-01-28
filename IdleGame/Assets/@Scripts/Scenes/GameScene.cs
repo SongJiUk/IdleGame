@@ -9,6 +9,6 @@ public class GameScene : BaseScene
         base.Init();
         Managers.UIM.ShowScene<UI_GameScene>().Init();
 
-        //TODO : ���⼭ ������ �ٷ� �ؾ��ϳ�?
+        Managers.SoundM.Play(Define.Sound.Bgm, "Bgm_Game");
     }
 }

@@ -11,13 +11,13 @@ public class UI_SettingPopup : UI_Popup, ITickable
     {
         CloseButton,
         CameraShakeButton,
+        PrivacyPolicyButton,
+        UserIDButton,
     }
     enum Sliders
     {
         BgmSlider,
         EffectSlider,
-
-
     }
 
     enum GameObjects
@@ -27,11 +27,12 @@ public class UI_SettingPopup : UI_Popup, ITickable
     }
 
     enum Texts
-    { UserIDText }
+    {
+        UserIDText
+    }
 
     #endregion
 
-    bool isCameraShake = false;
 
     public async override UniTask<bool> Init()
     {
@@ -50,10 +51,14 @@ public class UI_SettingPopup : UI_Popup, ITickable
 
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
         GetButton(ButtonsType, (int)Buttons.CameraShakeButton).gameObject.BindEvent(OnClickCameraShakeButton);
+        GetButton(ButtonsType, (int)Buttons.PrivacyPolicyButton).gameObject.BindEvent(OnClickPrivacyPolicyButton);
+        GetButton(ButtonsType, (int)Buttons.UserIDButton).gameObject.BindEvent(OnClickUniqueClipboard);
 
         GetText(TextsType, (int)Texts.UserIDText).text = $"Unique ID : {Managers.FirebaseM.CurrentUser.UserId}";
         GetSlider(SlidersType, (int)Sliders.BgmSlider).value = Managers.SoundM.BgmValue;
         GetSlider(SlidersType, (int)Sliders.EffectSlider).value = Managers.SoundM.EffectValue;
+
+        CameraShakeCheck();
         return true;
     }
 
@@ -61,7 +66,7 @@ public class UI_SettingPopup : UI_Popup, ITickable
     {
         Managers.UpdateM.Register(this);
     }
-  
+
 
     void OnClickCloseButton()
     {
@@ -71,17 +76,39 @@ public class UI_SettingPopup : UI_Popup, ITickable
 
         Managers.UIM.ClosePopup(this).Forget();
     }
-
+    bool CameraShakeCheck()
+    {
+        bool isCameraShake = PlayerPrefs.GetInt("CAM") == 0 ? true : false;
+        GetObject(GameObjectsType, (int)GameObjects.CameraShakeCheckImage).SetActive(isCameraShake);
+        return isCameraShake;
+    }
     void OnClickCameraShakeButton()
     {
-        isCameraShake = !isCameraShake;
 
-        GetObject(GameObjectsType, (int)GameObjects.CameraShakeCheckImage).SetActive(isCameraShake);
+        PlayerPrefs.SetInt("CAM", CameraShakeCheck() == true ? 1 : 0);
+        CameraShakeCheck();
     }
 
+    void OnClickPrivacyPolicyButton()
+    {
+        OpenURL("https://deserted-bream-361.notion.site/KOR-2f0ea58668dd80de93d3d0bee603c964?pvs=73");
+    }
+
+    void OpenURL(string _url)
+    {
+        Application.OpenURL(_url);
+    }
+
+    void OnClickUniqueClipboard()
+    {
+        GUIUtility.systemCopyBuffer = Managers.FirebaseM.CurrentUser.UserId;
+        Managers.UIM.ShowToast("복사 완료");
+    }
     public void Tick(float _deltaTime)
     {
         Managers.SoundM.BgmValue = GetSlider(SlidersType, (int)Sliders.BgmSlider).value;
+        Managers.SoundM.audioSources[0].volume = Managers.SoundM.BgmValue;
         Managers.SoundM.EffectValue = GetSlider(SlidersType, (int)Sliders.EffectSlider).value;
+        Managers.SoundM.audioSources[1].volume = Managers.SoundM.EffectValue;
     }
 }

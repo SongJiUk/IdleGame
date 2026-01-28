@@ -151,6 +151,7 @@ public class UI_TitleScene : UI_Scene
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);
         GetText(TextsType, (int)Texts.DataLoadText).text = "데이터가 정상적으로 로딩되었습니다,";
         StartBlinkTween();
+        Managers.SoundM.Play(Define.Sound.Bgm, "Bgm_Title");
         isLoadEnd = true;
 
     }

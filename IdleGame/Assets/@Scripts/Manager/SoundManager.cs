@@ -5,7 +5,7 @@ using System;
 
 public class SoundManager
 {
-    private AudioSource[] audioSources = new AudioSource[(int)Define.Sound.Max];
+    public AudioSource[] audioSources = new AudioSource[(int)Define.Sound.Max];
     Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
     public bool IsSoundOn { get; private set; } = true;
 
@@ -57,6 +57,15 @@ public class SoundManager
             DoPlay(_sound, _source, clip, _pitch);
             return;
         }
+
+        var loadedClip = Managers.ResourceM.Load<AudioClip>(_key);
+        if (loadedClip == null)
+        {
+            Debug.LogError($"SoundManger : 해당 키값이 없음 {_key}");
+            return;
+        }
+        audioClips[_key] = loadedClip;
+        DoPlay(_sound, _source, loadedClip, _pitch);
     }
 
     private void DoPlay(Define.Sound _sound, AudioSource _source, AudioClip _clip, float _pitch)
@@ -67,18 +76,20 @@ public class SoundManager
             case Define.Sound.Bgm:
                 if (_source.isPlaying) _source.Stop();
                 _source.clip = _clip;
-                //if (Managers.GameM.BGMOn) _source.Play();
+                _source.volume = BgmValue;
+                _source.Play();
                 break;
 
             case Define.Sound.Effect:
                 if (_source.isPlaying) _source.Stop();
                 _source.clip = _clip;
-                //if (Managers.GameM.EffectSoundOn) _source.Play();
+                _source.volume = EffectValue;
+                _source.Play();
                 break;
 
             default:
                 //if (Managers.GameM.EffectSoundOn)
-                    _source.PlayOneShot(_clip);
+                _source.PlayOneShot(_clip);
                 break;
         }
     }

@@ -58,7 +58,7 @@ public class GoodsDirecting : UIDirecting
         targetPos = _pos;
         transform.SetParent(Managers.UIM.SceneUI.WorldGoodsParent, false);
 
-        if(_isWorldPos)
+        if (_isWorldPos)
         {
             if (cam != null) transform.position = cam.WorldToScreenPoint(targetPos);
         }
@@ -67,10 +67,10 @@ public class GoodsDirecting : UIDirecting
             transform.position = targetPos;
         }
 
-        
+
         for (int i = 0; i < childs.Length; i++) childs[i].anchoredPosition = Vector2.zero;
 
-        switch(type)
+        switch (type)
         {
             case Define.GoodsType.Gold:
                 Managers.GameM.Gold += _count;
@@ -80,7 +80,7 @@ public class GoodsDirecting : UIDirecting
                 break;
 
         }
-        
+
         Coin_Effect_DoTween(cts.Token).Forget();
     }
 
@@ -88,22 +88,22 @@ public class GoodsDirecting : UIDirecting
     {
         try
         {
-          
+
             Vector3 destinationPos = type == Define.GoodsType.Gold
                 ? Managers.UIM.SceneUI.CoinDirectingTr.position
                 : Managers.UIM.SceneUI.DiaDirectingTr.position;
 
             Sprite symbolSprite = Managers.ResourceM.GetAtlas(type.ToString());
 
-            
+
             for (int i = 0; i < childs.Length; i++)
             {
                 if (childs[i] == null) continue;
 
                 RectTransform rect = childs[i];
-                rect.anchoredPosition = Vector2.zero; 
+                rect.anchoredPosition = Vector2.zero;
 
-                
+
                 if (rect.TryGetComponent<Image>(out var img)) img.sprite = symbolSprite;
 
                 Vector2 scatterPos = Random.insideUnitCircle * distanceRange;

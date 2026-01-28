@@ -14,6 +14,8 @@ public class CameraManager
     }
     public async UniTask CameraShake()
     {
+        if (PlayerPrefs.GetInt("CAM") == 1) return;
+
         if (cc == null || cc.isCameraShake) return;
         cc.isCameraShake = true;
 
