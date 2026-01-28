@@ -22,6 +22,10 @@ public class UI_ShopPopup : UI_Popup
         RelicElevenGachaButton,
         RelicAdGachaButton,
         RelicGachaListButton,
+
+        RemoveAdsButton,
+        Dia300Button,
+
     }
 
     enum Texts
@@ -64,6 +68,7 @@ public class UI_ShopPopup : UI_Popup
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
+        Managers.GameM.OnGoodsChanged += CheckGoodsCount;
 
         GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
@@ -87,6 +92,9 @@ public class UI_ShopPopup : UI_Popup
         GetButton(ButtonsType, (int)Buttons.RelicOneGachaButton).gameObject.BindEvent(OnClickRelicOneGachaButton);
         GetButton(ButtonsType, (int)Buttons.RelicElevenGachaButton).gameObject.BindEvent(OnClickRelicElevenGachaButton);
         GetButton(ButtonsType, (int)Buttons.RelicGachaListButton).gameObject.BindEvent(OnClickRelicGachaListButton);
+
+        GetButton(ButtonsType, (int)Buttons.RemoveAdsButton).gameObject.BindEvent(() => OnClickGoodsButton(Buttons.RemoveAdsButton));
+        GetButton(ButtonsType, (int)Buttons.Dia300Button).gameObject.BindEvent(() => OnClickGoodsButton(Buttons.Dia300Button));
         return true;
     }
     public override void SetInfo()
@@ -257,8 +265,29 @@ public class UI_ShopPopup : UI_Popup
     {
     }
     #endregion
+
+    public void GetProuduct(string _name)
+    {
+        Managers.IAPM.Purchase(_name);
+    }
+
+    void OnClickGoodsButton(Buttons _clickButton)
+    {
+        switch (_clickButton)
+        {
+            case Buttons.RemoveAdsButton:
+                GetProuduct(Define.IAP.removeads.ToString());
+                break;
+
+            case Buttons.Dia300Button :
+                GetProuduct(Define.IAP.dia300.ToString());
+                break;
+        }
+
+    }
     void OnClickCloseButton()
     {
+        Managers.GameM.OnGoodsChanged -= CheckGoodsCount;
         TriggerClose(this, true).Forget();
     }
 }

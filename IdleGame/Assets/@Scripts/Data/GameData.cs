@@ -68,6 +68,8 @@ public class GameData
     public int[] DungeonKey = { 2, 2 };
     public int[] DungeonKeyAssets = { 0, 0 };
     public int[] DungeonClearLevel = { 0, 0 };
+
+    public bool ADS_Remove = false;
     //플레이어가 가지고 있는 데이터 저장
     public Dictionary<string, CharacterHolder> Characters_Data = new Dictionary<string, CharacterHolder>();
     public Dictionary<string, Holder> Character_Holder = new Dictionary<string, Holder>();

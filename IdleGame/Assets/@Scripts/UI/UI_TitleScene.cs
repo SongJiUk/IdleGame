@@ -144,6 +144,7 @@ public class UI_TitleScene : UI_Scene
         Managers.ObjectM.Init();
         Managers.AdM.Init();
         Managers.QuestM.Init();
+        Managers.IAPM.InitUnityIAP();
         await Managers.FirebaseM.Init();
 
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);

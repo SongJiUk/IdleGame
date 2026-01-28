@@ -187,4 +187,11 @@ public static class Define
         CriticalP, //크리티컬 확률
         CriticalD // 크리티컬 데미지
     }
+
+    public enum IAP
+    {
+        removeads,
+        dia300,
+    }
+
 }

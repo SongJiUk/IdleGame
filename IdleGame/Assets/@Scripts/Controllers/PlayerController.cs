@@ -153,8 +153,6 @@ public class PlayerController : CreatureController
 
     public override void Attack()
     {
-        // 지점 1: 이벤트 호출 확인
-        Debug.Log($"[Step 1] Attack 이벤트 발생 - {gameObject.name}");
         isAttacking = true;
 
         if (currentTarget == null || currentTarget.IsDead)
@@ -165,20 +163,13 @@ public class PlayerController : CreatureController
 
         if (currentTarget == null)
         {
-            Debug.LogWarning("[Step 1-Error] 타겟 찾기 실패");
             StopAttack();
             return;
         }
 
-        // 지점 2: 데이터 확인
         if (DATA == null) { Debug.LogError("DATA가 Null입니다!"); return; }
 
-        // 지점 3: 스폰 직전
-        Debug.Log($"[Step 2] 스폰 시도 - ID: {DATA.ProjectileDataID}, Target: {currentTarget.name}");
-
-
-        Debug.Log("<color=yellow>[Step 3-Success] 공격 오브젝트 생성 완료!</color>");
-
+       
         if (trails != null)
         {
             foreach (var trail in trails) trail.SetActive(true);

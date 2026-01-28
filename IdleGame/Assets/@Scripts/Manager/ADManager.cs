@@ -111,6 +111,16 @@ public class ADManager
         OnRewardedCallback = _OnRewarded;
         OnReSumeCallback = _OnResume;
 
+        if(Managers.GameM.gameData.ADS_Remove)
+        {
+            if (OnRewardedCallback != null)
+            {
+                OnRewardedCallback?.Invoke();
+                OnRewardedCallback = null;
+            }
+            return;
+        }
+
         if (rewardedAd != null && rewardedAd.CanShowAd())
         {
             rewardedAd.Show((Reward reward) =>
@@ -118,8 +128,12 @@ public class ADManager
                 Debug.Log($"보상형 광고 보상 지급 : {reward.Type} / {reward.Amount}");
 
 #if UNITY_EDITOR
-                if(OnRewardedCallback!= null) OnRewardedCallback?.Invoke();
-                OnRewardedCallback = null;
+                if (OnRewardedCallback != null)
+                {
+                    OnRewardedCallback = null;
+                    OnRewardedCallback?.Invoke();
+                }
+                
 #endif
             });
         }

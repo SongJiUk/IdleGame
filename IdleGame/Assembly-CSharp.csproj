@@ -136,6 +136,7 @@
     <Compile Include="Assets\@Scripts\UI\UI_Item.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_RelicsPopup.cs" />
     <Compile Include="Assets\@Scripts\UI\UIDirecting\SpeechBubble.cs" />
+    <Compile Include="Assets\@Scripts\UI\UI_Reward.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\Archer_Skill.cs" />
     <Compile Include="Assets\@Scripts\Manager\CharacterManager.cs" />
     <Compile Include="Assets\@Scripts\Manager\SkillEffectDataLoader.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Assets\@Scripts\UI\UI_SmeltingPopup.cs" />
     <Compile Include="Assets\@Scripts\Manager\CameraManager.cs" />
     <Compile Include="Assets\@Scripts\Controllers\DungeonNPCController.cs" />
+    <Compile Include="Assets\@Scripts\Manager\IAPManager.cs" />
     <Compile Include="Assets\@Scripts\Skill\IBuff.cs" />
     <Compile Include="Assets\@Scripts\Controllers\RangeAttackController.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\TwoHandSword_Skill.cs" />
@@ -250,7 +252,6 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\Firebase\Plugins\Google.MiniJson.dll" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\AddressableAssetsData\link.xml" />
     <None Include="Assets\@Resources\Prefabs\Creature\Monster\Charttyp\Goblin demon creature modular unit Demo\Informations\Read_Me.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Firebase\Plugins\iOS\Firebase.App.dll" />

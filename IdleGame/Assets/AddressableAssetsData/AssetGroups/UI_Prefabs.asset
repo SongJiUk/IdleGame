@@ -17,157 +17,192 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 14a4e6e06b76a43469ead6b4fce8c37f
   m_SerializeEntries:
-  - m_GUID: 7a7ad21e51ca9df4f84ae02f95baf0d0
-    m_Address: UI_Item
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - AlwaysNeed
-    - PrevLoad
-  - m_GUID: 86817f8dc47294ef986683e3e122a603
-    m_Address: UI_AdsBuffPopup
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: b5444806e2d24894398dd0f58fd309ec
-    m_Address: UI_SavingMode
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 692ab72a65ac9134e9e5154966948905
-    m_Address: UI_ItemInfo
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 648d06ad38a894037bf268df68cd3433
-    m_Address: UI_HeroPopup
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 5e96f877de2ac8745886d3a1ce93ba2c
-    m_Address: UI_CharacterIcon
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: d480dc732dfd6e64c927ba627d3746bc
-    m_Address: UI_TitleScene
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 7ea6f65d5f6144d24a2ae8d3d6ba67ec
-    m_Address: UI_ShopPopup
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 63aaa2536a78e41f08fa358fba34f438
-    m_Address: UI_GachaPopup
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: c8c6dda95b3a94a0caf261c9f5c792cc
-    m_Address: UI_GachaHeroIcon
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 573bb91bbaa5bd64687b44612eb4d4be
-    m_Address: UI_GameScene
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: df4c8e2327f7ac244bd152b4027f6b28
-    m_Address: UI_GachaListPopup
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 5eae5862bc8ab6441a42c7e365b325cd
-    m_Address: UI_CharacterInfoPopup
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 5f3464cff7c5f4ce5b214404391d7bd5
-    m_Address: UI_Inventory
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 908b16afe4bbf4ab9b0c3e02bc04095c
-    m_Address: UI_RelicGachaIcon
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 6361cf0a8e6f348f7855f25214146968
-    m_Address: UI_UpgradeHeroIcon
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: e0404e2a79af2479681b3ac400bf9be4
-    m_Address: UI_Toast
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 3d9a713ddbb2046a6b6e1289094f7b66
-    m_Address: UI_GameExitPopup
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
-  - m_GUID: 4ae7f9f5030569341867f1fa98b31ea7
-    m_Address: UI_OfflinePopup
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
   - m_GUID: 068e155be5d154bc892e3542f73d8e9b
     m_Address: UI_RelicIcon
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
-  - m_GUID: 59c909e45d1104f05a7ee0b51d4eefe4
-    m_Address: UI_RelicsPopup
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d9a713ddbb2046a6b6e1289094f7b66
+    m_Address: UI_GameExitPopup
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
-  - m_GUID: c664caf8e83bb48498dbd47b852e4bb9
-    m_Address: UI_RelicInfoPopup
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 41d73bcde6d4b4f14b35c85f1bb279eb
     m_Address: UI_UpgradeRelicIcon
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
-  - m_GUID: e033d84b4aef2470ba605e1ce2b858d4
-    m_Address: UI_UpgradePopup
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4ae7f9f5030569341867f1fa98b31ea7
+    m_Address: UI_OfflinePopup
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
-  - m_GUID: f9448b11b7ad547878102a46c1e93ca3
-    m_Address: UI_RelicGachaPopup
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 573bb91bbaa5bd64687b44612eb4d4be
+    m_Address: UI_GameScene
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
-  - m_GUID: aa1093889b9a44240bc11701587764ca
-    m_Address: UI_DungeonPopup
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59c909e45d1104f05a7ee0b51d4eefe4
+    m_Address: UI_RelicsPopup
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
-  - m_GUID: 727be1c217ac74abb8e510da29e2327d
-    m_Address: UI_DungeonResultIcon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5e96f877de2ac8745886d3a1ce93ba2c
+    m_Address: UI_CharacterIcon
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
-  - m_GUID: d2715190705634b54b3973a2b4a5f865
-    m_Address: UI_DungeonResultInfoPopup
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5eae5862bc8ab6441a42c7e365b325cd
+    m_Address: UI_CharacterInfoPopup
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
-  - m_GUID: 78eb10c40f53ae749a9a829faaf953d7
-    m_Address: UI_HeroStatPopup
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f3464cff7c5f4ce5b214404391d7bd5
+    m_Address: UI_Inventory
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6361cf0a8e6f348f7855f25214146968
+    m_Address: UI_UpgradeHeroIcon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 63aaa2536a78e41f08fa358fba34f438
+    m_Address: UI_GachaPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 648d06ad38a894037bf268df68cd3433
+    m_Address: UI_HeroPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 692ab72a65ac9134e9e5154966948905
+    m_Address: UI_ItemInfo
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 69ce8ff3f1cb44322850099b0793264b
     m_Address: UI_SmeltingPopup
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 727be1c217ac74abb8e510da29e2327d
+    m_Address: UI_DungeonResultIcon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78eb10c40f53ae749a9a829faaf953d7
+    m_Address: UI_HeroStatPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a7ad21e51ca9df4f84ae02f95baf0d0
+    m_Address: UI_Item
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ea6f65d5f6144d24a2ae8d3d6ba67ec
+    m_Address: UI_ShopPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86817f8dc47294ef986683e3e122a603
+    m_Address: UI_AdsBuffPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 908b16afe4bbf4ab9b0c3e02bc04095c
+    m_Address: UI_RelicGachaIcon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 981faa38314ba1946bf5278e8391b49c
+    m_Address: UI_Reward
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aa1093889b9a44240bc11701587764ca
+    m_Address: UI_DungeonPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5444806e2d24894398dd0f58fd309ec
+    m_Address: UI_SavingMode
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c664caf8e83bb48498dbd47b852e4bb9
+    m_Address: UI_RelicInfoPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8c6dda95b3a94a0caf261c9f5c792cc
+    m_Address: UI_GachaHeroIcon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2715190705634b54b3973a2b4a5f865
+    m_Address: UI_DungeonResultInfoPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d480dc732dfd6e64c927ba627d3746bc
+    m_Address: UI_TitleScene
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df4c8e2327f7ac244bd152b4027f6b28
+    m_Address: UI_GachaListPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e033d84b4aef2470ba605e1ce2b858d4
+    m_Address: UI_UpgradePopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0404e2a79af2479681b3ac400bf9be4
+    m_Address: UI_Toast
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f9448b11b7ad547878102a46c1e93ca3
+    m_Address: UI_RelicGachaPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ca570c7d28bbb4267b961b4eeab1c88e, type: 2}
   m_SchemaSet:

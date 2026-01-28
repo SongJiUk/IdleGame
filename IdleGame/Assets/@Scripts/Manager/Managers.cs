@@ -31,6 +31,7 @@ public class Managers : MonoBehaviour
     readonly FirebaseManager firebaseManager = new();
     readonly RelicManager relicManager = new();
     readonly QuestManager questManager = new();
+    readonly IAPManager iapMamager = new();
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
     public static ResourceManager ResourceM { get { return Instance?.resourceManager; } }
@@ -52,6 +53,7 @@ public class Managers : MonoBehaviour
     public static FirebaseManager FirebaseM { get { return Instance?.firebaseManager; } }
     public static RelicManager RelicM { get { return Instance?.relicManager; } }
     public static QuestManager QuestM { get { return Instance?.questManager; } }
+    public static IAPManager IAPM { get { return Instance?.iapMamager; } }
 
     public static bool isFast = false;
     public static float save_Timer = 0.0f;
