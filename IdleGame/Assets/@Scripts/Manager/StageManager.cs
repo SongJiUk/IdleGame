@@ -78,6 +78,12 @@ public class StageManager
                     count = 0;
                     clearEvent?.Invoke();
                     Managers.GameM.Stage++;
+
+                    if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.StageClear, out MissionInfo stageClearInfo))
+                    {
+                        stageClearInfo.Progress++;
+                    }
+
                     isDead = false;
                     break;
                 case StageState.Dead:
@@ -96,6 +102,10 @@ public class StageManager
                 case StageState.DungeonClear:
                     isDungeon = false;
                     count = 0;
+                    if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.DungeonClear, out MissionInfo dungeonclearInfo))
+                    {
+                        dungeonclearInfo.Progress++;
+                    }
                     dungeonClearEvent?.Invoke();
                     break;
 

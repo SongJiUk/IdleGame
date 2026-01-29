@@ -200,6 +200,22 @@ public static class Define
         Effect,
         Max
     }
+    public enum MissionType
+    {
+        Weekly,
+        Daily
+    }
 
-
+    public enum MissionTarget
+    {
+        DailyAttendance,
+        StageClear,
+        LevelUp,
+        HeroGacha,
+        RelicGacha,
+        Dungeon,
+        DungeonClear,
+        WatchingAD,
+        Smelting
+    }
 }

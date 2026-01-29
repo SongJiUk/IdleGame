@@ -430,6 +430,36 @@ namespace Data
     }
     #endregion
 
+    #region MissionData
+    [Serializable]
+    public class MissionData
+    {
+        public int MissionID;
+        public Define.MissionType MissionType;
+        public string MissionName;
+        public string Description;
+        public Define.MissionTarget MissionTarget;
+        public int MissionTargetValue;
+        public int ClearRewardItemID;
+        public int RewardCount;
+    }
+
+    public class MissionDataLoader : ILoader<int, MissionData>
+    {
+        public List<MissionData> dataList = new List<MissionData>();
+        public Dictionary<int, MissionData> MakeDict()
+        {
+            Dictionary<int, MissionData> dic = new Dictionary<int, MissionData>();
+            foreach (var data in dataList)
+            {
+                dic.Add(data.MissionID, data);
+            }
+
+            return dic;
+        }
+    }
+    #endregion
+
     #region QuestData
     [Serializable]
     public class QuestData
@@ -533,4 +563,6 @@ namespace Data
         }
     }
     #endregion
+
+
 }

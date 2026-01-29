@@ -133,6 +133,7 @@ public class UI_TitleScene : UI_Scene
             Debug.LogError(e.Message);
         }
     }
+
     async UniTask FinishLoadingProcess()
     {
 
@@ -154,6 +155,10 @@ public class UI_TitleScene : UI_Scene
         StartBlinkTween();
         Managers.SoundM.Play(Define.Sound.Bgm, "Bgm_Title");
         isLoadEnd = true;
+        if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.DailyAttendance, out MissionInfo Info))
+        {
+            Info.Progress++;
+        }
 
     }
 

@@ -57,9 +57,9 @@ public class ADManager
                 IntersititialID = "ca-app-pub-7745197509342356/8132763505";
                 RewardID = "ca-app-pub-7745197509342356/5506600169";
 #else
-                BannderID = Test_Banner_ID;
-                IntersititialID = Test_Interstitial_ID;
-                RewardID = Test_Reward_ID;
+            BannderID = Test_Banner_ID;
+            IntersititialID = Test_Interstitial_ID;
+            RewardID = Test_Reward_ID;
 #endif
         }
 
@@ -74,7 +74,7 @@ public class ADManager
         }
 
         rewardedAd = _ad;
-        
+
         rewardedAd.OnAdFullScreenContentClosed += () =>
         {
             Debug.Log("광고 닫힘, 다시 로드 시도");
@@ -111,12 +111,17 @@ public class ADManager
         OnRewardedCallback = _OnRewarded;
         OnReSumeCallback = _OnResume;
 
-        if(Managers.GameM.gameData.ADS_Remove)
+        if (Managers.GameM.gameData.ADS_Remove)
         {
             if (OnRewardedCallback != null)
             {
                 OnRewardedCallback?.Invoke();
                 OnRewardedCallback = null;
+
+                if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.WatchingAD, out MissionInfo Info))
+                {
+                    Info.Progress++;
+                }
             }
             return;
         }
@@ -126,14 +131,16 @@ public class ADManager
             rewardedAd.Show((Reward reward) =>
             {
                 Debug.Log($"보상형 광고 보상 지급 : {reward.Type} / {reward.Amount}");
-
+                if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.WatchingAD, out MissionInfo Info))
+                {
+                    Info.Progress++;
+                }
 #if UNITY_EDITOR
                 if (OnRewardedCallback != null)
                 {
                     OnRewardedCallback = null;
                     OnRewardedCallback?.Invoke();
                 }
-                
 #endif
             });
         }
@@ -146,7 +153,7 @@ public class ADManager
 
     public void LoadIntersititialAd()
     {
-        if(interstitialAd != null)
+        if (interstitialAd != null)
         {
             interstitialAd.Destroy();
             interstitialAd = null;
@@ -155,7 +162,7 @@ public class ADManager
         AdRequest request = new AdRequest();
         InterstitialAd.Load(IntersititialID, request, (InterstitialAd ad, LoadAdError error) =>
         {
-            if(error != null || ad ==null)
+            if (error != null || ad == null)
             {
                 Debug.LogError($"전면광고 로드 실패 : {error.GetMessage()}");
                 return;
@@ -172,7 +179,7 @@ public class ADManager
 
     public void ShowIntersititialAd()
     {
-        if(interstitialAd != null && interstitialAd.CanShowAd())
+        if (interstitialAd != null && interstitialAd.CanShowAd())
         {
             interstitialAd.Show();
         }

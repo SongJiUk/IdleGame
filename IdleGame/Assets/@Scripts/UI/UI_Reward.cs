@@ -40,6 +40,10 @@ public class UI_Reward : UI_Base
         return true;
     }
 
+    public void SetInfo(int _count)
+    {
+        GetRewardInit("Dia", _count);
+    }
 
     public void GetIAPReward(Define.IAP _iap)
     {

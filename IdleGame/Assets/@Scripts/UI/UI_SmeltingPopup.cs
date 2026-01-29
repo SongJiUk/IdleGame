@@ -254,6 +254,10 @@ public class UI_SmeltingPopup : UI_Popup
         {
             SetSmelt();
             RefreshUI();
+            if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.Smelting, out MissionInfo Info))
+            {
+                Info.Progress++;
+            }
         }
     }
 }

@@ -93,7 +93,7 @@ public class SoundManager
                 break;
         }
     }
-    public void PlayButtonClick() => Play(Define.Sound.Effect, "ButtonClick");
+    public void PlayButtonClick() => Play(Define.Sound.Effect, "lick");
     public void PlayPopupClose() => Play(Define.Sound.Effect, "PopupClose");
 
 

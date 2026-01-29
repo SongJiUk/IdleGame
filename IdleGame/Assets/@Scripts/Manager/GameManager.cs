@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[Serializable]
+public class MissionInfo
+{
+    public int Progress;
+    public bool isRewarded;
+}
 public class GameManager
 {
     public PlayerController mPlayer { get { return Managers.ObjectM?.mPlayer; } }
@@ -195,4 +202,9 @@ public class GameManager
         Managers.QuestM.UpdateQuest();
     }
 
+    public Dictionary<Define.MissionTarget, MissionInfo> MissionDic
+    {
+        get { return gameData.MissionDic; }
+        set { gameData.MissionDic = value; }
+    }
 }

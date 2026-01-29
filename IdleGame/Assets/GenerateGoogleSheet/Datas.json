@@ -1,37 +1,37 @@
 {
   "WeaponData": [
     {
-      "DataID": 1,
+      "": 1,
       "Name": "gun",
       "Damage": 5,
       "Type": "Common"
     },
     {
-      "DataID": 2,
+      "": 2,
       "Name": "bow",
       "Damage": 4,
       "Type": "UnCommon"
     },
     {
-      "DataID": 3,
+      "": 3,
       "Name": "crossbow",
       "Damage": 2,
       "Type": "Rare"
     },
     {
-      "DataID": 4,
+      "": 4,
       "Name": "nife",
       "Damage": 4,
       "Type": "Rare"
     },
     {
-      "DataID": 5,
+      "": 5,
       "Name": "sword",
       "Damage": 5,
       "Type": "Unique"
     },
     {
-      "DataID": 6,
+      "": 6,
       "Name": "spear",
       "Damage": 1,
       "Type": "Legendary"
@@ -1096,7 +1096,98 @@
       "ResultDataID": 30001
     }
   ],
-  "MissionData": [],
+  "MissionData": [
+    {
+      "MissionID": 80001,
+      "MissionType": "Daily",
+      "MissionName": "일일 출석",
+      "Description": "하루에 한번 출석하세요",
+      "MissionTarget": "DailyAttendance",
+      "MissionTargetValue": 1,
+      "ClearRewardItemID": 30001,
+      "RewardCount": 50
+    },
+    {
+      "MissionID": 80002,
+      "MissionType": "Daily",
+      "MissionName": "스테이지 클리어",
+      "Description": "스테이지를 클리어하세요",
+      "MissionTarget": "StageClear",
+      "MissionTargetValue": 1,
+      "ClearRewardItemID": 30001,
+      "RewardCount": 50
+    },
+    {
+      "MissionID": 80003,
+      "MissionType": "Daily",
+      "MissionName": "레벨 업",
+      "Description": "레벨업을 시켜보세요",
+      "MissionTarget": "LevelUp",
+      "MissionTargetValue": 1,
+      "ClearRewardItemID": 30001,
+      "RewardCount": 50
+    },
+    {
+      "MissionID": 80004,
+      "MissionType": "Daily",
+      "MissionName": "영웅뽑기",
+      "Description": "영웅을 3회 뽑아보세요",
+      "MissionTarget": "HeroGacha",
+      "MissionTargetValue": 3,
+      "ClearRewardItemID": 30001,
+      "RewardCount": 100
+    },
+    {
+      "MissionID": 80005,
+      "MissionType": "Daily",
+      "MissionName": "유물뽑기",
+      "Description": "유물을 3회 뽑아보세요",
+      "MissionTarget": "RelicGacha",
+      "MissionTargetValue": 3,
+      "ClearRewardItemID": 30001,
+      "RewardCount": 100
+    },
+    {
+      "MissionID": 80006,
+      "MissionType": "Daily",
+      "MissionName": "던전 입장",
+      "Description": "던전에 입장해보세요",
+      "MissionTarget": "Dungeon",
+      "MissionTargetValue": 1,
+      "ClearRewardItemID": 30001,
+      "RewardCount": 100
+    },
+    {
+      "MissionID": 80007,
+      "MissionType": "Daily",
+      "MissionName": "던전 클리어",
+      "Description": "던전을 클리어하세요",
+      "MissionTarget": "DungeonClear",
+      "MissionTargetValue": 1,
+      "ClearRewardItemID": 30001,
+      "RewardCount": 200
+    },
+    {
+      "MissionID": 80008,
+      "MissionType": "Daily",
+      "MissionName": "광고시청",
+      "Description": "광고를 2회 시청하세요",
+      "MissionTarget": "WatchingAD",
+      "MissionTargetValue": 2,
+      "ClearRewardItemID": 30001,
+      "RewardCount": 200
+    },
+    {
+      "MissionID": 80009,
+      "MissionType": "Daily",
+      "MissionName": "각인 설정하기",
+      "Description": "각인을 1회 설정하세요",
+      "MissionTarget": "Smelting",
+      "MissionTargetValue": 1,
+      "ClearRewardItemID": 30001,
+      "RewardCount": 100
+    }
+  ],
   "QuestData": [
     {
       "Level": 0,

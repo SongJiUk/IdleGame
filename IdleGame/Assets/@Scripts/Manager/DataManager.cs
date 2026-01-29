@@ -18,7 +18,7 @@ public interface ILoader<key, value>
 public class DataManager
 {
     public Dictionary<int, Data.CreatureData> CreatureDataDic = new Dictionary<int, Data.CreatureData>();
-    public Dictionary<int, Data.WeaponData> WeaponDataDic = new Dictionary<int, Data.WeaponData>();
+    //public Dictionary<int, Data.WeaponData> WeaponDataDic = new Dictionary<int, Data.WeaponData>();
     public Dictionary<int, Data.ProjectileData> ProjectileDataDic = new Dictionary<int, Data.ProjectileData>();
     public Dictionary<int, Data.ItemData> ItemDataDic = new Dictionary<int, Data.ItemData>();
     public Dictionary<int, Data.StageSpawnData> StageDataDic = new Dictionary<int, Data.StageSpawnData>();
@@ -28,6 +28,7 @@ public class DataManager
     public Dictionary<int, Data.VFXData> VFXDataDic = new Dictionary<int, Data.VFXData>();
     public Dictionary<int, Data.GachaData> GachaDataDic = new Dictionary<int, Data.GachaData>();
     public Dictionary<int, Data.DungeonData> DungeonDataDic = new Dictionary<int, Data.DungeonData>();
+    public Dictionary<int, Data.MissionData> MissionDataDic = new Dictionary<int, Data.MissionData>();
     public Dictionary<int, Data.QuestData> QuestDataDic = new Dictionary<int, Data.QuestData>();
     public Dictionary<int, Data.NPCData> NPCDataDic = new Dictionary<int, Data.NPCData>();
     public Dictionary<int, Data.SmeltData> SmeltDataDic = new Dictionary<int, Data.SmeltData>();
@@ -45,7 +46,7 @@ public class DataManager
         JObject jsonObj = JObject.Parse(jsonAsset.text);
 
         CreatureDataDic = LoadJson<Data.CreatureDataLoader, int, Data.CreatureData>(jsonObj, "CreatureData").MakeDict();
-        WeaponDataDic = LoadJson<Data.WeaponDataLoader, int, Data.WeaponData>(jsonObj, "WeaponData").MakeDict();
+        //WeaponDataDic = LoadJson<Data.WeaponDataLoader, int, Data.WeaponData>(jsonObj, "WeaponData").MakeDict();
         ProjectileDataDic = LoadJson<Data.ProjectileDataLoader, int, Data.ProjectileData>(jsonObj, "ProjectileData").MakeDict();
         ItemDataDic = LoadJson<Data.ItemDataLoader, int, Data.ItemData>(jsonObj, "ItemData").MakeDict();
         StageDataDic = LoadJson<Data.StageSpawnDataLoader, int, Data.StageSpawnData>(jsonObj, "StageSpawnData").MakeDict();
@@ -55,6 +56,7 @@ public class DataManager
         VFXDataDic = LoadJson<Data.VFXDataLoader, int, Data.VFXData>(jsonObj, "VFXData").MakeDict();
         GachaDataDic = LoadJson<Data.GachaDataLoader, int, Data.GachaData>(jsonObj, "GachaData").MakeDict();
         DungeonDataDic = LoadJson<Data.DungeonDataLoader, int, Data.DungeonData>(jsonObj, "DungeonData").MakeDict();
+        MissionDataDic = LoadJson<Data.MissionDataLoader, int, Data.MissionData>(jsonObj, "MissionData").MakeDict();
         QuestDataDic = LoadJson<Data.QuestDataLoader, int, Data.QuestData>(jsonObj, "QuestData").MakeDict();
         NPCDataDic = LoadJson<Data.NPCDataLoader, int, Data.NPCData>(jsonObj, "NPCData").MakeDict();
         SmeltDataDic = LoadJson<Data.SmeltDataLoader, int, Data.SmeltData>(jsonObj, "SmeltData").MakeDict();

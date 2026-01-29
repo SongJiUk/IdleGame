@@ -93,7 +93,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Character5_PlusButton,
         Character6_PlusButton,
         FastButton,
-        BuffsButton
+        BuffsButton,
+        DailyMissionButton
     }
 
     enum Texts
@@ -476,6 +477,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             case Buttons.BuffsButton:
                 AdsBuffPopup = await Managers.UIM.ShowPopup<UI_AdsBuffPopup>();
 
+                break;
+            case Buttons.DailyMissionButton:
+                await Managers.UIM.ShowPopup<UI_MissionPopup>();
                 break;
             case Buttons.QuestButton:
                 bool isReward;
