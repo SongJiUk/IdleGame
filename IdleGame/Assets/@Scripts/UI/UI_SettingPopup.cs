@@ -13,6 +13,9 @@ public class UI_SettingPopup : UI_Popup, ITickable
         CameraShakeButton,
         PrivacyPolicyButton,
         UserIDButton,
+        KoButton,
+        EnButton,
+        JaButton,
     }
     enum Sliders
     {
@@ -54,6 +57,10 @@ public class UI_SettingPopup : UI_Popup, ITickable
         GetButton(ButtonsType, (int)Buttons.PrivacyPolicyButton).gameObject.BindEvent(OnClickPrivacyPolicyButton);
         GetButton(ButtonsType, (int)Buttons.UserIDButton).gameObject.BindEvent(OnClickUniqueClipboard);
 
+        GetButton(ButtonsType, (int)Buttons.KoButton).gameObject.BindEvent(() => OnClickLanguageButton(Buttons.KoButton));
+        GetButton(ButtonsType, (int)Buttons.EnButton).gameObject.BindEvent(() => OnClickLanguageButton(Buttons.EnButton));
+        GetButton(ButtonsType, (int)Buttons.JaButton).gameObject.BindEvent(() => OnClickLanguageButton(Buttons.JaButton));
+
         GetText(TextsType, (int)Texts.UserIDText).text = $"Unique ID : {Managers.FirebaseM.CurrentUser.UserId}";
         GetSlider(SlidersType, (int)Sliders.BgmSlider).value = Managers.SoundM.BgmValue;
         GetSlider(SlidersType, (int)Sliders.EffectSlider).value = Managers.SoundM.EffectValue;
@@ -67,6 +74,26 @@ public class UI_SettingPopup : UI_Popup, ITickable
         Managers.UpdateM.Register(this);
     }
 
+    async void OnClickLanguageButton(Buttons _button)
+    {
+        var popup = await Managers.UIM.ShowPopup<UI_ChangeLanguagePopup>();
+        string language = "";
+        switch(_button)
+        {
+            case Buttons.KoButton:
+                language = "ko";
+                break;
+
+            case Buttons.EnButton:
+                language = "en";
+                break;
+
+            case Buttons.JaButton:
+                language = "ja";
+                break;
+        }
+        popup.SetInfo(language);
+    }
 
     void OnClickCloseButton()
     {

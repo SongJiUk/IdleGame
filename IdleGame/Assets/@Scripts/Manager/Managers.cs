@@ -33,6 +33,7 @@ public class Managers : MonoBehaviour
     readonly QuestManager questManager = new();
     readonly IAPManager iapMamager = new();
     readonly SoundManager soundManager = new();
+    readonly LocalizationManager localizationManager = new();
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
     public static ResourceManager ResourceM { get { return Instance?.resourceManager; } }
     public static UIManager UIM { get { return Instance?.uIManager; } }
@@ -55,6 +56,8 @@ public class Managers : MonoBehaviour
     public static QuestManager QuestM { get { return Instance?.questManager; } }
     public static IAPManager IAPM { get { return Instance?.iapMamager; } }
     public static SoundManager SoundM { get { return Instance?.soundManager; } }
+    public static LocalizationManager LocalM { get { return Instance?.localizationManager; } }
+
     public static bool isFast = false;
     public static float save_Timer = 0.0f;
 

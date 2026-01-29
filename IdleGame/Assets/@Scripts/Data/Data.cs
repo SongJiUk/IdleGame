@@ -5,6 +5,34 @@ using UnityEngine;
 
 namespace Data
 {
+    #region Localization
+    [Serializable]
+    public class Localization
+    {
+        public string key;
+        public string ko;
+        public string en;
+        public string ja;
+    }
+
+    public class LocalizationLoader : ILoader<string, Localization>
+    {
+        public List<Localization> dataList = new List<Localization>();
+        public Dictionary<string, Localization> MakeDict()
+        {
+            Dictionary<string, Localization> dic = new Dictionary<string, Localization>();
+            foreach (Localization data in dataList)
+            {
+                dic.Add(data.key, data);
+            }
+
+            return dic;
+        }
+    }
+
+    #endregion
+
+
     #region CreatureData
     [Serializable]
     public class CreatureData

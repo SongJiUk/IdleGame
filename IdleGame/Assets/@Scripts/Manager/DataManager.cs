@@ -31,6 +31,7 @@ public class DataManager
     public Dictionary<int, Data.QuestData> QuestDataDic = new Dictionary<int, Data.QuestData>();
     public Dictionary<int, Data.NPCData> NPCDataDic = new Dictionary<int, Data.NPCData>();
     public Dictionary<int, Data.SmeltData> SmeltDataDic = new Dictionary<int, Data.SmeltData>();
+    public Dictionary<string, Data.Localization> LocalizationDic = new Dictionary<string, Data.Localization>();
 
     public void Init()
     {
@@ -57,6 +58,7 @@ public class DataManager
         QuestDataDic = LoadJson<Data.QuestDataLoader, int, Data.QuestData>(jsonObj, "QuestData").MakeDict();
         NPCDataDic = LoadJson<Data.NPCDataLoader, int, Data.NPCData>(jsonObj, "NPCData").MakeDict();
         SmeltDataDic = LoadJson<Data.SmeltDataLoader, int, Data.SmeltData>(jsonObj, "SmeltData").MakeDict();
+        LocalizationDic = LoadJson<Data.LocalizationLoader, string, Data.Localization>(jsonObj, "Localization").MakeDict();
     }
 
     Loader LoadJson<Loader, Tkey, TValue>(JObject _jsonObj, string _dataName) where Loader : ILoader<Tkey, TValue> where TValue : class

@@ -1237,7 +1237,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         GetImage(ImagesType, (int)Images.ItemPopupFrameImage).sprite = Managers.ResourceM.GetAtlas(_data.ItemGrade.ToString());
         GetImage(ImagesType, (int)Images.ItemPopupItemImage).sprite = Managers.ResourceM.GetAtlas(_data.Name);
-        GetText(TextsType, (int)Texts.ItemPopupText).text = Utils.StringToColorGrade(_data.ItemGrade) + _data.NameKR + "</color>을 획득하였습니다";
+        //TODO : Localiztion
+        //GetText(TextsType, (int)Texts.ItemPopupText).text = Utils.StringToColorGrade(_data.ItemGrade) + _data.NameKR + "</color>을 획득하였습니다";
+        GetText(TextsType, (int)Texts.ItemPopupText).text = string.Format(Managers.LocalM.localData["PopupGetItem02"].GetData(), Utils.StringToColorGrade(_data.ItemGrade) + _data.NameKR);
 
         PlayLegendaryPopupAnim();
     }
@@ -1366,7 +1368,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             slotToUse.color = currentSlotColor;
         }
 
-        slotToUse.text = "아이템을 획득하였습니다 : " + Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>";
+        //slotToUse.text = "아이템을 획득하였습니다 : " + Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>";
+        slotToUse.text = string.Format(Managers.LocalM.localData["PopupGetItem01"].GetData(), Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>");
         PlayTextFadeOut(slotToUse).Forget();
 
 
