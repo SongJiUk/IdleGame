@@ -94,7 +94,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Character6_PlusButton,
         FastButton,
         BuffsButton,
-        DailyMissionButton
+        DailyMissionButton,
+        AchievementsButton,
+
     }
 
     enum Texts
@@ -481,6 +483,11 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             case Buttons.DailyMissionButton:
                 await Managers.UIM.ShowPopup<UI_MissionPopup>();
                 break;
+            case Buttons.AchievementsButton:
+
+                await Managers.UIM.ShowPopup<UI_AchievementPopup>();
+                break;
+
             case Buttons.QuestButton:
                 bool isReward;
                 int rewardcount;

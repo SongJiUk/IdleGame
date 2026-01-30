@@ -91,7 +91,7 @@ public class UI_MissionItem : UI_Base
 
             if (missionInfo.Progress >= data.MissionTargetValue)
             {
-
+                
                 SetMission(MissionState.Complete);
 
                 if (missionInfo.isRewarded)

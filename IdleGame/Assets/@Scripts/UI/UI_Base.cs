@@ -31,7 +31,6 @@ public class UI_Base : MonoBehaviour
     public virtual async UniTask<bool> Init()
     {
         if (isInit) return false;
-
         isInit = true;
         return true;
     }

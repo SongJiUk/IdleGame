@@ -8,6 +8,12 @@ using Newtonsoft.Json;
 
 
 
+public class MissionInfo
+{
+    public int Progress;
+    public bool isRewarded;
+}
+
 public class Percentage
 {
     public Define.Grade grade;
@@ -32,6 +38,14 @@ public class ItemHolder
 {
     public Data.ItemData data;
     public Holder holder;
+}
+
+[Serializable]
+public class DailyMissionSave
+{
+    public string date;
+    public Dictionary<string, int> progress = new();
+    public Dictionary<string, bool> rewarded = new();
 }
 
 [Serializable]
@@ -82,25 +96,27 @@ public class GameData
     public List<SmeltHolder> Smelts = new List<SmeltHolder>();
     public Data.ItemData[] Items = new Data.ItemData[7];
 
-    //TODO : 파이어 베이스에 저장되는지 확인
-    public Dictionary<Define.MissionTarget, MissionInfo> MissionDic = new()
-    {
-        {Define.MissionTarget.DailyAttendance, new MissionInfo() { Progress = 0, isRewarded = false} },
-        {Define.MissionTarget.StageClear, new MissionInfo() { Progress = 0, isRewarded = false} },
-        {Define.MissionTarget.LevelUp, new MissionInfo() { Progress = 0, isRewarded = false} },
-        {Define.MissionTarget.HeroGacha, new MissionInfo() { Progress = 0, isRewarded = false} },
-        {Define.MissionTarget.RelicGacha, new MissionInfo() { Progress = 0, isRewarded = false} },
-        {Define.MissionTarget.Dungeon, new MissionInfo() { Progress = 0, isRewarded = false} },
-        {Define.MissionTarget.DungeonClear, new MissionInfo() { Progress = 0, isRewarded = false} },
-        {Define.MissionTarget.WatchingAD, new MissionInfo() { Progress = 0, isRewarded = false} },
-        {Define.MissionTarget.Smelting, new MissionInfo() { Progress = 0, isRewarded = false} },
-    };
+    public Dictionary<Define.MissionTarget, MissionInfo> MissionDic = new();
 
+    //TODO : 파이어 베이스에 저장되는지 확인
+    public void InitDailyMission()
+    {
+        MissionDic.Clear();
+        foreach (Define.MissionTarget target in Enum.GetValues(typeof(Define.MissionTarget)))
+        {
+            MissionDic[target] = new MissionInfo
+            {
+                Progress = 0,
+                isRewarded = false
+            };
+        }
+    }
 
     public void Init()
     {
         SetCharacter();
         SetItem();
+        InitDailyMission();
     }
 
     private void SetCharacter()

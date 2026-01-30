@@ -1188,6 +1188,98 @@
       "RewardCount": 100
     }
   ],
+  "AchievementData": [
+    {
+      "AchievementID": 90000,
+      "AchievementType": "Hero",
+      "Title": "기초 전술 훈련",
+      "RewardStatus": "Damage",
+      "AchievementCharacters": "1/2",
+      "AchievementCharactersLevel": "5/5",
+      "AchievementRelic": ""
+    },
+    {
+      "AchievementID": 90001,
+      "AchievementType": "Hero",
+      "Title": "신속한 사냥꾼",
+      "RewardStatus": "Damage",
+      "AchievementCharacters": "2/3",
+      "AchievementCharactersLevel": "10/10",
+      "AchievementRelic": ""
+    },
+    {
+      "AchievementID": 90002,
+      "AchievementType": "Hero",
+      "Title": "성스러운 수호자",
+      "RewardStatus": "Damage",
+      "AchievementCharacters": "1/5",
+      "AchievementCharactersLevel": "12/12",
+      "AchievementRelic": ""
+    },
+    {
+      "AchievementID": 90003,
+      "AchievementType": "Hero",
+      "Title": "철벽의 진군",
+      "RewardStatus": "Damage",
+      "AchievementCharacters": "4/5",
+      "AchievementCharactersLevel": "15/15",
+      "AchievementRelic": ""
+    },
+    {
+      "AchievementID": 90004,
+      "AchievementType": "Hero",
+      "Title": "선봉 파괘 부대",
+      "RewardStatus": "Damage",
+      "AchievementCharacters": "5/6/7",
+      "AchievementCharactersLevel": "20/20/20",
+      "AchievementRelic": ""
+    },
+    {
+      "AchievementID": 90005,
+      "AchievementType": "Hero",
+      "Title": "마력 공명",
+      "RewardStatus": "Damage",
+      "AchievementCharacters": "8/9",
+      "AchievementCharactersLevel": "25/25",
+      "AchievementRelic": ""
+    },
+    {
+      "AchievementID": 90006,
+      "AchievementType": "Hero",
+      "Title": "완성된 원정대",
+      "RewardStatus": "Damage",
+      "AchievementCharacters": "1/2/3/4/5/6/7/8/9",
+      "AchievementCharactersLevel": "30/30/30/30/30/30/30/30/30",
+      "AchievementRelic": ""
+    },
+    {
+      "AchievementID": 90007,
+      "AchievementType": "Relic",
+      "Title": "고대 유물 수집가",
+      "RewardStatus": "Damage",
+      "AchievementCharacters": "",
+      "AchievementCharactersLevel": "",
+      "AchievementRelic": "30009/30010"
+    },
+    {
+      "AchievementID": 90008,
+      "AchievementType": "Relic",
+      "Title": "신의 선택",
+      "RewardStatus": "Damage",
+      "AchievementCharacters": "",
+      "AchievementCharactersLevel": "",
+      "AchievementRelic": 30008
+    },
+    {
+      "AchievementID": 90009,
+      "AchievementType": "Relic",
+      "Title": "신화의 수집가",
+      "RewardStatus": "Damage",
+      "AchievementCharacters": "",
+      "AchievementCharactersLevel": "",
+      "AchievementRelic": "30008/30009/30010"
+    }
+  ],
   "QuestData": [
     {
       "Level": 0,
@@ -1680,6 +1772,18 @@
       "ko": "상점",
       "en": "Shop",
       "ja": "お店"
+    },
+    {
+      "Key": "UIDailyMission",
+      "ko": "데일리 미션",
+      "en": "DailyMission",
+      "ja": "デイリーミッション"
+    },
+    {
+      "Key": "UIAchievements",
+      "ko": "업적",
+      "en": "Achievements",
+      "ja": "実績"
     },
     {
       "Key": "UIYes",

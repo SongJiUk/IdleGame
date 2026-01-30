@@ -218,4 +218,10 @@ public static class Define
         WatchingAD,
         Smelting
     }
+
+    public enum AchievementType
+    {
+        Hero,
+        Relic
+    }
 }

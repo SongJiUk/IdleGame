@@ -460,6 +460,75 @@ namespace Data
     }
     #endregion
 
+    #region AchievementData
+    [Serializable]
+    public class AchievementData
+    {
+        public int AchievementID;
+        public Define.AchievementType AchievementType;
+        public string Title;
+        public Define.Status_Holder RewardStatus;
+        public string AchievementCharacters;
+        public string AchievementCharactersLevel;
+        public string AchievementRelic;
+
+        public List<int> AchievementCharactersList { get; private set; } = new List<int>();
+        public List<int> AchievementCharactersLevelList { get; private set; } = new List<int>();
+        public List<int> AchievementRelicList { get; private set; } = new List<int>();
+
+        public void ParseRawData()
+        {
+            if (AchievementType == Define.AchievementType.Hero)
+            {
+                AchievementCharactersList = ParseIdList(AchievementCharacters);
+                AchievementCharactersLevelList = ParseIdList(AchievementCharactersLevel);
+            }
+            else
+                AchievementRelicList = ParseIdList(AchievementRelic);
+        }
+
+        List<int> ParseIdList(string _rawData)
+        {
+            List<int> result = new List<int>();
+            if (string.IsNullOrEmpty(_rawData)) return result;
+            string[] idStrings = _rawData.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string idString in idStrings)
+            {
+                string trimmedId = idString.Trim();
+
+                if (int.TryParse(trimmedId, out int id))
+                {
+                    result.Add(id);
+                }
+                else
+                {
+                    Debug.LogError($"[AchievementData {AchievementID}] ID 파싱 오류: '{trimmedId}'는 유효한 정수가 아닙니다.");
+                }
+            }
+            return result;
+        }
+    }
+
+
+
+    public class AchievementDataLoader : ILoader<int, AchievementData>
+    {
+        public List<AchievementData> dataList = new List<AchievementData>();
+        public Dictionary<int, AchievementData> MakeDict()
+        {
+            Dictionary<int, AchievementData> dic = new Dictionary<int, AchievementData>();
+            foreach (var data in dataList)
+            {
+                data.ParseRawData();
+                dic.Add(data.AchievementID, data);
+            }
+
+            return dic;
+        }
+    }
+    #endregion
+
     #region QuestData
     [Serializable]
     public class QuestData

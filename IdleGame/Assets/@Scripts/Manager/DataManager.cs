@@ -29,6 +29,7 @@ public class DataManager
     public Dictionary<int, Data.GachaData> GachaDataDic = new Dictionary<int, Data.GachaData>();
     public Dictionary<int, Data.DungeonData> DungeonDataDic = new Dictionary<int, Data.DungeonData>();
     public Dictionary<int, Data.MissionData> MissionDataDic = new Dictionary<int, Data.MissionData>();
+    public Dictionary<int, Data.AchievementData> AchievementDataDic = new Dictionary<int, Data.AchievementData>();
     public Dictionary<int, Data.QuestData> QuestDataDic = new Dictionary<int, Data.QuestData>();
     public Dictionary<int, Data.NPCData> NPCDataDic = new Dictionary<int, Data.NPCData>();
     public Dictionary<int, Data.SmeltData> SmeltDataDic = new Dictionary<int, Data.SmeltData>();
@@ -57,6 +58,7 @@ public class DataManager
         GachaDataDic = LoadJson<Data.GachaDataLoader, int, Data.GachaData>(jsonObj, "GachaData").MakeDict();
         DungeonDataDic = LoadJson<Data.DungeonDataLoader, int, Data.DungeonData>(jsonObj, "DungeonData").MakeDict();
         MissionDataDic = LoadJson<Data.MissionDataLoader, int, Data.MissionData>(jsonObj, "MissionData").MakeDict();
+        AchievementDataDic = LoadJson<Data.AchievementDataLoader, int, Data.AchievementData>(jsonObj, "AchievementData").MakeDict();
         QuestDataDic = LoadJson<Data.QuestDataLoader, int, Data.QuestData>(jsonObj, "QuestData").MakeDict();
         NPCDataDic = LoadJson<Data.NPCDataLoader, int, Data.NPCData>(jsonObj, "NPCData").MakeDict();
         SmeltDataDic = LoadJson<Data.SmeltDataLoader, int, Data.SmeltData>(jsonObj, "SmeltData").MakeDict();

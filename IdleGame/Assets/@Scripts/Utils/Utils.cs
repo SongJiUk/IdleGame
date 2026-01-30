@@ -19,6 +19,7 @@ using System.Linq;
 60000 ~ VfxData
 70000 ~ DungeonData
 80000 ~ MissionData
+90000~ Achievement
 90000 ~ QuestData
 100000 ~ NPCData
 110000 ~ SmeltData
