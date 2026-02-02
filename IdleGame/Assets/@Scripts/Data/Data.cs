@@ -468,6 +468,7 @@ namespace Data
         public Define.AchievementType AchievementType;
         public string Title;
         public Define.Status_Holder RewardStatus;
+        public double RewardValue;
         public string AchievementCharacters;
         public string AchievementCharactersLevel;
         public string AchievementRelic;

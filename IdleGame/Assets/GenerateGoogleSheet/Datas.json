@@ -1194,6 +1194,7 @@
       "AchievementType": "Hero",
       "Title": "기초 전술 훈련",
       "RewardStatus": "Damage",
+      "RewardValue": 5,
       "AchievementCharacters": "1/2",
       "AchievementCharactersLevel": "5/5",
       "AchievementRelic": ""
@@ -1202,7 +1203,8 @@
       "AchievementID": 90001,
       "AchievementType": "Hero",
       "Title": "신속한 사냥꾼",
-      "RewardStatus": "Damage",
+      "RewardStatus": "Skill",
+      "RewardValue": 3,
       "AchievementCharacters": "2/3",
       "AchievementCharactersLevel": "10/10",
       "AchievementRelic": ""
@@ -1211,7 +1213,8 @@
       "AchievementID": 90002,
       "AchievementType": "Hero",
       "Title": "성스러운 수호자",
-      "RewardStatus": "Damage",
+      "RewardStatus": "HP",
+      "RewardValue": 5,
       "AchievementCharacters": "1/5",
       "AchievementCharactersLevel": "12/12",
       "AchievementRelic": ""
@@ -1220,7 +1223,8 @@
       "AchievementID": 90003,
       "AchievementType": "Hero",
       "Title": "철벽의 진군",
-      "RewardStatus": "Damage",
+      "RewardStatus": "CriticalP",
+      "RewardValue": 2,
       "AchievementCharacters": "4/5",
       "AchievementCharactersLevel": "15/15",
       "AchievementRelic": ""
@@ -1229,7 +1233,8 @@
       "AchievementID": 90004,
       "AchievementType": "Hero",
       "Title": "선봉 파괘 부대",
-      "RewardStatus": "Damage",
+      "RewardStatus": "Item",
+      "RewardValue": 3,
       "AchievementCharacters": "5/6/7",
       "AchievementCharactersLevel": "20/20/20",
       "AchievementRelic": ""
@@ -1238,7 +1243,8 @@
       "AchievementID": 90005,
       "AchievementType": "Hero",
       "Title": "마력 공명",
-      "RewardStatus": "Damage",
+      "RewardStatus": "Money",
+      "RewardValue": 5,
       "AchievementCharacters": "8/9",
       "AchievementCharactersLevel": "25/25",
       "AchievementRelic": ""
@@ -1247,7 +1253,8 @@
       "AchievementID": 90006,
       "AchievementType": "Hero",
       "Title": "완성된 원정대",
-      "RewardStatus": "Damage",
+      "RewardStatus": "CriticalD",
+      "RewardValue": 3,
       "AchievementCharacters": "1/2/3/4/5/6/7/8/9",
       "AchievementCharactersLevel": "30/30/30/30/30/30/30/30/30",
       "AchievementRelic": ""
@@ -1257,6 +1264,7 @@
       "AchievementType": "Relic",
       "Title": "고대 유물 수집가",
       "RewardStatus": "Damage",
+      "RewardValue": 5,
       "AchievementCharacters": "",
       "AchievementCharactersLevel": "",
       "AchievementRelic": "30009/30010"
@@ -1265,7 +1273,8 @@
       "AchievementID": 90008,
       "AchievementType": "Relic",
       "Title": "신의 선택",
-      "RewardStatus": "Damage",
+      "RewardStatus": "HP",
+      "RewardValue": 5,
       "AchievementCharacters": "",
       "AchievementCharactersLevel": "",
       "AchievementRelic": 30008
@@ -1274,7 +1283,8 @@
       "AchievementID": 90009,
       "AchievementType": "Relic",
       "Title": "신화의 수집가",
-      "RewardStatus": "Damage",
+      "RewardStatus": "CriticalP",
+      "RewardValue": 3,
       "AchievementCharacters": "",
       "AchievementCharactersLevel": "",
       "AchievementRelic": "30008/30009/30010"
@@ -1838,6 +1848,54 @@
       "ko": "{0}을(를) 획득하였습니다.",
       "en": "You have acquired {0}.",
       "ja": "{0}を獲得しました。"
+    },
+    {
+      "Key": "Damage",
+      "ko": "공격력",
+      "en": "Damage",
+      "ja": "攻撃力"
+    },
+    {
+      "Key": "HP",
+      "ko": "HP",
+      "en": "HP",
+      "ja": "HP"
+    },
+    {
+      "Key": "Money",
+      "ko": "골드 획득량",
+      "en": "Gold earned",
+      "ja": "ゴールド獲得量"
+    },
+    {
+      "Key": "Item",
+      "ko": "아이템 드랍률",
+      "en": "ItemDropPercentage",
+      "ja": "アイテムドロップ率"
+    },
+    {
+      "Key": "Skill",
+      "ko": "스킬 쿨타임",
+      "en": "SkillCoolTime",
+      "ja": "スキルクールタイム"
+    },
+    {
+      "Key": "AttackSpeed",
+      "ko": "공격속도",
+      "en": "AttackSpeed",
+      "ja": "攻撃速度"
+    },
+    {
+      "Key": "CriticalP",
+      "ko": "크리티컬 확률",
+      "en": "CriticalPercentage",
+      "ja": "クリティカル確率\r"
+    },
+    {
+      "Key": "CriticalD",
+      "ko": "크리티컬 데미지",
+      "en": "CriticalDamage",
+      "ja": "クリティカルダメージ"
     }
   ]
 }

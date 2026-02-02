@@ -73,6 +73,10 @@ public class PlayerController : CreatureController
     }
     public void SetInfo(Data.CreatureData _data)
     {
+
+        attackCTS?.Cancel();
+        attackCTS = null;
+
         DATA = _data;
         baseHp = _data.BaseHp;
         baseDamage = _data.BaseDamage;

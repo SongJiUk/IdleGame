@@ -54,7 +54,7 @@ public class PlayerManager
         var hp = Utils.Datas.levelData.HP() * ((int)_grade + 1);
         float level = (float)_holder.holder.Level * 10 / (float)100;
         var realHp = hp + hp * level;
-        realHp += realHp * (Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Hp) / 100f);
+        realHp += realHp * (Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.HP) / 100f);
         return realHp;
     }
     public void LevelUp()

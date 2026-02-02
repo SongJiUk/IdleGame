@@ -50,7 +50,7 @@ public class UI_AchievementItem : UI_Base
     {
         data = _data;
         GetText(TextsType, (int)Texts.AchievementNameText).text = data.Title;
-        GetText(TextsType, (int)Texts.AchievementEffectText).text = data.RewardStatus.ToString();
+        GetText(TextsType, (int)Texts.AchievementEffectText).text = Managers.LocalM.localData[data.RewardStatus.ToString()].GetData() + " + " + data.RewardValue + "%";
 
         if (data.AchievementType == Define.AchievementType.Hero)
         {

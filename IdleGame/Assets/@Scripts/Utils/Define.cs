@@ -179,7 +179,7 @@ public static class Define
     public enum Status_Holder
     {
         Damage, //공격력 
-        Hp, //체력 
+        HP, //체력 
         Money, //골드 획득량
         Item, //아이템 드랍률
         Skill,// 스킬 쿨타임

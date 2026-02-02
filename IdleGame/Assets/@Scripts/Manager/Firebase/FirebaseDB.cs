@@ -19,7 +19,11 @@ public partial class FirebaseManager
     public bool IsLoading { get; private set; } = false;
     public async UniTask WriteData()
     {
-        if (IsLoading || reference == null || currentUser == null) return;
+        if (reference == null || currentUser == null)
+        {
+            return;
+        }
+        if (IsLoading) return;
 
 
         GameData data = Managers.GameM.gameData;
@@ -49,10 +53,10 @@ public partial class FirebaseManager
             string smelt_json = JsonConvert.SerializeObject(data.Smelts);
 
             await UniTask.WhenAll(
-                reference.Child("USER").Child(currentUser.UserId).Child("DATA").SetRawJsonValueAsync(default_json).AsUniTask(),
-                reference.Child("USER").Child(currentUser.UserId).Child("CHARACTER").SetRawJsonValueAsync(character_json).AsUniTask(),
-                reference.Child("USER").Child(currentUser.UserId).Child("ITEM").SetRawJsonValueAsync(item_json).AsUniTask(),
-                reference.Child("USER").Child(currentUser.UserId).Child("SMELT").SetRawJsonValueAsync(smelt_json).AsUniTask());
+                reference.Child("users").Child(currentUser.UserId).Child("DATA").SetRawJsonValueAsync(default_json).AsUniTask(),
+                reference.Child("users").Child(currentUser.UserId).Child("CHARACTER").SetRawJsonValueAsync(character_json).AsUniTask(),
+                reference.Child("users").Child(currentUser.UserId).Child("ITEM").SetRawJsonValueAsync(item_json).AsUniTask(),
+                reference.Child("users").Child(currentUser.UserId).Child("SMELT").SetRawJsonValueAsync(smelt_json).AsUniTask());
 
         }
         catch (Exception e)
@@ -69,10 +73,10 @@ public partial class FirebaseManager
             var userId = currentUser.UserId;
 
             var (dataSnap, charSnap, itemSnap, smeltSnap) = await UniTask.WhenAll(
-            reference.Child("USER").Child(userId).Child("DATA").GetValueAsync().AsUniTask(),
-            reference.Child("USER").Child(userId).Child("CHARACTER").GetValueAsync().AsUniTask(),
-            reference.Child("USER").Child(userId).Child("ITEM").GetValueAsync().AsUniTask(),
-            reference.Child("USER").Child(userId).Child("SMELT").GetValueAsync().AsUniTask());
+            reference.Child("users").Child(userId).Child("DATA").GetValueAsync().AsUniTask(),
+            reference.Child("users").Child(userId).Child("CHARACTER").GetValueAsync().AsUniTask(),
+            reference.Child("users").Child(userId).Child("ITEM").GetValueAsync().AsUniTask(),
+            reference.Child("users").Child(userId).Child("SMELT").GetValueAsync().AsUniTask());
 
             if (dataSnap.Exists)
             {

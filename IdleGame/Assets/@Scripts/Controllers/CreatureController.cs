@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using static Define;
+using System.Threading;
 
 public class CreatureController : BaseController
 {
@@ -75,6 +76,8 @@ public class CreatureController : BaseController
 
     protected float searchDelayTimer = 0f;
     private const float SEARCH_DELAY = 0.5f;
+
+    protected CancellationTokenSource attackCTS;
     public override bool Init()
     {
         if (!base.Init()) return false;
@@ -100,7 +103,11 @@ public class CreatureController : BaseController
     }
     public virtual void Dead()
     {
+        attackCTS?.Cancel();
+        attackCTS = null;
+        isAttacking = false;
         isDead = true;
+
         if (buffController != null) buffController.ClearAllBuffs();
         //if (skillController != null) skillController.ClearAllSkillsVFX();
         ClearChildVFXs();
@@ -153,12 +160,12 @@ public class CreatureController : BaseController
 
         return 0f;
     }
-    protected async UniTask WaitForAttackDelay()
+    protected async UniTask WaitForAttackDelay(CancellationToken _token)
     {
         try
         {
             float attackDuration = 1f / data.AttackSpeed;
-            await UniTask.Delay(TimeSpan.FromSeconds(attackDuration), cancellationToken: this.GetCancellationTokenOnDestroy());
+            await UniTask.Delay(TimeSpan.FromSeconds(attackDuration), cancellationToken: _token);
         }
         catch (OperationCanceledException) { }
         catch (Exception e)
@@ -167,6 +174,8 @@ public class CreatureController : BaseController
         }
         finally
         {
+            if (_token.IsCancellationRequested) return;
+
             isAttacking = false;
             isTargetLocked = false;
             currentTarget = null;
@@ -207,6 +216,9 @@ public class CreatureController : BaseController
 
     public virtual async UniTask StartAttack()
     {
+        attackCTS?.Cancel();
+        attackCTS = new CancellationTokenSource();
+
         if (target == null || !target.IsValid())
         {
             isAttacking = false;
@@ -217,7 +229,7 @@ public class CreatureController : BaseController
         AnimatorChange(Define.CreatureState.Attack);
         transform.LookAt(target.transform);
 
-        await WaitForAttackDelay();
+        await WaitForAttackDelay(attackCTS.Token);
     }
 
     public virtual void ResetTarget()
