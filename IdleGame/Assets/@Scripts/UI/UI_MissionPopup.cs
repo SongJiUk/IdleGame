@@ -58,9 +58,18 @@ public class UI_MissionPopup : UI_Popup
                 itemPool.Add(item);
             }
 
-            item.SetInfo(data.Value);
+            item.SetInfo(data.Value, index);
             index++;
         }
+
+        for (int i = 0; i < itemPool.Count; i++)
+        {
+            if (Managers.GameM.gameData.IsDailyMissions[i])
+            {
+                itemPool[i].transform.SetAsLastSibling();
+            }
+        }
+
 
         for (int i = index; i < itemPool.Count; i++)
         {

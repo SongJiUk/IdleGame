@@ -45,9 +45,14 @@ public partial class FirebaseManager
             {
                 Managers.GameM.gameData.DungeonKey[0] = 2;
                 Managers.GameM.gameData.DungeonKey[1] = 2;
+
+                for (int i = 0; i < Managers.GameM.gameData.IsDailyMissions.Length; i++)
+                {
+                    Managers.GameM.gameData.IsDailyMissions[i] = false;
+                }
             }
 
-            string default_json = JsonUtility.ToJson(data);
+            string default_json = JsonConvert.SerializeObject(data);
             string character_json = JsonConvert.SerializeObject(data.Character_Holder);
             string item_json = JsonConvert.SerializeObject(data.Item_Holder);
             string smelt_json = JsonConvert.SerializeObject(data.Smelts);
@@ -81,7 +86,7 @@ public partial class FirebaseManager
             if (dataSnap.Exists)
             {
                 string json = dataSnap.GetRawJsonValue();
-                JsonUtility.FromJsonOverwrite(json, Managers.GameM.gameData);
+                JsonConvert.PopulateObject(json, Managers.GameM.gameData);
             }
             else
             {
@@ -103,6 +108,12 @@ public partial class FirebaseManager
                 {
                     Managers.GameM.gameData.DungeonKey[0] = 2;
                     Managers.GameM.gameData.DungeonKey[1] = 2;
+
+                    for (int i = 0; i < Managers.GameM.gameData.IsDailyMissions.Length; i++)
+                    {
+                        Managers.GameM.gameData.IsDailyMissions[i] = false;
+                    }
+                    Managers.GameM.gameData.ResetDailyMission();
                 }
             }
 

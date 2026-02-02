@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Data;
 using Newtonsoft.Json;
+using Unity.Collections;
 
 
-
-
+[Serializable]
 public class MissionInfo
 {
     public int Progress;
@@ -86,6 +86,11 @@ public class GameData
     public int[] DungeonClearLevel = { 0, 0 };
 
     public bool ADS_Remove = false;
+
+
+
+    public bool[] IsDailyMissions = new bool[9];
+    public bool[] IsAchievement = new bool[10];
     //플레이어가 가지고 있는 데이터 저장
     public Dictionary<string, CharacterHolder> Characters_Data = new Dictionary<string, CharacterHolder>();
     public Dictionary<string, Holder> Character_Holder = new Dictionary<string, Holder>();
@@ -96,19 +101,25 @@ public class GameData
     public List<SmeltHolder> Smelts = new List<SmeltHolder>();
     public Data.ItemData[] Items = new Data.ItemData[7];
 
-    public Dictionary<Define.MissionTarget, MissionInfo> MissionDic = new();
+    public Dictionary<string, MissionInfo> MissionDic = new();
 
-    //TODO : 파이어 베이스에 저장되는지 확인
-    public void InitDailyMission()
+    public void ResetDailyMission()
     {
         MissionDic.Clear();
         foreach (Define.MissionTarget target in Enum.GetValues(typeof(Define.MissionTarget)))
         {
-            MissionDic[target] = new MissionInfo
-            {
-                Progress = 0,
-                isRewarded = false
-            };
+            string key = target.ToString();
+
+            if (!MissionDic.ContainsKey(key)) MissionDic[key] = new MissionInfo();
+        }
+    }
+    public void FixDailyMission()
+    {
+        foreach (Define.MissionTarget target in Enum.GetValues(typeof(Define.MissionTarget)))
+        {
+            string key = target.ToString();
+
+            if (!MissionDic.ContainsKey(key)) MissionDic[key] = new MissionInfo();
         }
     }
 
@@ -116,7 +127,7 @@ public class GameData
     {
         SetCharacter();
         SetItem();
-        InitDailyMission();
+        FixDailyMission();
     }
 
     private void SetCharacter()

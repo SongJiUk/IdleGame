@@ -79,10 +79,7 @@ public class StageManager
                     clearEvent?.Invoke();
                     Managers.GameM.Stage++;
 
-                    if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.StageClear, out MissionInfo stageClearInfo))
-                    {
-                        stageClearInfo.Progress++;
-                    }
+                    Managers.GameM.GetMission(Define.MissionTarget.StageClear).Progress++;
 
                     isDead = false;
                     break;
@@ -102,10 +99,8 @@ public class StageManager
                 case StageState.DungeonClear:
                     isDungeon = false;
                     count = 0;
-                    if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.DungeonClear, out MissionInfo dungeonclearInfo))
-                    {
-                        dungeonclearInfo.Progress++;
-                    }
+
+                    Managers.GameM.GetMission(Define.MissionTarget.DungeonClear).Progress++;
                     dungeonClearEvent?.Invoke();
                     break;
 

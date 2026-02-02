@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 2377663189884512018}
   - component: {fileID: 3438439320550701175}
   m_Layer: 0
-  m_Name: UpgradeButton
+  m_Name: CollectButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 1919602671687991961}
   - component: {fileID: 3479027128103489651}
   m_Layer: 0
-  m_Name: ClearText
+  m_Name: CollectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Clear!
+  m_text: Collect!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f042465329aeb0e4b91a9c9a3b9d666b, type: 2}
   m_sharedMaterial: {fileID: 6906440704022309904, guid: f042465329aeb0e4b91a9c9a3b9d666b, type: 2}
@@ -916,7 +916,7 @@ GameObject:
   - component: {fileID: 6619167568599648295}
   - component: {fileID: 7910417388491125440}
   m_Layer: 0
-  m_Name: UpgradeText
+  m_Name: CollectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

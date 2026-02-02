@@ -84,6 +84,8 @@ public class CreatureController : BaseController
         if (animator == null) animator = GetComponent<Animator>();
         if (buffController == null) buffController = GetComponent<BuffController>();
         if (skillController == null) skillController = GetComponent<SkillController>();
+
+
         return true;
     }
 
@@ -166,20 +168,22 @@ public class CreatureController : BaseController
         {
             float attackDuration = 1f / data.AttackSpeed;
             await UniTask.Delay(TimeSpan.FromSeconds(attackDuration), cancellationToken: _token);
-        }
-        catch (OperationCanceledException) { }
-        catch (Exception e)
-        {
-            Debug.LogError($"InitAttack Error {e.Message}");
-        }
-        finally
-        {
-            if (_token.IsCancellationRequested) return;
 
             isAttacking = false;
             isTargetLocked = false;
             currentTarget = null;
             OnAttackDelayEnd();
+        }
+        catch (OperationCanceledException)
+        {
+            isAttacking = false;
+            isTargetLocked = false;
+            currentTarget = null;
+        }
+        catch (Exception e)
+        {
+            isAttacking = false;
+            Debug.LogError($"InitAttack Error {e.Message}");
         }
     }
 
@@ -226,10 +230,20 @@ public class CreatureController : BaseController
         }
         currentTarget = target;
         isAttacking = true;
+
         AnimatorChange(Define.CreatureState.Attack);
         transform.LookAt(target.transform);
 
-        await WaitForAttackDelay(attackCTS.Token);
+        try
+        {
+            await WaitForAttackDelay(attackCTS.Token);
+
+        }
+        finally
+        {
+            isAttacking = false;
+        }
+
     }
 
     public virtual void ResetTarget()

@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UI_AchievementIcon : UI_Base
@@ -53,6 +54,7 @@ public class UI_AchievementIcon : UI_Base
                 int characterLevel = Managers.GameM.gameData.Character_Holder[data.Name].Level;
                 if (characterLevel >= _level)
                 {
+                    GetObject(GameObjectsType, (int)GameObjects.BlackObject).SetActive(false);
                     GetText(TextsType, (int)Texts.AchievementCountText).color = Color.green;
                 }
                 else
@@ -72,29 +74,16 @@ public class UI_AchievementIcon : UI_Base
                 GetImage(ImagesType, (int)Images.AchievementImage).sprite = Managers.ResourceM.GetAtlas(data.Name);
                 GetText(TextsType, (int)Texts.AchievementCountText).gameObject.SetActive(false);
 
-                var itemDatas = Managers.GameM.gameData.Item_Data;
+                var itemData = Managers.GameM.gameData.Item_Data[data.Name];
 
 
-                foreach (var itemdata in itemDatas)
+                if (itemData.holder.Count > 0)
                 {
-                    if (itemdata.Value.data.ItemType == Define.ItemType.Equipment)
-                    {
-                        if (itemdata.Value.holder.Count == 0) continue;
-
-                        if (itemdata.Value.data.DataID == data.DataID)
-                        {
-                            if (itemdata.Value.holder.Count > 0)
-                            {
-                                GetObject(GameObjectsType, (int)GameObjects.BlackObject).SetActive(false);
-                            }
-                        }
-                    }
-
-
+                    GetObject(GameObjectsType, (int)GameObjects.BlackObject).SetActive(false);
                 }
+                else
+                    GetObject(GameObjectsType, (int)GameObjects.BlackObject).SetActive(true);
             }
         }
-
     }
-
 }

@@ -43,7 +43,10 @@ public class MonsterController : CreatureController
     }
     protected override void OnDisable()
     {
-        skillCTS?.Cancel();
+        attackCTS?.Cancel();
+        attackCTS?.Dispose();
+        attackCTS = null;
+
         Managers.UpdateM.UnRegister(this);
 
         base.OnDisable();
@@ -54,6 +57,11 @@ public class MonsterController : CreatureController
     {
         Managers.StageM.deadEvent -= OnDead;
         Managers.StageM.deadEvent += OnDead;
+
+        attackCTS?.Cancel();
+        attackCTS?.Dispose();
+        attackCTS = null;
+
         DATA = _data;
         isDead = false;
         isKnockBack = false;
@@ -207,12 +215,16 @@ public class MonsterController : CreatureController
         {
             if (!isAttacking)
             {
-                isAttacking = true;
                 isTargetLocked = true;
 
                 AnimatorChange(Define.CreatureState.Attack);
                 transform.LookAt(target.transform);
-                WaitForAttackDelay().Forget();
+
+                attackCTS?.Cancel();
+                attackCTS?.Dispose();
+                attackCTS = new CancellationTokenSource();
+
+                WaitForAttackDelay(attackCTS.Token).Forget();
             }
         }
     }

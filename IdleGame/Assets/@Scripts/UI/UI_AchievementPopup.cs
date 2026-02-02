@@ -24,6 +24,7 @@ public class UI_AchievementPopup : UI_Popup
     }
     #endregion
     Transform parent;
+    List<UI_AchievementItem> itemPool = new List<UI_AchievementItem>();
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -49,17 +50,41 @@ public class UI_AchievementPopup : UI_Popup
     }
     void RefreshUI()
     {
+        int num = 0;
+        int index = 0;
         foreach (var data in Managers.DataM.AchievementDataDic)
         {
-            var item = Managers.UIM.MakeSubItem<UI_AchievementItem>(parent);
-            item.Init().Forget();
-            item.SetInfo(data.Value);
+            UI_AchievementItem item;
+            if (index < itemPool.Count)
+            {
+                item = itemPool[index];
+                item.gameObject.SetActive(true);
+            }
+            else
+            {
+                item = Managers.UIM.MakeSubItem<UI_AchievementItem>(parent);
+                item.Init().Forget();
+                itemPool.Add(item);
+            }
+
+            item.SetInfo(data.Value, num);
+            index++;
+            num++;
+        }
+
+
+        for (int i = 0; i < itemPool.Count; i++)
+        {
+            if (Managers.GameM.gameData.IsAchievement[i])
+            {
+                itemPool[i].transform.SetAsLastSibling();
+            }
         }
     }
 
     void OnClickCloseButton()
     {
-        Managers.UIM.ClosePopup(this);
+        Managers.UIM.ClosePopup(this).Forget();
 
     }
 }

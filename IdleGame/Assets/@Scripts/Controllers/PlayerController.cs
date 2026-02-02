@@ -122,8 +122,6 @@ public class PlayerController : CreatureController
 
     public override void Projectile()
     {
-        Debug.Log($"<color=cyan>[Projectile Step 1] 이벤트 호출됨 - {gameObject.name}</color>");
-        isAttacking = true;
 
         if (currentTarget == null || currentTarget.IsDead)
         {
@@ -157,8 +155,6 @@ public class PlayerController : CreatureController
 
     public override void Attack()
     {
-        isAttacking = true;
-
         if (currentTarget == null || currentTarget.IsDead)
         {
             FindClosetTarget(Managers.ObjectM.mcList);
@@ -173,7 +169,6 @@ public class PlayerController : CreatureController
 
         if (DATA == null) { Debug.LogError("DATA가 Null입니다!"); return; }
 
-       
         if (trails != null)
         {
             foreach (var trail in trails) trail.SetActive(true);
@@ -191,8 +186,8 @@ public class PlayerController : CreatureController
 
     private void StopAttack()
     {
-        isAttacking = false;
-        AnimatorChange(CreatureState.Idle); // 타겟이 없으니 대기 상태로
+        AnimatorChange(CreatureState.Idle);
+        attackCTS?.Cancel();
     }
 
 
@@ -352,7 +347,6 @@ public class PlayerController : CreatureController
 
     void UsePlayerSkill()
     {
-        isAttacking = false;
         if (skillController.UseSkill(_target: target))
         {
             mp = 0;
@@ -377,7 +371,6 @@ public class PlayerController : CreatureController
         await UniTask.Delay(TimeSpan.FromSeconds(duration));
 
         isUsingSkill = false;
-        isAttacking = false;
 
         AnimatorChange(CreatureState.Idle);
 

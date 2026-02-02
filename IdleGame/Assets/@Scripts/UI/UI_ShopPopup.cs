@@ -210,10 +210,7 @@ public class UI_ShopPopup : UI_Popup
         popup.OnGachaFinished = RefreshUI;
         await popup.GetGachaHero(11);
         RefreshUI();
-        if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.HeroGacha, out MissionInfo Info))
-        {
-            Info.Progress += 11;
-        }
+        Managers.GameM.GetMission(Define.MissionTarget.HeroGacha).Progress += 11;
 
     }
 
@@ -223,10 +220,7 @@ public class UI_ShopPopup : UI_Popup
         {
             //TODO : 성공시 Refresh()
 
-            if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.HeroGacha, out MissionInfo Info))
-            {
-                Info.Progress++;
-            }
+            Managers.GameM.GetMission(Define.MissionTarget.HeroGacha).Progress++;
         }
         else
         {
@@ -238,10 +232,7 @@ public class UI_ShopPopup : UI_Popup
     {
         if (Managers.GameM.Dia >= 3000)
         {
-            if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.HeroGacha, out MissionInfo Info))
-            {
-                Info.Progress += 11;
-            }
+            Managers.GameM.GetMission(Define.MissionTarget.HeroGacha).Progress += 11;
         }
         else
         {
@@ -264,18 +255,17 @@ public class UI_ShopPopup : UI_Popup
         await popup.GetGachaRelic(11);
         RefreshUI();
 
-        if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.RelicGacha, out MissionInfo Info))
-        {
-            Info.Progress += 11;
-        }
+        Managers.GameM.GetMission(Define.MissionTarget.RelicGacha).Progress += 11;
     }
 
     void OnClickRelicOneGachaButton()
     {
+        Managers.GameM.GetMission(Define.MissionTarget.RelicGacha).Progress++;
     }
 
     void OnClickRelicElevenGachaButton()
     {
+        Managers.GameM.GetMission(Define.MissionTarget.RelicGacha).Progress += 11;
     }
 
     void OnClickRelicGachaListButton()

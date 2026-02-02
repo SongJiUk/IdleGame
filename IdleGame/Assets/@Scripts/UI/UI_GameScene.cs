@@ -1380,7 +1380,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         }
 
         //slotToUse.text = "아이템을 획득하였습니다 : " + Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>";
-        slotToUse.text = string.Format(Managers.LocalM.localData["PopupGetItem01"].GetData(), Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>");
+        slotToUse.text = string.Format(Managers.LocalM.localData["PopupGetItem01"].GetData(), Utils.StringToColorGrade(_data.ItemGrade) + "[" + Managers.LocalM.localData[_data.Name].GetData() + "]</color>");
         PlayTextFadeOut(slotToUse).Forget();
 
 
