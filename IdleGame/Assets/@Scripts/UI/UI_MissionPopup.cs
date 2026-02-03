@@ -64,10 +64,11 @@ public class UI_MissionPopup : UI_Popup
 
         for (int i = 0; i < itemPool.Count; i++)
         {
-            if (Managers.GameM.gameData.IsDailyMissions[i])
+            if(Managers.QuestM.MissionDic[itemPool[i].data.MissionTarget.ToString()].isRewarded)
             {
                 itemPool[i].transform.SetAsLastSibling();
             }
+
         }
 
 

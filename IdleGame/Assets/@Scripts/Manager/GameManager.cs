@@ -195,23 +195,4 @@ public class GameManager
         gameData.DungeonClearLevel[(int)_type] = level;
         Managers.QuestM.UpdateQuest();
     }
-
-    public Dictionary<string, MissionInfo> MissionDic
-    {
-        get { return gameData.MissionDic; }
-        set { gameData.MissionDic = value; }
-    }
-
-    public MissionInfo GetMission(Define.MissionTarget _target)
-    {
-        string key = _target.ToString();
-        if (!MissionDic.TryGetValue(key, out MissionInfo info))
-        {
-            info = new MissionInfo();
-            MissionDic[key] = info;
-        }
-
-        return info;
-    }
-
 }

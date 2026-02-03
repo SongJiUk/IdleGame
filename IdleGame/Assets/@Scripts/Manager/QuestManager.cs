@@ -4,7 +4,39 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
-//TODO : 이거 UI_GameScene에서 관리하게 바꿔줘야함
+
+public class DailyMission
+{
+
+}
+
+public class Achievement_Status
+{
+    public double damage;
+    public double hp;
+    public double money;
+    public double item;
+    public double skill;
+    public double attackspeed;
+    public double criticalP;
+    public double criticalD;
+
+    public void GetStatusData(Define.Status_Holder _holder, double _value)
+    {
+        switch (_holder)
+        {
+            case Define.Status_Holder.Damage: damage += _value; break;
+            case Define.Status_Holder.HP: hp += _value; break;
+            case Define.Status_Holder.Money: money += _value; break;
+            case Define.Status_Holder.Item: item += _value; break;
+            case Define.Status_Holder.Skill: skill += _value; break;
+            case Define.Status_Holder.AttackSpeed: attackspeed += _value; break;
+            case Define.Status_Holder.CriticalP: criticalP += _value; break;
+            case Define.Status_Holder.CriticalD: criticalD += _value; break;
+        }
+
+    }
+}
 public class QuestManager
 {
     public event Action OnQuestDataChanged;
@@ -30,10 +62,67 @@ public class QuestManager
     Define.QuestType questType;
     public bool isGetEnemy = false;
     public bool isReward = false;
+    #region Daily Mission
+    public Dictionary<string, MissionInfo> MissionDic
+    {
+        get { return Managers.GameM.gameData.MissionDic; }
+        set { Managers.GameM.gameData.MissionDic = value; }
+    }
 
+    public MissionInfo GetMission(Define.MissionTarget _target)
+    {
+        string key = _target.ToString();
+        if (!MissionDic.TryGetValue(key, out MissionInfo info))
+        {
+            info = new MissionInfo();
+            MissionDic[key] = info;
+        }
+        return info;
+    }
 
+    #endregion
+
+    #region Achievement 
+
+    public List<Data.AchievementData> AchievementList = new List<Data.AchievementData>();
+    public Achievement_Status Achievement_Status_Data = new Achievement_Status();
+    public Dictionary<int, bool> AchievementDic
+    {
+        get { return Managers.GameM.gameData.AchievementDic; }
+        set { Managers.GameM.gameData.AchievementDic = value; }
+    }
+
+    public void FixAchievementDatas()
+    {
+        foreach(var data in Managers.DataM.AchievementDataDic)
+        {
+            int id = data.Key;
+
+            if(!AchievementDic.ContainsKey(id))
+            {
+                AchievementDic[id] = false;
+            }
+        }
+    }
+    public void LoadAchievementDatas()
+    {
+        Achievement_Status achievement_Status = new Achievement_Status();
+        foreach (var data in Managers.DataM.AchievementDataDic)
+        {
+            int key = data.Key;
+            if(!AchievementDic[key])
+            {
+                achievement_Status.GetStatusData(data.Value.RewardStatus, data.Value.RewardValue);
+            }
+        }
+
+        Achievement_Status_Data = achievement_Status;
+    }
+    #endregion
     public void Init()
     {
+        FixAchievementDatas();
+        LoadAchievementDatas();
         NextQuest();
     }
     public void UpdateQuest()

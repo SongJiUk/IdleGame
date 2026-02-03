@@ -62,7 +62,7 @@ public class PlayerManager
         Managers.GameM.Level++;
         Managers.GameM.Exp = 0;
 
-        Managers.GameM.GetMission(Define.MissionTarget.LevelUp).Progress++;
+        Managers.QuestM.GetMission(Define.MissionTarget.LevelUp).Progress++;
     }
 
     public double MainAttack()

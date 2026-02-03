@@ -118,10 +118,7 @@ public class ADManager
                 OnRewardedCallback?.Invoke();
                 OnRewardedCallback = null;
 
-                if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.WatchingAD.ToString(), out MissionInfo Info))
-                {
-                    Info.Progress++;
-                }
+                Managers.QuestM.GetMission(Define.MissionTarget.WatchingAD).Progress++;
             }
             return;
         }
@@ -131,10 +128,7 @@ public class ADManager
             rewardedAd.Show((Reward reward) =>
             {
                 Debug.Log($"보상형 광고 보상 지급 : {reward.Type} / {reward.Amount}");
-                if (Managers.GameM.MissionDic.TryGetValue(Define.MissionTarget.WatchingAD.ToString(), out MissionInfo Info))
-                {
-                    Info.Progress++;
-                }
+                Managers.QuestM.GetMission(Define.MissionTarget.WatchingAD).Progress++;
 #if UNITY_EDITOR
                 if (OnRewardedCallback != null)
                 {

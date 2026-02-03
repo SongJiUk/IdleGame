@@ -40,7 +40,7 @@ public class UI_MissionItem : UI_Base
     }
     #endregion
 
-    Data.MissionData data;
+    public Data.MissionData data;
     int num;
     public async override UniTask<bool> Init()
     {
@@ -86,7 +86,7 @@ public class UI_MissionItem : UI_Base
         GetImage(ImagesType, (int)Images.MissionTargetValueImage).fillAmount = 0;
         GetText(TextsType, (int)Texts.MissionTargetValueText).text = $"({0} / {data.MissionTargetValue})";
 
-        if (Managers.GameM.MissionDic.TryGetValue(data.MissionTarget.ToString(), out MissionInfo missionInfo))
+        if (Managers.QuestM.MissionDic.TryGetValue(data.MissionTarget.ToString(), out MissionInfo missionInfo))
         {
             if (missionInfo.Progress > 0)
             {
@@ -142,13 +142,13 @@ public class UI_MissionItem : UI_Base
         int count = data.RewardCount;
         UI_Reward reward = await Managers.UIM.ShowPopup<UI_Reward>();
         reward.SetInfo(count);
-        if (Managers.GameM.MissionDic.TryGetValue(data.MissionTarget.ToString(), out MissionInfo info))
+        if (Managers.QuestM.MissionDic.TryGetValue(data.MissionTarget.ToString(), out MissionInfo info))
         {
             info.isRewarded = true;
             await Managers.FirebaseM.WriteData();
         }
 
-        Managers.GameM.gameData.IsDailyMissions[_num] = true;
+        Managers.QuestM.MissionDic[data.MissionTarget.ToString()].isRewarded = true;
 
 
         Refresh();

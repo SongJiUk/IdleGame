@@ -144,18 +144,19 @@ public class UI_TitleScene : UI_Scene
         Managers.DataM.Init();
         Managers.ObjectM.Init();
         Managers.AdM.Init();
-        Managers.QuestM.Init();
         Managers.IAPM.InitUnityIAP();
         Managers.SoundM.Init();
-        Managers.LocalM.Init();
+        Managers.LocalM.Init();        
         await Managers.FirebaseM.Init();
+        Managers.QuestM.Init();
+
 
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);
         GetText(TextsType, (int)Texts.DataLoadText).text = "데이터가 정상적으로 로딩되었습니다,";
         StartBlinkTween();
         Managers.SoundM.Play(Define.Sound.Bgm, "Bgm_Title");
         isLoadEnd = true;
-        Managers.GameM.GetMission(Define.MissionTarget.DailyAttendance).Progress++;
+        Managers.QuestM.GetMission(Define.MissionTarget.DailyAttendance).Progress++;
 
     }
 

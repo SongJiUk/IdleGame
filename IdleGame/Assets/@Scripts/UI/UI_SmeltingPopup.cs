@@ -254,7 +254,7 @@ public class UI_SmeltingPopup : UI_Popup
         {
             SetSmelt();
             RefreshUI();
-            Managers.GameM.GetMission(Define.MissionTarget.Smelting).Progress++;
+            Managers.QuestM.GetMission(Define.MissionTarget.Smelting).Progress++;
         }
     }
 }

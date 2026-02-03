@@ -79,7 +79,7 @@ public class StageManager
                     clearEvent?.Invoke();
                     Managers.GameM.Stage++;
 
-                    Managers.GameM.GetMission(Define.MissionTarget.StageClear).Progress++;
+                    Managers.QuestM.GetMission(Define.MissionTarget.StageClear).Progress++;
 
                     isDead = false;
                     break;
@@ -100,7 +100,7 @@ public class StageManager
                     isDungeon = false;
                     count = 0;
 
-                    Managers.GameM.GetMission(Define.MissionTarget.DungeonClear).Progress++;
+                    Managers.QuestM.GetMission(Define.MissionTarget.DungeonClear).Progress++;
                     dungeonClearEvent?.Invoke();
                     break;
 

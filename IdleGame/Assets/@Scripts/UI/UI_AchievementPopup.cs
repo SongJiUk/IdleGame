@@ -50,7 +50,6 @@ public class UI_AchievementPopup : UI_Popup
     }
     void RefreshUI()
     {
-        int num = 0;
         int index = 0;
         foreach (var data in Managers.DataM.AchievementDataDic)
         {
@@ -67,15 +66,14 @@ public class UI_AchievementPopup : UI_Popup
                 itemPool.Add(item);
             }
 
-            item.SetInfo(data.Value, num);
+            item.SetInfo(data.Value);
             index++;
-            num++;
         }
 
 
         for (int i = 0; i < itemPool.Count; i++)
         {
-            if (Managers.GameM.gameData.IsAchievement[i])
+            if(Managers.QuestM.AchievementDic[itemPool[i].data.AchievementID])
             {
                 itemPool[i].transform.SetAsLastSibling();
             }

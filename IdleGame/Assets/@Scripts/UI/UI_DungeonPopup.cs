@@ -111,7 +111,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
                 {
                     GetText(TextsType, (int)Texts.CrystalCountText).text = $"({Managers.GameM.gameData.DungeonKey[0]--} / 2)";
                     Managers.StageM.StateChange(Define.StageState.Dungeon, 70000);
-                    Managers.GameM.GetMission(Define.MissionTarget.Dungeon).Progress++;
+                    Managers.QuestM.GetMission(Define.MissionTarget.Dungeon).Progress++;
                 }
                 else
                 {
@@ -128,7 +128,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
                     GetText(TextsType, (int)Texts.SapphireCountText).text = $"({Managers.GameM.gameData.DungeonKey[1]--} / 2)";
                     Managers.StageM.StateChange(Define.StageState.Dungeon, 70001);
 
-                    Managers.GameM.GetMission(Define.MissionTarget.Dungeon).Progress++;
+                    Managers.QuestM.GetMission(Define.MissionTarget.Dungeon).Progress++;
                 }
                 else
                 {

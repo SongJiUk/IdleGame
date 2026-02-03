@@ -41,16 +41,17 @@ public partial class FirebaseManager
 
             Managers.GameM.EndDate = DateTime.Now.ToString();
 
-            if (GetDateItem(endDate, DateTime.Now))
-            {
-                Managers.GameM.gameData.DungeonKey[0] = 2;
-                Managers.GameM.gameData.DungeonKey[1] = 2;
+            //if (GetDateItem(endDate, DateTime.Now))
+            //{
+            //    Managers.GameM.gameData.DungeonKey[0] = 2;
+            //    Managers.GameM.gameData.DungeonKey[1] = 2;
 
-                for (int i = 0; i < Managers.GameM.gameData.IsDailyMissions.Length; i++)
-                {
-                    Managers.GameM.gameData.IsDailyMissions[i] = false;
-                }
-            }
+            //    foreach(var mission in Managers.GameM.gameData.MissionDic)
+            //    {
+            //        mission.Value.Progress = 0;
+            //        mission.Value.isRewarded = false;
+            //    }
+            //}
 
             string default_json = JsonConvert.SerializeObject(data);
             string character_json = JsonConvert.SerializeObject(data.Character_Holder);
@@ -109,10 +110,7 @@ public partial class FirebaseManager
                     Managers.GameM.gameData.DungeonKey[0] = 2;
                     Managers.GameM.gameData.DungeonKey[1] = 2;
 
-                    for (int i = 0; i < Managers.GameM.gameData.IsDailyMissions.Length; i++)
-                    {
-                        Managers.GameM.gameData.IsDailyMissions[i] = false;
-                    }
+                  
                     Managers.GameM.gameData.ResetDailyMission();
                 }
             }

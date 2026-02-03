@@ -87,11 +87,6 @@ public class GameData
 
     public bool ADS_Remove = false;
 
-
-
-    public bool[] IsDailyMissions = new bool[9];
-    public bool[] IsAchievement = new bool[10];
-    //플레이어가 가지고 있는 데이터 저장
     public Dictionary<string, CharacterHolder> Characters_Data = new Dictionary<string, CharacterHolder>();
     public Dictionary<string, Holder> Character_Holder = new Dictionary<string, Holder>();
 
@@ -102,24 +97,31 @@ public class GameData
     public Data.ItemData[] Items = new Data.ItemData[7];
 
     public Dictionary<string, MissionInfo> MissionDic = new();
+    public Dictionary<int, bool> AchievementDic = new();
 
     public void ResetDailyMission()
     {
         MissionDic.Clear();
-        foreach (Define.MissionTarget target in Enum.GetValues(typeof(Define.MissionTarget)))
-        {
-            string key = target.ToString();
 
-            if (!MissionDic.ContainsKey(key)) MissionDic[key] = new MissionInfo();
+        foreach(var data in Managers.DataM.MissionDataDic)
+        {
+            if (data.Value.MissionType != Define.MissionType.Daily) continue;
+
+            string key = data.Value.MissionTarget.ToString();
+            MissionDic[key] = new MissionInfo();
         }
     }
     public void FixDailyMission()
     {
-        foreach (Define.MissionTarget target in Enum.GetValues(typeof(Define.MissionTarget)))
+        foreach (var data in Managers.DataM.MissionDataDic)
         {
-            string key = target.ToString();
+            if (data.Value.MissionType != Define.MissionType.Daily) continue;
 
-            if (!MissionDic.ContainsKey(key)) MissionDic[key] = new MissionInfo();
+            string key = data.Value.MissionTarget.ToString();
+            if(!MissionDic.ContainsKey(key))
+            { 
+                MissionDic[key] = new MissionInfo();
+            }        
         }
     }
 

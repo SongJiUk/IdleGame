@@ -30,7 +30,8 @@ public class UI_AchievementItem : UI_Base
     }
     #endregion
     Transform parent;
-    Data.AchievementData data;
+    public Data.AchievementData data;
+
     List<UI_AchievementIcon> iconPool = new List<UI_AchievementIcon>();
     public async override UniTask<bool> Init()
     {
@@ -48,7 +49,7 @@ public class UI_AchievementItem : UI_Base
         return true;
     }
 
-    public void SetInfo(Data.AchievementData _data, int _valueNum)
+    public void SetInfo(Data.AchievementData _data)
     {
         data = _data;
         GetText(TextsType, (int)Texts.AchievementNameText).text = data.Title;
@@ -56,17 +57,18 @@ public class UI_AchievementItem : UI_Base
 
         GetButton(ButtonsType, (int)Buttons.CollectButton).onClick.RemoveAllListeners();
 
-        if (Managers.GameM.gameData.IsAchievement[_valueNum])
+        if (Managers.QuestM.AchievementDic[data.AchievementID])
         {
             GetObject(GameObjectsType, (int)GameObjects.CollectObject).SetActive(true);
         }
 
         int index = 0;
+        int achievementID = data.AchievementID;
         switch (data.AchievementType)
         {
             case Define.AchievementType.Hero:
                 bool isCanCollectHero = true;
-                int heroNum = _valueNum;
+                
                 for (int i = 0; i < data.AchievementCharactersList.Count; i++)
                 {
                     UI_AchievementIcon icon;
@@ -102,7 +104,7 @@ public class UI_AchievementItem : UI_Base
                     iconPool[i].gameObject.SetActive(false);
                 }
 
-                GetButton(ButtonsType, (int)Buttons.CollectButton).gameObject.BindEvent(() => OnClickCollectButton(heroNum, isCanCollectHero));
+                GetButton(ButtonsType, (int)Buttons.CollectButton).gameObject.BindEvent(() => OnClickCollectButton(achievementID, isCanCollectHero));
                 break;
 
             case Define.AchievementType.Relic:
@@ -143,12 +145,13 @@ public class UI_AchievementItem : UI_Base
     }
 
 
-    void OnClickCollectButton(int _num, bool _isCollect)
+    void OnClickCollectButton(int _achievementID, bool _isCollect)
     {
         if (_isCollect)
         {
-            Managers.GameM.gameData.IsAchievement[_num] = true;
-            SetInfo(data, _num);
+            Managers.QuestM.AchievementDic[_achievementID] = true;
+            Managers.QuestM.LoadAchievementDatas();
+            SetInfo(data);
         }
         else
         {
