@@ -7,7 +7,6 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using TMPro;
 
 public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable

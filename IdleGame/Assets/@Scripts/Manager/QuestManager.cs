@@ -17,7 +17,7 @@ public class Achievement_Status
     public double money;
     public double item;
     public double skill;
-    public double attackspeed;
+    public double attackSpeed;
     public double criticalP;
     public double criticalD;
 
@@ -30,7 +30,7 @@ public class Achievement_Status
             case Define.Status_Holder.Money: money += _value; break;
             case Define.Status_Holder.Item: item += _value; break;
             case Define.Status_Holder.Skill: skill += _value; break;
-            case Define.Status_Holder.AttackSpeed: attackspeed += _value; break;
+            case Define.Status_Holder.AttackSpeed: attackSpeed += _value; break;
             case Define.Status_Holder.CriticalP: criticalP += _value; break;
             case Define.Status_Holder.CriticalD: criticalD += _value; break;
         }
@@ -94,11 +94,11 @@ public class QuestManager
 
     public void FixAchievementDatas()
     {
-        foreach(var data in Managers.DataM.AchievementDataDic)
+        foreach (var data in Managers.DataM.AchievementDataDic)
         {
             int id = data.Key;
 
-            if(!AchievementDic.ContainsKey(id))
+            if (!AchievementDic.ContainsKey(id))
             {
                 AchievementDic[id] = false;
             }
@@ -110,7 +110,7 @@ public class QuestManager
         foreach (var data in Managers.DataM.AchievementDataDic)
         {
             int key = data.Key;
-            if(!AchievementDic[key])
+            if (AchievementDic[key])
             {
                 achievement_Status.GetStatusData(data.Value.RewardStatus, data.Value.RewardValue);
             }

@@ -73,11 +73,43 @@ public class UI_AchievementPopup : UI_Popup
 
         for (int i = 0; i < itemPool.Count; i++)
         {
-            if(Managers.QuestM.AchievementDic[itemPool[i].data.AchievementID])
+            if (Managers.QuestM.AchievementDic[itemPool[i].data.AchievementID])
             {
                 itemPool[i].transform.SetAsLastSibling();
             }
         }
+
+        GetText(TextsType, (int)Texts.AchievementAbilityText).text = string.Format("{0} / {1}\n{2} / {3}\n{4} / {5}\n{6} / {7}",
+        LocalTemp(Define.Status_Holder.Damage, Managers.QuestM.Achievement_Status_Data.damage),
+        LocalTemp(Define.Status_Holder.HP, Managers.QuestM.Achievement_Status_Data.hp),
+        LocalTemp(Define.Status_Holder.Money, Managers.QuestM.Achievement_Status_Data.money),
+        LocalTemp(Define.Status_Holder.Item, Managers.QuestM.Achievement_Status_Data.item),
+        LocalTemp(Define.Status_Holder.Skill, Managers.QuestM.Achievement_Status_Data.skill),
+        LocalTemp(Define.Status_Holder.AttackSpeed, Managers.QuestM.Achievement_Status_Data.attackSpeed),
+        LocalTemp(Define.Status_Holder.CriticalP, Managers.QuestM.Achievement_Status_Data.criticalP),
+        LocalTemp(Define.Status_Holder.CriticalD, Managers.QuestM.Achievement_Status_Data.criticalD)
+        );
+    }
+    private string PlusOrMinus(double _value)
+    {
+        var temp = (int)Mathf.Sign((float)_value) == 1 ? " + " : " - ";
+        return temp;
+    }
+
+    private string LocalTemp(Define.Status_Holder _holder, double _value)
+    {
+        string color;
+        if(_value != 0 )
+        { 
+        color = Utils.StringToColorGrade(Define.Grade.UnCommon);
+        }
+        else
+        color = Utils.StringToColorGrade(Define.Grade.Common);
+        
+
+        string temp = color + Managers.LocalM.localData[_holder.ToString()].GetData() + PlusOrMinus(_value) + _value.ToString() + "%" +"</color>";
+
+        return temp;
     }
 
     void OnClickCloseButton()

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using Unity.VisualScripting; // OperationCanceledException�� ���� �ʿ�
 
 public class ProjectileController : BaseController
 {

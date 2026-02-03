@@ -2,7 +2,6 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UI_AchievementIcon : UI_Base

@@ -4,7 +4,6 @@ using UnityEngine;
 using DG.Tweening;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Unity.VisualScripting;
 public class UI_Inventory : UI_Base
 {
     List<UI_Item> itemPool = new List<UI_Item>();
