@@ -30,5 +30,7 @@ public class Memo
     TODO : 업적도 저장해야됨
     TODO : 업적, 미션 옆에 스크롤 달기
     TODO : 업적 스탯들 적용 되는지 확인
+    TODO : safeArea 설정하고나서 화면 이상한거 확인하기, 골드, 다이아 획득 위치 이상함
+    TODO : 팝업들ㅇ ㅣ상함, 
     */
 }
