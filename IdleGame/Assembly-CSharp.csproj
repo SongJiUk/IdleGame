@@ -64,6 +64,7 @@
     <Compile Include="Assets\@Scripts\UI\UI_OfflinePopup.cs" />
     <Compile Include="Assets\@Scripts\Controllers\ObjectController.cs" />
     <Compile Include="Assets\@Scripts\Skill\BuffBase.cs" />
+    <Compile Include="Assets\Samples\iOS 14 Advertising Support\1.0.1\01 Context Screen\Scripts\AutoSwitchLayout.cs" />
     <Compile Include="Assets\@Resources\Prefabs\Creature\Monster\SazenGames\Skeleton\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\@Scripts\Scenes\TitleScene.cs" />
     <Compile Include="Assets\@Scripts\UI\SafeArea.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Assets\@Scripts\UI\UIRenderImage\RenderGacha.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Localization.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign\LevelDesign.cs" />
+    <Compile Include="Assets\GoogleSignIn\Future.cs" />
     <Compile Include="Assets\@Scripts\Skill\DamageEffect.cs" />
     <Compile Include="Assets\@Scripts\Controllers\BaseController.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Popup.cs" />
@@ -93,13 +95,17 @@
     <Compile Include="Assets\@Resources\Prefabs\Creature\Monster\SazenGames\Skeleton\Scripts\AnimationReplayer.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_DungeonResultInfoPopup.cs" />
     <Compile Include="Assets\@Scripts\Manager\ADManager.cs" />
+    <Compile Include="Assets\Samples\iOS 14 Advertising Support\1.0.1\01 Context Screen\Scripts\ContextScreenManager.cs" />
     <Compile Include="Assets\@Scripts\Manager\GameManager.cs" />
+    <Compile Include="Assets\GoogleSignIn\Impl\BaseObject.cs" />
     <Compile Include="Assets\@Scripts\Manager\RelicManager.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_DungeonResultIcon.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\Knight_Skill.cs" />
     <Compile Include="Assets\@Resources\Package\Scripts\StringMethod.cs" />
+    <Compile Include="Assets\Samples\iOS 14 Advertising Support\1.0.1\01 Context Screen\Scripts\ContextScreenView.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_CharacterIcon.cs" />
     <Compile Include="Assets\@Scripts\UI\UIDirecting\UIDirecting.cs" />
+    <Compile Include="Assets\GoogleSignIn\Impl\GoogleSignInImpl.cs" />
     <Compile Include="Assets\@Scripts\Skill\SkillBase.cs" />
     <Compile Include="Assets\@Scripts\Manager\SpawnManager.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_UpgradePopup.cs" />
@@ -108,7 +114,9 @@
     <Compile Include="Assets\@Scripts\Skill\Buffs\HealBuff.cs" />
     <Compile Include="Assets\@Scripts\Manager\CustomSceneManager.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\Mage_M_Skill.cs" />
+    <Compile Include="Assets\GoogleSignIn\GoogleSignIn.cs" />
     <Compile Include="Assets\@Scripts\Utils\Utils.cs" />
+    <Compile Include="Assets\@Scripts\Manager\Firebase\LoadingLogin.cs" />
     <Compile Include="Assets\@Scripts\Manager\UpdateManager.cs" />
     <Compile Include="Assets\@Scripts\Manager\SoundManager.cs" />
     <Compile Include="Assets\@Scripts\Utils\DelegateHolder.cs" />
@@ -120,15 +128,20 @@
     <Compile Include="Assets\@Scripts\Skill\ParticleController.cs" />
     <Compile Include="Assets\@Scripts\Scenes\GameScene.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_SavingMode.cs" />
+    <Compile Include="Assets\DebugConsole.cs" />
     <Compile Include="Assets\@Scripts\Manager\InventoryManager.cs" />
     <Compile Include="Assets\@Resources\Image\FantasyIconsPackFree\Demo\IconViewer.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_CharacterInfoPopup.cs" />
+    <Compile Include="Assets\GoogleSignIn\GoogleSignInStatusCode.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Toast.cs" />
     <Compile Include="Assets\@Scripts\UI\UIDirecting\GoodsDirecting.cs" />
+    <Compile Include="Assets\GoogleSignIn\GoogleSignInUser.cs" />
+    <Compile Include="Assets\GoogleSignIn\GoogleSignInConfiguration.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Base.cs" />
     <Compile Include="Assets\@Scripts\Manager\GoogleSheetManager.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\SpearMan_Skill.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_RelicIcon.cs" />
+    <Compile Include="Assets\GoogleSignIn\Impl\NativeFuture.cs" />
     <Compile Include="Assets\@Scripts\Skill\Player\Enchantress_Skill.cs" />
     <Compile Include="Assets\@Scripts\Manager\ItemManager.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Inventory.cs" />
@@ -153,6 +166,7 @@
     <Compile Include="Assets\@Scripts\Skill\SkillController.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_ItemInfo.cs" />
     <Compile Include="Assets\@Scripts\LevelDesign\StageDesign.cs" />
+    <Compile Include="Assets\@Scripts\IAP_LocalText.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Scene.cs" />
     <Compile Include="Assets\@Scripts\Controllers\MeleeAttackController.cs" />
     <Compile Include="Assets\@Scripts\Skill\Buffs\StatDownBuff.cs" />
@@ -173,6 +187,7 @@
     <Compile Include="Assets\@Scripts\Data\GameData.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_AchievementPopup.cs" />
     <Compile Include="Assets\@Scripts\Controllers\ProjectileController.cs" />
+    <Compile Include="Assets\GoogleSignIn\Impl\SignInHelperObject.cs" />
     <Compile Include="Assets\@Scripts\Skill\Monster\Boss_Electric.cs" />
     <Compile Include="Assets\@Scripts\Manager\ObjectManager.cs" />
     <Compile Include="Assets\@Scripts\Utils\Define.cs" />
@@ -195,6 +210,7 @@
     <Compile Include="Assets\@Scripts\Manager\Managers.cs" />
     <Compile Include="Assets\@Scripts\Utils\EditorStartInit.cs" />
     <Compile Include="Assets\@Scripts\Controllers\CameraController.cs" />
+    <Compile Include="Assets\@Scripts\TimerNTP.cs" />
     <Compile Include="Assets\@Scripts\Manager\Firebase\FirebaseDB.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_RelicInfoPopup.cs" />
     <Compile Include="Assets\@Scripts\Skill\Buffs\DotBuff.cs" />
@@ -1172,16 +1188,20 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.62f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.2D.SpriteShape.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.2D.IK.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Advertisement.IosSupport.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Advertisement.IosSupport.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
@@ -1210,6 +1230,10 @@
     </Reference>
     <Reference Include="Unity.ScriptableBuildPipeline">
       <HintPath>Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Localization.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Localization.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Services.Core">
@@ -1316,6 +1340,10 @@
       <HintPath>Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Advertisement.IosSupport">
+      <HintPath>Library\ScriptAssemblies\Unity.Advertisement.IosSupport.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Burst">
       <HintPath>Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
       <Private>False</Private>
@@ -1346,6 +1374,10 @@
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Localization">
+      <HintPath>Library\ScriptAssemblies\Unity.Localization.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.UI">

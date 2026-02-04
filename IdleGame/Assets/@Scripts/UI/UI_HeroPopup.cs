@@ -256,4 +256,5 @@ public class UI_HeroPopup : UI_Popup
         isRemoveCharacter = false;
     }
 
+    //TODO : 드래그앤 드랍으로 캐릭터 배치하기 / 해제하기
 }

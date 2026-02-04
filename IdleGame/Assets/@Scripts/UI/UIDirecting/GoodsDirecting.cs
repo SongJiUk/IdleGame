@@ -60,6 +60,8 @@ public class GoodsDirecting : UIDirecting
 
         if (_isWorldPos)
         {
+            Vector3 viewPortPoint = cam.WorldToViewportPoint(_pos);
+            Vector2 screenPoint = new Vector2(viewPortPoint.x + Screen.width, viewPortPoint.y + Screen.height);
             if (cam != null) transform.position = cam.WorldToScreenPoint(targetPos);
         }
         else

@@ -43,11 +43,6 @@ public class SpawnManager : MonoBehaviour, ITickable
         scene = Managers.UIM.SceneUI as UI_GameScene;
     }
 
-
-
-
-
-
     #region 이벤트
     public void OnReady()
     {

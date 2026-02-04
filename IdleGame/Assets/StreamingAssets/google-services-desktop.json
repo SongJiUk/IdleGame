@@ -13,7 +13,20 @@
           "package_name": "com.JiUk.IdleGame"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "689965818352-frlrqo69sirde70gqi7jb9b8bmuug1lr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.JiUk.IdleGame",
+            "certificate_hash": "28b98b23d7534e627aedc08f5a3b1c97f7945911"
+          }
+        },
+        {
+          "client_id": "689965818352-plir62446mohq2eq7vtptl4jca9lrldl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyALCh25fDylWonSepWA5gKH5lFt1Pr-I0Q"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "689965818352-plir62446mohq2eq7vtptl4jca9lrldl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

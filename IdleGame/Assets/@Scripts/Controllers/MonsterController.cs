@@ -289,14 +289,12 @@ public class MonsterController : CreatureController
             Managers.ObjectM.DeSpawn(this);
         }
 
-        //TODO : 이것도 바꿔야됌
         var GoodsDirecting = Managers.ObjectM.Spawn<GoodsDirecting>(transform.position, Utils.GoodsDirectingDataID);
         GoodsDirecting.Init(Define.GoodsType.Gold, transform.position, Utils.Money());
 
 
         var items = Managers.ItemM.GetDropItem();
 
-        //TODO : 몬스터마다 아이템 개수 다르게
         for (int i = 0; i < items.Count; i++)
         {
             DropItemController dc = Managers.ObjectM.Spawn<DropItemController>(transform.position, Utils.DropItemDataID);

@@ -64,7 +64,6 @@ public class UI_SavingMode : UI_Popup, ITickable
 
     public void Tick(float _deltaTime)
     {
-        //핸드폰에서만 됌.
         GetText(TextsType, (int)Texts.Battery_Text).text = (SystemInfo.batteryLevel * 100f).ToString();
         GetImage(ImagesType, (int)Images.Battery_Image_Fill).fillAmount = SystemInfo.batteryLevel;
         int battery = (int)(SystemInfo.batteryLevel * 100f);

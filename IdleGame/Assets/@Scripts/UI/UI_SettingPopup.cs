@@ -16,6 +16,7 @@ public class UI_SettingPopup : UI_Popup, ITickable
         KoButton,
         EnButton,
         JaButton,
+        RestoreButton,
     }
     enum Sliders
     {
@@ -61,6 +62,12 @@ public class UI_SettingPopup : UI_Popup, ITickable
         GetButton(ButtonsType, (int)Buttons.EnButton).gameObject.BindEvent(() => OnClickLanguageButton(Buttons.EnButton));
         GetButton(ButtonsType, (int)Buttons.JaButton).gameObject.BindEvent(() => OnClickLanguageButton(Buttons.JaButton));
 
+#if UNITY_IOS
+        GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.SetActive(true);
+        GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.BindEvent(() => Managers.IAPM.RestorePurchase());
+#endif
+
+        GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.SetActive(false);
         GetText(TextsType, (int)Texts.UserIDText).text = $"Unique ID : {Managers.FirebaseM.CurrentUser.UserId}";
         GetSlider(SlidersType, (int)Sliders.BgmSlider).value = Managers.SoundM.BgmValue;
         GetSlider(SlidersType, (int)Sliders.EffectSlider).value = Managers.SoundM.EffectValue;

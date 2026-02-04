@@ -34,24 +34,24 @@ public partial class FirebaseManager
         }
         try
         {
+            Managers.GameM.EndDate = TimerNTP.NowTime.ToString();
             if (!DateTime.TryParse(Managers.GameM.EndDate, out DateTime endDate))
             {
-                endDate = DateTime.Now;
+                endDate = TimerNTP.NowTime;
             }
 
-            Managers.GameM.EndDate = DateTime.Now.ToString();
 
-            //if (GetDateItem(endDate, DateTime.Now))
-            //{
-            //    Managers.GameM.gameData.DungeonKey[0] = 2;
-            //    Managers.GameM.gameData.DungeonKey[1] = 2;
+            if (GetDateItem(endDate, DateTime.Now))
+            {
+                Managers.GameM.gameData.DungeonKey[0] = 2;
+                Managers.GameM.gameData.DungeonKey[1] = 2;
 
-            //    foreach(var mission in Managers.GameM.gameData.MissionDic)
-            //    {
-            //        mission.Value.Progress = 0;
-            //        mission.Value.isRewarded = false;
-            //    }
-            //}
+                //foreach (var mission in Managers.GameM.gameData.MissionDic)
+                //{
+                //    mission.Value.Progress = 0;
+                //    mission.Value.isRewarded = false;
+                //}
+            }
 
             string default_json = JsonConvert.SerializeObject(data);
             string character_json = JsonConvert.SerializeObject(data.Character_Holder);
@@ -91,17 +91,17 @@ public partial class FirebaseManager
             }
             else
             {
-                Managers.GameM.EndDate = DateTime.Now.ToString();
+                Managers.GameM.EndDate = TimerNTP.NowTime.ToString();
             }
 
-            Managers.GameM.StartDate = DateTime.Now.ToString();
+            Managers.GameM.StartDate = TimerNTP.NowTime.ToString();
 
             if (string.IsNullOrEmpty(Managers.GameM.EndDate))
             {
-                Managers.GameM.EndDate = DateTime.Now.ToString();
+                Managers.GameM.EndDate = TimerNTP.NowTime.ToString();
             }
 
-            DateTime startDate = DateTime.Now;
+            DateTime startDate = TimerNTP.NowTime;
 
             if (DateTime.TryParse(Managers.GameM.EndDate, out DateTime endDate))
             {

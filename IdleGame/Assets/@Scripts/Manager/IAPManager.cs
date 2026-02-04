@@ -95,4 +95,43 @@ public class IAPManager : IStoreListener
         else
             Debug.Log("상품이 없거나 현재 구매가 불가능합니다.");
     }
+
+    public Product GetProduct(string _prouductID)
+    {
+        return storeController.products.WithID(_prouductID);
+    }
+
+    //Restore버튼
+    public void RestorePurchase()
+    {
+        if(storeController == null)
+        {
+            Debug.Log("IAP is not init");
+            return;
+        }
+
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+
+            var apple = storeExtensionProvider.GetExtension<IAppleExtensions>();
+            apple.RestoreTransactions((bool succes, string message) =>
+            {
+                Debug.Log($"Restore Purchase Completed :  succes={succes}, message = {message}");
+
+                if(succes)
+                {
+                    Debug.Log("Restore Succes");
+                }
+                else
+                {
+                    Debug.Log("Restore Fail" + message);
+                }
+            });
+        }
+        else
+        {
+            Debug.Log("Restore Purchase is not support");
+        }
+    }
+
 }

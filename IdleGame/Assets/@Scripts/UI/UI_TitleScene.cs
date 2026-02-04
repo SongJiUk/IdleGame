@@ -36,6 +36,8 @@ public class UI_TitleScene : UI_Scene
     public enum Buttons
     {
         StartButton,
+        GoogleButton,
+        GuestButton,
     }
 
     public enum Images
@@ -55,7 +57,6 @@ public class UI_TitleScene : UI_Scene
     #endregion
     bool isLoadEnd = false;
     Tween blinkTween = null;
-
     private void Start()
     {
         Init().Forget();
@@ -64,6 +65,7 @@ public class UI_TitleScene : UI_Scene
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
+        DebugConsole.Instance.Log("UI_TITle Init: 시작");
         GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
         ImagesType = typeof(Images);
@@ -91,6 +93,7 @@ public class UI_TitleScene : UI_Scene
 
         });
 
+        
         SetInfo().Forget();
         return true;
     }
@@ -123,9 +126,8 @@ public class UI_TitleScene : UI_Scene
                     break;
                 }
             }
-
             await FinishLoadingProcess();
-
+            
 
         }
         catch (System.Exception e)
@@ -144,9 +146,19 @@ public class UI_TitleScene : UI_Scene
         Managers.DataM.Init();
         Managers.ObjectM.Init();
         Managers.AdM.Init();
+        DebugConsole.Instance.Log("AdM Init: 성공");
         Managers.IAPM.InitUnityIAP();
+        DebugConsole.Instance.Log("IAPM Init: 성공");
+        Managers.TimeM.Init();
+        DebugConsole.Instance.Log("TimeM Init: 성공");
         Managers.SoundM.Init();
-        Managers.LocalM.Init();        
+        DebugConsole.Instance.Log("SoundM Init: 성공");
+        Managers.SoundM.Play(Define.Sound.Bgm, "Bgm_Title");
+        DebugConsole.Instance.Log("SoundM Play: 성공");
+        Managers.LocalM.Init();
+        DebugConsole.Instance.Log("LocalM Init: 성공");
+
+        DebugConsole.Instance.Log("FirebaseM: 시작전");
         await Managers.FirebaseM.Init();
         Managers.QuestM.Init();
 
@@ -154,7 +166,7 @@ public class UI_TitleScene : UI_Scene
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);
         GetText(TextsType, (int)Texts.DataLoadText).text = "데이터가 정상적으로 로딩되었습니다,";
         StartBlinkTween();
-        Managers.SoundM.Play(Define.Sound.Bgm, "Bgm_Title");
+        
         isLoadEnd = true;
         Managers.QuestM.GetMission(Define.MissionTarget.DailyAttendance).Progress++;
 
@@ -178,6 +190,4 @@ public class UI_TitleScene : UI_Scene
             blinkTween = null;
         }
     }
-
-
 }

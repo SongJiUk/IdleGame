@@ -9,12 +9,13 @@ public class SafeArea : MonoBehaviour
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        ApplySafeArea();
     }
 
     void ApplySafeArea()
     {
         Rect safeArea = Screen.safeArea;
-
+        Debug.Log($"SafeArea: {safeArea} / Screen: {Screen.width}x{Screen.height}");
         Vector2 anchorMin = safeArea.position;
         Vector2 anchorMax = safeArea.position + safeArea.size;
 

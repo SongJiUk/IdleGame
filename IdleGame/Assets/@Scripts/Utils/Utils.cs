@@ -577,19 +577,24 @@ public static class Utils
     #region Time
     public static double TimerCheck()
     {
-        //TODO : 인터넷 시간으로 바꾸기
         if (Managers.GameM.EndDate == "" || Managers.GameM.StartDate == "")
         {
             return 0.0d;
         }
 
         DateTime startDate = DateTime.Parse(Managers.GameM.StartDate);
-        DateTime endDate = DateTime.Parse(Managers.GameM.EndDate);
+        if (Managers.GameM.EndDate != null && Managers.GameM.EndDate != "")
+        {
+            DateTime endDate = DateTime.Parse(Managers.GameM.EndDate);
 
-        TimeSpan timer = startDate - endDate;
-        double timeCount = timer.TotalSeconds;
+            TimeSpan timer = startDate - endDate;
+            double timeCount = timer.TotalSeconds;
 
-        return timeCount;
+            return timeCount;
+
+        }
+        else return 0;
+       
     }
 
     public static string NextDayTimer()

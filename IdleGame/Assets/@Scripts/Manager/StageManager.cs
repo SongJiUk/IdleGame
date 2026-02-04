@@ -91,6 +91,7 @@ public class StageManager
 
                 case StageState.Dungeon:
                     isDungeon = true;
+                    isDead = false;
                     dungeonEvent?.Invoke(_dungeonDataID);
                     count = 0;
                     if (_dungeonDataID == 70000) AsyncAction(() => StateChange(StageState.Play, _prevStage: StageState.Dungeon), 1f, token).Forget();

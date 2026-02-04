@@ -23,14 +23,25 @@ public class ADManager
 
     public void Init()
     {
-
         SetAdID();
+        DebugConsole.Instance.Log("SetAdID 완료: Banner=" + BannderID);
 
+
+        DebugConsole.Instance.Log("MobileAds.Initialize 호출 직전");
         MobileAds.Initialize(initStatus =>
         {
+            DebugConsole.Instance.Log("MobileAds.Initialize 콜백 진입");
+
             LoadRewardedAd();
+            DebugConsole.Instance.Log("LoadRewardedAd 호출");
+
             LoadIntersititialAd();
+            DebugConsole.Instance.Log("LoadIntersititialAd 호출");
+
             RequestBanner();
+            DebugConsole.Instance.Log("RequestBanner 호출");
+
+            DebugConsole.Instance.Log("광고 초기화 완료");
             Debug.Log("광고 초기화 완료");
         });
 
@@ -102,6 +113,7 @@ public class ADManager
 
     public void LoadRewardedAd()
     {
+        DebugConsole.Instance.Log("LoadRewardedAd: 진입");
         AdRequest request = new AdRequest();
         RewardedAd.Load(RewardID, request, OnAdRewardCallback);
     }
@@ -147,6 +159,7 @@ public class ADManager
 
     public void LoadIntersititialAd()
     {
+        DebugConsole.Instance.Log("LoadIntersititialAd: 진입");
         if (interstitialAd != null)
         {
             interstitialAd.Destroy();
@@ -186,6 +199,7 @@ public class ADManager
 
     public void RequestBanner()
     {
+        DebugConsole.Instance.Log("RequestBanner: 진입");
         if (bannerView != null) bannerView.Destroy();
         AdSize size = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
         bannerView = new BannerView(BannderID, size, AdPosition.Bottom);

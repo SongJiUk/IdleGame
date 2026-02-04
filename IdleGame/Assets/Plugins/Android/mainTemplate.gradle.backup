@@ -7,6 +7,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:12
     implementation 'androidx.lifecycle:lifecycle-process:2.6.2' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:17
     implementation 'com.google.android.gms:play-services-ads:24.5.0' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
+    implementation 'com.google.android.gms:play-services-auth:16+' // Assets/GoogleSignIn/Editor/GoogleSignInDependencies.xml:10
     implementation 'com.google.android.gms:play-services-base:18.1.0' // Assets/Firebase/Editor/DatabaseDependencies.xml:17
     implementation 'com.google.android.ump:user-messaging-platform:3.2.0' // Assets/GoogleMobileAds/Editor/GoogleUmpDependencies.xml:7
     implementation 'com.google.firebase:firebase-analytics:21.2.0' // Assets/Firebase/Editor/DatabaseDependencies.xml:15
@@ -16,6 +17,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-common:20.2.0' // Assets/Firebase/Editor/AppDependencies.xml:13
     implementation 'com.google.firebase:firebase-database:20.1.0' // Assets/Firebase/Editor/DatabaseDependencies.xml:13
     implementation 'com.google.firebase:firebase-database-unity:10.2.0' // Assets/Firebase/Editor/DatabaseDependencies.xml:22
+    implementation 'com.google.signin:google-signin-support:1.0.4' // Assets/GoogleSignIn/Editor/GoogleSignInSupportDependencies.xml:9
 // Android Resolver Dependencies End
 **DEPS**}
 
