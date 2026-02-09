@@ -1,43 +1,50 @@
 {
   "project_info": {
-    "project_number": "689965818352",
-    "firebase_url": "https://idlegame-d710e-default-rtdb.firebaseio.com",
-    "project_id": "idlegame-d710e",
-    "storage_bucket": "idlegame-d710e.firebasestorage.app"
+    "project_number": "1007607179174",
+    "firebase_url": "https://knight-order-grow-default-rtdb.firebaseio.com",
+    "project_id": "knight-order-grow",
+    "storage_bucket": "knight-order-grow.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:689965818352:android:a3be45de74b8a39fccbd35",
+        "mobilesdk_app_id": "1:1007607179174:android:f8db83a18b94ba17be9167",
         "android_client_info": {
-          "package_name": "com.JiUk.IdleGame"
+          "package_name": "com.JiUk.KnightOrderGrow"
         }
       },
       "oauth_client": [
         {
-          "client_id": "689965818352-frlrqo69sirde70gqi7jb9b8bmuug1lr.apps.googleusercontent.com",
+          "client_id": "1007607179174-h89qls79q4qad03cegnli5husb8l5cvi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.JiUk.IdleGame",
+            "package_name": "com.JiUk.KnightOrderGrow",
             "certificate_hash": "28b98b23d7534e627aedc08f5a3b1c97f7945911"
           }
         },
         {
-          "client_id": "689965818352-plir62446mohq2eq7vtptl4jca9lrldl.apps.googleusercontent.com",
+          "client_id": "1007607179174-eob21571uq2q6bku1i3l2s8nrmnmdkl3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyALCh25fDylWonSepWA5gKH5lFt1Pr-I0Q"
+          "current_key": "AIzaSyCq9ver9UNNsrHjWS2D1faQdh0KnFdzVmo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "689965818352-plir62446mohq2eq7vtptl4jca9lrldl.apps.googleusercontent.com",
+              "client_id": "1007607179174-eob21571uq2q6bku1i3l2s8nrmnmdkl3.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1007607179174-bma3bk7a747gc3unijdd40579f2bh1r3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.JiUk.KnightOrderGrow"
+              }
             }
           ]
         }
