@@ -39,5 +39,8 @@ public class Memo
     TODO : Localization 추가하기
     TODO : 던전 둘다 비교(안꺼지는게 있는거같음)
     TODO : 구글 로그인 확인하기(빌드해서 => USB디버깅 해봐야함)
+    TODO : 랭킹 이미지 만들어서 바꾸기
+    TODO : 대시보드 초기화하기(전투력)
+    TODO : 듀토리얼
     */
 }

@@ -34,6 +34,8 @@ public class Managers : MonoBehaviour
     readonly SoundManager soundManager = new();
     readonly LocalizationManager localizationManager = new();
     readonly TimeManager timeManager = new();
+    readonly GPGSManager gpgsManager = new();
+
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
     public static ResourceManager ResourceM { get { return Instance?.resourceManager; } }
     public static UIManager UIM { get { return Instance?.uIManager; } }
@@ -58,6 +60,8 @@ public class Managers : MonoBehaviour
     public static SoundManager SoundM { get { return Instance?.soundManager; } }
     public static LocalizationManager LocalM { get { return Instance?.localizationManager; } }
     public static TimeManager TimeM { get { return Instance?.timeManager; } }
+    public static GPGSManager GPGSM { get { return Instance?.gpgsManager; } }
+
 
     public static bool isFast = false;
     public static float save_Timer = 0.0f;

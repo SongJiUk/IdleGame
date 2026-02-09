@@ -154,6 +154,7 @@ public partial class FirebaseManager
             }
 
             Managers.GameM.gameData.Init();
+            Managers.GPGSM.Init();
 
 
             Debug.Log("모든 데이터 로드 및 초기화 완료");

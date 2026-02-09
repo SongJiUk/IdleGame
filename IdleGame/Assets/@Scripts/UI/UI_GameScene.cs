@@ -67,6 +67,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         DungeonButtonCloseObject,
         SmeltingButtonCloseObject,
         ShopButtonCloseObject,
+        TutorialObject,
 
     }
     enum Buttons
@@ -95,6 +96,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         BuffsButton,
         DailyMissionButton,
         AchievementsButton,
+        LeaderBoardButton,
 
     }
 
@@ -487,6 +489,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 await Managers.UIM.ShowPopup<UI_AchievementPopup>();
                 break;
 
+            case Buttons.LeaderBoardButton:
+                //Managers.GPGSM.ShowLeaderboardUI();
+                break;
             case Buttons.QuestButton:
                 bool isReward;
                 int rewardcount;
@@ -1595,4 +1600,37 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
 
     #endregion
+
+    public void StartTutorial(Button _button)
+    {
+        GameObject panel = GetObject(GameObjectsType, (int)GameObjects.TutorialObject);
+        panel.SetActive(true);
+        GameObject copy = Instantiate(_button.gameObject);
+
+        RectTransform copyRect = copy.GetComponent<RectTransform>();
+        RectTransform originRect = _button.GetComponent<RectTransform>();
+
+        copy.transform.SetParent(panel.transform);
+
+        copyRect.anchorMin = new Vector2(0.5f, 0.5f);
+        copyRect.anchorMax = new Vector2(0.5f, 0.5f);
+        copyRect.pivot = new Vector2(0.5f, 0.5f);
+        copyRect.sizeDelta = originRect.sizeDelta;
+
+        copyRect.position = originRect.position;
+        copyRect.localScale = Vector3.one;
+
+        Button copyButton = copy.GetComponent<Button>();
+        copyButton.onClick = _button.onClick;
+        copyButton.onClick.AddListener(() => EndTutorial());
+    }
+    public void EndTutorial()
+    {
+        GameObject panel = GetObject(GameObjectsType, (int)GameObjects.TutorialObject);
+        for (int i =0; i< panel.transform.childCount; i++)
+        {
+            Destroy(panel.transform.GetChild(i).gameObject);
+        }
+        panel.SetActive(false);
+    }
 }

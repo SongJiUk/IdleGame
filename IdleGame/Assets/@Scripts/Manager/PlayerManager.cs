@@ -61,7 +61,6 @@ public class PlayerManager
     {
         Managers.GameM.Level++;
         Managers.GameM.Exp = 0;
-
         Managers.QuestM.GetMission(Define.MissionTarget.LevelUp).Progress++;
     }
 
@@ -127,7 +126,9 @@ public class PlayerManager
 
     public double AverageCombatPower()
     {
-        return MainAttack() + MainHP();
+        double damage = MainAttack() + MainHP();
+
+        return damage;
     }
 
 }

@@ -146,19 +146,12 @@ public class UI_TitleScene : UI_Scene
         Managers.DataM.Init();
         Managers.ObjectM.Init();
         Managers.AdM.Init();
-        DebugConsole.Instance.Log("AdM Init: 성공");
         Managers.IAPM.InitUnityIAP();
-        DebugConsole.Instance.Log("IAPM Init: 성공");
         Managers.TimeM.Init();
-        DebugConsole.Instance.Log("TimeM Init: 성공");
         Managers.SoundM.Init();
-        DebugConsole.Instance.Log("SoundM Init: 성공");
         Managers.SoundM.Play(Define.Sound.Bgm, "Bgm_Title");
-        DebugConsole.Instance.Log("SoundM Play: 성공");
         Managers.LocalM.Init();
-        DebugConsole.Instance.Log("LocalM Init: 성공");
 
-        DebugConsole.Instance.Log("FirebaseM: 시작전");
         await Managers.FirebaseM.Init();
         Managers.QuestM.Init();
 
