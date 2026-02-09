@@ -141,13 +141,11 @@ public class ADManager
             {
                 Debug.Log($"보상형 광고 보상 지급 : {reward.Type} / {reward.Amount}");
                 Managers.QuestM.GetMission(Define.MissionTarget.WatchingAD).Progress++;
-#if UNITY_EDITOR
                 if (OnRewardedCallback != null)
                 {
-                    OnRewardedCallback = null;
                     OnRewardedCallback?.Invoke();
+                    OnRewardedCallback = null;
                 }
-#endif
             });
         }
         else

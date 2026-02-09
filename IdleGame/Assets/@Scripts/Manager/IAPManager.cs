@@ -12,6 +12,9 @@ public class IAPManager : IStoreListener
     private IStoreController storeController; // 구매 과정 제어
     private IExtensionProvider storeExtensionProvider; // 플랫폼 위한 확정 처리
 
+
+    public Action OnPurchaseSuccess;
+    public Action OnPurchaseFail;
     public void InitUnityIAP()
     {
         if (storeController != null) return;
@@ -71,9 +74,11 @@ public class IAPManager : IStoreListener
         Debug.Log($"TransactionID: {args.purchasedProduct.transactionID}");
 
         string purchaseName = args.purchasedProduct.definition.id;
-        Define.IAP iap = (Define.IAP)Enum.Parse(typeof(Define.IAP), purchaseName);
 
+        Define.IAP iap = (Define.IAP)Enum.Parse(typeof(Define.IAP), purchaseName);
         HandlePurchaseAsync(iap).Forget();
+
+        OnPurchaseSuccess?.Invoke();
 
         return PurchaseProcessingResult.Complete;
     }
@@ -87,7 +92,7 @@ public class IAPManager : IStoreListener
 
     public void Purchase(string _productID)
     {
-        Product product =  storeController.products.WithID(_productID);
+        Product product = storeController.products.WithID(_productID);
         if (product != null && product.availableToPurchase)
         {
             storeController.InitiatePurchase(product);
@@ -104,7 +109,7 @@ public class IAPManager : IStoreListener
     //Restore버튼
     public void RestorePurchase()
     {
-        if(storeController == null)
+        if (storeController == null)
         {
             Debug.Log("IAP is not init");
             return;
@@ -118,7 +123,7 @@ public class IAPManager : IStoreListener
             {
                 Debug.Log($"Restore Purchase Completed :  succes={succes}, message = {message}");
 
-                if(succes)
+                if (succes)
                 {
                     Debug.Log("Restore Succes");
                 }

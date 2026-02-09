@@ -35,6 +35,7 @@ public class Managers : MonoBehaviour
     readonly LocalizationManager localizationManager = new();
     readonly TimeManager timeManager = new();
     readonly GPGSManager gpgsManager = new();
+    readonly BuffManager buffManager = new();
 
     public static PoolManager PoolM { get { return Instance?.poolManager; } }
     public static ResourceManager ResourceM { get { return Instance?.resourceManager; } }
@@ -61,6 +62,7 @@ public class Managers : MonoBehaviour
     public static LocalizationManager LocalM { get { return Instance?.localizationManager; } }
     public static TimeManager TimeM { get { return Instance?.timeManager; } }
     public static GPGSManager GPGSM { get { return Instance?.gpgsManager; } }
+    public static BuffManager BuffM { get { return Instance?.buffManager; } }
 
 
     public static bool isFast = false;

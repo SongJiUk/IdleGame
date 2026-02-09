@@ -103,7 +103,7 @@ public class GameData
     {
         MissionDic.Clear();
 
-        foreach(var data in Managers.DataM.MissionDataDic)
+        foreach (var data in Managers.DataM.MissionDataDic)
         {
             if (data.Value.MissionType != Define.MissionType.Daily) continue;
 
@@ -118,10 +118,10 @@ public class GameData
             if (data.Value.MissionType != Define.MissionType.Daily) continue;
 
             string key = data.Value.MissionTarget.ToString();
-            if(!MissionDic.ContainsKey(key))
-            { 
+            if (!MissionDic.ContainsKey(key))
+            {
                 MissionDic[key] = new MissionInfo();
-            }        
+            }
         }
     }
 

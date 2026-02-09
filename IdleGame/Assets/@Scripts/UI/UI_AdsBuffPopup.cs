@@ -54,9 +54,12 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
 
     }
     #endregion
+
     bool isAttackBuffing = false;
     bool isGoldBuffing = false;
     bool isCriticalBuffing = false;
+
+    bool[] isBuffing = new bool[3];
 
     public class BuffData
     {
@@ -64,6 +67,8 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
         public float remainTime;
     }
     List<BuffData> BuffTimers = new List<BuffData>();
+    float autoSaveTimer = 0f;
+    const float AUTO_SAVE_INTERVAL = 30f;
 
     public override async UniTask<bool> Init()
     {
@@ -94,7 +99,33 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
         GetText(TextsType, (int)Texts.Count_Text).text = $"{1} / {3}";
         //GetImage(ImagesType, (int)Images.SliderFillImage).fillAmount = 
 
-        RefreshPopup();
+
+        bool isUseTimer = false;
+        for (int i = 0; i < Managers.GameM.Buff_Timers.Length; i++)
+        {
+            if (Managers.GameM.Buff_Timers[i] > 0.0f)
+            {
+                isBuffing[i] = true;
+                if (isBuffing[i])
+                {
+                    isUseTimer = true;
+                    BuffData item = new BuffData
+                    {
+                        BuffType = Define.BuffType.AttackUp + i,
+                        remainTime = Managers.GameM.Buff_Timers[i]
+                    };
+
+                    BuffTimers.Add(item);
+                }
+                GetObject(GameObjectsType, (int)GameObjects.AttackUpTimeObject + i).SetActive(isBuffing[i]);
+                GetObject(GameObjectsType, (int)GameObjects.AttackUpButtonLockObject + i).SetActive(isBuffing[i]);
+                GetObject(GameObjectsType, (int)GameObjects.AttackUpLockObject + i).SetActive(!isBuffing[i]);
+                GetObject(GameObjectsType, (int)GameObjects.AttackUpCoolTimeObject + i).SetActive(isBuffing[i]);
+            }
+        }
+
+        if (isUseTimer) Managers.UpdateM.Register(_unscaledTickable: this);
+        //RefreshPopup();
 
     }
 
@@ -151,34 +182,41 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
         Action rewardedAction = () =>
         {
             Managers.UpdateM.Register(_unscaledTickable: this);
-            BuffData item = new BuffData { BuffType = _type, remainTime = 10f };
+            BuffData item = new BuffData { BuffType = _type, remainTime = 1800f };
             BuffTimers.Add(item);
+            int index = (int)item.BuffType;
             switch (_type)
             {
                 case Define.BuffType.AttackUp:
 
                     isAttackBuffing = true;
-                    (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isAttackBuffing);
+                    isBuffing[index] = true;
+                    Managers.GameM.Buff_Timers[index] = item.remainTime;
+                    (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isBuffing[0]);
                     RefreshPopup();
                     break;
 
                 case Define.BuffType.GoldUp:
                     isGoldBuffing = true;
-                    (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isGoldBuffing);
+                    isBuffing[index] = true;
+                    Managers.GameM.Buff_Timers[index] = item.remainTime;
+                    (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isBuffing[1]);
                     RefreshPopup();
                     break;
 
                 case Define.BuffType.CriticalUp:
                     isCriticalBuffing = true;
-                    (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isCriticalBuffing);
+                    isBuffing[index] = true;
+                    Managers.GameM.Buff_Timers[index] = item.remainTime;
+                    (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, isBuffing[2]);
                     RefreshPopup();
                     break;
             }
         };
         Managers.AdM.ShowRewardedAd(rewardedAction, null);
-        
 
-        
+
+
     }
 
     void OnClickCloseButton()
@@ -188,32 +226,44 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
 
     public void UnscaledTick(float _unscaledDeltaTime)
     {
+        autoSaveTimer += _unscaledDeltaTime;
+        if (autoSaveTimer >= AUTO_SAVE_INTERVAL)
+        {
+            autoSaveTimer = 0f;
+
+            for (int i = 0; i < BuffTimers.Count; i++)
+            {
+                var buff = BuffTimers[i];
+                int idx = (int)buff.BuffType;
+                Managers.GameM.Buff_Timers[idx] = buff.remainTime;
+            }
+        }
 
         for (int i = BuffTimers.Count - 1; i >= 0; i--)
         {
             BuffData buff = BuffTimers[i];
             buff.remainTime -= _unscaledDeltaTime;
-
+            int index = (int)buff.BuffType;
             if (buff.remainTime < 0.0f)
             {
                 switch (buff.BuffType)
                 {
                     case Define.BuffType.AttackUp:
 
-                        isAttackBuffing = false;
-                        (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(buff.BuffType, isAttackBuffing);
+                        isBuffing[index] = false;
+                        (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(buff.BuffType, isBuffing[0]);
                         RefreshPopup();
                         break;
 
                     case Define.BuffType.GoldUp:
-                        isGoldBuffing = false;
-                        (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(buff.BuffType, isGoldBuffing);
+                        isBuffing[index] = false;
+                        (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(buff.BuffType, isBuffing[1]);
                         RefreshPopup();
                         break;
 
                     case Define.BuffType.CriticalUp:
-                        isCriticalBuffing = false;
-                        (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(buff.BuffType, isCriticalBuffing);
+                        isBuffing[index] = false;
+                        (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(buff.BuffType, isBuffing[2]);
                         RefreshPopup();
                         break;
                 }
@@ -228,5 +278,16 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
 
         if (BuffTimers.Count == 0)
             Managers.UpdateM.UnRegister(_unscaledTickable: this);
+    }
+
+    private void OnApplicationQuit()
+    {
+        for (int i = 0; i < BuffTimers.Count; i++)
+        {
+            var buff = BuffTimers[i];
+            int idx = (int)buff.BuffType;
+            Managers.GameM.Buff_Timers[idx] = buff.remainTime;
+        }
+        Managers.FirebaseM.WriteData().Forget();
     }
 }

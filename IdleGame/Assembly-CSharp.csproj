@@ -84,6 +84,7 @@
     <Compile Include="Assets/@Scripts/UI/UI_ChangeLanguagePopup.cs" />
     <Compile Include="Assets/@Scripts/Controllers/CreatureController.cs" />
     <Compile Include="Assets/@Scripts/Manager/RenderManager.cs" />
+    <Compile Include="Assets/@Scripts/Manager/IUnScaledTickle.cs" />
     <Compile Include="Assets/@Scripts/UI/UI_TitleScene.cs" />
     <Compile Include="Assets/@Scripts/Controllers/PlayerController.cs" />
     <Compile Include="Assets/@Scripts/Manager/LocalizationManager.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Assets/@Scripts/UI/UI_HeroPopup.cs" />
     <Compile Include="Assets/@Scripts/Manager/Firebase/FirebaseLogin.cs" />
     <Compile Include="Assets/@Scripts/UI/UI_UpgradeRelicIcon.cs" />
+    <Compile Include="Assets/@Scripts/Manager/BuffManager.cs" />
     <Compile Include="Assets/@Scripts/Controllers/MonsterController.cs" />
     <Compile Include="Assets/@Scripts/UI/UI_AchievementItem.cs" />
     <Compile Include="Assets/@Scripts/Data/Data.cs" />

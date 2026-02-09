@@ -8,6 +8,7 @@ public class UI_ShopPopup : UI_Popup
 
     enum GameObjects
     {
+        RemoveADObject
     }
 
     enum Buttons
@@ -69,6 +70,7 @@ public class UI_ShopPopup : UI_Popup
     {
         if (!await base.Init()) return false;
         Managers.GameM.OnGoodsChanged += CheckGoodsCount;
+        Managers.IAPM.OnPurchaseSuccess += OnCheckRemoveAD;
 
         GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
@@ -107,6 +109,7 @@ public class UI_ShopPopup : UI_Popup
         CheckGachaHero();
         CheckGachaRelic();
         CheckButtonTextColor();
+        OnCheckRemoveAD();
     }
 
     #region 들어올때마다 초기화 해줘야하는것들
@@ -273,6 +276,21 @@ public class UI_ShopPopup : UI_Popup
     }
     #endregion
 
+
+    #region RemoveAd
+
+    //TODO : 이거 구매되면 바로 true로 바꾸고싶은데 .
+    void OnCheckRemoveAD()
+    {
+        if (Managers.GameM.gameData.ADS_Remove)
+        {
+            GetObject(GameObjectsType, (int)GameObjects.RemoveADObject).SetActive(true);
+        }
+        else
+            GetObject(GameObjectsType, (int)GameObjects.RemoveADObject).SetActive(false);
+    }
+
+    #endregion
     public void GetProuduct(string _name)
     {
         Managers.IAPM.Purchase(_name);
@@ -290,11 +308,11 @@ public class UI_ShopPopup : UI_Popup
                 GetProuduct(Define.IAP.dia300.ToString());
                 break;
         }
-
     }
     void OnClickCloseButton()
     {
         Managers.GameM.OnGoodsChanged -= CheckGoodsCount;
+        Managers.IAPM.OnPurchaseSuccess -= OnCheckRemoveAD;
         TriggerClose(this, true).Forget();
     }
 }
