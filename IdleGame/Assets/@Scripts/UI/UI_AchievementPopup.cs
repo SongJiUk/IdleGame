@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 
 public class UI_AchievementPopup : UI_Popup
@@ -9,7 +10,7 @@ public class UI_AchievementPopup : UI_Popup
     enum GameObjects
     {
         Content,
-
+        ScrollView,
     }
 
     enum Texts
@@ -25,6 +26,7 @@ public class UI_AchievementPopup : UI_Popup
     #endregion
     Transform parent;
     List<UI_AchievementItem> itemPool = new List<UI_AchievementItem>();
+    ScrollRect scrollRect;
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -38,17 +40,13 @@ public class UI_AchievementPopup : UI_Popup
         BindButton(ButtonsType);
 
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
-
+        scrollRect = GetObject(GameObjectsType, (int)GameObjects.ScrollView).GetComponent<ScrollRect>();
         parent = GetObject(GameObjectsType, (int)GameObjects.Content).transform;
         return true;
     }
 
 
     public override void SetInfo()
-    {
-        RefreshUI();
-    }
-    void RefreshUI()
     {
         int index = 0;
         foreach (var data in Managers.DataM.AchievementDataDic)
@@ -67,10 +65,16 @@ public class UI_AchievementPopup : UI_Popup
             }
 
             item.SetInfo(data.Value);
+            item.OnCollected = RefreshUI;
             index++;
         }
 
-
+        Canvas.ForceUpdateCanvases();
+        scrollRect.verticalNormalizedPosition = 1f;
+        RefreshUI();
+    }
+    void RefreshUI()
+    {        
         for (int i = 0; i < itemPool.Count; i++)
         {
             if (Managers.QuestM.AchievementDic[itemPool[i].data.AchievementID])

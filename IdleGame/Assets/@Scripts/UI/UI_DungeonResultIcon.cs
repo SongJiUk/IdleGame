@@ -35,7 +35,7 @@ public class UI_DungeonResultIcon : UI_Base
         return true;
     }
 
-    public void SetInfo(int _dungeonDataID, bool _isClear)
+    public void SetInfo(int _dungeonDataID)
     {
         int level = 0;
 
@@ -50,9 +50,6 @@ public class UI_DungeonResultIcon : UI_Base
 
             GetImage(ImagesType, (int)Images.ResultImage).sprite = Managers.ResourceM.GetAtlas(item.Name);
             level = Managers.GameM.gameData.DungeonClearLevel[value];
-
-            if (!_isClear) level--;
-
 
             if (_dungeonDataID == 70000)
             {

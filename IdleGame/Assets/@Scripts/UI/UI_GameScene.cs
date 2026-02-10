@@ -576,7 +576,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                     ScaleDownSelectButton();
                     GetObject(GameObjectsType, (int)GameObjects.HeroButtonCloseObject).SetActive(false);
                     if (currentBottomPopup == heroPopup) currentBottomPopup = null;
-                    statPopup = null;
                 };
 
                 break;
@@ -1002,7 +1001,36 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     #region 하단 캐릭터들 정보 업데이트
     public async void OnClickCharacterPlus(int _index)
     {
-        await Managers.UIM.ShowPopup<UI_HeroPopup>(_isFade: true);
+        //await Managers.UIM.ShowPopup<UI_HeroPopup>(_isFade: true);
+        if (selectedButton != heroBtn && currentBottomPopup != null)
+        {
+            currentBottomPopup.ClosePopup(false).Forget();
+        }
+
+        if (selectedButton == heroBtn && currentBottomPopup != null)
+        {
+            if (currentBottomPopup is UI_HeroPopup hero)
+            {
+                ScaleDownSelectButton();
+                GetObject(GameObjectsType, (int)GameObjects.HeroButtonCloseObject).SetActive(false);
+                hero.ClosePopup(true).Forget();
+            }
+            return;
+        }
+
+        clickedButton = heroBtn;
+        GetObject(GameObjectsType, (int)GameObjects.HeroButtonCloseObject).SetActive(true);
+        ScaleUpSelectButton();
+
+        UI_HeroPopup heroPopup = await Managers.UIM.ShowPopup<UI_HeroPopup>(_isFade: true, _parent: GetPopUpLayer());
+        currentBottomPopup = heroPopup;
+        heroPopup.OnThisPopupClosed = () =>
+        {
+            ScaleDownSelectButton();
+            GetObject(GameObjectsType, (int)GameObjects.HeroButtonCloseObject).SetActive(false);
+            if (currentBottomPopup == heroPopup) currentBottomPopup = null;
+        };
+
     }
 
 

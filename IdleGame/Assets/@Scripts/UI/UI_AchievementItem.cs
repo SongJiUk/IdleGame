@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using System;
 
 public class UI_AchievementItem : UI_Base
 {
@@ -29,6 +30,8 @@ public class UI_AchievementItem : UI_Base
     #endregion
     Transform parent;
     public Data.AchievementData data;
+
+    public Action OnCollected;
 
     List<UI_AchievementIcon> iconPool = new List<UI_AchievementIcon>();
     public async override UniTask<bool> Init()
@@ -107,7 +110,7 @@ public class UI_AchievementItem : UI_Base
 
             case Define.AchievementType.Relic:
                 bool isCanCollectRelic = true;
-                int relicNum = -1;
+                
                 for (int i = 0; i < data.AchievementRelicList.Count; i++)
                 {
                     UI_AchievementIcon icon;
@@ -124,7 +127,7 @@ public class UI_AchievementItem : UI_Base
                     }
 
                     int dataID = data.AchievementRelicList[i];
-                    var itemData = Managers.DataM.ItemDataDic[dataID];
+                    var itemData = Managers .DataM.ItemDataDic[dataID];
 
                     var item = Managers.GameM.gameData.Item_Data[itemData.Name];
                     if (item.holder.Count == 0)
@@ -135,8 +138,7 @@ public class UI_AchievementItem : UI_Base
                     icon.SetInfo(data.AchievementRelicList[i]);
                     index++;
                 }
-
-                GetButton(ButtonsType, (int)Buttons.CollectButton).gameObject.BindEvent(() => OnClickCollectButton(relicNum, isCanCollectRelic));
+                GetButton(ButtonsType, (int)Buttons.CollectButton).gameObject.BindEvent(() => OnClickCollectButton(achievementID, isCanCollectRelic));
                 break;
         }
 
@@ -150,6 +152,8 @@ public class UI_AchievementItem : UI_Base
             Managers.QuestM.AchievementDic[_achievementID] = true;
             Managers.QuestM.LoadAchievementDatas();
             SetInfo(data);
+
+            OnCollected?.Invoke();
         }
         else
         {

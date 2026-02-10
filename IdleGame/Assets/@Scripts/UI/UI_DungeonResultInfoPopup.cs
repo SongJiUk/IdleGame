@@ -29,7 +29,8 @@ public class UI_DungeonResultInfoPopup : UI_Popup
 
     enum Images
     {
-        TimerImage
+        TimerImage,
+        DungeonFailImage
     }
     #endregion  
     Transform parent = null;
@@ -59,24 +60,27 @@ public class UI_DungeonResultInfoPopup : UI_Popup
     public void SetInfo(int _dungeonDataID, bool _isClear)
     {
 
+        GetImage(ImagesType, (int)Images.DungeonFailImage).gameObject.SetActive(false);
+
         dungeonDataID = _dungeonDataID;
         value = 0;
         if (_dungeonDataID == 70000) value = 0;
         else value = 1;
 
 
-        GetText(TextsType, (int)Texts.Level_Text).text = $"Lv. {Managers.GameM.gameData.DungeonClearLevel[value]}";
+        GetText(TextsType, (int)Texts.Level_Text).text = $"Lv. {Managers.GameM.gameData.DungeonClearLevel[value] + 1}";
         if (_isClear)
         {
             GetText(TextsType, (int)Texts.ResultText).text = "클리어";
             var icon = Managers.UIM.MakeSubItem<UI_DungeonResultIcon>();
             icon.Init().Forget();
-            icon.SetInfo(dungeonDataID, _isClear);
+            icon.SetInfo(dungeonDataID);
 
         }
         else
         {
             GetText(TextsType, (int)Texts.ResultText).text = "실패";
+            GetImage(ImagesType, (int)Images.DungeonFailImage).gameObject.SetActive(true);
         }
 
         UpdateResultInfoPopupClose().Forget();

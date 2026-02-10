@@ -43,6 +43,8 @@ public class ItemManager
         List<Data.ItemData> dropitems = new List<Data.ItemData>();
         int currentStage = Managers.GameM.Stage;
 
+        float bounus = Managers.PlayerM.ItemDrop();
+
         foreach (var data in Managers.GameM.gameData.Item_Data)
         {
             var item = data.Value.data;
@@ -51,8 +53,10 @@ public class ItemManager
             if (item.MinStage > currentStage) continue;
 
             float randValue = Random.Range(0, 100f);
+            float finalProb = item.Probability + bounus;
 
-            if (randValue <= item.Probability)
+            finalProb = Mathf.Clamp(finalProb, 0f, 100f);
+            if (randValue <= finalProb)
             {
                 dropitems.Add(data.Value.data);
             }

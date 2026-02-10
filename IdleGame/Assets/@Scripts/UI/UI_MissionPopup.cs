@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_MissionPopup : UI_Popup
 {
@@ -16,11 +17,13 @@ public class UI_MissionPopup : UI_Popup
     enum GameObjects
     {
         Content,
+        ScrollView,
     }
     #endregion
     Transform parent = null;
 
     List<UI_MissionItem> itemPool = new List<UI_MissionItem>();
+    ScrollRect scrollRect;
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -33,7 +36,7 @@ public class UI_MissionPopup : UI_Popup
 
         parent = GetObject(GameObjectsType, (int)GameObjects.Content).transform;
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
-
+        scrollRect = GetObject(GameObjectsType, (int)GameObjects.ScrollView).GetComponent<ScrollRect>();
         return true;
     }
 
@@ -76,6 +79,9 @@ public class UI_MissionPopup : UI_Popup
         {
             itemPool[i].gameObject.SetActive(false);
         }
+
+        Canvas.ForceUpdateCanvases();
+        scrollRect.verticalNormalizedPosition = 1f;
     }
 
     void OnClickCloseButton()

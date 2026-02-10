@@ -45,8 +45,9 @@ public class PlayerManager
         var damage = Utils.Datas.levelData.Damage() * ((int)_grade + 1);
         float level = (float)_holder.holder.Level * 10 / (float)100;
         var realDamage = damage + damage * level;
-        realDamage += realDamage * (Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Damage) / 100f);
+        realDamage *= 1.0 + (Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Damage) / 100f);
 
+        realDamage *= 1.0 + (Managers.QuestM.Achievement_Status_Data.damage / 100f);
         realDamage *= Managers.BuffM.GetAttackBuffMul();
 
         return realDamage;
@@ -57,7 +58,9 @@ public class PlayerManager
         var hp = Utils.Datas.levelData.HP() * ((int)_grade + 1);
         float level = (float)_holder.holder.Level * 10 / (float)100;
         var realHp = hp + hp * level;
-        realHp += realHp * (Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.HP) / 100f);
+        realHp *= 1.0f + (Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.HP) / 100f);
+
+        realHp *= 1.0f + (Managers.QuestM.Achievement_Status_Data.hp / 100f);
         return realHp;
     }
     public void LevelUp()
@@ -104,36 +107,49 @@ public class PlayerManager
 
     public float GoldDrop()
     {
+        float smeltPercent = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Money);
+        float achievementPercent = (float)Managers.QuestM.Achievement_Status_Data.money;
 
-        float percent = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Money);
-
-        float statMul = 1f + percent / 100f;
+        float statMul = 1f + (smeltPercent / 100f);
+        float achievementMul = 1f + (achievementPercent / 100f);
         float buffMul = Managers.BuffM.GetGoldBuffMul();
 
-       
-        return statMul * buffMul;
+        return statMul * achievementMul * buffMul;
     }
 
     public float ItemDrop()
     {
-        return 0.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Item); ;
+        float smelt = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Item);
+        float achievement = (float)Managers.QuestM.Achievement_Status_Data.item;
+        return smelt + achievement;
     }
 
     public float AttackSpeed()
     {
-        return 1.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.AttackSpeed);
+        float smelt = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.AttackSpeed);
+        float achievement = (float)Managers.QuestM.Achievement_Status_Data.attackSpeed;
+        return 1.0f + (smelt / 100f) + (achievement / 100f);
     }
 
     public float CriticalChance()
     {
-        float baseValue = 20.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.CriticalP);
-        baseValue += Managers.BuffM.GetCriticalBuffMul();
-        return baseValue;
+
+        float baseValue = 20.0f;
+        float smelt = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.CriticalP);
+        float achievement = (float)Managers.QuestM.Achievement_Status_Data.criticalP;
+
+        float buff = Managers.BuffM.GetCriticalBuffMul();
+
+        return baseValue + smelt + achievement + buff;
     }
 
     public float CriticalDamage()
     {
-        return 140.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.CriticalD);
+        float baseValue = 140.0f;
+        float smelt = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.CriticalD);
+        float achievement = (float)Managers.QuestM.Achievement_Status_Data.criticalD;
+
+        return baseValue + smelt + achievement;
     }
 
     public double AverageCombatPower()
