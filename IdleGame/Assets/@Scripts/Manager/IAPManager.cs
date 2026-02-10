@@ -78,8 +78,6 @@ public class IAPManager : IStoreListener
         Define.IAP iap = (Define.IAP)Enum.Parse(typeof(Define.IAP), purchaseName);
         HandlePurchaseAsync(iap).Forget();
 
-        OnPurchaseSuccess?.Invoke();
-
         return PurchaseProcessingResult.Complete;
     }
 
@@ -137,6 +135,11 @@ public class IAPManager : IStoreListener
         {
             Debug.Log("Restore Purchase is not support");
         }
+    }
+
+    public void NotifyPurchaseSucces()
+    {
+        OnPurchaseSuccess?.Invoke();
     }
 
 }

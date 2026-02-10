@@ -160,7 +160,7 @@ public class UI_ShopPopup : UI_Popup
     }
     void CheckGoodsCount()
     {
-        GetText(TextsType, (int)Texts.DiaText).text = Utils.ToCurrencyString(Managers.GameM.Gold);
+        GetText(TextsType, (int)Texts.GoldText).text = Utils.ToCurrencyString(Managers.GameM.Gold);
         GetText(TextsType, (int)Texts.DiaText).text = Utils.ToCurrencyString(Managers.GameM.Dia);
     }
 

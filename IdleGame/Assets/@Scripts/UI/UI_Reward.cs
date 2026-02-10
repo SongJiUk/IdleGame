@@ -73,6 +73,7 @@ public class UI_Reward : UI_Base
 
     void OnClickCloseButton()
     {
+        Managers.IAPM.NotifyPurchaseSucces();
         Managers.UIM.ClosePopup(this).Forget();
     }
 }
