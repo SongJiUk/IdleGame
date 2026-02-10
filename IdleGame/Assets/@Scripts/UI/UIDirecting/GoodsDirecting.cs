@@ -47,7 +47,7 @@ public class GoodsDirecting : UIDirecting
         type = _type;
         if ((Managers.UIM.SceneUI as UI_GameScene).isSavingMode)
         {
-            Managers.GameM.Gold += Utils.Money();
+            Managers.GameM.Gold += _count;
 
             if (this != null && gameObject != null)
                 Managers.ObjectM.DeSpawn(this);

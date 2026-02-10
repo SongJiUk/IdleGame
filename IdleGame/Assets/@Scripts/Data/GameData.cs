@@ -8,6 +8,13 @@ using Unity.Collections;
 
 
 [Serializable]
+public class BuffAdProgress
+{
+    public int level;
+    public int count;
+}
+
+[Serializable]
 public class MissionInfo
 {
     public int Progress;
@@ -86,7 +93,7 @@ public class GameData
     public int[] DungeonClearLevel = { 0, 0 };
 
     public bool ADS_Remove = false;
-
+    public BuffAdProgress BuffAds = new BuffAdProgress();
     public Dictionary<string, CharacterHolder> Characters_Data = new Dictionary<string, CharacterHolder>();
     public Dictionary<string, Holder> Character_Holder = new Dictionary<string, Holder>();
 

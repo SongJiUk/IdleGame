@@ -46,6 +46,9 @@ public class PlayerManager
         float level = (float)_holder.holder.Level * 10 / (float)100;
         var realDamage = damage + damage * level;
         realDamage += realDamage * (Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Damage) / 100f);
+
+        realDamage *= Managers.BuffM.GetAttackBuffMul();
+
         return realDamage;
     }
 
@@ -101,7 +104,14 @@ public class PlayerManager
 
     public float GoldDrop()
     {
-        return 0.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Money);
+
+        float percent = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Money);
+
+        float statMul = 1f + percent / 100f;
+        float buffMul = Managers.BuffM.GetGoldBuffMul();
+
+       
+        return statMul * buffMul;
     }
 
     public float ItemDrop()
@@ -116,12 +126,14 @@ public class PlayerManager
 
     public float CriticalChance()
     {
-        return 20.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.CriticalP); ;
+        float baseValue = 20.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.CriticalP);
+        baseValue += Managers.BuffM.GetCriticalBuffMul();
+        return baseValue;
     }
 
     public float CriticalDamage()
     {
-        return 140.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.CriticalD); ;
+        return 140.0f + Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.CriticalD);
     }
 
     public double AverageCombatPower()

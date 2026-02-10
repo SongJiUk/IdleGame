@@ -74,7 +74,7 @@ public class UI_HeroStatPopup : UI_Popup
         GetText(TextsType, (int)Texts.AttackPowerText).text = Utils.ToCurrencyString(Managers.PlayerM.MainAttack());
         GetText(TextsType, (int)Texts.HealthText).text = Utils.ToCurrencyString(Managers.PlayerM.MainHP());
 
-        GetText(TextsType, (int)Texts.GoldDropRateText).text = string.Format("{0:0}%", Managers.PlayerM.GoldDrop());
+        GetText(TextsType, (int)Texts.GoldDropRateText).text = string.Format("{0:0}%", Managers.PlayerM.GoldDrop() * 100f);
         GetText(TextsType, (int)Texts.ItemDropRateText).text = string.Format("{0:0}%", Managers.PlayerM.ItemDrop());
         GetText(TextsType, (int)Texts.AttackSpeedText).text = string.Format("{0:0}%", Managers.PlayerM.AttackSpeed());
         GetText(TextsType, (int)Texts.CriticalChanceText).text = string.Format("{0:0}%", Managers.PlayerM.CriticalChance());

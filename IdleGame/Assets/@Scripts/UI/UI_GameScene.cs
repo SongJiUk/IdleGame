@@ -369,6 +369,11 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(Managers.QuestM.isGetReward());
 
 
+        //TODO : 튜토리얼 임시
+        GetObject(GameObjectsType, (int)GameObjects.TutorialObject).gameObject.SetActive(false);
+        //TODO : 게임씬 입장시 이거
+        Managers.BuffM.RestoreFromSave();
+
 
         AllOff();
         StartSpawn();
@@ -1221,7 +1226,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         //GetImage(ImagesType, (int)Images.CharacterImage).sprite = "";
         GetText(TextsType, (int)Texts.CharacterLevelText).text = $"LV : {Managers.GameM.Level}";
         //TODO :이거 소수점 끝까지 안나오게 수정하기
-        GetText(TextsType, (int)Texts.UserCombatPowerText).text = Utils.ToCurrencyString(Utils.Datas.levelData.Damage() + Utils.Datas.levelData.HP());
+        GetText(TextsType, (int)Texts.UserCombatPowerText).text = Utils.ToCurrencyString(Managers.PlayerM.AverageCombatPower());
     }
 
     IEnumerator coPush()

@@ -290,7 +290,9 @@ public class MonsterController : CreatureController
         }
 
         var GoodsDirecting = Managers.ObjectM.Spawn<GoodsDirecting>(transform.position, Utils.GoodsDirectingDataID);
-        GoodsDirecting.Init(Define.GoodsType.Gold, transform.position, Utils.Money());
+
+        double finalGold = Utils.Money() * Managers.PlayerM.GoldDrop();
+        GoodsDirecting.Init(Define.GoodsType.Gold, transform.position, finalGold);
 
 
         var items = Managers.ItemM.GetDropItem();
