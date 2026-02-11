@@ -17,6 +17,11 @@ public class IAPManager : IStoreListener
     public Action OnPurchaseFail;
     public void InitUnityIAP()
     {
+#if UNITY_IOS
+        Debug.Log("IAP disabled on IOS)");
+        return;
+#else
+
         if (storeController != null) return;
 
         //초기화가 필요한데 초기화를 도와주는 코드임
@@ -42,6 +47,7 @@ public class IAPManager : IStoreListener
         });
 
         UnityPurchasing.Initialize(this, builder);
+#endif
     }
 
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
@@ -90,6 +96,10 @@ public class IAPManager : IStoreListener
 
     public void Purchase(string _productID)
     {
+#if UNITY_IOS
+        Debug.Log("IOS에서는 인앱결제 사용안함 ");
+        return;
+#else
         Product product = storeController.products.WithID(_productID);
         if (product != null && product.availableToPurchase)
         {
@@ -97,6 +107,8 @@ public class IAPManager : IStoreListener
         }
         else
             Debug.Log("상품이 없거나 현재 구매가 불가능합니다.");
+#endif
+
     }
 
     public Product GetProduct(string _prouductID)
@@ -107,6 +119,11 @@ public class IAPManager : IStoreListener
     //Restore버튼
     public void RestorePurchase()
     {
+#if UNITY_IOS
+        Debug.Log("IOS에서는 인앱결제 사용 안함");
+        return;
+#else
+
         if (storeController == null)
         {
             Debug.Log("IAP is not init");
@@ -135,6 +152,7 @@ public class IAPManager : IStoreListener
         {
             Debug.Log("Restore Purchase is not support");
         }
+#endif
     }
 
     public void NotifyPurchaseSucces()

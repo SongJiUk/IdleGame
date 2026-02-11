@@ -6,6 +6,7 @@ using DG.Tweening;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using TMPro;
+using System.Threading.Tasks;
 
 public class GoodsDirecting : UIDirecting
 {
@@ -35,9 +36,25 @@ public class GoodsDirecting : UIDirecting
     }
     private void OnDisable()
     {
-        cts?.Cancel();
-        cts.Dispose();
-        cts = null;
+        if (cts != null)
+        {
+
+            cts?.Cancel();
+            cts.Dispose();
+            cts = null;
+        }
+
+        transform.DOKill();
+        if (text != null) text.DOKill();
+
+        if (childs != null)
+        {
+            foreach (var c in childs)
+            {
+                if (c != null) c.DOKill();
+            }
+        }
+
     }
     #endregion
     public override bool Init()
@@ -123,35 +140,36 @@ public class GoodsDirecting : UIDirecting
 
                 Vector2 scatterPos = Random.insideUnitCircle * distanceRange;
 
-                rect.DOAnchorPos(scatterPos, SCATTER_DURATION)
+                Tween t = rect.DOAnchorPos(scatterPos, SCATTER_DURATION)
                     .SetEase(Ease.OutBack)
                     .SetUpdate(true)
-                    .SetDelay(Random.Range(0f, 0.05f))
-                    .ToUniTask(cancellationToken: _token)
-                    .Forget();
+                    .SetDelay(Random.Range(0f, 0.05f));
             }
 
             await UniTask.Delay(500, cancellationToken: _token);
 
-            var tasks = new UniTask[childs.Length];
+            var tasks = new List<Task>();
             for (int i = 0; i < childs.Length; i++)
             {
-                if (childs[i] == null) { tasks[i] = UniTask.CompletedTask; continue; }
+                if (childs[i] == null) continue;
 
-                tasks[i] = childs[i].DOMove(destinationPos, COLLECT_DURATION)
+                Tween t = childs[i].DOMove(destinationPos, COLLECT_DURATION)
                                    .SetEase(Ease.InCubic)
-                                   .SetUpdate(true)
-                                   .ToUniTask(cancellationToken: _token);
+                                   .SetUpdate(true);
+
+                tasks.Add(t.AsyncWaitForCompletion());
+
             }
 
-            await UniTask.WhenAll(tasks);
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
+
             if (text != null)
             {
                 // 위치를 목적지로
                 text.rectTransform.position = destinationPos;
 
                 // 알파/스케일 초기화
-                
+
                 // 내용 설정
                 text.gameObject.SetActive(true);
                 text.text = $"+{count:N0}";

@@ -15,7 +15,7 @@ public class SafeArea : MonoBehaviour
     void ApplySafeArea()
     {
         Rect safeArea = Screen.safeArea;
-        Debug.Log($"SafeArea: {safeArea} / Screen: {Screen.width}x{Screen.height}");
+
         Vector2 anchorMin = safeArea.position;
         Vector2 anchorMax = safeArea.position + safeArea.size;
 
@@ -26,5 +26,8 @@ public class SafeArea : MonoBehaviour
 
         rectTransform.anchorMin = anchorMin;
         rectTransform.anchorMax = anchorMax;
+
+        rectTransform.offsetMin = Vector2.zero;
+        rectTransform.offsetMax = Vector2.zero;
     }
 }

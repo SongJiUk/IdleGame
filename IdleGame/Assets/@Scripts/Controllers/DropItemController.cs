@@ -22,6 +22,7 @@ public class DropItemController : UIDirecting
     Define.Grade grade;
     Data.ItemData itemData;
     Camera cam;
+    Tween timeTween;
     public override bool Init()
     {
         if (!base.Init()) return false;
@@ -76,7 +77,6 @@ public class DropItemController : UIDirecting
         Vector3 horizontalDirection = displacementXZ.normalized;
         Vector3 startPos = transform.position;
 
-        Tween timeTween = null;
 
         try
         {
@@ -106,7 +106,7 @@ public class DropItemController : UIDirecting
                 })
                 .SetLink(gameObject);
 
-            await timeTween.ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
+            await timeTween.AsyncWaitForCompletion();
             if (this == null) return;
             transform.position = _pos;
             ItemCheck();
@@ -174,6 +174,15 @@ public class DropItemController : UIDirecting
             Debug.LogError("������ ȹ�� ���� : " + e.Message);
         }
 
+    }
+
+    private void OnDisable()
+    {
+        if (timeTween != null && timeTween.IsActive())
+        {
+            timeTween.Kill();
+            timeTween = null;
+        }
     }
 
 }

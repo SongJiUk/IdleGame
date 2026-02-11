@@ -32,13 +32,19 @@ public class UI_HeroStatPopup : UI_Popup
     {
         StatButton,
         MasteryButton,
-        CostumeButton
+        CostumeButton,
+        CloseButton
     }
 
 
 
     #endregion
 
+
+    RectTransform targetRect;
+    RectTransform statBtnRect;
+    RectTransform masteryBtnBect;
+    RectTransform costumeBtnRect;
 
     public async override UniTask<bool> Init()
     {
@@ -55,6 +61,16 @@ public class UI_HeroStatPopup : UI_Popup
         GetButton(ButtonsType, (int)Buttons.StatButton).gameObject.BindEvent(OnClickStatButton);
         GetButton(ButtonsType, (int)Buttons.MasteryButton).gameObject.BindEvent(OnClickMasteryButton);
         GetButton(ButtonsType, (int)Buttons.CostumeButton).gameObject.BindEvent(OnClickCostumeButton);
+        GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
+
+
+
+        targetRect = GetObject(GameObjectsType, (int)GameObjects.BottomButtonBarObject).GetComponent<RectTransform>();
+        statBtnRect = GetButton(ButtonsType, (int)Buttons.StatButton).GetComponent<RectTransform>();
+        masteryBtnBect = GetButton(ButtonsType, (int)Buttons.MasteryButton).GetComponent<RectTransform>();
+        costumeBtnRect = GetButton(ButtonsType, (int)Buttons.CostumeButton).GetComponent<RectTransform>();
+
+        MoveTarget(statBtnRect, false);
 
         GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(false);
         return true;
@@ -64,7 +80,7 @@ public class UI_HeroStatPopup : UI_Popup
     public override void SetInfo()
     {
         RefreshUI();
-        
+
     }
 
 
@@ -81,41 +97,61 @@ public class UI_HeroStatPopup : UI_Popup
         GetText(TextsType, (int)Texts.CriticalDamageText).text = string.Format("{0:0}%", Managers.PlayerM.CriticalDamage());
     }
 
+
+    void MoveTarget(RectTransform _target, bool _animate = true)
+    {
+
+        Vector3 worldPos = targetRect.position;
+
+
+        targetRect.SetParent(_target, false);
+        targetRect.SetAsFirstSibling();
+
+        targetRect.anchorMin = new Vector2(0.5f, 0.5f);
+        targetRect.anchorMax = new Vector2(0.5f, 0.5f);
+        targetRect.pivot = new Vector2(0.5f, 0.5f);
+        targetRect.position = worldPos;
+
+
+
+
+        if (_animate)
+        {
+            targetRect.localScale = Vector3.one * 0.9f;
+            targetRect.DOScale(1f, 0.15f).SetEase(Ease.OutBack);
+            targetRect.DOAnchorPos(Vector2.zero, 0.25f).SetEase(Ease.OutQuad);
+        }
+        else targetRect.anchoredPosition = Vector2.zero;
+
+    }
     void OnClickStatButton()
     {
-        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BottomButtonBarObject).transform;
-        Vector3 endPos = GetButton(ButtonsType, (int)Buttons.StatButton).transform.position;
-
-        GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.StatObject).SetActive(true);
+        GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(false);
 
         RefreshUI();
-        targetTr.DOMove(endPos, 0.5f)
-            .SetEase(Ease.OutQuad);
+        MoveTarget(statBtnRect, true);
     }
 
     void OnClickMasteryButton()
     {
-        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BottomButtonBarObject).transform;
-        Vector3 endPos = GetButton(ButtonsType, (int)Buttons.MasteryButton).transform.position;
-
         GetObject(GameObjectsType, (int)GameObjects.StatObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(true);
 
-        targetTr.DOMove(endPos, 0.5f)
-            .SetEase(Ease.OutQuad);
+        MoveTarget(masteryBtnBect, true);
     }
 
     void OnClickCostumeButton()
     {
-        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BottomButtonBarObject).transform;
-        Vector3 endPos = GetButton(ButtonsType, (int)Buttons.CostumeButton).transform.position;
-
         GetObject(GameObjectsType, (int)GameObjects.StatObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(false);
-        
 
-        targetTr.DOMove(endPos, 0.5f)
-            .SetEase(Ease.OutQuad);
+
+        MoveTarget(costumeBtnRect, true);
+    }
+
+    async void OnClickCloseButton()
+    {
+        await TriggerClose(this, true);
     }
 }

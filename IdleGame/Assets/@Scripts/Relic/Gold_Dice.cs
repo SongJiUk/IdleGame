@@ -54,7 +54,7 @@ public class Gold_Dice : MonoBehaviour
 
             await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: this.GetCancellationTokenOnDestroy());
 
-            await transform.DOScale(0f, 0.5f).SetEase(Ease.InBack).ToUniTask();
+            await transform.DOScale(0f, 0.5f).SetEase(Ease.InBack).AsyncWaitForCompletion();
         }
         catch (OperationCanceledException) { }
         catch (Exception e) { }
@@ -64,7 +64,7 @@ public class Gold_Dice : MonoBehaviour
             diceImage.DOKill();
             Managers.ResourceM.Destroy(this.gameObject);
         }
-        
+
     }
 
     void ApplyGoldReward(int _roll)

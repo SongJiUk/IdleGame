@@ -1443,7 +1443,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         try
         {
             await UniTask.Delay(TimeSpan.FromSeconds(1f), ignoreTimeScale: false, cancellationToken: token);
-            await _text.DOFade(0f, 0.5f).ToUniTask(cancellationToken: token);
+            await _text.DOFade(0f, 0.5f).AsyncWaitForCompletion();
         }
         catch (OperationCanceledException)
         { }
@@ -1660,7 +1660,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     public void EndTutorial()
     {
         GameObject panel = GetObject(GameObjectsType, (int)GameObjects.TutorialObject);
-        for (int i =0; i< panel.transform.childCount; i++)
+        for (int i = 0; i < panel.transform.childCount; i++)
         {
             Destroy(panel.transform.GetChild(i).gameObject);
         }
