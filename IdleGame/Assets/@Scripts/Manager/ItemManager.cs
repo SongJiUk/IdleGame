@@ -8,9 +8,11 @@ public class ItemManager
 
     public bool ItemCheck(string _name)
     {
-        for (int i = 0; i < Managers.GameM.gameData.Items.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.relics.Length; i++)
         {
-            if (Managers.GameM.gameData.Items[i].Name == _name) return true;
+            if (Managers.GameM.gameData.relics[i] == null) continue;
+
+            if (Managers.GameM.gameData.relics[i].Name == _name) return true;
         }
 
         return false;
@@ -18,23 +20,23 @@ public class ItemManager
 
     public void SetItem(int _value, string _name)
     {
-        Managers.GameM.gameData.Items[_value] = Managers.GameM.gameData.Item_Data[_name].data;
+        Managers.GameM.gameData.relics[_value] = Managers.GameM.gameData.Item_Data[_name].data;
     }
 
     public void RemoveItem(string _name)
     {
-        for (int i = 0; i < Managers.GameM.gameData.Items.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.relics.Length; i++)
         {
-            if (Managers.GameM.gameData.Items[i] == null) continue;
+            if (Managers.GameM.gameData.relics[i] == null) continue;
 
-            if (Managers.GameM.gameData.Items[i].Name == _name) Managers.GameM.gameData.Items[i] = null;
+            if (Managers.GameM.gameData.relics[i].Name == _name) Managers.GameM.gameData.relics[i] = null;
         }
     }
 
 
     public void DisableItem(int _value)
     {
-        Managers.GameM.gameData.Items[_value] = null;
+        Managers.GameM.gameData.relics[_value] = null;
     }
 
 

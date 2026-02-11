@@ -101,10 +101,40 @@ public class GameData
     public Dictionary<string, Holder> Item_Holder = new Dictionary<string, Holder>();
 
     public List<SmeltHolder> Smelts = new List<SmeltHolder>();
-    public Data.ItemData[] Items = new Data.ItemData[7];
+    
+    [JsonIgnore]
+    public Data.ItemData[] relics = new Data.ItemData[6];
+    public Dictionary<string, Data.ItemData> RelicsSave = new();
 
     public Dictionary<string, MissionInfo> MissionDic = new();
     public Dictionary<int, bool> AchievementDic = new();
+    
+
+    public void SyncFromSave()
+    {
+        Array.Clear(relics, 0, relics.Length);
+
+        if (RelicsSave == null) return;
+
+        foreach(var kv in RelicsSave)
+        {
+            if(int.TryParse(kv.Key, out int index))
+            {
+                if (index >= 0 && index < relics.Length)
+                    relics[index] = kv.Value;
+            }
+        }
+    }
+    public void SyncToSave()
+    {
+        if (RelicsSave == null) RelicsSave = new Dictionary<string, ItemData>();
+        else RelicsSave.Clear();
+
+        for(int i =0; i< relics.Length; i++)
+        {
+            if (relics[i] != null) RelicsSave[i.ToString()] = relics[i];
+        }
+    }
 
     public void ResetDailyMission()
     {

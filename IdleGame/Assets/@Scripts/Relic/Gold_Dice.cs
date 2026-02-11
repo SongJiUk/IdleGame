@@ -11,6 +11,7 @@ public class Gold_Dice : MonoBehaviour
     public TextMeshPro coinText;
     public Transform diceImage;
     public GameObject particle;
+    double baseGold;
     private void OnEnable()
     {
         Init();
@@ -25,6 +26,7 @@ public class Gold_Dice : MonoBehaviour
     }
     async UniTaskVoid AsyncDiceRoll()
     {
+        int finalRoll = 1;
         try
         {
             transform.DOScale(0.5f, 0.2f).SetEase(Ease.OutBack);
@@ -32,6 +34,7 @@ public class Gold_Dice : MonoBehaviour
             for (int i = 0; i < 10; i++)
             {
                 int randnum = UnityEngine.Random.Range(1, 7);
+                finalRoll = randnum;
                 coinText.text = randnum.ToString();
 
                 diceImage.DOPunchRotation(new Vector3(0, 0, 90f), 0.1f);
@@ -39,6 +42,8 @@ public class Gold_Dice : MonoBehaviour
 
                 await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: this.GetCancellationTokenOnDestroy());
             }
+
+            ApplyGoldReward(finalRoll);
 
             diceImage.DORotate(new Vector3(45f, 0, 0), 0.2f);
             transform.DOScale(0.6f, 0.2f).SetEase(Ease.OutQuad);
@@ -61,5 +66,17 @@ public class Gold_Dice : MonoBehaviour
         }
         
     }
- 
+
+    void ApplyGoldReward(int _roll)
+    {
+        double bouns = baseGold * _roll;
+        Managers.GameM.gameData.gold += bouns;
+    }
+
+    public void SetBaseGold(double _gold)
+    {
+        baseGold = _gold;
+    }
 }
+
+

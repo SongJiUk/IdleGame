@@ -98,11 +98,11 @@ public class UI_RelicIcon : UI_Base
     {
         isUseRelic = false;
 
-        for (int i = 0; i < Managers.GameM.gameData.Items.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.relics.Length; i++)
         {
-            if (Managers.GameM.gameData.Items[i] == null) continue;
+            if (Managers.GameM.gameData.relics[i] == null) continue;
 
-            if (Managers.GameM.gameData.Items[i] == data)
+            if (Managers.GameM.gameData.relics[i] == data)
             {
                 isUseRelic = true;
             }

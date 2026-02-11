@@ -120,6 +120,20 @@ public class UI_RelicsPopup : UI_Popup
 
     public override void SetInfo()
     {
+        
+
+        RefreshUI();
+        InitEquippedRelicsUI();
+        InitRelicIcon();
+    }
+
+    void RefreshUI()
+    {
+        GetObject(GameObjectsType, (int)GameObjects.RelicLockObject12).gameObject.SetActive(false);
+    }
+
+    void InitRelicIcon()
+    {
         var datas = Managers.GameM.gameData.Item_Data;
 
         if (relics.Count != 0) ClearIcons();
@@ -139,13 +153,31 @@ public class UI_RelicsPopup : UI_Popup
                 relics.Add(go);
             }
         }
-
-        RefreshUI();
     }
-
-    void RefreshUI()
+    void InitEquippedRelicsUI()
     {
-        GetObject(GameObjectsType, (int)GameObjects.RelicLockObject12).gameObject.SetActive(false);
+        var slots = Managers.GameM.gameData.relics;
+
+        for (int i = 0; i<slots.Length; i++)
+        {
+            var data = slots[i];
+            Buttons btn = (Buttons)i;
+
+            relicMaps.TryGetValue(btn, out var map);
+            if(data != null)
+            {
+                Managers.ItemM.SetItem((int)btn, data.Name);
+
+                GetImage(ImagesType, (int)map.bg).color = Utils.HexToColor(Utils.StringToColorGradeImage(data.ItemGrade));
+                GetImage(ImagesType, (int)map.icon).gameObject.SetActive(true);
+                GetImage(ImagesType, (int)map.icon).sprite = Managers.ResourceM.GetAtlas(data.Name);
+                GetImage(ImagesType, (int)map.icon).SetNativeSize();
+
+                GetText(TextsType, (int)map.name).text = data.NameKR;
+                Managers.GameM.gameData.Item_Data.TryGetValue(data.Name, out var itemHolder);
+                if (itemHolder != null) GetText(TextsType, (int)map.level).text = "Lv. " + itemHolder.holder.Level.ToString();
+            }
+        }
     }
 
 
@@ -188,9 +220,9 @@ public class UI_RelicsPopup : UI_Popup
 
     void RemoveRelic()
     {
-        for (int i = 0; i < Managers.GameM.gameData.Items.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.relics.Length; i++)
         {
-            if (Managers.GameM.gameData.Items[i] == null)
+            if (Managers.GameM.gameData.relics[i] == null)
             {
                 Buttons btn = (Buttons)i;
                 GetImage(ImagesType, (int)relicMaps[btn].bg).color = Utils.HexToColor("#FFFFFF");
@@ -278,9 +310,9 @@ public class UI_RelicsPopup : UI_Popup
         {
             clickRelic = _clickRelic;
 
-            for (int i = 0; i < Managers.GameM.gameData.Items.Length; i++)
+            for (int i = 0; i < Managers.GameM.gameData.relics.Length; i++)
             {
-                var data = Managers.GameM.gameData.Items[i];
+                var data = Managers.GameM.gameData.relics[i];
                 if (data != null)
                 {
                     if (data == clickRelic.DATA)

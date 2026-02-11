@@ -27,6 +27,7 @@ public partial class FirebaseManager
 
 
         GameData data = Managers.GameM.gameData;
+        data.SyncToSave();
         if (data == null || data.Character_Holder.Count == 0)
         {
             Debug.LogWarning("데이터가 비어있어 저장을 취소합니다.");
@@ -155,6 +156,8 @@ public partial class FirebaseManager
 
             Managers.GameM.gameData.Init();
             Managers.GPGSM.Init();
+            Managers.GameM.gameData.SyncFromSave();
+            Managers.RelicM.Init();
 
 
             Debug.Log("모든 데이터 로드 및 초기화 완료");

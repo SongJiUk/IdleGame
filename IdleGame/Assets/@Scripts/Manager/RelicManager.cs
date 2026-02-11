@@ -35,6 +35,11 @@ public class RelicManager
         Vector3 pos = _mc.transform.position;
         GameObject go = Managers.ResourceM.Instantiate("Gold_Dice", _pooling: true);
         go.transform.position = pos;
+
+        var dice = go.GetComponent<Gold_Dice>();
+
+        double baseGold = Utils.Money() * Managers.PlayerM.GoldDrop();
+        dice.SetBaseGold(baseGold);
     }
 
     public void Axe(PlayerController _pc, CreatureController _mc)
