@@ -11,7 +11,8 @@ public class UI_SavingMode : UI_Popup, ITickable
     #region Enum
     enum GameObjects
     {
-        Content
+        Content,
+        RawImage
     }
     enum Images
     {
@@ -38,6 +39,7 @@ public class UI_SavingMode : UI_Popup, ITickable
     Vector2 dragEndPos;
     float dragDist;
     Camera cam;
+    RawImage rawImage;
 
     public override async UniTask<bool> Init()
     {
@@ -52,6 +54,7 @@ public class UI_SavingMode : UI_Popup, ITickable
         BindText(TextsType);
 
         parent = GetObject(GameObjectsType, (int)GameObjects.Content).transform;
+        rawImage = GetObject(GameObjectsType, (int)GameObjects.RawImage).GetComponent<RawImage>();
         return true;
     }
     public override void SetInfo()
@@ -59,6 +62,7 @@ public class UI_SavingMode : UI_Popup, ITickable
         cam = Camera.main;
         cam.enabled = false;
         Managers.UpdateM.Register(this);
+        Managers.RenderM.Show(RenderType.Saving, rawImage);
     }
 
 
@@ -188,6 +192,11 @@ public class UI_SavingMode : UI_Popup, ITickable
         (Managers.UIM.SceneUI as UI_GameScene).isSavingMode = false;
 
         Managers.UIM.ClosePopup(this).Forget();
+    }
+
+    private void OnDisable()
+    {
+        Managers.RenderM.Hide();
     }
 }
 

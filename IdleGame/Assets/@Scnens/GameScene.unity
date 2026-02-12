@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 81646695}
   - component: {fileID: 81646696}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: HeroStatCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -339,7 +339,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.60375214, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -370,7 +370,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 64
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 5a781c5ed65b6412984153a090651eb6, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -456,7 +456,7 @@ GameObject:
   - component: {fileID: 131659880}
   - component: {fileID: 131659881}
   m_Layer: 6
-  m_Name: Knight (1)
+  m_Name: NPC2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,7 +471,7 @@ Transform:
   m_GameObject: {fileID: 131659878}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.8, y: 0, z: -0.4}
+  m_LocalPosition: {x: 0.99, y: 0, z: -0.4}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6724,7 +6724,7 @@ GameObject:
   - component: {fileID: 464249998}
   - component: {fileID: 464249999}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: SavingCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6755,7 +6755,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.60375214, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -6786,7 +6786,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 128
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 5c96a3e9e4d814466a757b7955c05b33, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -26599,89 +26599,6 @@ Transform:
   - {fileID: 704623176}
   m_Father: {fileID: 235149501}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &557824565
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 557824568}
-  - component: {fileID: 557824567}
-  m_Layer: 0
-  m_Name: Camera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!20 &557824567
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 557824565}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: -30
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 1
-  orthographic size: 4
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 64
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: c7b3339d6294e46eb992a75b2450364a, type: 2}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &557824568
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 557824565}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.28343812, y: -0, z: -0, w: 0.9589906}
-  m_LocalPosition: {x: 0, y: 0.36, z: -3.014}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1052340491}
-  m_LocalEulerAnglesHint: {x: 32.931, y: 0, z: 0}
 --- !u!1 &578563824
 GameObject:
   m_ObjectHideFlags: 0
@@ -38321,7 +38238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1014685685}
   - component: {fileID: 1014685686}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Characters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38498,7 +38415,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 218003936}
-  - {fileID: 557824568}
+  - {fileID: 3192659384142196443}
   - {fileID: 1014685685}
   m_Father: {fileID: 2110180505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -38765,7 +38682,7 @@ GameObject:
   - component: {fileID: 1069143607}
   - component: {fileID: 1069143608}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: DungeonCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38796,7 +38713,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.60375214, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -38827,7 +38744,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 64
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 5a781c5ed65b6412984153a090651eb6, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -39909,7 +39826,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1e-45, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 4.09e-43, z: 0, w: 4.09e-43}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -40511,8 +40428,8 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1440, y: 2560}
-  m_ScreenMatchMode: 1
-  m_MatchWidthOrHeight: 0.428
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -56874,7 +56791,7 @@ GameObject:
   - component: {fileID: 1873107100}
   - component: {fileID: 1873107101}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: GachaCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56889,7 +56806,7 @@ Transform:
   m_GameObject: {fileID: 1873107099}
   serializedVersion: 2
   m_LocalRotation: {x: 0.28343812, y: -0, z: -0, w: 0.9589906}
-  m_LocalPosition: {x: 0, y: 0.36, z: -3.014}
+  m_LocalPosition: {x: 0, y: 1.28, z: -4.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56905,7 +56822,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.60375214, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -56930,13 +56847,13 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 2.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 5847041204fe64d3fa1d3e694dc6ca14, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -58152,10 +58069,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1052340491}
-  - {fileID: 1038950867}
   - {fileID: 1358636676}
   - {fileID: 718855342}
   - {fileID: 823440834}
+  - {fileID: 1038950867}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2110180506
@@ -58170,6 +58087,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f2d7630be4d6843beeb255ad736c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heroCamera: {fileID: 8735259498668341949}
+  gachaCamera: {fileID: 1873107101}
+  dungeonCamera: {fileID: 1069143608}
+  heroStatCamera: {fileID: 81646696}
+  savingCamera: {fileID: 464249999}
+  heroObject: {fileID: 1052340490}
+  gachaObject: {fileID: 1358636675}
+  dungeonObject: {fileID: 718855341}
+  heroStatObject: {fileID: 823440833}
+  savingObject: {fileID: 1038950866}
+  npcs:
+  - {fileID: 3580652849716688494}
+  - {fileID: 131659881}
   renderCharacter: {fileID: 1014685686}
   renderGacha: {fileID: 1662385090}
 --- !u!1 &2138471826
@@ -58213,7 +58143,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2143065268}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58241,6 +58171,23 @@ Transform:
   - {fileID: 655123688}
   m_Father: {fileID: 1014685685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &353361738593613751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3192659384142196443}
+  - component: {fileID: 8735259498668341949}
+  m_Layer: 0
+  m_Name: HeroCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!23 &536736746755722149
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63282,6 +63229,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!4 &3192659384142196443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353361738593613751}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.28343812, y: -0, z: -0, w: 0.9589906}
+  m_LocalPosition: {x: 0, y: 0.36, z: -3.014}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1052340491}
+  m_LocalEulerAnglesHint: {x: 32.931, y: 0, z: 0}
 --- !u!1 &3580652848863614104
 GameObject:
   m_ObjectHideFlags: 0
@@ -63907,7 +63869,7 @@ Transform:
   m_GameObject: {fileID: 3580652849716688493}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.8, y: 0, z: -0.4}
+  m_LocalPosition: {x: -1.05, y: 0, z: -0.4}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -63948,7 +63910,7 @@ GameObject:
   - component: {fileID: 3580652849716688492}
   - component: {fileID: 3580652849716688494}
   m_Layer: 6
-  m_Name: Knight
+  m_Name: NPC1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86985,6 +86947,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4236097607322500561}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &8735259498668341949
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353361738593613751}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.3820755, g: 0.5468552, b: 1, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: -30
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 4
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 64
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &9143321246665409189
 GameObject:
   m_ObjectHideFlags: 0

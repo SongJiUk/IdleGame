@@ -3,8 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI
-;
+using UnityEngine.UI;
 
 public class UI_GachaPopup : UI_Popup
 {
@@ -14,6 +13,7 @@ public class UI_GachaPopup : UI_Popup
         Horizontal_1,
         Horizontal_2,
         Horizontal_3,
+        RawImage,
     }
 
     enum Buttons
@@ -36,6 +36,7 @@ public class UI_GachaPopup : UI_Popup
     List<UI_GachaHeroIcon> iconList = new List<UI_GachaHeroIcon>();
     bool isUsingButton = false;
     public Action OnGachaFinished;
+    RawImage rawImage;
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -50,7 +51,7 @@ public class UI_GachaPopup : UI_Popup
 
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
         GetButton(ButtonsType, (int)Buttons.OneMoreButton).gameObject.BindEvent(OnClickOneMoreButton);
-
+        rawImage = GetObject(GameObjectsType, (int)GameObjects.RawImage).GetComponent<RawImage>();
         for (int i = 0; i < horizontalCount; i++)
         {
             horizontals[i] = GetObject(GameObjectsType, (int)GameObjects.Horizontal_1 + i).transform;
@@ -59,6 +60,11 @@ public class UI_GachaPopup : UI_Popup
         return true;
     }
 
+
+    public override void SetInfo()
+    {
+        Managers.RenderM.Show(RenderType.Gacha, rawImage);
+    }
     public async UniTask GetGachaHero(int _count)
     {
         await GachaHeroes(_count);
@@ -176,6 +182,10 @@ public class UI_GachaPopup : UI_Popup
         ResetIcon();
         Managers.RenderM.renderGacha.ClearList();
         GetGachaHero(value).Forget();
+    }
 
+    private void OnDisable()
+    {
+        Managers.RenderM.Hide();
     }
 }

@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class UI_HeroStatPopup : UI_Popup
@@ -26,6 +27,7 @@ public class UI_HeroStatPopup : UI_Popup
         StatObject,
         MasteryObject,
         BottomButtonBarObject,
+        RawImage
     }
 
     enum Buttons
@@ -45,7 +47,7 @@ public class UI_HeroStatPopup : UI_Popup
     RectTransform statBtnRect;
     RectTransform masteryBtnBect;
     RectTransform costumeBtnRect;
-
+    RawImage rawImage;
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -70,6 +72,7 @@ public class UI_HeroStatPopup : UI_Popup
         masteryBtnBect = GetButton(ButtonsType, (int)Buttons.MasteryButton).GetComponent<RectTransform>();
         costumeBtnRect = GetButton(ButtonsType, (int)Buttons.CostumeButton).GetComponent<RectTransform>();
 
+        rawImage = GetObject(GameObjectsType, (int)GameObjects.RawImage).GetComponent<RawImage>();
         MoveTarget(statBtnRect, false);
 
         GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(false);
@@ -79,6 +82,7 @@ public class UI_HeroStatPopup : UI_Popup
 
     public override void SetInfo()
     {
+        Managers.RenderM.Show(RenderType.HereStat, rawImage);
         RefreshUI();
 
     }
@@ -153,5 +157,10 @@ public class UI_HeroStatPopup : UI_Popup
     async void OnClickCloseButton()
     {
         await TriggerClose(this, true);
+    }
+
+    private void OnDisable()
+    {
+        Managers.RenderM.Hide();
     }
 }

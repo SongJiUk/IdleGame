@@ -24,24 +24,14 @@ public class ADManager
     public void Init()
     {
         SetAdID();
-        DebugConsole.Instance.Log("SetAdID 완료: Banner=" + BannderID);
 
 
-        DebugConsole.Instance.Log("MobileAds.Initialize 호출 직전");
         MobileAds.Initialize(initStatus =>
         {
-            DebugConsole.Instance.Log("MobileAds.Initialize 콜백 진입");
-
             LoadRewardedAd();
-            DebugConsole.Instance.Log("LoadRewardedAd 호출");
-
             LoadIntersititialAd();
-            DebugConsole.Instance.Log("LoadIntersititialAd 호출");
-
             RequestBanner();
-            DebugConsole.Instance.Log("RequestBanner 호출");
 
-            DebugConsole.Instance.Log("광고 초기화 완료");
             Debug.Log("광고 초기화 완료");
         });
 

@@ -24,7 +24,7 @@ public class DebugConsole : MonoBehaviour
 
     public void Log(string msg)
     {
-        Debug.Log(msg); // 에디터에서도 보이게
+        Debug.Log(msg);
         if (debugText != null)
         {
             debugText.text += "\n" + msg;

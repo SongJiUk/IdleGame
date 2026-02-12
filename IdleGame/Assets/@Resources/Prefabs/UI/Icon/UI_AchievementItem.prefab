@@ -34,10 +34,10 @@ RectTransform:
   - {fileID: 5456138262457215803}
   m_Father: {fileID: 3900174385114360429}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -103.535034, y: -35.499}
-  m_SizeDelta: {x: 591.1322, y: 149.41}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -110.91998, y: 72.53813}
+  m_SizeDelta: {x: -221.84, y: 145.0763}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8361766023044940913
 CanvasRenderer:
@@ -277,7 +277,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -121, y: 58.94012}
+  m_AnchoredPosition: {x: -121, y: 58.940063}
   m_SizeDelta: {x: 201.66667, y: 88.333336}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5760248250493305973
@@ -605,6 +605,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd4e46e9c81134e1190749dfbe7ce9f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    AchievementID: 0
+    AchievementType: 0
+    Title: 
+    RewardStatus: 0
+    RewardValue: 0
+    AchievementCharacters: 
+    AchievementCharactersLevel: 
+    AchievementRelic: 
 --- !u!1 &6561258427604798964
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,7 +738,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -121, y: -47.8}
+  m_AnchoredPosition: {x: -121, y: -47.80005}
   m_SizeDelta: {x: 201.67, y: 71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2580006064690709612

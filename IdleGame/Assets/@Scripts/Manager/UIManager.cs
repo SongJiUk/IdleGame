@@ -39,7 +39,7 @@ public class UIManager
         if (string.IsNullOrEmpty(_name)) _name = typeof(T).Name;
         GameObject go = Managers.ResourceM.Instantiate($"{_name}", _parent, _pooling);
         if (_parent != null)
-            go.transform.SetParent(_parent);
+            go.transform.SetParent(_parent,false);
 
         return Utils.GetOrAddComponent<T>(go);
     }

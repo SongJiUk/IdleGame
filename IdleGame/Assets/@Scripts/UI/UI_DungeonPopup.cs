@@ -2,11 +2,16 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_DungeonPopup : UI_Popup, ITickable
 {
     #region Enum
 
+    enum GameObjects
+    {
+        RawImage
+    }
 
     enum Texts
     {
@@ -41,17 +46,22 @@ public class UI_DungeonPopup : UI_Popup, ITickable
 
     int TreasureTroveLevel = 0;
     int GoldDungeonLevel = 0;
+
+    RawImage rawImage;
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
 
         Managers.UpdateM.Register(this);
 
+        GameObjectsType = typeof(GameObjects);
         TextsType = typeof(Texts);
         ButtonsType = typeof(Buttons);
 
+        BindObject(GameObjectsType);
         BindText(TextsType);
         BindButton(ButtonsType);
+
         GetButton(ButtonsType, (int)Buttons.TreasureTroveStartButton).gameObject.BindEvent(() => OnClickDungeonStartButton(Buttons.TreasureTroveStartButton));
         GetButton(ButtonsType, (int)Buttons.GoldDungeonStartButton).gameObject.BindEvent(() => OnClickDungeonStartButton(Buttons.GoldDungeonStartButton));
 
@@ -61,6 +71,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
         GetButton(ButtonsType, (int)Buttons.TreasureTrovePlusButton).gameObject.BindEvent(() => OnClickPlusButton(Buttons.TreasureTrovePlusButton));
         GetButton(ButtonsType, (int)Buttons.GoldDungeonPlusButton).gameObject.BindEvent(() => OnClickPlusButton(Buttons.GoldDungeonPlusButton));
 
+        rawImage = GetObject(GameObjectsType, (int)GameObjects.RawImage).GetComponent<RawImage>();
         TreasureTroveMaxLevel = Managers.GameM.gameData.DungeonClearLevel[0] + 1;
         GoldDungeonMaxLevel = Managers.GameM.gameData.DungeonClearLevel[1] + 1;
         TreasureTroveLevel = TreasureTroveMaxLevel;
@@ -72,7 +83,6 @@ public class UI_DungeonPopup : UI_Popup, ITickable
 
     public override void SetInfo()
     {
-        Managers.UIM.OnDungeonPopupState?.Invoke(true);
 
         for (int i = 0; i < Managers.GameM.gameData.DungeonKey.Length; i++)
         {
@@ -91,7 +101,9 @@ public class UI_DungeonPopup : UI_Popup, ITickable
         double money = Utils.Money() * level * 10;
         GetText(TextsType, (int)Texts.GoldDungeonCompenstaionText).text = Utils.ToCurrencyString(money);
 
-
+        Managers.RenderM.Show(RenderType.Dungeon, rawImage);
+        Managers.RenderM.DungeonNPC();
+        Managers.UIM.OnDungeonPopupState?.Invoke(true);
     }
 
     void OnClickDungeonStartButton(Buttons _btn)
@@ -223,6 +235,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
     private void OnDisable()
     {
         Managers.UIM.OnDungeonPopupState?.Invoke(false);
+        Managers.RenderM.Hide();
     }
 
     public void Tick(float _deltaTime)

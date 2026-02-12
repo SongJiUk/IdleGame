@@ -172,6 +172,7 @@ public class PlayerController : CreatureController
         {
             foreach (var trail in trails) trail.SetActive(true);
         }
+        //TODO :NullReferenceException: Object reference not set to an instance of an object 이거 떴었음
         var go = Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, DATA.ProjectileDataID, this, currentTarget);
 
         if (go != null)

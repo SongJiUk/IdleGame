@@ -9,12 +9,17 @@ public class DungeonNPCController : BaseController
     [SerializeField] Camera cam;
     bool isDugeonPopupOn = false;
     SpeechBubble currentBubble;
-    private void Start()
+   
+    public void SetInfo()
     {
         Managers.UIM.OnDungeonPopupState -= OnDungeonPopup;
         Managers.UIM.OnDungeonPopupState += OnDungeonPopup;
     }
-   
+
+    private void OnDisable()
+    {
+        Managers.UIM.OnDungeonPopupState -= OnDungeonPopup;
+    }
 
     void OnDungeonPopup(bool _isOpen)
     {

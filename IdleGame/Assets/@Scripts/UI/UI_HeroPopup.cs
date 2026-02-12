@@ -14,6 +14,7 @@ public class UI_HeroPopup : UI_Popup
     enum GameObjects
     {
         CharacterContentObject,
+        RawImage,
     }
 
     enum Texts
@@ -38,6 +39,7 @@ public class UI_HeroPopup : UI_Popup
     public System.Action OnValueChange;
     bool isRemoveCharacter = false;
     List<CharacterHolder> characterList = new List<CharacterHolder>();
+    RawImage rawImage;
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -62,6 +64,7 @@ public class UI_HeroPopup : UI_Popup
         }
 
         rect = GetObject(GameObjectsType, (int)GameObjects.CharacterContentObject).GetComponent<RectTransform>();
+        rawImage = GetObject(GameObjectsType, (int)GameObjects.RawImage).GetComponent<RawImage>();
         Managers.RenderM.renderCharacter.InitCharacter();
 
         return true;
@@ -71,7 +74,10 @@ public class UI_HeroPopup : UI_Popup
     public override void SetInfo()
     {
         Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(false);
+        Managers.RenderM.Show(RenderType.Hero, rawImage);
+
         var datas = Managers.GameM.gameData.Characters_Data;
+
 
         if (characters.Count != 0) ClearIcons();
 
@@ -144,11 +150,16 @@ public class UI_HeroPopup : UI_Popup
 
     async void OnClickCloseButton()
     {
+        
         await TriggerClose(this, true);
 
         ClearIcons();
     }
 
+    private void OnDisable()
+    {
+        Managers.RenderM.Hide();
+    }
     void ClearIcons()
     {
         for (int i = 0; i < characters.Count; i++)
