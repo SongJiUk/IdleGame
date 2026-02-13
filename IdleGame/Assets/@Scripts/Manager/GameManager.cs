@@ -195,4 +195,17 @@ public class GameManager
         gameData.DungeonClearLevel[(int)_type] = level;
         Managers.QuestM.UpdateQuest();
     }
+
+    public void ResetGameData()
+    {
+        gameData = new GameData();
+        gameData.isGuest = true;
+        gameData.playerName = "Guest";
+
+        //TODO : 이거 테스트 해야됌(로그아웃 되는지 확인해보기) 로그아웃이 된다하면 타이틀씬으로 이동되는데, 모든값들 초기화되는지 확인하세요
+        gameData.Init();
+
+        OnGoodsChanged?.Invoke();
+
+    }
 }

@@ -31,13 +31,15 @@ public class UI_TitleScene : UI_Scene
 
     public enum GameObjects
     {
-        LoadingBarObject
+        LoadingBarObject,
+        LoginButtonObject,
+
     }
     public enum Buttons
     {
         StartButton,
-        GoogleButton,
-        GuestButton,
+        GoogleLoginButton,
+        AppleLoginButton
     }
 
     public enum Images
@@ -56,6 +58,7 @@ public class UI_TitleScene : UI_Scene
     }
     #endregion
     bool isLoadEnd = false;
+    bool hasSeenLogin;
     Tween blinkTween = null;
     private void Start()
     {
@@ -92,8 +95,10 @@ public class UI_TitleScene : UI_Scene
             }
 
         });
+        GetButton(ButtonsType, (int)Buttons.GoogleLoginButton).gameObject.BindEvent(OnClickGoogleLoginButton);
+        GetButton(ButtonsType, (int)Buttons.AppleLoginButton).gameObject.BindEvent(OnClickAppleLoginButton);
 
-        
+        GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
         SetInfo().Forget();
         return true;
     }
@@ -127,7 +132,7 @@ public class UI_TitleScene : UI_Scene
                 }
             }
             await FinishLoadingProcess();
-            
+
 
         }
         catch (System.Exception e)
@@ -153,13 +158,34 @@ public class UI_TitleScene : UI_Scene
         Managers.LocalM.Init();
 
         await Managers.FirebaseM.Init();
+        await Managers.FirebaseM.CheckAndApplyCurrentUser();
+
         Managers.QuestM.Init();
 
+
+        hasSeenLogin = PlayerPrefs.GetInt("HasSeenLogin", 0) == 1;
+        if (!hasSeenLogin || !Managers.FirebaseM.IsLoggedIn())
+        {
+            var popup = await Managers.UIM.ShowPopup<UI_LoadingLogin>();
+            popup.transform.SetParent(this.transform);
+            popup.transform.SetAsLastSibling();
+        }
+        else
+        {
+            bool isGuest = Managers.GameM.gameData.isGuest;
+            GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(isGuest);
+#if UNITY_ANDROID
+        GetButton(ButtonsType, (int)Buttons.GoogleLoginButton).transform.SetAsFirstSibling();
+#elif UNITY_IOS
+            GetButton(ButtonsType, (int)Buttons.AppleLoginButton).transform.SetAsFirstSibling();
+#endif
+            //Managers.FirebaseM.CheckOrLogin().Forget();
+        }
 
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);
         GetText(TextsType, (int)Texts.DataLoadText).text = "데이터가 정상적으로 로딩되었습니다,";
         StartBlinkTween();
-        
+
         isLoadEnd = true;
         Managers.QuestM.GetMission(Define.MissionTarget.DailyAttendance).Progress++;
 
@@ -182,5 +208,15 @@ public class UI_TitleScene : UI_Scene
             blinkTween.Kill();
             blinkTween = null;
         }
+    }
+
+    void OnClickGoogleLoginButton()
+    {
+        //TODO : 로그인 버튼
+        Managers.FirebaseM.LinkGoogleToCurrentUser().Forget();
+    }
+
+    void OnClickAppleLoginButton()
+    {
     }
 }

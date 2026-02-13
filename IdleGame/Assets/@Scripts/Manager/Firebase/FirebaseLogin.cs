@@ -12,7 +12,8 @@ public partial class FirebaseManager
 {
     private string webClientId = "1007607179174-eob21571uq2q6bku1i3l2s8nrmnmdkl3.apps.googleusercontent.com";
     private FirebaseUser user;
-    private GoogleSignInConfiguration configuration;
+
+
     public async void GoogleLogin()
     {
         configuration = new GoogleSignInConfiguration()
@@ -30,53 +31,30 @@ public partial class FirebaseManager
 #if UNITY_ANDROID || UNITY_IOS
         try
         {
-            configuration = new GoogleSignInConfiguration()
-            {
-                WebClientId = webClientId,
-                RequestIdToken = true,
-                RequestEmail = true
-            };
-
+            configuration = GetGoogleConfig();
             GoogleSignIn.Configuration = configuration;
 
-            GoogleSignInUser user = await GoogleSignIn.DefaultInstance.SignIn();
+            GoogleSignInUser googleUser = await GoogleSignIn.DefaultInstance.SignIn();
 
-            if (user == null)
+            if (googleUser == null || string.IsNullOrEmpty(googleUser.IdToken))
             {
                 Debug.LogError("Google SignIn failed : user is null");
                 return;
             }
 
-            string idToken = user.IdToken;
-            if (string.IsNullOrEmpty(idToken))
-            {
-                Debug.LogError("Google SignIn failed : IdToken is null or empty");
-                return;
-            }
-
-            Credential credential = GoogleAuthProvider.GetCredential(idToken, null);
+            Credential credential = GoogleAuthProvider.GetCredential(googleUser.IdToken, null);
             var result = await Auth.SignInWithCredentialAsync(credential);
 
             CurrentUser = result;
-            Managers.GameM.gameData.isGuest = false;
-            string name = CurrentUser.DisplayName;
+            ApplyUserToGameData(CurrentUser);
 
-            if (string.IsNullOrEmpty(name))
-            {
-                if (!string.IsNullOrEmpty(CurrentUser.DisplayName))
-                    name = CurrentUser.Email;
-                else
-                    name = "Player";
-            }
-
-            Managers.GameM.gameData.playerName = name;
+            PlayerPrefs.SetInt("HasSeenLogin", 1);
+            PlayerPrefs.Save();
 
             Debug.Log("Firebase Google Login Success!");
             Debug.Log($"UserID : {result.UserId}");
 
             await ReadData();
-            LoadingLogin.instance.LoginComplete();
-            loginCTS?.TrySetResult(true);
         }
         catch (System.Exception e)
         {
@@ -84,39 +62,34 @@ public partial class FirebaseManager
         }
 #endif
     }
+
+
     public void SignOut()
     {
         GoogleSignIn.DefaultInstance.SignOut();
         SignOutFM();
     }
 
-
     public async UniTask GuestLogin()
     {
-        if (Auth == null)
-        {
-            return;
-        }
+        if (Auth == null) return;
+
+
         try
         {
             FirebaseUser user = await Auth.SignInAnonymouslyAsync();
-            if (user == null)
-            {
-                return;
-            }
+            if (user == null) return;
+
+
             CurrentUser = user;
-            PlayerPrefs.SetFloat("BGM", 1.0f);
-            PlayerPrefs.SetFloat("EFFECT", 1.0f);
+            ApplyUserToGameData(CurrentUser);
 
+            PlayerPrefs.SetInt("HasSeenLogin", 1);
+            PlayerPrefs.Save();
 
-            await ReadData();
             Debug.Log("게스트 로그인 성공 ! 사용자 ID : " + user.UserId);
 
-            Managers.GameM.gameData.isGuest = true;
-            Managers.GameM.gameData.playerName = "Guest";
-
-            LoadingLogin.instance.LoginComplete();
-            loginCTS?.TrySetResult(true);
+            await ReadData();
         }
         catch (System.Exception e)
         {
@@ -141,7 +114,7 @@ public partial class FirebaseManager
 
                 if (string.IsNullOrEmpty(name))
                 {
-                    if (!string.IsNullOrEmpty(CurrentUser.DisplayName))
+                    if (!string.IsNullOrEmpty(CurrentUser.Email))
                         name = CurrentUser.Email;
                     else
                         name = "Player";
@@ -158,6 +131,94 @@ public partial class FirebaseManager
         {
             await GuestLogin();
         }
+    }
+
+
+    public async UniTask LinkGoogleToCurrentUser()
+    {
+        if (Auth.CurrentUser == null || !Auth.CurrentUser.IsAnonymous)
+        {
+
+            Debug.LogWarning("게스트가 아니거나 유저가 없음. Link 불가");
+            return;
+        }
+
+        try
+        {
+            configuration = GetGoogleConfig();
+            GoogleSignIn.Configuration = configuration; ;
+
+            GoogleSignInUser googleUser = await GoogleSignIn.DefaultInstance.SignIn();
+            if (googleUser == null || string.IsNullOrEmpty(googleUser.IdToken))
+            {
+                Debug.LogError("google SignIn 실패");
+                return;
+            }
+
+            Credential credential = GoogleAuthProvider.GetCredential(googleUser.IdToken, null);
+            var result = await Auth.CurrentUser.LinkWithCredentialAsync(credential);
+
+            CurrentUser = result;
+            ApplyUserToGameData(CurrentUser);
+
+            PlayerPrefs.SetInt("HasSeenLogin", 1);
+            PlayerPrefs.Save();
+
+            Debug.Log("게스트 -> 구글 계정 연동 성공 : UID : " + result.UserId);
+
+            await ReadData();
+        }
+        catch (System.Exception e)
+        {
+
+            Debug.Log("계정 연동 실패 : " + e);
+        }
+    }
+
+    public async UniTask CheckAndApplyCurrentUser()
+    {
+        if (Auth.CurrentUser != null)
+        {
+            CurrentUser = Auth.CurrentUser;
+            ApplyUserToGameData(CurrentUser);
+            Debug.Log("자동 로그인 적용 : " + CurrentUser.UserId);
+            await ReadData();
+        }
+    }
+    void ApplyUserToGameData(FirebaseUser _user)
+    {
+
+        if (_user == null || _user.IsAnonymous)
+        {
+            Managers.GameM.gameData.isGuest = true;
+            Managers.GameM.gameData.playerName = "Guest";
+        }
+        else
+        {
+            Managers.GameM.gameData.isGuest = false;
+
+            string name = user.DisplayName;
+
+            if (string.IsNullOrEmpty(name))
+            {
+                if (!string.IsNullOrEmpty(user.Email))
+                    name = user.Email;
+                else
+                    name = "Player";
+            }
+
+            Managers.GameM.gameData.playerName = name;
+        }
+    }
+
+    GoogleSignInConfiguration GetGoogleConfig()
+    {
+        return new GoogleSignInConfiguration()
+        {
+            WebClientId = webClientId,
+            RequestIdToken = true,
+            RequestEmail = true
+        };
     }
 
 }

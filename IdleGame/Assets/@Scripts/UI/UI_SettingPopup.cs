@@ -16,6 +16,7 @@ public class UI_SettingPopup : UI_Popup, ITickable
         KoButton,
         EnButton,
         JaButton,
+        LogOutButton,
         RestoreButton,
     }
     enum Sliders
@@ -62,10 +63,13 @@ public class UI_SettingPopup : UI_Popup, ITickable
         GetButton(ButtonsType, (int)Buttons.EnButton).gameObject.BindEvent(() => OnClickLanguageButton(Buttons.EnButton));
         GetButton(ButtonsType, (int)Buttons.JaButton).gameObject.BindEvent(() => OnClickLanguageButton(Buttons.JaButton));
 
+        GetButton(ButtonsType, (int)Buttons.LogOutButton).gameObject.BindEvent(OnClickLogOutButton);
+        GetButton(ButtonsType, (int)Buttons.LogOutButton).gameObject.SetActive(false);
 #if UNITY_IOS
         GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.SetActive(true);
         GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.BindEvent(() => Managers.IAPM.RestorePurchase());
 #endif
+
 
         GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.SetActive(false);
         GetText(TextsType, (int)Texts.UserIDText).text = $"Unique ID : {Managers.FirebaseM.CurrentUser.UserId}";
@@ -79,13 +83,18 @@ public class UI_SettingPopup : UI_Popup, ITickable
     public override void SetInfo()
     {
         Managers.UpdateM.Register(this);
+
+        if (Managers.GameM.gameData.isGuest)
+        {
+            GetButton(ButtonsType, (int)Buttons.LogOutButton).gameObject.SetActive(true);
+        }
     }
 
     async void OnClickLanguageButton(Buttons _button)
     {
         var popup = await Managers.UIM.ShowPopup<UI_ChangeLanguagePopup>();
         string language = "";
-        switch(_button)
+        switch (_button)
         {
             case Buttons.KoButton:
                 language = "ko";
@@ -144,5 +153,11 @@ public class UI_SettingPopup : UI_Popup, ITickable
         Managers.SoundM.audioSources[0].volume = Managers.SoundM.BgmValue;
         Managers.SoundM.EffectValue = GetSlider(SlidersType, (int)Sliders.EffectSlider).value;
         Managers.SoundM.audioSources[1].volume = Managers.SoundM.EffectValue;
+    }
+
+    async void OnClickLogOutButton()
+    {
+        await Managers.UIM.ShowPopup<UI_LogOutPopup>();
+
     }
 }

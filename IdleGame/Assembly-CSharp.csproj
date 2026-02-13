@@ -122,7 +122,6 @@
     <Compile Include="Assets/@Scripts/Skill/Player/Mage_M_Skill.cs" />
     <Compile Include="Assets/GoogleSignIn/GoogleSignIn.cs" />
     <Compile Include="Assets/@Scripts/Utils/Utils.cs" />
-    <Compile Include="Assets/@Scripts/Manager/Firebase/LoadingLogin.cs" />
     <Compile Include="Assets/@Scripts/Manager/UpdateManager.cs" />
     <Compile Include="Assets/@Scripts/Manager/SoundManager.cs" />
     <Compile Include="Assets/@Scripts/Utils/DelegateHolder.cs" />
@@ -130,6 +129,7 @@
     <Compile Include="Assets/@Scripts/UI/UI_EventHandler.cs" />
     <Compile Include="Assets/@Scripts/Manager/Firebase/FirebaseManager.cs" />
     <Compile Include="Assets/@Scripts/Manager/PlayerManager.cs" />
+    <Compile Include="Assets/@Scripts/UI/UI_LogOutPopup.cs" />
     <Compile Include="Assets/@Scripts/UI/BaseSceneUIController.cs" />
     <Compile Include="Assets/@Scripts/Skill/ParticleController.cs" />
     <Compile Include="Assets/@Scripts/Scenes/GameScene.cs" />
@@ -173,6 +173,7 @@
     <Compile Include="Assets/@Scripts/Skill/SkillController.cs" />
     <Compile Include="Assets/@Scripts/UI/UI_ItemInfo.cs" />
     <Compile Include="Assets/@Scripts/LevelDesign/StageDesign.cs" />
+    <Compile Include="Assets/@Scripts/Manager/Firebase/UI_LoadingLogin.cs" />
     <Compile Include="Assets/@Scripts/IAP_LocalText.cs" />
     <Compile Include="Assets/@Scripts/UI/UI_Scene.cs" />
     <Compile Include="Assets/@Scripts/Controllers/MeleeAttackController.cs" />
