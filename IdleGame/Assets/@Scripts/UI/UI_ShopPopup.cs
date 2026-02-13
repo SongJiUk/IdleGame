@@ -1,14 +1,29 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Reflection;
+using System.Security.Permissions;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
+using System.Runtime.CompilerServices;
 
 public class UI_ShopPopup : UI_Popup
 {
 
     enum GameObjects
     {
-        RemoveADObject
+        RemoveADObject,
+        BottomButtonBarObject,
+        ScrollView,
+        Content,
+        GachaTitle,
+        RemoveAdsTitle,
+        GoodsTitle,
+        DailyTitle
+
     }
 
     enum Buttons
@@ -26,6 +41,14 @@ public class UI_ShopPopup : UI_Popup
 
         RemoveAdsButton,
         Dia300Button,
+
+
+
+        GachaBottomButton,
+        RemoveAdsBottomButton,
+        GoodsBottomButton,
+        DailyShopBottomButton
+
 
     }
 
@@ -66,6 +89,19 @@ public class UI_ShopPopup : UI_Popup
     }
 
 
+    RectTransform gachaRect;
+    RectTransform removeAdsRect;
+    RectTransform goodsRect;
+    RectTransform dailyRect;
+
+    RectTransform targetRect;
+    RectTransform gachaButtonRect;
+    RectTransform removeAdsButtonRect;
+    RectTransform goodsButtonRect;
+    RectTransform dailyButtonRect;
+
+    ScrollRect scrollRect;
+    RectTransform content;
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -97,10 +133,34 @@ public class UI_ShopPopup : UI_Popup
 
         GetButton(ButtonsType, (int)Buttons.RemoveAdsButton).gameObject.BindEvent(() => OnClickGoodsButton(Buttons.RemoveAdsButton));
         GetButton(ButtonsType, (int)Buttons.Dia300Button).gameObject.BindEvent(() => OnClickGoodsButton(Buttons.Dia300Button));
+
+        GetButton(ButtonsType, (int)Buttons.GachaBottomButton).gameObject.BindEvent(OnClickGachaButton);
+        GetButton(ButtonsType, (int)Buttons.RemoveAdsBottomButton).gameObject.BindEvent(OnClickPackageButton);
+        GetButton(ButtonsType, (int)Buttons.GoodsBottomButton).gameObject.BindEvent(OnClickGoodsButton);
+        GetButton(ButtonsType, (int)Buttons.DailyShopBottomButton).gameObject.BindEvent(OnClickDailyButton);
+
+        targetRect = GetObject(GameObjectsType, (int)GameObjects.BottomButtonBarObject).GetComponent<RectTransform>();
+
+        gachaButtonRect = GetButton(ButtonsType, (int)Buttons.GachaBottomButton).GetComponent<RectTransform>();
+        removeAdsButtonRect = GetButton(ButtonsType, (int)Buttons.RemoveAdsBottomButton).GetComponent<RectTransform>();
+        goodsButtonRect = GetButton(ButtonsType, (int)Buttons.GoodsBottomButton).GetComponent<RectTransform>();
+        dailyButtonRect = GetButton(ButtonsType, (int)Buttons.DailyShopBottomButton).GetComponent<RectTransform>();
+
+        gachaRect = GetObject(GameObjectsType, (int)GameObjects.GachaTitle).GetComponent<RectTransform>();
+        removeAdsRect = GetObject(GameObjectsType, (int)GameObjects.RemoveAdsTitle).GetComponent<RectTransform>();
+        goodsRect = GetObject(GameObjectsType, (int)GameObjects.GoodsTitle).GetComponent<RectTransform>();
+        dailyRect = GetObject(GameObjectsType, (int)GameObjects.DailyTitle).GetComponent<RectTransform>();
+
+
+        scrollRect = GetObject(GameObjectsType, (int)GameObjects.ScrollView).GetComponent<ScrollRect>();
+        content = GetObject(GameObjectsType, (int)GameObjects.Content).GetComponent<RectTransform>();
+
         return true;
     }
     public override void SetInfo()
     {
+        ScrollToTitle(gachaRect, true);
+        MoveTarget(gachaButtonRect, false);
         RefreshUI();
     }
     void RefreshUI()
@@ -289,6 +349,95 @@ public class UI_ShopPopup : UI_Popup
         else
             GetObject(GameObjectsType, (int)GameObjects.RemoveADObject).SetActive(false);
     }
+
+    #endregion
+
+    #region bottom Button
+    void OnClickGachaButton()
+    {
+        ScrollToTitle(gachaRect, true);
+        MoveTarget(gachaButtonRect, true);
+    }
+
+    void OnClickPackageButton()
+    {
+        ScrollToTitle(removeAdsRect, true);
+        MoveTarget(removeAdsButtonRect, true);
+    }
+
+    void OnClickGoodsButton()
+    {
+        ScrollToTitle(goodsRect, true);
+        MoveTarget(goodsButtonRect, true);
+    }
+
+    void OnClickDailyButton()
+    {
+        ScrollToTitle(dailyRect, true);
+        MoveTarget(dailyButtonRect, true);
+    }
+
+
+    public void ScrollToTitle(RectTransform _target, bool _animate = true)
+    {
+        Canvas.ForceUpdateCanvases();
+
+        RectTransform viewport = scrollRect.viewport != null
+            ? scrollRect.viewport
+            : scrollRect.GetComponent<RectTransform>();
+
+        float contentHeight = content.rect.height;
+        float viewportHeight = viewport.rect.height;
+
+        float scrollableHeight = Mathf.Max(1f, contentHeight - viewportHeight);
+
+        Vector2 localPos = content.InverseTransformPoint(_target.position);
+        float yFromTop = -localPos.y;
+
+        float targetHalfHeight = _target.rect.height * 0.5f;
+
+        float margin = 20f;
+
+        float adjustedY = yFromTop - targetHalfHeight - margin;
+        float normalized = Mathf.Clamp01(adjustedY / scrollableHeight);
+        float finalValue = 1f - normalized;
+
+        if (_animate)
+        {
+            DOTween.To(
+                () => scrollRect.verticalNormalizedPosition,
+                v => scrollRect.verticalNormalizedPosition = v,
+                finalValue,
+                0.25f
+            ).SetEase(Ease.OutQuad);
+        }
+        else
+        {
+            scrollRect.verticalNormalizedPosition = finalValue;
+        }
+    }
+
+    void MoveTarget(RectTransform _target, bool _animate = true)
+    {
+        Vector3 worldPos = targetRect.position;
+
+        targetRect.SetParent(_target, false);
+        targetRect.SetAsFirstSibling();
+
+        targetRect.anchorMin = new Vector2(0.5f, 0.5f);
+        targetRect.anchorMax = new Vector2(0.5f, 0.5f);
+        targetRect.pivot = new Vector2(0.5f, 0.5f);
+        targetRect.position = worldPos;
+
+        if (_animate)
+        {
+            targetRect.localScale = Vector3.one * 0.9f;
+            targetRect.DOScale(1f, 0.15f).SetEase(Ease.OutBack);
+            targetRect.DOAnchorPos(Vector2.zero, 0.25f).SetEase(Ease.OutQuad);
+        }
+        else targetRect.anchoredPosition = Vector2.zero;
+    }
+
 
     #endregion
     public void GetProuduct(string _name)

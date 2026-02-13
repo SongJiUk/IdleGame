@@ -58,6 +58,19 @@ public partial class FirebaseManager
             var result = await Auth.SignInWithCredentialAsync(credential);
 
             CurrentUser = result;
+            Managers.GameM.gameData.isGuest = false;
+            string name = CurrentUser.DisplayName;
+
+            if (string.IsNullOrEmpty(name))
+            {
+                if (!string.IsNullOrEmpty(CurrentUser.DisplayName))
+                    name = CurrentUser.Email;
+                else
+                    name = "Player";
+            }
+
+            Managers.GameM.gameData.playerName = name;
+
             Debug.Log("Firebase Google Login Success!");
             Debug.Log($"UserID : {result.UserId}");
 
@@ -98,6 +111,10 @@ public partial class FirebaseManager
 
             await ReadData();
             Debug.Log("게스트 로그인 성공 ! 사용자 ID : " + user.UserId);
+
+            Managers.GameM.gameData.isGuest = true;
+            Managers.GameM.gameData.playerName = "Guest";
+
             LoadingLogin.instance.LoginComplete();
             loginCTS?.TrySetResult(true);
         }
@@ -112,6 +129,27 @@ public partial class FirebaseManager
         if (Auth.CurrentUser != null)
         {
             CurrentUser = Auth.CurrentUser;
+            if (CurrentUser.IsAnonymous)
+            {
+                Managers.GameM.gameData.isGuest = true;
+                Managers.GameM.gameData.playerName = "Guest";
+            }
+            else
+            {
+                Managers.GameM.gameData.isGuest = false;
+                string name = CurrentUser.DisplayName;
+
+                if (string.IsNullOrEmpty(name))
+                {
+                    if (!string.IsNullOrEmpty(CurrentUser.DisplayName))
+                        name = CurrentUser.Email;
+                    else
+                        name = "Player";
+                }
+                Managers.GameM.gameData.playerName = name;
+            }
+
+
             Debug.Log("자동 로그인 성공! 사용자 ID : " + CurrentUser.UserId);
 
             await ReadData();

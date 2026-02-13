@@ -64,6 +64,8 @@ public class Holder
 
 public class GameData
 {
+    public bool isGuest = true;
+    public string playerName;
     public double damage;
     public double hp;
     public double gold;
@@ -101,14 +103,14 @@ public class GameData
     public Dictionary<string, Holder> Item_Holder = new Dictionary<string, Holder>();
 
     public List<SmeltHolder> Smelts = new List<SmeltHolder>();
-    
+
     [JsonIgnore]
     public Data.ItemData[] relics = new Data.ItemData[6];
     public Dictionary<string, Data.ItemData> RelicsSave = new();
 
     public Dictionary<string, MissionInfo> MissionDic = new();
     public Dictionary<int, bool> AchievementDic = new();
-    
+
 
     public void SyncFromSave()
     {
@@ -116,9 +118,9 @@ public class GameData
 
         if (RelicsSave == null) return;
 
-        foreach(var kv in RelicsSave)
+        foreach (var kv in RelicsSave)
         {
-            if(int.TryParse(kv.Key, out int index))
+            if (int.TryParse(kv.Key, out int index))
             {
                 if (index >= 0 && index < relics.Length)
                     relics[index] = kv.Value;
@@ -130,7 +132,7 @@ public class GameData
         if (RelicsSave == null) RelicsSave = new Dictionary<string, ItemData>();
         else RelicsSave.Clear();
 
-        for(int i =0; i< relics.Length; i++)
+        for (int i = 0; i < relics.Length; i++)
         {
             if (relics[i] != null) RelicsSave[i.ToString()] = relics[i];
         }

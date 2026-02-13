@@ -1251,9 +1251,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
     void CheckPlayer()
     {
-        //GetImage(ImagesType, (int)Images.CharacterImage).sprite = "";
         GetText(TextsType, (int)Texts.CharacterLevelText).text = $"LV : {Managers.GameM.Level}";
-        //TODO :이거 소수점 끝까지 안나오게 수정하기
+        GetText(TextsType, (int)Texts.UserNameText).text = Managers.GameM.gameData.playerName;
         GetText(TextsType, (int)Texts.UserCombatPowerText).text = Utils.ToCurrencyString(Managers.PlayerM.AverageCombatPower());
     }
 
