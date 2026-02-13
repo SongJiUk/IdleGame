@@ -68,7 +68,6 @@ public class UI_TitleScene : UI_Scene
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
-        DebugConsole.Instance.Log("UI_TITle Init: 시작");
         GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
         ImagesType = typeof(Images);
@@ -158,7 +157,7 @@ public class UI_TitleScene : UI_Scene
         Managers.LocalM.Init();
 
         await Managers.FirebaseM.Init();
-        await Managers.FirebaseM.CheckAndApplyCurrentUser();
+
 
         Managers.QuestM.Init();
 
@@ -172,14 +171,16 @@ public class UI_TitleScene : UI_Scene
         }
         else
         {
+            await Managers.FirebaseM.CheckAndApplyCurrentUser();
+
             bool isGuest = Managers.GameM.gameData.isGuest;
             GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(isGuest);
+
 #if UNITY_ANDROID
         GetButton(ButtonsType, (int)Buttons.GoogleLoginButton).transform.SetAsFirstSibling();
 #elif UNITY_IOS
             GetButton(ButtonsType, (int)Buttons.AppleLoginButton).transform.SetAsFirstSibling();
 #endif
-            //Managers.FirebaseM.CheckOrLogin().Forget();
         }
 
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);
@@ -212,7 +213,7 @@ public class UI_TitleScene : UI_Scene
 
     void OnClickGoogleLoginButton()
     {
-        //TODO : 로그인 버튼
+        Debug.Log("[LOGIN] Google Login Button Clicked");
         Managers.FirebaseM.LinkGoogleToCurrentUser().Forget();
     }
 

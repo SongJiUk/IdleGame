@@ -50,6 +50,7 @@ public partial class FirebaseManager
 
     public bool IsLoggedIn()
     {
+        Debug.Log("[FirebaseManager] : " + CurrentUser != null);
         return CurrentUser != null;
     }
 

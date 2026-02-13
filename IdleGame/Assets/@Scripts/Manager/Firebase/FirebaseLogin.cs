@@ -38,7 +38,7 @@ public partial class FirebaseManager
 
             if (googleUser == null || string.IsNullOrEmpty(googleUser.IdToken))
             {
-                Debug.LogError("Google SignIn failed : user is null");
+                Debug.LogError("[FirebaseManager] : Google SignIn failed : user is null");
                 return;
             }
 
@@ -51,14 +51,14 @@ public partial class FirebaseManager
             PlayerPrefs.SetInt("HasSeenLogin", 1);
             PlayerPrefs.Save();
 
-            Debug.Log("Firebase Google Login Success!");
-            Debug.Log($"UserID : {result.UserId}");
+            Debug.Log("[FirebaseManager] : Firebase Google Login Success!");
+            Debug.Log($"[FirebaseManager] : UserID : {result.UserId}");
 
             await ReadData();
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"구글 로그인 실패 : {e}");
+            Debug.LogError($"[FirebaseManager] : 구글 로그인 실패 : {e}");
         }
 #endif
     }
@@ -136,6 +136,7 @@ public partial class FirebaseManager
 
     public async UniTask LinkGoogleToCurrentUser()
     {
+        Debug.Log("[LOGIN] LinkGoogleToCurrentUser START");
         if (Auth.CurrentUser == null || !Auth.CurrentUser.IsAnonymous)
         {
 
@@ -143,35 +144,79 @@ public partial class FirebaseManager
             return;
         }
 
+        Debug.Log($"[LOGIN] IsAnonymous: {Auth.CurrentUser.IsAnonymous}");
+
         try
         {
-            configuration = GetGoogleConfig();
-            GoogleSignIn.Configuration = configuration; ;
+            // configuration = GetGoogleConfig();
+            // GoogleSignIn.Configuration = configuration; ;
 
-            GoogleSignInUser googleUser = await GoogleSignIn.DefaultInstance.SignIn();
-            if (googleUser == null || string.IsNullOrEmpty(googleUser.IdToken))
+            // GoogleSignInUser googleUser = await GoogleSignIn.DefaultInstance.SignIn();
+            // if (googleUser == null || string.IsNullOrEmpty(googleUser.IdToken))
+            // {
+            //     Debug.LogError("google SignIn 실패");
+            //     return;
+            // }
+
+            // Credential credential = GoogleAuthProvider.GetCredential(googleUser.IdToken, null);
+            // var result = await Auth.CurrentUser.LinkWithCredentialAsync(credential);
+
+            // CurrentUser = result;
+            // ApplyUserToGameData(CurrentUser);
+
+            // PlayerPrefs.SetInt("HasSeenLogin", 1);
+            // PlayerPrefs.Save();
+
+            // Debug.Log("게스트 -> 구글 계정 연동 성공 : UID : " + result.UserId);
+
+            // await ReadData();
+            Debug.Log("[LOGIN] Set Google Configuration");
+            configuration = GetGoogleConfig();
+            GoogleSignIn.Configuration = configuration;
+
+            Debug.Log("[LOGIN] Call GoogleSignIn.SignIn()");
+            GoogleSignInUser gUser = await GoogleSignIn.DefaultInstance.SignIn();
+
+            Debug.Log("[LOGIN] GoogleSignIn returned");
+
+            if (gUser == null)
             {
-                Debug.LogError("google SignIn 실패");
+                Debug.LogError("[LOGIN] GoogleSignInUser is NULL");
                 return;
             }
 
-            Credential credential = GoogleAuthProvider.GetCredential(googleUser.IdToken, null);
+            Debug.Log("[LOGIN] Got IdToken");
+            if (string.IsNullOrEmpty(gUser.IdToken))
+            {
+                Debug.LogError("[LOGIN] IdToken is NULL or EMPTY");
+                return;
+            }
+
+            Credential credential = GoogleAuthProvider.GetCredential(gUser.IdToken, null);
+
+            Debug.Log("[LOGIN] Call LinkWithCredentialAsync()");
             var result = await Auth.CurrentUser.LinkWithCredentialAsync(credential);
+
+            Debug.Log("[LOGIN] LinkWithCredentialAsync SUCCESS");
 
             CurrentUser = result;
             ApplyUserToGameData(CurrentUser);
 
+            Debug.Log("[LOGIN] ApplyUserToGameData DONE");
+
             PlayerPrefs.SetInt("HasSeenLogin", 1);
             PlayerPrefs.Save();
 
-            Debug.Log("게스트 -> 구글 계정 연동 성공 : UID : " + result.UserId);
+            Debug.Log("[LOGIN] PlayerPrefs Saved");
 
             await ReadData();
+
+            Debug.Log("[LOGIN] ReadData DONE");
         }
         catch (System.Exception e)
         {
-
-            Debug.Log("계정 연동 실패 : " + e);
+            Debug.LogError("[LOGIN] EXCEPTION: " + e);
+            //Debug.Log("계정 연동 실패 : " + e);
         }
     }
 

@@ -54,9 +54,9 @@ public class ADManager
             IntersititialID = "ca-app-pub-7745197509342356/3363830166";
             RewardID = "ca-app-pub-7745197509342356/3691133226";
 #elif UNITY_IOS
-                BannderID = "ca-app-pub-7745197509342356/4090394957";
-                IntersititialID = "ca-app-pub-7745197509342356/8132763505";
-                RewardID = "ca-app-pub-7745197509342356/5506600169";
+            BannderID = "ca-app-pub-7745197509342356/4090394957";
+            IntersititialID = "ca-app-pub-7745197509342356/8132763505";
+            RewardID = "ca-app-pub-7745197509342356/5506600169";
 #else
             BannderID = Test_Banner_ID;
             IntersititialID = Test_Interstitial_ID;
@@ -103,7 +103,6 @@ public class ADManager
 
     public void LoadRewardedAd()
     {
-        DebugConsole.Instance.Log("LoadRewardedAd: 진입");
         AdRequest request = new AdRequest();
         RewardedAd.Load(RewardID, request, OnAdRewardCallback);
     }
@@ -147,7 +146,6 @@ public class ADManager
 
     public void LoadIntersititialAd()
     {
-        DebugConsole.Instance.Log("LoadIntersititialAd: 진입");
         if (interstitialAd != null)
         {
             interstitialAd.Destroy();
@@ -187,7 +185,6 @@ public class ADManager
 
     public void RequestBanner()
     {
-        DebugConsole.Instance.Log("RequestBanner: 진입");
         if (bannerView != null) bannerView.Destroy();
         AdSize size = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
         bannerView = new BannerView(BannderID, size, AdPosition.Bottom);
