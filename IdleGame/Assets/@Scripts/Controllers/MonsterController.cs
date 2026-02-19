@@ -206,8 +206,11 @@ public class MonsterController : CreatureController
             if (!isAttacking)
             {
                 AnimatorChange(Define.CreatureState.Move);
-                transform.LookAt(target.transform.position);
-                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
+                Vector3 targetPos = target.transform.position;
+                targetPos.z = transform.position.z;
+
+                transform.LookAt(targetPos);
+                transform.position = Vector3.MoveTowards(transform.position, targetPos, _deltaTime);
             }
         }
         else
@@ -217,7 +220,9 @@ public class MonsterController : CreatureController
                 isTargetLocked = true;
 
                 AnimatorChange(Define.CreatureState.Attack);
-                transform.LookAt(target.transform);
+                Vector3 lookPos = target.transform.position;
+                lookPos.z = transform.position.z;
+                transform.LookAt(lookPos);
 
                 attackCTS?.Cancel();
                 attackCTS?.Dispose();

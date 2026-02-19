@@ -141,7 +141,10 @@ public class PlayerController : CreatureController
             Debug.LogError($"{gameObject.name}의 Range ProjectileDataID가 0입니다!");
         }
         Debug.Log($"[Projectile Step 2] 발사 시도 - ID: {DATA.ProjectileDataID}, 타겟: {currentTarget.name}");
-        transform.LookAt(currentTarget.transform);
+
+        Vector3 lookPos = currentTarget.transform.position;
+        lookPos.z = transform.position.z;
+        transform.LookAt(lookPos);
         var go = Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, currentTarget);
 
         if (go != null)

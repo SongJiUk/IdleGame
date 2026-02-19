@@ -36,9 +36,11 @@ public class RenderManager : MonoBehaviour
 
     public RenderCharacter renderCharacter;
     public RenderGacha renderGacha;
-
+    int renderOnlyLayerMask;
     private void Awake()
     {
+        renderOnlyLayerMask = LayerMask.GetMask("Render");
+        SetupAllRenderCamera();
         DisableAllObject();
     }
 
@@ -53,6 +55,30 @@ public class RenderManager : MonoBehaviour
             Debug.LogError("Managers 인스턴스가 없음");
         }
     }
+
+    void SetupAllRenderCamera()
+    {
+        SetupCamera(heroCamera);
+        SetupCamera(gachaCamera);
+        SetupCamera(dungeonCamera);
+        SetupCamera(heroStatCamera);
+        SetupCamera(savingCamera);
+    }
+
+    void SetupCamera(Camera _cam)
+    {
+        if (_cam == null) return;
+
+
+        _cam.cullingMask = renderOnlyLayerMask;
+        _cam.clearFlags = CameraClearFlags.SolidColor;
+        _cam.backgroundColor = new Color(0, 0, 0, 0);
+
+        _cam.enabled = false;
+        _cam.gameObject.SetActive(false);
+    }
+
+
     public void DisableAllObject()
     {
         DisableAllCamera();
@@ -75,6 +101,14 @@ public class RenderManager : MonoBehaviour
         if (savingCamera != null) savingCamera.gameObject.SetActive(false);
     }
 
+    void DisableCamera(Camera _cam)
+    {
+        if (_cam == null) return;
+
+        _cam.targetTexture = null;
+        _cam.enabled = false;
+        _cam.gameObject.SetActive(false);
+    }
 
     Camera GetCamera(RenderType _type)
     {
@@ -88,6 +122,7 @@ public class RenderManager : MonoBehaviour
         }
         return null;
     }
+
     GameObject GetObject(RenderType _type)
     {
         switch (_type)
@@ -112,8 +147,9 @@ public class RenderManager : MonoBehaviour
     public void Show(RenderType _type, RawImage _targetRawImage)
     {
         Hide();
+
         currentGameObject = GetObject(_type);
-        currentGameObject.SetActive(true);
+        if(currentGameObject != null) currentGameObject.SetActive(true);
 
         var cam = GetCamera(_type);
         if(cam == null)
@@ -122,18 +158,23 @@ public class RenderManager : MonoBehaviour
             return;
         }
 
+
         cam.gameObject.SetActive(true);
         cam.enabled = true;
 
-        currentRT = new RenderTexture(512, 512, 0, RenderTextureFormat.ARGB32);
+        RectTransform rt = _targetRawImage.rectTransform;
+        float scale = _targetRawImage.canvas.scaleFactor;
+
+        int w = Mathf.Max(1, Mathf.RoundToInt(rt.rect.width * scale));
+        int h = Mathf.Max(1, Mathf.RoundToInt(rt.rect.height * scale));
+
+        currentRT = new RenderTexture(w, h, 0, RenderTextureFormat.ARGB32);
         currentRT.Create();
 
-        cam.clearFlags = CameraClearFlags.SolidColor;
-        //cam.backgroundColor = Color.black;
-        cam.backgroundColor = new Color(0, 0, 0, 0);
         cam.targetTexture = currentRT;
+        if (_targetRawImage != null) _targetRawImage.texture = currentRT;
 
-        _targetRawImage.texture = currentRT;
+
         currentCamera = cam;
     }
 
@@ -157,6 +198,7 @@ public class RenderManager : MonoBehaviour
         if(currentGameObject  != null)
         {
             currentGameObject.SetActive(false);
+            currentGameObject = null;
         }
     }
 }
