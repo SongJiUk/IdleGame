@@ -206,11 +206,11 @@ public class MonsterController : CreatureController
             if (!isAttacking)
             {
                 AnimatorChange(Define.CreatureState.Move);
-                Vector3 targetPos = target.transform.position;
-                targetPos.z = transform.position.z;
+                Vector3 lookPos = target.transform.position;
+                lookPos.y = transform.position.y;
 
-                transform.LookAt(targetPos);
-                transform.position = Vector3.MoveTowards(transform.position, targetPos, _deltaTime);
+                transform.LookAt(lookPos);
+                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
             }
         }
         else
@@ -221,7 +221,7 @@ public class MonsterController : CreatureController
 
                 AnimatorChange(Define.CreatureState.Attack);
                 Vector3 lookPos = target.transform.position;
-                lookPos.z = transform.position.z;
+                lookPos.y = transform.position.y;
                 transform.LookAt(lookPos);
 
                 attackCTS?.Cancel();

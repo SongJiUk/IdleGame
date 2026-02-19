@@ -79,7 +79,11 @@ public class UI_CharacterIcon : UI_Base
 
         GetObject(GameObjectsType, (int)GameObjects.CharacterUseObject).SetActive(false);
 
-
+        if (data.DataID == 1)
+        {
+            GetButton(ButtonsType, (int)Buttons.CharacterUseButton).gameObject.SetActive(false);
+        }
+        else GetButton(ButtonsType, (int)Buttons.CharacterUseButton).gameObject.SetActive(true);
         RefreshUI();
     }
     public void RefreshUI()
@@ -131,15 +135,13 @@ public class UI_CharacterIcon : UI_Base
     {
         if (isUseCharacter)
         {
-            //TODO : 여기선 뺴기.
-
             parent.SetClick(this, true);
-            Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(true);
+            //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(false);
         }
         else
         {
             parent.SetClick(this);
-            Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(true);
+            //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(false);
         }
 
     }

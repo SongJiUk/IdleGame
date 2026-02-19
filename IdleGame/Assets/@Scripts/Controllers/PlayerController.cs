@@ -92,6 +92,7 @@ public class PlayerController : CreatureController
         maxMp = DATA.MaxMp;
         ownerName = this.name;
         target = null;
+        this.enabled = true;
     }
     public void SetStat()
     {
@@ -143,8 +144,9 @@ public class PlayerController : CreatureController
         Debug.Log($"[Projectile Step 2] 발사 시도 - ID: {DATA.ProjectileDataID}, 타겟: {currentTarget.name}");
 
         Vector3 lookPos = currentTarget.transform.position;
-        lookPos.z = transform.position.z;
+        lookPos.y = transform.position.y;
         transform.LookAt(lookPos);
+
         var go = Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, currentTarget);
 
         if (go != null)

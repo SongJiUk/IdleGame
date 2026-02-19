@@ -33,20 +33,20 @@ public class CharacterSpawnPoint : MonoBehaviour
     {
         int mainIndex = Managers.CharacterM.Characters.Length - 1;
 
-        if(Managers.CharacterM.players[mainIndex] == null)
+        if (Managers.CharacterM.players[mainIndex] == null)
         {
             Vector3 mainPos = SpawnTr[mainIndex].position;
-            PlayerController mainPC = Managers.ObjectM.Spawn<PlayerController>(mainPos, 3);
-            mainPC.index = mainIndex; 
+            PlayerController mainPC = Managers.ObjectM.Spawn<PlayerController>(mainPos, 1);
+            mainPC.index = mainIndex;
             Managers.CharacterM.AddPlayerReference(mainIndex, mainPC);
 
         }
 
-        for (int i =0; i< mainIndex; i++)
+        for (int i = 0; i < mainIndex; i++)
         {
             if (Managers.CharacterM.Characters[i] == null) continue;
 
-            if(Managers.CharacterM.players[i] != null)
+            if (Managers.CharacterM.players[i] != null)
             {
                 Managers.CharacterM.players[i].transform.position = SpawnTr[i].position;
                 continue;
@@ -60,7 +60,7 @@ public class CharacterSpawnPoint : MonoBehaviour
         }
 
 
-        
+
         //TODO: 메인캐릭터는 클레릭 고정임(지금은 테스트한다고 바꿔놓은거.)
         //Managers.CharacterM.players[Managers.CharacterM.Characters.Length - 1] = Managers.ObjectM.Spawn<PlayerController>(pos, 3);
         //for (int i = 0; i < Managers.CharacterM.Characters.Length; i++)

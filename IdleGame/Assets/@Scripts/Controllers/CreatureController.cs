@@ -204,8 +204,8 @@ public class CreatureController : BaseController
         if (dist > 0.1f)
         {
             AnimatorChange(Define.CreatureState.Move);
-            
-            
+
+
             transform.LookAt(SpawnPos);
             transform.position = Vector3.MoveTowards(transform.position, SpawnPos, _deltaTime);
         }
@@ -216,11 +216,11 @@ public class CreatureController : BaseController
     public void MoveToTarget(float _deltaTime)
     {
         AnimatorChange(Define.CreatureState.Move);
-        Vector3 targetPos = target.transform.position;
-        targetPos.z = transform.position.z;
+        Vector3 lookPos = target.transform.position;
+        lookPos.y = transform.position.y;
 
-        transform.LookAt(targetPos);
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, _deltaTime);
+        transform.LookAt(lookPos);
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
     }
 
     public virtual async UniTask StartAttack()
@@ -238,7 +238,7 @@ public class CreatureController : BaseController
 
         AnimatorChange(Define.CreatureState.Attack);
         Vector3 lookPos = target.transform.position;
-        lookPos.z = transform.position.z;
+        lookPos.y = transform.position.y;
 
         transform.LookAt(lookPos);
 

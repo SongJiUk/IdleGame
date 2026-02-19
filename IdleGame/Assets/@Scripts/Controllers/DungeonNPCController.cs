@@ -9,7 +9,7 @@ public class DungeonNPCController : BaseController
     [SerializeField] Camera cam;
     bool isDugeonPopupOn = false;
     SpeechBubble currentBubble;
-   
+
     public void SetInfo()
     {
         Managers.UIM.OnDungeonPopupState -= OnDungeonPopup;
@@ -30,7 +30,7 @@ public class DungeonNPCController : BaseController
         }
         else
         {
-            if(currentBubble != null)
+            if (currentBubble != null)
             {
                 Managers.ObjectM.DeSpawn(currentBubble);
                 currentBubble = null;
@@ -40,18 +40,18 @@ public class DungeonNPCController : BaseController
 
     async UniTaskVoid StartSpeech()
     {
-        while(isDugeonPopupOn)
+        while (isDugeonPopupOn)
         {
             await UniTask.WaitForSeconds(Random.Range(3.0f, 7.0f));
             if (!isDugeonPopupOn) break;
 
-            if(currentBubble != null) Managers.ObjectM.DeSpawn(currentBubble);
+            if (currentBubble != null) Managers.ObjectM.DeSpawn(currentBubble);
             currentBubble = Managers.ObjectM.Spawn<SpeechBubble>(transform.position, Utils.SpeechBubbleDataID);
 
             Managers.DataM.NPCDataDic.TryGetValue(NPCDataID, out var data);
             if (currentBubble != null)
             {
-                currentBubble.Init(transform.position, cam, data);
+                currentBubble.Init(transform, cam, data);
             }
             await UniTask.WaitForSeconds(3.0f);
 
@@ -66,6 +66,6 @@ public class DungeonNPCController : BaseController
     private void OnDestroy()
     {
         isDugeonPopupOn = false;
-        if(Managers.UIM != null) Managers.UIM.OnDungeonPopupState -= OnDungeonPopup;
+        if (Managers.UIM != null) Managers.UIM.OnDungeonPopupState -= OnDungeonPopup;
     }
 }

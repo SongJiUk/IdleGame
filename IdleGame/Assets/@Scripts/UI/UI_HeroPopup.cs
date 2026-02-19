@@ -15,6 +15,7 @@ public class UI_HeroPopup : UI_Popup
     {
         CharacterContentObject,
         RawImage,
+        CircleButtonsObject,
     }
 
     enum Texts
@@ -73,7 +74,7 @@ public class UI_HeroPopup : UI_Popup
     //처음에만 사용할것인지? 아이템을 뽑거나 할때는 수정이 되어야함
     public override void SetInfo()
     {
-        Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(false);
+        GetObject(GameObjectsType, (int)GameObjects.CircleButtonsObject).SetActive(false);
         Managers.RenderM.Show(RenderType.Hero, rawImage);
 
         var datas = Managers.GameM.gameData.Characters_Data;
@@ -104,6 +105,8 @@ public class UI_HeroPopup : UI_Popup
             go.SetInfo(data.Value.data, this);
             characters.Add(go);
         }
+
+        //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(true);
     }
 
 
@@ -150,7 +153,7 @@ public class UI_HeroPopup : UI_Popup
 
     async void OnClickCloseButton()
     {
-        
+
         await TriggerClose(this, true);
 
         ClearIcons();
@@ -183,27 +186,21 @@ public class UI_HeroPopup : UI_Popup
 
         if (Managers.RenderM.renderCharacter.isCheckCharacter((int)_clickButton))
         {
-            //TODO : 여기는 해당 버튼에 캐릭터가 있을때
             Managers.CharacterM.SetCharacter((int)_clickButton, clickCharacter.DATA.Name);
-            Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(false);
             SetClick(null);
             (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
 
             Managers.RenderM.renderCharacter.ChangeCharacter();
             OnValueChange?.Invoke();
             clickCharacter = null;
+            //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(true);
             Managers.StageM.StateChange(Define.StageState.Ready);
         }
         else
         {
-            //TODO : 전에클릭되어있던 clickCharacter정보 가져와서 거기 초기화 시켜줘야함
-
             Managers.CharacterM.SetCharacter((int)_clickButton, clickCharacter.DATA.Name);
-            //해당 지역 이펙트
-            Managers.RenderM.renderCharacter.GetRenderCharacterParitcle(false);
-            //해당 아이콘 잠금 처리?
             SetClick(null);
-            //TODO : 아직 게임 진행중일때, 대기중 사진 띄우기.
+            //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(true);
             (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
 
 
@@ -214,7 +211,8 @@ public class UI_HeroPopup : UI_Popup
             Managers.StageM.StateChange(Define.StageState.Ready);
         }
 
-        
+        GetObject(GameObjectsType, (int)GameObjects.CircleButtonsObject).SetActive(false);
+
     }
 
 
@@ -249,6 +247,7 @@ public class UI_HeroPopup : UI_Popup
             }
             else
             {
+                GetObject(GameObjectsType, (int)GameObjects.CircleButtonsObject).SetActive(true);
                 for (int i = 0; i < characters.Count; i++)
                 {
                     characters[i].SetLockImage(true);

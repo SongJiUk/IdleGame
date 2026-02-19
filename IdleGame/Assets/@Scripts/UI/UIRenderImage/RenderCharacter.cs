@@ -13,15 +13,16 @@ public class RenderCharacter : MonoBehaviour
     {
         return isGetCharacter[_value];
     }
-    public void GetRenderCharacterParitcle(bool _isUseSpawnPoint)
+
+    public void GetRenderCharacterParticle(bool _isUseSpawnPoint)
     {
 
-        for (int i = 0; i < particles.Length; i++)
-        {
-            if (isGetCharacter[i]) continue;
+        // for (int i = 0; i < particles.Length; i++)
+        // {
+        //     if (isGetCharacter[i]) continue;
 
-            particles[i].SetActive(_isUseSpawnPoint);
-        }
+        //     particles[i].SetActive(_isUseSpawnPoint);
+        // }
     }
 
     public void InitCharacter()

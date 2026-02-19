@@ -46,15 +46,15 @@ public abstract class UI_Scene : UI_Base
         }
         return layers.GetChild(_num);
     }
-    
+
     public Transform GetSpeechLayer()
     {
-        if(speechLayer == null)
+        if (speechLayer == null)
         {
             Debug.LogError("SpeechLayer가 없음");
             return null;
         }
-        return speechLayer.GetChild(0);
+        return speechLayer;
     }
 
     public Transform GetPopUpLayer()
