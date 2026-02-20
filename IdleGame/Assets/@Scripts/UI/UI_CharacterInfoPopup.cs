@@ -95,8 +95,8 @@ public class UI_CharacterInfoPopup : UI_Popup
         if (skillData != null)
         {
             //TODO : 스킬 이미지 뽑아서 하기
-            //GetImage(ImagesType, (int)Images.SkillIDescriptionImage).sprite = Managers.ResourceM.GetAtlas(skillData.SkillName);
-            GetText(TextsType, (int)Texts.SkillEffectText).text = "짱 쎔";
+            GetImage(ImagesType, (int)Images.SkillIDescriptionImage).sprite = Managers.ResourceM.GetAtlas(skillData.SkillName);
+            GetText(TextsType, (int)Texts.SkillEffectText).text = skillData.SkillEffect;
             GetText(TextsType, (int)Texts.SkillDescriptionNameText).text = skillData.SkillNameKR;
             GetText(TextsType, (int)Texts.SkillDescriptionText).text = skillData.Description;
         }

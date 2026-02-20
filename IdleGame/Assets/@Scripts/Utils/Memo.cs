@@ -66,5 +66,7 @@ public class Memo
     TODO : 데미지 확인해보기
     TODO : 로그인 에러(왜뜨는지 확인해봐야됌)
     TODO : 배치 캐릭터 저장하고 불러오기
+    TODO : 캐릭터들 스킬 효과, 스킬 이미지 만들기
+    TODO : 하단 HP / MP width 150
     */
 }

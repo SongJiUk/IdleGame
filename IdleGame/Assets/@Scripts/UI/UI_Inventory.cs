@@ -34,6 +34,13 @@ public class UI_Inventory : UI_Base
 
     Transform parent = null;
     RectTransform rect = null;
+
+    RectTransform targetRect;
+    RectTransform allRect;
+    RectTransform equipmentRect;
+    RectTransform consumableRect;
+    RectTransform othersRect;
+    
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -52,13 +59,23 @@ public class UI_Inventory : UI_Base
         GetButton(ButtonsType, (int)Buttons.OthersButton).gameObject.BindEvent(OnClickOthersButton);
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
 
+        targetRect = GetObject(GameObjectsType, (int)GameObjects.BarObject).GetComponent<RectTransform>();
+
+        allRect = GetButton(ButtonsType, (int)Buttons.AllButton).GetComponent<RectTransform>();
+        equipmentRect = GetButton(ButtonsType, (int)Buttons.EquipmentButton).GetComponent<RectTransform>();
+        consumableRect = GetButton(ButtonsType, (int)Buttons.ConsumableButton).GetComponent<RectTransform>();
+        othersRect = GetButton(ButtonsType, (int)Buttons.OthersButton).GetComponent<RectTransform>();
+
         parent = GetObject(GameObjectsType, (int)GameObjects.Content).transform;
+
+
         rect = gameObject.GetComponent<RectTransform>();
         return true;
     }
 
     public override void SetInfo()
     {
+        MoveTarget(allRect, false);
         RefreshItems();
     }
 
@@ -95,11 +112,13 @@ public class UI_Inventory : UI_Base
     }
     void OnClickAllButton()
     {
-        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
-        Vector3 endPos = GetButton(ButtonsType, (int)Buttons.AllButton).transform.position;
+        //Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
+        //Vector3 endPos = GetButton(ButtonsType, (int)Buttons.AllButton).transform.position;
 
-        targetTr.DOMove(endPos, 0.5f)
-            .SetEase(Ease.OutQuad);
+        //targetTr.DOMove(endPos, 0.5f)
+        //    .SetEase(Ease.OutQuad);
+
+        MoveTarget(allRect, true);
 
         RefreshItems();
 
@@ -108,11 +127,13 @@ public class UI_Inventory : UI_Base
 
     void OnClickEquipmentButton()
     {
-        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
-        Vector3 endPos = GetButton(ButtonsType, (int)Buttons.EquipmentButton).transform.position;
+        //Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
+        //Vector3 endPos = GetButton(ButtonsType, (int)Buttons.EquipmentButton).transform.position;
 
-        targetTr.DOMove(endPos, 0.5f)
-            .SetEase(Ease.OutQuad);
+        //targetTr.DOMove(endPos, 0.5f)
+        //    .SetEase(Ease.OutQuad);
+
+        MoveTarget(equipmentRect, true);
 
         foreach (var slot in itemPool)
             slot.gameObject.SetActive(false);
@@ -137,22 +158,44 @@ public class UI_Inventory : UI_Base
 
     void OnClickConsumableButton()
     {
-        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
-        Vector3 endPos = GetButton(ButtonsType, (int)Buttons.ConsumableButton).transform.position;
+        //Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
+        //Vector3 endPos = GetButton(ButtonsType, (int)Buttons.ConsumableButton).transform.position;
 
-        targetTr.DOMove(endPos, 0.5f)
-            .SetEase(Ease.OutQuad);
+        //targetTr.DOMove(endPos, 0.5f)
+        //    .SetEase(Ease.OutQuad);
+        MoveTarget(consumableRect, true);
 
+        foreach (var slot in itemPool)
+            slot.gameObject.SetActive(false);
+
+        int index = 0;
+        var sort_items = Managers.GameM.gameData.Item_Data.OrderByDescending(x => x.Value.data.ItemGrade);
+        foreach (var item in sort_items)
+        {
+            if (Managers.GameM.gameData.Item_Holder[item.Key].Count > 0)
+            {
+                if (item.Value.data.ItemType == Define.ItemType.Consumable)
+                {
+                    UI_Item slot = itemPool[index++];
+                    slot.gameObject.SetActive(true);
+
+                    slot.Init().Forget();
+                    slot.SetInfo(item.Value, rect);
+                }
+            }
+        }
 
     }
 
     void OnClickOthersButton()
     {
-        Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
-        Vector3 endPos = GetButton(ButtonsType, (int)Buttons.OthersButton).transform.position;
+        //Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
+        //Vector3 endPos = GetButton(ButtonsType, (int)Buttons.OthersButton).transform.position;
 
-        targetTr.DOMove(endPos, 0.5f)
-            .SetEase(Ease.OutQuad);
+        //targetTr.DOMove(endPos, 0.5f)
+        //    .SetEase(Ease.OutQuad);
+
+        MoveTarget(othersRect, true);
 
         foreach (var slot in itemPool)
             slot.gameObject.SetActive(false);
@@ -179,6 +222,27 @@ public class UI_Inventory : UI_Base
     {
         Managers.UIM.ClosePopup();
         DOTween.Kill(this);
+    }
+
+    void MoveTarget(RectTransform _target, bool _animate = true)
+    {
+        Vector3 worldPos = targetRect.position;
+
+        targetRect.SetParent(_target, false);
+        targetRect.SetAsFirstSibling();
+
+        targetRect.anchorMin = new Vector2(0f, 0f);
+        targetRect.anchorMax = new Vector2(1f, 1f);
+        targetRect.pivot = new Vector2(0.5f, 0.5f);
+        targetRect.position = worldPos;
+
+        if (_animate)
+        {
+            targetRect.localScale = Vector3.one * 0.9f;
+            targetRect.DOScale(1f, 0.15f).SetEase(Ease.OutBack);
+            targetRect.DOAnchorPos(Vector2.zero, 0.25f).SetEase(Ease.OutQuad);
+        }
+        else targetRect.anchoredPosition = Vector2.zero;
     }
 
 }

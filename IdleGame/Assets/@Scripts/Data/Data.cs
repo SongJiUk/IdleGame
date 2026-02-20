@@ -206,6 +206,7 @@ namespace Data
         public float SkillLength;
         public float SkillWidth;
         public float AnimDuration;
+        public string SkillEffect;
         public bool IsSplash;
         public string CastingVFX_ID_Raw;
         public string TargetVFX_ID_Raw;
