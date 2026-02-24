@@ -36,7 +36,7 @@ public class CharacterSpawnPoint : MonoBehaviour
         if (Managers.CharacterM.players[mainIndex] == null)
         {
             Vector3 mainPos = SpawnTr[mainIndex].position;
-            PlayerController mainPC = Managers.ObjectM.Spawn<PlayerController>(mainPos, 1);
+            PlayerController mainPC = Managers.ObjectM.Spawn<PlayerController>(mainPos, 9);
             mainPC.index = mainIndex;
             Managers.CharacterM.AddPlayerReference(mainIndex, mainPC);
 

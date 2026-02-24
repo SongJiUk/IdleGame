@@ -11,6 +11,8 @@ public class RangeAttackController : ProjectileController
     CreatureController owner;
     bool isSkillProjectile = false;
 
+    public System.Action OnHitTarget;
+
     private void Awake()
     {
         Transform projectiles = transform.GetChild(0);
@@ -34,7 +36,13 @@ public class RangeAttackController : ProjectileController
 
         owner = _owner;
         isSkillProjectile = _isSkillProjectile;
-        base.AttackInit(_cc, _dmg, owner);
+
+
+        double finalDamge = (_owner != null) ? _owner.Damage : _dmg;
+
+        base.AttackInit(_cc, finalDamge, owner);
+
+
         //TODO : 여기에서 null값뜸 똑같은 상황나오면 체크하기
         if (target == null)
         {
@@ -65,8 +73,10 @@ public class RangeAttackController : ProjectileController
             if (target != null)
             {
                 isHit = true;
-                target.GetDamage(damage, owner, _isSkill: isSkillProjectile);
 
+                target.GetDamage(damage, owner, _isSkill: isSkillProjectile);
+                OnHitTarget?.Invoke();
+                OnHitTarget = null;
 
                 if (Projectiles.Count != 0) Projectiles[characterName].SetActive(false);
                 if (Muzzles.Count != 0) Muzzles[characterName].Play();

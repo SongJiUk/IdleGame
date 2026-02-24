@@ -215,7 +215,7 @@ public class SpawnManager : MonoBehaviour, ITickable
         var monsters = Managers.ObjectM.mcList.ToList();
         foreach (var monster in monsters)
         {
-            monster.ClearChildVFXs();
+            monster.ClearAttachedVFXs();
             Managers.ObjectM.DeSpawn(monster);
         }
         Managers.ObjectM.mcList.Clear();

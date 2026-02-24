@@ -132,10 +132,12 @@ public static class Define
         DungeonBoss,
     }
 
-    public enum SkillEffectType
+    public enum BuffEffectType
     {
-        BuffEffect,
-        DamageEffect
+        None,
+        AttackEffect,
+        DefenseEffect,
+        StatDownEffect
     }
 
     public enum BuffType

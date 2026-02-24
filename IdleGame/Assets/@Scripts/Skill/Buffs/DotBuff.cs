@@ -42,4 +42,6 @@ public class DotBuff : BuffBase
         target.GetDamage(tickDamage, Owner, _isSkill: true);
 
     }
+
+    public override Define.BuffEffectType GetBuffTypes() => Define.BuffEffectType.None;
 }

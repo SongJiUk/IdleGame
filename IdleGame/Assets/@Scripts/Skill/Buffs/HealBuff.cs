@@ -16,4 +16,5 @@ public class HealBuff : BuffBase
     }
 
     public override void Remove(CreatureController _target) { }
+    public override Define.BuffEffectType GetBuffTypes() => Define.BuffEffectType.None;
 }

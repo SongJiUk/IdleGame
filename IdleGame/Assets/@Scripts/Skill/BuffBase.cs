@@ -34,8 +34,10 @@ public abstract class BuffBase : IBuff
     }
 
 
-    //?��?�� ?���? 로직
+    
     public abstract void Apply(CreatureController _target);
     public abstract void Remove(CreatureController _target);
+    public abstract Define.BuffEffectType GetBuffTypes();
+    public float GetRatio() => ratio;
 
 }

@@ -251,10 +251,15 @@ public class UI_RelicsPopup : UI_Popup
     }
 
 
-    void OnClickGachaButton()
+    async void OnClickGachaButton()
     {
-        Managers.UIM.ClosePopup(this).Forget();
-        Managers.UIM.ShowPopup<UI_ShopPopup>().Forget();
+        if (!Managers.UIM.ClickLock(0.5f)) return;
+        var gameScene = Managers.UIM.SceneUI as UI_GameScene;
+        if (gameScene != null)
+        {
+            await Managers.UIM.ClosePopup(this);
+            gameScene.OpenShopFormOtherUI().Forget();
+        }
     }
 
 

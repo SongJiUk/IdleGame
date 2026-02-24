@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AttackBuff : BuffBase
 {
+
+    protected float ratio;
+
     //지속시간 설정
     public AttackBuff(float _duration, float _ratio) : base(_duration)
     {
@@ -21,4 +24,6 @@ public class AttackBuff : BuffBase
     {
         _target.Damage /= ratio;
     }
+
+    public override Define.BuffEffectType GetBuffTypes() => Define.BuffEffectType.AttackEffect;
 }

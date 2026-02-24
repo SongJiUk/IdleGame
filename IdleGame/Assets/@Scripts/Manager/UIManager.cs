@@ -11,7 +11,7 @@ public class UIManager
 {
     public readonly Stack<UI_Base> popupStack = new();
 
-
+    private bool isGolbalLock = false;
     public Action<bool> OnDungeonPopupState;
 
     UI_Scene sceneUI = null;
@@ -198,6 +198,20 @@ public class UIManager
     }
     #endregion
 
+    public bool ClickLock(float _delay = 0.5f)
+    {
+        if (isGolbalLock) return false;
+
+        isGolbalLock = true;
+        ReleaseLockAfterDelay(_delay).Forget();
+        return true;
+    }
+
+    private async UniTaskVoid ReleaseLockAfterDelay(float _delay)
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(_delay));
+        isGolbalLock = false;
+    }
 
     //TODO : 뒤로가기 게임종료 팝업 
 

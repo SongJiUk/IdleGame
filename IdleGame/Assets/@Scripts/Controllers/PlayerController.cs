@@ -50,8 +50,26 @@ public class PlayerController : CreatureController
     }
 
 
+    public override double Damage
+    {
+        get
+        {
+            return Managers.PlayerM.GetAttack(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name], this);
+        }
+    }
 
+    public override double Defense
+    {
+        get
+        {
+            double baseDef = Managers.PlayerM.GetDefense(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name], this);
 
+            float buffRatio = GetBuffValue(BuffEffectType.DefenseEffect);
+
+            return baseDef * (1.0f + buffRatio);
+        }
+    }
+    
     void OnEnable()
     {
         Managers.UpdateM.Register(this);
@@ -98,7 +116,7 @@ public class PlayerController : CreatureController
     {
         hp = Managers.PlayerM.GetHP(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name]);
         maxHp = hp;
-        damage = Managers.PlayerM.GetAttack(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name]);
+        damage = Managers.PlayerM.GetAttack(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name], this);
         CriticalRate = Managers.PlayerM.CriticalChance();
 
         attackRange = DATA.AttackRange;
@@ -106,6 +124,7 @@ public class PlayerController : CreatureController
         if (animator != null)
         {
             animator.speed = 1.0f;
+            float currentSPeed = Managers.PlayerM.AttackSpeed(DATA.AttackSpeed);
             animator.SetFloat("AttackSpeed", DATA.AttackSpeed);
         }
     }

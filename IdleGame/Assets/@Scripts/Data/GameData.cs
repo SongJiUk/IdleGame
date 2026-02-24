@@ -93,7 +93,7 @@ public class GameData
     public int[] DungeonKey = { 2, 2 };
     public int[] DungeonKeyAssets = { 0, 0 };
     public int[] DungeonClearLevel = { 0, 0 };
-
+    public int[] TeamPlacementID = new int[6] { 0, 0, 0, 0, 0, 0 };
     public bool ADS_Remove = false;
     public BuffAdProgress BuffAds = new BuffAdProgress();
     public Dictionary<string, CharacterHolder> Characters_Data = new Dictionary<string, CharacterHolder>();

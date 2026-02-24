@@ -108,10 +108,15 @@ public class UI_CharacterInfoPopup : UI_Popup
         Managers.UIM.ClosePopup(this).Forget();
     }
 
-    void OnClickGachaButton()
+    async void OnClickGachaButton()
     {
-        Managers.UIM.CloseAllPopup();
-        Managers.UIM.ShowPopup<UI_ShopPopup>().Forget();
+        if (!Managers.UIM.ClickLock(0.5f)) return;
+        var gameScene = Managers.UIM.SceneUI as UI_GameScene;
+        if (gameScene != null)
+        {
+            await Managers.UIM.ClosePopup(this);
+            gameScene.OpenShopFormOtherUI().Forget();
+        }
     }
 
     void OnClickEnforceButton()

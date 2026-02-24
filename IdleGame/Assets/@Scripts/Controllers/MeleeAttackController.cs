@@ -12,7 +12,9 @@ public class MeleeAttackController : ProjectileController
         target = _cc;
         if (target != null && !target.IsDead)
         {
-            target.GetDamage(_dmg, _owner);
+            double realDamage = (_owner != null) ? _owner.Damage : _dmg;
+            
+            target.GetDamage(realDamage, _owner);
 
             isHit = true;
 

@@ -513,6 +513,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
             case Buttons.StatButton:
 
+                if (!Managers.UIM.ClickLock(0.5f)) return;
+
                 if (selectedButton != statBtn && currentBottomPopup != null)
                 {
                     currentBottomPopup.ClosePopup(false).Forget();
@@ -549,6 +551,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 break;
 
             case Buttons.HeroButton:
+                if (!Managers.UIM.ClickLock(0.5f)) return;
+
                 if (selectedButton != heroBtn && currentBottomPopup != null)
                 {
                     currentBottomPopup.ClosePopup(false).Forget();
@@ -581,6 +585,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 break;
 
             case Buttons.RelicsButton:
+                if (!Managers.UIM.ClickLock(0.5f)) return;
 
                 if (selectedButton != relicsBtn && currentBottomPopup != null)
                 {
@@ -613,6 +618,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 break;
 
             case Buttons.DungeonButton:
+                if (!Managers.UIM.ClickLock(0.5f)) return;
 
                 if (selectedButton != dungeonBtn && currentBottomPopup != null)
                 {
@@ -647,6 +653,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 break;
 
             case Buttons.SmeltingButton:
+                if (!Managers.UIM.ClickLock(0.5f)) return;
                 if (selectedButton != smeltingBtn && currentBottomPopup != null)
                 {
                     currentBottomPopup.ClosePopup(false).Forget();
@@ -679,6 +686,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 break;
 
             case Buttons.ShopButton:
+                if (!Managers.UIM.ClickLock(0.5f)) return;
                 if (selectedButton != shopBtn && currentBottomPopup != null)
                 {
                     currentBottomPopup.ClosePopup(false).Forget();
@@ -875,7 +883,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             {
                 Managers.StageM.StateChange(Define.StageState.Boss);
             }
-
+            GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = 0;
+            GetText(TextsType, (int)Texts.StageMonsterCountText).text = string.Format("{0:0.0}", 0 * 100.0f) + "%";
         }
         GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = value;
         GetText(TextsType, (int)Texts.StageMonsterCountText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
@@ -1264,6 +1273,20 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     void StartSpawn()
     {
         Managers.SpawnM.Init();
+        int[] savedIds = Managers.GameM.gameData.TeamPlacementID;
+        if(savedIds != null)
+        {
+            for(int i =0; i< savedIds.Length; i++)
+            {
+                int id = savedIds[i];
+                if (id <= 0) continue;
+                
+                if(Managers.DataM.CreatureDataDic.TryGetValue(id, out var data))
+                {
+                    Managers.CharacterM.SetCharacter(i, data.Name);
+                }
+            }
+        }
         Managers.StageM.StateChange(Define.StageState.Ready);
     }
 
@@ -1664,5 +1687,21 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             Destroy(panel.transform.GetChild(i).gameObject);
         }
         panel.SetActive(false);
+    }
+
+    public async UniTask OpenShopFormOtherUI()
+    {
+        if (currentBottomPopup is UI_ShopPopup) return;
+
+
+        if (currentBottomPopup != null && currentBottomPopup.gameObject.activeSelf)
+        {
+            var tempPopup = currentBottomPopup;
+            currentBottomPopup = null;
+            await tempPopup.ClosePopup(false);
+        }
+            
+
+        OnClickAnyButtons(Buttons.ShopButton);
     }
 }

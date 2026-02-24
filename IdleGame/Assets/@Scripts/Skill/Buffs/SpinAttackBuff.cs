@@ -50,6 +50,7 @@ public class SpinAttackBuff : BuffBase
         target.GetDamage(tickDamage, target);
     }
 
+    public override Define.BuffEffectType GetBuffTypes() => Define.BuffEffectType.None;
 
 
 }

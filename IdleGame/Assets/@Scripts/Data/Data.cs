@@ -48,6 +48,7 @@ namespace Data
         public Define.Grade CharacterGrade;
         public double BaseHp;
         public double BaseDamage;
+        public double BaseDefense;
         public int MaxMp;
         public float AttackSpeed;
         public int ProjectileDataID;

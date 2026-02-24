@@ -21,6 +21,34 @@ public class MonsterController : CreatureController
     public Action<MonsterController> OnMonsterInfoUpdate;
     public bool isBoss = false;
     SkillBase skillbase;
+    protected double baseDefense;
+    public override double Damage
+    {
+        get
+        {
+            float debuffValue = GetBuffValue(BuffEffectType.StatDownEffect);
+
+            double finalDamage = damage * (1.0f + debuffValue);
+
+            return finalDamage > 0 ? finalDamage : 0;
+
+        }
+    }
+
+    public override double Defense
+    {
+        get
+        {
+            float debuffValue = GetBuffValue(BuffEffectType.StatDownEffect);
+            if (debuffValue > 0)
+            {
+                Debug.Log($"<color=yellow>[Buff_Step 3]</color> 몬스터 방어력 계산 중... 디버프 수치: {debuffValue}%");
+            }
+            double finalDefense = defense * (1.0f +debuffValue);
+
+            return finalDefense > 0 ? finalDefense : 0;
+        }
+    }
 
     CancellationTokenSource skillCTS;
     public override bool Init()
@@ -67,12 +95,17 @@ public class MonsterController : CreatureController
         baseHp = _data.BaseHp;
         //TODO : 지우기
         baseDamage = _data.BaseDamage;
+        this.baseDefense = _data.BaseDefense;
+        this.defense = baseDefense;
+
         maxHp = Utils.Datas.stageData.HP((float)baseHp, Managers.GameM.Stage);
         hp = Utils.Datas.stageData.HP((float)baseHp, Managers.GameM.Stage);
         //baseDamage = _data.BaseDamage / 10;
         //maxHp = Utils.Datas.stageData.HP((float)baseHp) * 1000;
         //hp = Utils.Datas.stageData.HP((float)baseHp) * 1000;
         damage = Utils.Datas.stageData.Damage((float)baseDamage, Managers.GameM.Stage);
+        ClearAttachedVFXs();
+        if (buffController != null) buffController.ClearAllBuffs();
 
         attackRange = DATA.AttackRange;
         detectRange = Mathf.Infinity;

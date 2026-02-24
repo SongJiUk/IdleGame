@@ -40,18 +40,47 @@ public class PlayerManager
         return (myExp / exp) * 100.0f;
     }
 
-    public double GetAttack(Define.Grade _grade, CharacterHolder _holder)
+    //TODO : 이거 테스트 해봐야됌 
+    public double GetAttack(Define.Grade _grade, CharacterHolder _holder, CreatureController _owner = null)
     {
         var damage = Utils.Datas.levelData.Damage() * ((int)_grade + 1);
         float level = (float)_holder.holder.Level * 10 / (float)100;
-        var realDamage = damage + damage * level;
-        realDamage *= 1.0 + (Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Damage) / 100f);
+        var realDamage = damage + (damage * level);
 
-        realDamage *= 1.0 + (Managers.QuestM.Achievement_Status_Data.damage / 100f);
+        float baseStatPercent = (float)Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Damage) + (float)Managers.QuestM.Achievement_Status_Data.damage;
+
+        float buffValue = 0f;
+        if(_owner != null)
+        {
+            buffValue += _owner.GetBuffValue(Define.BuffEffectType.AttackEffect);
+            buffValue -= _owner.GetBuffValue(Define.BuffEffectType.StatDownEffect);
+        }
+
+
+
+        realDamage *= 1.0 + ((baseStatPercent + buffValue) / 100);
         realDamage *= Managers.BuffM.GetAttackBuffMul();
 
         return realDamage;
     }
+    public double GetDefense(Define.Grade _grade, CharacterHolder _holder, CreatureController _owner)
+    {
+        double baseDefense = (float)_holder.data.BaseDefense;
+        float levelModifier = (float)_holder.holder.Level * 10 / (float)100;
+        double realDefense = baseDefense + (baseDefense * levelModifier);
+
+        float buffValue = 0f;
+        if (_owner != null)
+        {
+            buffValue += _owner.GetBuffValue(Define.BuffEffectType.DefenseEffect);
+            buffValue -= _owner.GetBuffValue(Define.BuffEffectType.StatDownEffect);
+        }
+
+        realDefense *= 1.0 + (buffValue / 100);
+
+        return realDefense;
+    }
+
 
     public double GetHP(Define.Grade _grade, CharacterHolder _holder)
     {
@@ -63,6 +92,8 @@ public class PlayerManager
         realHp *= 1.0f + (Managers.QuestM.Achievement_Status_Data.hp / 100f);
         return realHp;
     }
+    
+    
     public void LevelUp()
     {
         Managers.GameM.Level++;
@@ -105,6 +136,8 @@ public class PlayerManager
         return hp / value;
     }
 
+   
+
     public float GoldDrop()
     {
         float smeltPercent = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Money);
@@ -124,11 +157,13 @@ public class PlayerManager
         return smelt + achievement;
     }
 
-    public float AttackSpeed()
+    public float AttackSpeed(float _baseSpeed = 0.75f)
     {
-        float smelt = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.AttackSpeed);
-        float achievement = (float)Managers.QuestM.Achievement_Status_Data.attackSpeed;
-        return 1.0f + (smelt / 100f) + (achievement / 100f);
+        float smelt = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.AttackSpeed) * 0.01f;
+        float achievement = (float)Managers.QuestM.Achievement_Status_Data.attackSpeed * 0.01f;
+
+        float total = _baseSpeed * (1.0f + smelt + achievement);
+        return Mathf.Clamp(total, 0.5f, 5.0f);
     }
 
     public float CriticalChance()

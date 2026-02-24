@@ -89,6 +89,7 @@ public class UI_TitleScene : UI_Scene
         {
             if (isLoadEnd)
             {
+                isLoadEnd = false;
                 await Managers.SceneM.LoadSceneAsync(Define.SceneType.GameScene);
                 KillBlinkTween();
             }

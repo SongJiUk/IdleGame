@@ -74,6 +74,8 @@ public class UI_HeroPopup : UI_Popup
     //처음에만 사용할것인지? 아이템을 뽑거나 할때는 수정이 되어야함
     public override void SetInfo()
     {
+        GetText(TextsType, (int)Texts.AttackText).text = Utils.ToCurrencyString(Managers.PlayerM.AverageCombatPower());
+
         GetObject(GameObjectsType, (int)GameObjects.CircleButtonsObject).SetActive(false);
         Managers.RenderM.Show(RenderType.Hero, rawImage);
 
@@ -107,13 +109,19 @@ public class UI_HeroPopup : UI_Popup
         }
 
         //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(true);
-    }
+    }   
 
 
-    void OnClickHeroGachaButton()
+    async void OnClickHeroGachaButton()
     {
-        Managers.UIM.ClosePopup(this).Forget();
-        Managers.UIM.ShowPopup<UI_ShopPopup>().Forget();
+        if (!Managers.UIM.ClickLock(0.5f)) return;
+        var gameScene = Managers.UIM.SceneUI as UI_GameScene;
+        if(gameScene != null)
+        {
+            await Managers.UIM.ClosePopup(this);
+            gameScene.OpenShopFormOtherUI().Forget();
+        }
+
     }
 
     async void OnClickHeroEnforceButton()
@@ -183,6 +191,13 @@ public class UI_HeroPopup : UI_Popup
 
     void InitCharacter(Buttons _clickButton)
     {
+        int slotIndex = (int)_clickButton;
+
+        if (clickCharacter != null && clickCharacter.DATA != null)
+        {
+            Managers.GameM.gameData.TeamPlacementID[slotIndex] = clickCharacter.DATA.DataID;
+            Managers.FirebaseM.WriteData().Forget();
+        }
 
         if (Managers.RenderM.renderCharacter.isCheckCharacter((int)_clickButton))
         {
@@ -195,6 +210,7 @@ public class UI_HeroPopup : UI_Popup
             clickCharacter = null;
             //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(true);
             Managers.StageM.StateChange(Define.StageState.Ready);
+            
         }
         else
         {
@@ -210,9 +226,7 @@ public class UI_HeroPopup : UI_Popup
             clickCharacter = null;
             Managers.StageM.StateChange(Define.StageState.Ready);
         }
-
         GetObject(GameObjectsType, (int)GameObjects.CircleButtonsObject).SetActive(false);
-
     }
 
 

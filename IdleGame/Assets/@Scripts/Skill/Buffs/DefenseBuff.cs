@@ -20,5 +20,6 @@ public class DefenseBuff : BuffBase
         _target.Defense /= ratio;
     }
 
+    public override Define.BuffEffectType GetBuffTypes() => Define.BuffEffectType.DefenseEffect;
 
 }

@@ -25,16 +25,16 @@ public class UI_HeroStatPopup : UI_Popup
     enum GameObjects
     {
         StatObject,
-        MasteryObject,
-        BottomButtonBarObject,
+        //MasteryObject,
+        //BottomButtonBarObject,
         RawImage
     }
 
     enum Buttons
     {
-        StatButton,
-        MasteryButton,
-        CostumeButton,
+        //StatButton,
+        //MasteryButton,
+        //CostumeButton,
         CloseButton
     }
 
@@ -60,22 +60,22 @@ public class UI_HeroStatPopup : UI_Popup
         BindObject(GameObjectsType);
         BindButton(ButtonsType);
 
-        GetButton(ButtonsType, (int)Buttons.StatButton).gameObject.BindEvent(OnClickStatButton);
-        GetButton(ButtonsType, (int)Buttons.MasteryButton).gameObject.BindEvent(OnClickMasteryButton);
-        GetButton(ButtonsType, (int)Buttons.CostumeButton).gameObject.BindEvent(OnClickCostumeButton);
+        //GetButton(ButtonsType, (int)Buttons.StatButton).gameObject.BindEvent(OnClickStatButton);
+        //GetButton(ButtonsType, (int)Buttons.MasteryButton).gameObject.BindEvent(OnClickMasteryButton);
+        //GetButton(ButtonsType, (int)Buttons.CostumeButton).gameObject.BindEvent(OnClickCostumeButton);
         GetButton(ButtonsType, (int)Buttons.CloseButton).gameObject.BindEvent(OnClickCloseButton);
 
 
 
-        targetRect = GetObject(GameObjectsType, (int)GameObjects.BottomButtonBarObject).GetComponent<RectTransform>();
-        statBtnRect = GetButton(ButtonsType, (int)Buttons.StatButton).GetComponent<RectTransform>();
-        masteryBtnBect = GetButton(ButtonsType, (int)Buttons.MasteryButton).GetComponent<RectTransform>();
-        costumeBtnRect = GetButton(ButtonsType, (int)Buttons.CostumeButton).GetComponent<RectTransform>();
+        //targetRect = GetObject(GameObjectsType, (int)GameObjects.BottomButtonBarObject).GetComponent<RectTransform>();
+        //statBtnRect = GetButton(ButtonsType, (int)Buttons.StatButton).GetComponent<RectTransform>();
+        //masteryBtnBect = GetButton(ButtonsType, (int)Buttons.MasteryButton).GetComponent<RectTransform>();
+        //costumeBtnRect = GetButton(ButtonsType, (int)Buttons.CostumeButton).GetComponent<RectTransform>();
 
         rawImage = GetObject(GameObjectsType, (int)GameObjects.RawImage).GetComponent<RawImage>();
-        MoveTarget(statBtnRect, false);
+        //MoveTarget(statBtnRect, false);
 
-        GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(false);
+        //GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(false);
         return true;
     }
 
@@ -90,6 +90,7 @@ public class UI_HeroStatPopup : UI_Popup
 
     void RefreshUI()
     {
+        GetText(TextsType, (int)Texts.LevelText).text = Managers.GameM.Level.ToString();
         GetText(TextsType, (int)Texts.CombatPowerText).text = Utils.ToCurrencyString(Managers.PlayerM.AverageCombatPower());
         GetText(TextsType, (int)Texts.AttackPowerText).text = Utils.ToCurrencyString(Managers.PlayerM.MainAttack());
         GetText(TextsType, (int)Texts.HealthText).text = Utils.ToCurrencyString(Managers.PlayerM.MainHP());
@@ -131,7 +132,7 @@ public class UI_HeroStatPopup : UI_Popup
     void OnClickStatButton()
     {
         GetObject(GameObjectsType, (int)GameObjects.StatObject).SetActive(true);
-        GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(false);
+        //GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(false);
 
         RefreshUI();
         MoveTarget(statBtnRect, true);
@@ -140,7 +141,7 @@ public class UI_HeroStatPopup : UI_Popup
     void OnClickMasteryButton()
     {
         GetObject(GameObjectsType, (int)GameObjects.StatObject).SetActive(false);
-        GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(true);
+        //GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(true);
 
         MoveTarget(masteryBtnBect, true);
     }
@@ -148,7 +149,7 @@ public class UI_HeroStatPopup : UI_Popup
     void OnClickCostumeButton()
     {
         GetObject(GameObjectsType, (int)GameObjects.StatObject).SetActive(false);
-        GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(false);
+        //GetObject(GameObjectsType, (int)GameObjects.MasteryObject).SetActive(false);
 
 
         MoveTarget(costumeBtnRect, true);

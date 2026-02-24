@@ -40,17 +40,21 @@ public class Archer_Skill : SkillBase
 
             if (_target == null || _target.IsDead) return;
 
-            Managers.ObjectM.Spawn<RangeAttackController>(_caster.transform.position,
+            var projectile = Managers.ObjectM.Spawn<RangeAttackController>(_caster.transform.position,
                skill_ProjectileID,
                _caster,
                _target,
                true);
 
-            foreach (var effect in effects)
+            projectile.OnHitTarget = () =>
             {
-                effect.Execute(_caster, _target);
-            }
-            ShowEffect(_target);
+                foreach (var effect in effects)
+                {
+                    effect.Execute(_caster, _target);
+                }
+                ShowEffect(_target);
+            };
+            
 
         }
         catch (OperationCanceledException) { }

@@ -11,15 +11,12 @@ public class StatDownBuff : BuffBase
 
     public override void Apply(CreatureController _target)
     {
-        _target.Damage *= (1 - ratio);
-        _target.Defense *= (1 - ratio);
-        _target.Speed *= (1 - ratio);
+        Debug.Log($"{_target.name}에게 종합 디버프 적용중 : {ratio}%");
     }
 
     public override void Remove(CreatureController _target)
     {
-        _target.Damage /= (1 - ratio);
-        _target.Defense /= (1 - ratio);
-        _target.Speed /= (1 - ratio);
     }
+
+    public override Define.BuffEffectType GetBuffTypes() => Define.BuffEffectType.StatDownEffect;
 }

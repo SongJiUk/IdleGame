@@ -269,6 +269,8 @@ public class UI_ShopPopup : UI_Popup
 
     async void OnClickHeroAdGachaButton()
     {
+        if (!Managers.UIM.ClickLock(0.5f)) return;
+
         var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
         popup.OnGachaFinished = RefreshUI;
         await popup.GetGachaHero(11);
@@ -277,8 +279,10 @@ public class UI_ShopPopup : UI_Popup
 
     }
 
-    void OnClickHeroOneGachaButton()
+    async void OnClickHeroOneGachaButton()
     {
+        if (!Managers.UIM.ClickLock(0.5f)) return;
+
         if (Managers.GameM.Dia >= 300)
         {
             //TODO : 성공시 Refresh()
@@ -291,8 +295,9 @@ public class UI_ShopPopup : UI_Popup
         }
     }
 
-    void OnClickHeroElevenGachaButton()
+    async void OnClickHeroElevenGachaButton()
     {
+        if (!Managers.UIM.ClickLock(0.5f)) return;
         if (Managers.GameM.Dia >= 3000)
         {
             Managers.QuestM.GetMission(Define.MissionTarget.HeroGacha).Progress += 11;
@@ -313,6 +318,7 @@ public class UI_ShopPopup : UI_Popup
     #region RelicButton
     async void OnClickRelicAdGachaButton()
     {
+        if (!Managers.UIM.ClickLock(0.5f)) return;
         var popup = await Managers.UIM.ShowPopup<UI_RelicGachaPopup>();
         popup.OnGachaFinished = RefreshUI;
         await popup.GetGachaRelic(11);
@@ -323,16 +329,19 @@ public class UI_ShopPopup : UI_Popup
 
     void OnClickRelicOneGachaButton()
     {
+        if (!Managers.UIM.ClickLock(0.5f)) return;
         Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress++;
     }
 
     void OnClickRelicElevenGachaButton()
     {
+        if (!Managers.UIM.ClickLock(0.5f)) return;
         Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress += 11;
     }
 
     void OnClickRelicGachaListButton()
     {
+        Managers.UIM.ShowPopup<UI_GachaListPopup>().Forget();
     }
     #endregion
 

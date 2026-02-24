@@ -51,11 +51,41 @@ public class BuffController : MonoBehaviour, ITickable
         }
     }
 
+
+    public float GetTotalRatio(Define.BuffEffectType _type)
+    {
+        float total = 0;
+        foreach (var buff in activeBuffs)
+        {
+            if (buff is BuffBase b && b.GetBuffTypes() == _type)
+            {
+                float r = b.GetRatio();
+                // 데이터가 0이면 계산에서 제외하거나 1로 취급
+                if (r <= 0)
+                {
+                    Debug.LogWarning($"{b.GetType().Name}의 Ratio가 0입니다! 데이터를 확인하세요.");
+                    continue;
+                }
+                total += (r - 1f);
+            }
+        }
+
+        if (total != 0)
+        {
+            Debug.Log($"<color=yellow>[Buff_Step 3]</color> {owner.name} 스탯 계산 중 ({_type}): 총 합산 비율 {total * 100}%");
+        }
+        return total;
+    }
+
+
     public void AddBuff(IBuff _newBuff)
     {
+        Debug.Log($"<color=cyan>[Buff_Step 1]</color> {_newBuff.GetType().Name} 추가 시도 (대상: {owner.name})");
+
         IBuff existingBuff = activeBuffs.Find(b => b.GetBuffType() == _newBuff.GetBuffType());
         if (existingBuff != null)
         {
+            Debug.Log($"<color=gray>[Buff_Notice]</color> 기존 동일 버프가 있어 갱신합니다.");
             RemoveBuff(existingBuff);
         }
 
@@ -66,6 +96,8 @@ public class BuffController : MonoBehaviour, ITickable
 
         activeBuffs.Add(_newBuff);
         _newBuff.Apply(owner);
+        Debug.Log($"<color=magenta>[Buff_Step 2]</color> 현재 {owner.name}의 활성 버프 수: {activeBuffs.Count}");
+
     }
 
     public void RemoveBuff(IBuff _buff)
@@ -73,7 +105,7 @@ public class BuffController : MonoBehaviour, ITickable
         int index = activeBuffs.IndexOf(_buff);
 
         if (index != -1)
-        {
+        {Debug.Log($"<color=orange>[Buff_End]</color> {_buff.GetType().Name} 만료되어 제거됨");
             _buff.Remove(owner);
             activeBuffs.RemoveAt(index);
 

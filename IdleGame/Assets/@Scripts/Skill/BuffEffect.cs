@@ -2,19 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//��ų ȿ���� �ϳ�, Ÿ�ٿ��� ���� �����ϴ� ����
 public class BuffEffect : ISkillEffect
 {
-    //IBuff �ν��Ͻ� �����ϴ� ���丮�Լ�(���÷��� ��� ���)
     public delegate IBuff BuffFactory(float _duration, float _ratio, float _interval = 0, CreatureController _owner = null);
     readonly BuffFactory buffFactory;
 
+    public Define.BuffEffectType buffType;
     private float buffDurtaion;
     float buffRatio;
     float buffInterval;
     CreatureController buffOwner;
 
-    //���� �ν��Ͻ��� ������ ���丮 �Լ�, ���ӽð�
     public BuffEffect(BuffFactory _factory, float _duration, float _ratio, float _interval = 0, CreatureController _owner = null)
     {
         buffFactory = _factory;
@@ -27,13 +25,17 @@ public class BuffEffect : ISkillEffect
 
     public void Execute(CreatureController _caster, CreatureController _target, float _delayTime = 0f)
     {
-        //���� �ν��Ͻ� ���� : ���丮 �Լ��� ȣ���Ͽ� ���ο� Ibuff ��ü ����
+        if (_target == null || _target.IsDead) return; 
+
         IBuff newBuff = buffFactory(buffDurtaion, buffRatio, buffInterval, buffOwner);
-        //Ÿ�ٿ� ���� �߰�, Ÿ���� addfBuffȣ��
-        _target.buffController.AddBuff(newBuff);
+        Debug.Log($"<color=cyan>[Buff_Step 1]</color> {newBuff.GetType().Name} 생성됨. 대상: {_target.name}, 수치: {buffRatio}");
+        if (_target.buffController != null)
+        {
+            _target.buffController.AddBuff(newBuff);
+        }
+        
 
 
-        //TDOO: �??���?(?��?��방법)
         //effects.Add(new BuffEffect(typeof(AttackBuff), 15f));
     }
 }

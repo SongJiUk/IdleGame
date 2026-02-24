@@ -27,14 +27,14 @@ public class CreatureController : BaseController
     protected virtual double maxHp { get; set; }
     public double MaxHP { get { return maxHp; } }
     protected virtual double damage { get; set; }
-    public double Damage
+    public virtual double Damage
     {
         get { return damage; }
         set { damage = value; }
     }
 
     protected virtual double defense { get; set; }
-    public double Defense
+    public virtual double Defense
     {
         get { return defense; }
         set { defense = value; }
@@ -78,6 +78,8 @@ public class CreatureController : BaseController
     private const float SEARCH_DELAY = 0.5f;
 
     protected CancellationTokenSource attackCTS;
+
+    protected Dictionary<BuffEffectType, float> activeBuffs = new Dictionary<BuffEffectType, float>();
     public override bool Init()
     {
         if (!base.Init()) return false;
@@ -92,6 +94,9 @@ public class CreatureController : BaseController
     protected virtual void OnDisable()
     {
         if (target != null) target.OnTargetDead -= OnTargetDeadCallBack;
+
+        ClearAttachedVFXs();
+        if (buffController != null) buffController.ClearAllBuffs();
 
     }
     public virtual void InitStat()
@@ -112,7 +117,7 @@ public class CreatureController : BaseController
 
         if (buffController != null) buffController.ClearAllBuffs();
         //if (skillController != null) skillController.ClearAllSkillsVFX();
-        ClearChildVFXs();
+        ClearAttachedVFXs();
         OnTargetDead?.Invoke();
     }
 
@@ -129,21 +134,22 @@ public class CreatureController : BaseController
         }
     }
 
-    public void ClearChildVFXs()
+    public void ClearAttachedVFXs()
     {
+        if (vfxs == null) return;
+
         for (int i = vfxs.Count - 1; i >= 0; i--)
         {
-            GameObject vfx = vfxs[i];
-            if (vfx != null)
+           
+            if (vfxs[i] != null)
             {
-                vfx.transform.SetParent(null);
-                Managers.ResourceM.Destroy(vfx);
+                Managers.ResourceM.Destroy(vfxs[i]);
             }
         }
 
         vfxs.Clear();
-
     }
+
     public virtual void Projectile() { }
     public virtual void Attack() { }
     public void Heal(float _amount)
@@ -317,15 +323,23 @@ public class CreatureController : BaseController
 
         double finalDamage = _dmg;
         isCritical = _isCritical;
-        if (isCritical)
-        {
-            finalDamage = _dmg * Managers.PlayerM.CriticalDamage() / 100f;
-        }
 
-        if (_isSkill)
-        {
-            finalDamage = _dmg;
-        }
+
+        if (isCritical) finalDamage *= Managers.PlayerM.CriticalDamage() / 100f;
+
+
+        //if (_isSkill)
+        //{
+        //    finalDamage = _dmg;
+        //}
+        double currentDefense = this.Defense;
+
+     
+        double reduction = 100.0 / (100.0 + (currentDefense > 0 ? currentDefense : 0));
+        finalDamage *= reduction;
+        if (finalDamage < 1) finalDamage = 1;
+
+        Debug.Log($"<color=red>[Buff_Step 4]</color> 최종 피격 데미지: {finalDamage} (적용 방어력: {currentDefense})");
 
         hp -= finalDamage;
         bool isMonster = false;
@@ -340,5 +354,31 @@ public class CreatureController : BaseController
         if (rand <= this.CriticalRate) return true;
 
         return false;
+    }
+
+    public void ApplyStatBuff(BuffEffectType _type , float _amount, float _duration)
+    {
+        if (!activeBuffs.ContainsKey(_type)) activeBuffs[_type] = 0;
+
+        activeBuffs[_type] += _amount;
+
+        RemoveBuffAfterTime(_type, _amount, _duration).Forget();
+    }
+
+    private async UniTaskVoid RemoveBuffAfterTime(BuffEffectType _type, float _amount, float _duration)
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(_duration));
+
+        if(activeBuffs.ContainsKey(_type))
+        {
+            activeBuffs[_type] -= _amount;
+        }
+    }
+
+    public float GetBuffValue(BuffEffectType _type)
+    {
+        if (buffController == null) return 0f;
+
+        return buffController.GetTotalRatio(_type);
     }
 }
