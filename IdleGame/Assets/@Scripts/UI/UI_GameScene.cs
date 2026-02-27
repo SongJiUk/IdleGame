@@ -36,7 +36,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Character4_Object,
         Character5_Object,
         Character6_Object,
-
         Character1_HpFrameObject,
         Character2_HpFrameObject,
         Character3_HpFrameObject,
@@ -83,7 +82,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         DungeonButton,
         SmeltingButton,
         ShopButton,
-        MainSkillButton,
         LevelUpButton,
         DeadFrameButton,
         Character1_PlusButton,
@@ -132,12 +130,14 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         ItemText3,
         ItemText4,
         ItemText5,
+        Character0_HpText,
         Character1_HpText,
         Character2_HpText,
         Character3_HpText,
         Character4_HpText,
         Character5_HpText,
         Character6_HpText,
+        Character0_MpText,
         Character1_MpText,
         Character2_MpText,
         Character3_MpText,
@@ -153,7 +153,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         CharacterImage,
         RewardItemImage,
         TutorialHandImage,
-        MainSkillButton,
         Character1_Lock,
         Character2_Lock,
         Character3_Lock,
@@ -166,12 +165,14 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Character4_Icon,
         Character5_Icon,
         Character6_Icon,
+        Character0_HpFillImage,
         Character1_HpFillImage,
         Character2_HpFillImage,
         Character3_HpFillImage,
         Character4_HpFillImage,
         Character5_HpFillImage,
         Character6_HpFillImage,
+        Character0_MpFillImage,
         Character1_MpFillImage,
         Character2_MpFillImage,
         Character3_MpFillImage,
@@ -438,6 +439,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         // GetImage(ImagesType, (int)Images.Character6_Plus).gameObject.SetActive(false);
 
         //TODO : 캐릭터 수만큼
+
+
         for (int i = 0; i < 6; i++)
         {
             GetImage(ImagesType, (int)Images.Character1_Lock + i).gameObject.SetActive(false);
@@ -718,7 +721,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 };
 
                 break;
-
 
             case Buttons.DeadFrameButton:
                 Managers.StageM.isDead = false;
@@ -1091,12 +1093,12 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
     public void OnPlayerStatChange(PlayerController _pc)
     {
-        if (_pc.index == Managers.CharacterM.Characters.Length - 1) return;
+        if (_pc.index == Managers.CharacterM.Characters.Length) return;
 
-        GetImage(ImagesType, (int)Images.Character1_HpFillImage + (_pc.index)).fillAmount = (float)_pc.HP / (float)_pc.MaxHP;
-        GetText(TextsType, (int)Texts.Character1_HpText + (_pc.index)).text = $"{Utils.ToCurrencyString(_pc.HP)} / {Utils.ToCurrencyString(_pc.MaxHP)}";
-        GetImage(ImagesType, (int)Images.Character1_MpFillImage + (_pc.index)).fillAmount = (float)_pc.MP / (float)_pc.MaxMp;
-        GetText(TextsType, (int)Texts.Character1_MpText + (_pc.index)).text = _pc.MP.ToString() + " / " + _pc.MaxMp.ToString();
+        GetImage(ImagesType, (int)Images.Character0_HpFillImage + (_pc.index)).fillAmount = (float)_pc.HP / (float)_pc.MaxHP;
+        GetText(TextsType, (int)Texts.Character0_HpText + (_pc.index)).text = $"{Utils.ToCurrencyString(_pc.HP)} / {Utils.ToCurrencyString(_pc.MaxHP)}";
+        GetImage(ImagesType, (int)Images.Character0_MpFillImage + (_pc.index)).fillAmount = (float)_pc.MP / (float)_pc.MaxMp;
+        GetText(TextsType, (int)Texts.Character0_MpText + (_pc.index)).text = _pc.MP.ToString() + " / " + _pc.MaxMp.ToString();
     }
 
     #endregion
@@ -1274,14 +1276,14 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         Managers.SpawnM.Init();
         int[] savedIds = Managers.GameM.gameData.TeamPlacementID;
-        if(savedIds != null)
+        if (savedIds != null)
         {
-            for(int i =0; i< savedIds.Length; i++)
+            for (int i = 0; i < savedIds.Length; i++)
             {
                 int id = savedIds[i];
                 if (id <= 0) continue;
-                
-                if(Managers.DataM.CreatureDataDic.TryGetValue(id, out var data))
+
+                if (Managers.DataM.CreatureDataDic.TryGetValue(id, out var data))
                 {
                     Managers.CharacterM.SetCharacter(i, data.Name);
                 }
@@ -1700,7 +1702,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             currentBottomPopup = null;
             await tempPopup.ClosePopup(false);
         }
-            
+
 
         OnClickAnyButtons(Buttons.ShopButton);
     }

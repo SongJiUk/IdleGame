@@ -39,7 +39,7 @@ public class UIManager
         if (string.IsNullOrEmpty(_name)) _name = typeof(T).Name;
         GameObject go = Managers.ResourceM.Instantiate($"{_name}", _parent, _pooling);
         if (_parent != null)
-            go.transform.SetParent(_parent,false);
+            go.transform.SetParent(_parent, false);
 
         return Utils.GetOrAddComponent<T>(go);
     }
@@ -77,36 +77,52 @@ public class UIManager
 
     public async UniTask<T> ShowPopup<T>(string _name = null, bool _isFade = false, Transform _parent = null) where T : UI_Base
     {
-        if (_isFade)
-        {
-            UI_GameScene scene = (sceneUI as UI_GameScene);
-            await scene.AsyncFadeInOut(false, true);
-        }
-        T popup = GetPopupUI<T>(_name);
-        if (_parent != null)
-        {
-            popup.gameObject.SetActive(false);
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-        }
+        Define.StageState prevState = Managers.StageM.stageState;
 
-        if (_parent != null)
+        if (_isFade) Managers.StageM.StateChange(Define.StageState.Changing);
+
+        try
         {
-            popup.gameObject.transform.SetParent(_parent);
+            if (_isFade)
+            {
+                UI_GameScene scene = (sceneUI as UI_GameScene);
+                await scene.AsyncFadeInOut(false, true);
+            }
+
+            T popup = GetPopupUI<T>(_name);
+
+            if (_parent != null)
+            {
+                popup.gameObject.SetActive(false);
+                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+                popup.gameObject.transform.SetParent(_parent);
+                await UniTask.Yield();
+                popup.gameObject.SetActive(true);
+            }
+            popup.Init().Forget();
+            popup.SetInfo();
             await UniTask.Yield();
+
+            if (_isFade)
+            {
+                UI_GameScene scene = (sceneUI as UI_GameScene);
+                await scene.AsyncFadeInOut(true, true);
+            }
+
+            return popup;
         }
-
-        if (_parent != null) popup.gameObject.SetActive(true);
-        popup.Init().Forget();
-        popup.SetInfo();
-
-        await UniTask.Yield();
-        if (_isFade)
+        catch (Exception e)
         {
-            UI_GameScene scene = (sceneUI as UI_GameScene);
-            await scene.AsyncFadeInOut(true, true);
+            Debug.LogError(e);
+            throw;
         }
-
-        return popup;
+        finally
+        {
+            if (_isFade)
+            {
+                Managers.StageM.StateChange(Define.StageState.Ready);
+            }
+        }
     }
 
     public T GetPopupUI<T>(string _name) where T : UI_Base

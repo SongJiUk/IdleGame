@@ -116,8 +116,17 @@ public class UI_DungeonPopup : UI_Popup, ITickable
     async UniTaskVoid StartDungeonButtonPress(Buttons _btn)
     {
 
+        if (!Managers.StageM.CanEnterDungeon())
+        {
+            Managers.UIM.ShowToast("현재 상태에서는 던전에 입장할 수 없습니다.");
+            return;
+        }
+
+        Managers.StageM.StateChange(Define.StageState.Changing);
+
         switch (_btn)
         {
+
             case Buttons.TreasureTroveStartButton:
                 if (Managers.GameM.gameData.DungeonKey[0] != 0)
                 {

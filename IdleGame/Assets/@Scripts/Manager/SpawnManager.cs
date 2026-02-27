@@ -138,6 +138,7 @@ public class SpawnManager : MonoBehaviour, ITickable
 
     async UniTask ClearDelay()
     {
+        Managers.StageM.StateChange(Define.StageState.Changing);
         StopSpawn();
         if (isDelay) await UniTask.WaitForSeconds(2.0f);
 

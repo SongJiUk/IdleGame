@@ -46,7 +46,7 @@ public abstract class SkillBase
                 break;
             case "HealBuff":
                 effects.Add(new BuffEffect((duration, ratio, interval, owner)
-                => new HealBuff(duration, ratio), _duration, _ratio, _interval, _owner));
+                => new HealBuff(duration, ratio, interval), _duration, _ratio, _interval, _owner));
                 break;
             case "StatDownBuff":
                 effects.Add(new BuffEffect((duration, ratio, interval, owner)
@@ -68,7 +68,7 @@ public abstract class SkillBase
         {
             if (!Managers.DataM.BuffDataDic.TryGetValue(buff, out var effectData))
             {
-                
+
                 return;
             }
 
@@ -81,7 +81,7 @@ public abstract class SkillBase
             {
                 if (!Managers.DataM.BuffTypeDataDic.TryGetValue(effectData.BuffTypeID, out var buffType))
                 {
-                    
+
                     return;
                 }
 

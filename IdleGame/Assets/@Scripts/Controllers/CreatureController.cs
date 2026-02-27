@@ -140,7 +140,7 @@ public class CreatureController : BaseController
 
         for (int i = vfxs.Count - 1; i >= 0; i--)
         {
-           
+
             if (vfxs[i] != null)
             {
                 Managers.ResourceM.Destroy(vfxs[i]);
@@ -154,7 +154,14 @@ public class CreatureController : BaseController
     public virtual void Attack() { }
     public void Heal(float _amount)
     {
-        //TODO : 힐 효과(현재 체력 or 총체력 퍼센트로 할지 생각)
+        if (IsDead) return;
+        double healValue = MaxHP * _amount;
+        hp += healValue;
+
+        if (HP > MaxHP)
+            hp = MaxHP;
+
+        Debug.Log($"[Heal] {name} 회복량: {healValue} (비율:{_amount}) 현재HP:{HP}/{MaxHP}");
     }
 
     public float GetCurrentPlayingClipDuration(Animator anim)
@@ -334,7 +341,7 @@ public class CreatureController : BaseController
         //}
         double currentDefense = this.Defense;
 
-     
+
         double reduction = 100.0 / (100.0 + (currentDefense > 0 ? currentDefense : 0));
         finalDamage *= reduction;
         if (finalDamage < 1) finalDamage = 1;
@@ -356,7 +363,7 @@ public class CreatureController : BaseController
         return false;
     }
 
-    public void ApplyStatBuff(BuffEffectType _type , float _amount, float _duration)
+    public void ApplyStatBuff(BuffEffectType _type, float _amount, float _duration)
     {
         if (!activeBuffs.ContainsKey(_type)) activeBuffs[_type] = 0;
 
@@ -369,7 +376,7 @@ public class CreatureController : BaseController
     {
         await UniTask.Delay(TimeSpan.FromSeconds(_duration));
 
-        if(activeBuffs.ContainsKey(_type))
+        if (activeBuffs.ContainsKey(_type))
         {
             activeBuffs[_type] -= _amount;
         }

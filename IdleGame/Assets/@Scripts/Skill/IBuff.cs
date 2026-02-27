@@ -4,16 +4,15 @@ using UnityEngine;
 
 public interface IBuff
 {
-    //¹öÇÁ Áßº¹ Ã¼Å© / °ü¸®À§ÇØ ¹öÇÁÀÇ ±¸Ã¼ÀûÀÎ Å¸ÀÔ ¹ÝÈ¯
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ßºï¿½ Ã¼Å© / ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½È¯
     System.Type GetBuffType();
 
-    //¹öÇÁ°¡ °´Ã¼¿¡ Àû¿ëµÉ¶§, ½ºÅÈ º¯°æ ½ÇÁ¦È¿°ú ¹ß»ý
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½É¶ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È¿ï¿½ï¿½ ï¿½ß»ï¿½
     void Apply(CreatureController _target);
-    //¹öÇÁ ¸¸·á½Ã Á¦°Å
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     void Remove(CreatureController _target);
 
-    //BuffControllerÀÇ Tick()¿¡¼­ µ¹¾Æ°¨ ÀÌ¸§¸¸ update
+    //BuffControllerï¿½ï¿½ Tick()ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ update
     void Update(float _deltaTime);
-    //¹öÇÁ ¸¸·á È®ÀÎ
     bool isExpired();
 }

@@ -28,7 +28,7 @@ public class StageManager
 
     public bool isDead = false;
     public bool isDungeon = false;
-    bool isChangingState = false;
+    //bool isChangingState = false;
     public OnReadyEvent readyEvent;
     public OnPlayEvent playEvent;
     public OnBossEvent bossEvent;
@@ -44,8 +44,16 @@ public class StageManager
 
     public void StateChange(StageState _state, int _dungeonDataID = 0, StageState _prevStage = StageState.Play)
     {
-        if (isChangingState) return;
-        isChangingState = true;
+        // if (isChangingState) return;
+        // isChangingState = true;
+
+        if (stageState == _state) return;
+
+        if (stageState == Define.StageState.Changing && _state == Define.StageState.Changing)
+        {
+            Debug.LogError("이미 State Changing중 입니다.");
+            return;
+        }
 
         try
         {
@@ -116,10 +124,7 @@ public class StageManager
                     break;
             }
         }
-        finally
-        {
-            isChangingState = false;
-        }
+        catch (Exception e) { Debug.LogError(e); }
 
     }
 
@@ -132,8 +137,19 @@ public class StageManager
             _action?.Invoke();
         }
         catch (OperationCanceledException) { }
-        catch (Exception e) { }
+        catch (Exception e)
+        {
+            Debug.LogError(e);
+        }
     }
 
+    public bool CanEnterDungeon()
+    {
+        if (stageState == StageState.Changing) return false;
+
+        if (stageState == StageState.Dead || stageState == StageState.Clear || stageState == StageState.BossPlay) return false;
+
+        return true;
+    }
 }
 

@@ -31,18 +31,18 @@ public class CharacterSpawnPoint : MonoBehaviour
     }
     public void PlayerSpawn()
     {
-        int mainIndex = Managers.CharacterM.Characters.Length - 1;
+        int mainIndex = 0;
 
         if (Managers.CharacterM.players[mainIndex] == null)
         {
             Vector3 mainPos = SpawnTr[mainIndex].position;
-            PlayerController mainPC = Managers.ObjectM.Spawn<PlayerController>(mainPos, 9);
+            PlayerController mainPC = Managers.ObjectM.Spawn<PlayerController>(mainPos, 1);
             mainPC.index = mainIndex;
             Managers.CharacterM.AddPlayerReference(mainIndex, mainPC);
 
         }
 
-        for (int i = 0; i < mainIndex; i++)
+        for (int i = 1; i < Managers.CharacterM.Characters.Length; i++)
         {
             if (Managers.CharacterM.Characters[i] == null) continue;
 

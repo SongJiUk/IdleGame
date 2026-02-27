@@ -93,6 +93,7 @@ public static class Define
 
     public enum StageState
     {
+        None,
         Ready,
         Play,
         Boss,
@@ -102,7 +103,8 @@ public static class Define
         Dungeon,
         DungeonClear,
         DungeonFail,
-        DungeonOut
+        DungeonOut,
+        Changing,
     }
 
     public enum CircleButtons
