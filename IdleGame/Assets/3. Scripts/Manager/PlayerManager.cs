@@ -31,7 +31,6 @@ public class PlayerManager
         return (myExp / exp) * 100.0f;
     }
 
-    //TODO : 이거 테스트 해봐야됌 
     public double GetAttack(Define.Grade _grade, CharacterHolder _holder, CreatureController _owner = null)
     {
         var damage = Utils.Datas.levelData.Damage() * ((int)_grade + 1);

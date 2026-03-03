@@ -37,7 +37,7 @@ public class UI_DungeonResultInfoPopup : UI_Popup
     int value = 0;
     int dungeonDataID = 0;
     bool isClickCloseButton = false;
-
+    List<UI_DungeonResultIcon> iconPool = new List<UI_DungeonResultIcon>();
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -72,9 +72,23 @@ public class UI_DungeonResultInfoPopup : UI_Popup
         if (_isClear)
         {
             GetText(TextsType, (int)Texts.ResultText).text = "클리어";
-            var icon = Managers.UIM.MakeSubItem<UI_DungeonResultIcon>();
-            icon.Init().Forget();
-            icon.SetInfo(dungeonDataID);
+            int index = 0;
+            UI_DungeonResultIcon icon;
+
+            if (index < iconPool.Count)
+            {
+                icon = iconPool[index];
+                icon.gameObject.SetActive(true);
+                icon.SetInfo(dungeonDataID);
+            }
+            else
+            {
+                icon = Managers.UIM.MakeSubItem<UI_DungeonResultIcon>(parent);
+                icon.transform.SetParent(parent);
+                icon.Init().Forget();
+                icon.SetInfo(dungeonDataID);
+                iconPool.Add(icon);
+            }
 
         }
         else

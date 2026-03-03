@@ -56,11 +56,15 @@ public class UI_DungeonResultIcon : UI_Base
 
                 double Dia = level * 50;
                 GetText(TextsType, (int)Texts.ResultCountText).text = $"x {Dia}";
+
+                Managers.GameM.Dia += Dia;
             }
             else
             {
                 double money = Utils.Money() * level * 10;
                 GetText(TextsType, (int)Texts.ResultCountText).text = $"x {Utils.ToCurrencyString(money)}";
+
+                Managers.GameM.Gold += money;
             }
         }
     }

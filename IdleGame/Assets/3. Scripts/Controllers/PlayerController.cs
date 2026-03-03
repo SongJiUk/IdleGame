@@ -93,7 +93,6 @@ public class PlayerController : CreatureController
 
         attackCTS?.Cancel();
         attackCTS = null;
-
         DATA = _data;
         baseHp = _data.BaseHp;
         baseDamage = _data.BaseDamage;
@@ -114,18 +113,27 @@ public class PlayerController : CreatureController
     }
     public void SetStat()
     {
-        hp = Managers.PlayerM.GetHP(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name]);
+        if (DATA == null) return;
+
+        var charData = Managers.GameM.gameData.Characters_Data[DATA.Name];
+
+        hp = Managers.PlayerM.GetHP(DATA.CharacterGrade, charData);
         maxHp = hp;
-        damage = Managers.PlayerM.GetAttack(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name], this);
+        damage = Managers.PlayerM.GetAttack(DATA.CharacterGrade, charData, this);
         CriticalRate = Managers.PlayerM.CriticalChance();
 
         attackRange = DATA.AttackRange;
         detectRange = 5f;
+
+
         if (animator != null)
         {
-            animator.speed = 1.0f;
-            float currentSPeed = Managers.PlayerM.AttackSpeed(DATA.AttackSpeed);
-            animator.SetFloat("AttackSpeed", DATA.AttackSpeed);
+            float baseSpeed = Mathf.Max(0.1f, DATA.AttackSpeed);
+            float finalAttackSpeed = Managers.PlayerM.AttackSpeed(baseSpeed);
+
+            animator.SetFloat("AttackSpeed", finalAttackSpeed);
+            animator.speed = finalAttackSpeed / baseSpeed;
+
         }
     }
     public override void InitStat()
@@ -432,5 +440,10 @@ public class PlayerController : CreatureController
             if (Managers.StageM.isDungeon) Managers.StageM.StateChange(StageState.DungeonFail);
             else Managers.StageM.StateChange(StageState.Dead);
         }
+    }
+
+    public override float GetAttackSpeed()
+    {
+        return Managers.PlayerM.AttackSpeed(DATA.AttackSpeed);
     }
 }

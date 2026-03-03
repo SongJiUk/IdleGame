@@ -83,7 +83,6 @@ public class UI_AchievementItem : UI_Base
                         icon = Managers.UIM.MakeSubItem<UI_AchievementIcon>(parent);
                         icon.Init().Forget();
                         iconPool.Add(icon);
-
                     }
 
                     int dataID = data.AchievementCharactersList[i];

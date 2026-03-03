@@ -101,7 +101,11 @@ public class CreatureController : BaseController
     }
     public virtual void InitStat()
     {
-
+        if (data.AttackSpeed <= 0)
+        {
+            Debug.LogWarning($"[Data Error] {name}의 공격속도가 0입니다. 기본값 1로 강제설정합니다.");
+            data.AttackSpeed = 1f;
+        }
     }
 
     public virtual void OnDamage()
@@ -175,11 +179,17 @@ public class CreatureController : BaseController
 
         return 0f;
     }
+
+    public virtual float GetAttackSpeed()
+    {
+        return data.AttackSpeed;
+    }
     protected async UniTask WaitForAttackDelay(CancellationToken _token)
     {
         try
         {
-            float attackDuration = 1f / data.AttackSpeed;
+            float safeSpeed = Mathf.Max(0.1f, GetAttackSpeed());
+            float attackDuration = 1f / safeSpeed;
             await UniTask.Delay(TimeSpan.FromSeconds(attackDuration), cancellationToken: _token);
 
             isAttacking = false;

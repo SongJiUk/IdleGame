@@ -39,7 +39,7 @@ public class UI_TitleScene : UI_Scene
     {
         StartButton,
         GoogleLoginButton,
-        AppleLoginButton
+        //AppleLoginButton
     }
 
     public enum Images
@@ -96,7 +96,7 @@ public class UI_TitleScene : UI_Scene
 
         });
         GetButton(ButtonsType, (int)Buttons.GoogleLoginButton).gameObject.BindEvent(OnClickGoogleLoginButton);
-        GetButton(ButtonsType, (int)Buttons.AppleLoginButton).gameObject.BindEvent(OnClickAppleLoginButton);
+        //GetButton(ButtonsType, (int)Buttons.AppleLoginButton).gameObject.BindEvent(OnClickAppleLoginButton);
 
         GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
         SetInfo().Forget();
@@ -180,7 +180,7 @@ public class UI_TitleScene : UI_Scene
 #if UNITY_ANDROID
         GetButton(ButtonsType, (int)Buttons.GoogleLoginButton).transform.SetAsFirstSibling();
 #elif UNITY_IOS
-            GetButton(ButtonsType, (int)Buttons.AppleLoginButton).transform.SetAsFirstSibling();
+            //GetButton(ButtonsType, (int)Buttons.AppleLoginButton).transform.SetAsFirstSibling();
 #endif
         }
 

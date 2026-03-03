@@ -31,6 +31,7 @@ public class UI_LoadingLogin : UI_Popup
     {
         Managers.FirebaseM.GoogleLogin();
         Managers.UIM.ClosePopup(this).Forget();
+        Managers.GameM.gameData.isGuest = false;
     }
 
     async void OnClickGuestButton()
