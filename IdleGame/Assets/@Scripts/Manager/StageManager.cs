@@ -151,5 +151,25 @@ public class StageManager
 
         return true;
     }
+
+
+    public bool CanChangeToReady()
+    {
+        if(stageState ==StageState.Boss || stageState == StageState.BossPlay)
+        {
+            Managers.UIM.ShowToast("보스 진행중엔 투입할 수 없습니다.");
+            return false;
+        }
+
+        if(stageState == StageState.Dungeon ||
+            stageState == StageState.DungeonClear ||
+            stageState == StageState.DungeonFail ||
+            stageState == StageState.DungeonOut)
+        {
+            Managers.UIM.ShowToast("던전 진행중엔 투입할 수 없습니다.");
+            return false;
+        }
+        return true;
+    }
 }
 

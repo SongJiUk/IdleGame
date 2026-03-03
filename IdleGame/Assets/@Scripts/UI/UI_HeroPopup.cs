@@ -25,6 +25,7 @@ public class UI_HeroPopup : UI_Popup
     }
     enum Buttons
     {
+        CloseButton,
         Circle1Button,
         Circle2Button,
         Circle3Button,
@@ -33,7 +34,7 @@ public class UI_HeroPopup : UI_Popup
         Circle6Button,
         HeroGachaButton,
         HeroEnforceButton,
-        CloseButton
+        
     }
     UI_CharacterIcon clickCharacter;
     RectTransform rect;
@@ -185,17 +186,22 @@ public class UI_HeroPopup : UI_Popup
         //일단 선택된 캐릭터가 없으면 return
         if (clickCharacter == null) return;
         if (_clickButton > Buttons.Circle6Button) return;
-
+        if(_clickButton < Buttons.Circle1Button) return;
         InitCharacter(_clickButton);
     }
 
     void InitCharacter(Buttons _clickButton)
     {
-        int slotIndex = (int)_clickButton;
 
+        if(!Managers.StageM.CanChangeToReady())
+        {
+            return;
+        }
+
+        clickCharacter.slotIndex = (int)_clickButton;
         if (clickCharacter != null && clickCharacter.DATA != null)
         {
-            Managers.GameM.gameData.TeamPlacementID[slotIndex] = clickCharacter.DATA.DataID;
+            Managers.GameM.gameData.TeamPlacementID[clickCharacter.slotIndex] = clickCharacter.DATA.DataID;
             Managers.FirebaseM.WriteData().Forget();
         }
 
@@ -230,15 +236,27 @@ public class UI_HeroPopup : UI_Popup
     }
 
 
-    void OnlyRemoveCharacter()
+    void OnlyRemoveCharacter(int _slotIndex)
     {
+        if (!Managers.StageM.CanChangeToReady())
+        {
+            return;
+        }
+
+        Managers.GameM.gameData.TeamPlacementID[_slotIndex] = 0;
+        Managers.FirebaseM.WriteData().Forget();
+
         Managers.CharacterM.GetCharacter(clickCharacter.DATA.Name);
         SetClick(null);
         isRemoveCharacter = true;
 
+
+
         Managers.RenderM.renderCharacter.RemoveCharacter();
         OnValueChange?.Invoke();
         clickCharacter = null;
+
+        Managers.StageM.StateChange(Define.StageState.Ready); 
     }
 
     public void SetClick(UI_CharacterIcon _clickCharacter, bool _isMinusClick = false)
@@ -257,7 +275,7 @@ public class UI_HeroPopup : UI_Popup
             clickCharacter = _clickCharacter;
             if (_isMinusClick)
             {
-                OnlyRemoveCharacter();
+                OnlyRemoveCharacter(clickCharacter.slotIndex);
             }
             else
             {
@@ -279,6 +297,4 @@ public class UI_HeroPopup : UI_Popup
         (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
         isRemoveCharacter = false;
     }
-
-    //TODO : 드래그앤 드랍으로 캐릭터 배치하기 / 해제하기
 }

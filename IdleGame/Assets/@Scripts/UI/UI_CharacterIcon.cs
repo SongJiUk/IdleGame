@@ -41,6 +41,7 @@ public class UI_CharacterIcon : UI_Base
     }
     UI_HeroPopup parent;
     bool isUseCharacter = false;
+    public int slotIndex;
 
     public override async UniTask<bool> Init()
     {

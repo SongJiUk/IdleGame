@@ -148,12 +148,12 @@ public class QuestManager
     public void NextQuest()
     {
         monsterIndex = 0;
-        int questCount = Managers.GameM.QuestCount % Managers.DataM.QuestDataDic.Count;
-        int questAllClearCount = Managers.GameM.QuestCount / Managers.DataM.QuestDataDic.Count;
-        if (questAllClearCount != Managers.GameM.QuestLevel)
-        {
-            Managers.GameM.QuestLevel++;
-        }
+        int totalQuestCount = Managers.DataM.QuestDataDic.Count;
+
+        int questAllClearCount = Managers.GameM.QuestCount / totalQuestCount;
+
+        Managers.GameM.QuestLevel = questAllClearCount + 1;
+        int questCount = Managers.GameM.QuestCount % totalQuestCount;
 
 
         quest = Managers.DataM.QuestDataDic[questCount];
