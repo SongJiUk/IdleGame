@@ -61,8 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\_ExternalModule\Favorites\FavoritesTab\Editor\Scripts\FavoritesTab.cs" />
-    <Compile Include="Assets\@Scripts\Editor\LevelDesignEditor.cs" />
     <Compile Include="Assets\_ExternalModule\Favorites\FavoritesTab\Editor\Scripts\GameObjectGUIDsInspector.cs" />
+    <Compile Include="Assets\3. Scripts\Editor\LevelDesignEditor.cs" />
     <Compile Include="Assets\_ExternalModule\Favorites\FavoritesTab\Editor\Scripts\AboutFavoritesTab.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1278,6 +1278,10 @@
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.BuildReportInspector.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.BuildReportInspector.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UniTask.Linq">

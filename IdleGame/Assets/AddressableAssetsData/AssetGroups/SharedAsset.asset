@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SharedAsset
+  m_EditorClassIdentifier: 
+  m_GroupName: SharedAsset
+  m_Data:
+    m_SerializedData: []
+  m_GUID: da84a41a3636f58458522e7a929e270b
+  m_SerializeEntries:
+  - m_GUID: 5286e58bd4e717e459ba2cdfb7fd7d33
+    m_Address: Assets/1.Resources/Font/Maplestory Light.ttf
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f042465329aeb0e4b91a9c9a3b9d666b
+    m_Address: Assets/1.Resources/Font/Maplestory Bold SDF.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7b9d2ed1a1fb6f49b08f1d6266f853f
+    m_Address: Assets/1.Resources/Font/Maplestory Bold.ttf
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ca570c7d28bbb4267b961b4eeab1c88e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 8fd1914c6340dba47bad26d34187c5d4, type: 2}
+    - {fileID: 11400000, guid: 66f315a18281ba0408f1ffdfe4e21b02, type: 2}

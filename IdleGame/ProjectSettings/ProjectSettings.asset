@@ -265,7 +265,7 @@ PlayerSettings:
   useCustomGradlePropertiesTemplate: 1
   useCustomGradleSettingsTemplate: 1
   useCustomProguardFile: 0
-  AndroidTargetArchitectures: 3
+  AndroidTargetArchitectures: 2
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
@@ -858,6 +858,7 @@ PlayerSettings:
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   managedStrippingLevel:
+    Android: 3
     EmbeddedLinux: 1
     GameCoreScarlett: 1
     GameCoreXboxOne: 1
