@@ -7,7 +7,12 @@ using Cysharp.Threading.Tasks;
 public class IAPManager : IStoreListener
 {
     public readonly string removeADS = "removeads";
-    public readonly string dia01 = "dia300";
+    public readonly string dia300 = "dia300";
+    public readonly string dia550 = "dia550";
+    public readonly string dia1200 = "dia1200";
+    public readonly string dia4000 = "dia4000";
+    public readonly string dia7000 = "dia7000";
+    public readonly string dia13000 = "dia13000";
 
     private IStoreController storeController; // 구매 과정 제어
     private IExtensionProvider storeExtensionProvider; // 플랫폼 위한 확정 처리
@@ -29,23 +34,77 @@ public class IAPManager : IStoreListener
         var module = StandardPurchasingModule.Instance();
         var builder = ConfigurationBuilder.Instance(module);
 
-        builder.AddProduct(
-            dia01,
-            ProductType.Consumable,
-            new StoreSpecificIds
-        {
-            {dia01, GooglePlay.Name },
-            {dia01, AppleAppStore.Name }
-        });
 
-        builder.AddProduct(
-            removeADS,
-            ProductType.NonConsumable,
-            new StoreSpecificIds
-        {
-            {removeADS, GooglePlay.Name },
-            {removeADS, AppleAppStore.Name }
-        });
+        builder.AddProduct(dia300, ProductType.Consumable);
+        builder.AddProduct(dia550, ProductType.Consumable);
+        builder.AddProduct(dia1200, ProductType.Consumable);
+        builder.AddProduct(dia4000, ProductType.Consumable);
+        builder.AddProduct(dia7000, ProductType.Consumable);
+        builder.AddProduct(dia13000, ProductType.Consumable);
+        builder.AddProduct(removeADS, ProductType.NonConsumable);
+
+        //builder.AddProduct(
+        //    dia300,
+        //    ProductType.Consumable,
+        //    new StoreSpecificIds
+        //{
+        //    {dia300, GooglePlay.Name },
+        //    {dia300, AppleAppStore.Name }
+        //});
+
+        //builder.AddProduct(
+        //    dia550,
+        //    ProductType.Consumable,
+        //    new StoreSpecificIds
+        //{
+        //    {dia550, GooglePlay.Name },
+        //    {dia550, AppleAppStore.Name }
+        //});
+
+        //builder.AddProduct(
+        //    dia1200,
+        //    ProductType.Consumable,
+        //    new StoreSpecificIds
+        //{
+        //    {dia1200, GooglePlay.Name },
+        //    {dia1200, AppleAppStore.Name }
+        //});
+
+        //builder.AddProduct(
+        //    dia4000,
+        //    ProductType.Consumable,
+        //    new StoreSpecificIds
+        //{
+        //    {dia4000, GooglePlay.Name },
+        //    {dia4000, AppleAppStore.Name }
+        //});
+
+        //builder.AddProduct(
+        //    dia7000,
+        //    ProductType.Consumable,
+        //    new StoreSpecificIds
+        //{
+        //    {dia7000, GooglePlay.Name },
+        //    {dia7000, AppleAppStore.Name }
+        //});
+
+        //builder.AddProduct(
+        //    dia13000,
+        //    ProductType.Consumable,
+        //    new StoreSpecificIds
+        //{
+        //    {dia13000, GooglePlay.Name },
+        //    {dia300, AppleAppStore.Name }
+        //});
+
+        //builder.AddProduct(
+        //    removeADS,
+        //    ProductType.NonConsumable,
+        //    new StoreSpecificIds
+        //{
+        //    {removeADS, GooglePlay.Name },
+        //    {removeADS, AppleAppStore.Name }
+        //});
 
         UnityPurchasing.Initialize(this, builder);
 #endif
@@ -53,7 +112,11 @@ public class IAPManager : IStoreListener
 
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
-        Debug.Log("초기화 성공");
+        Debug.Log("--- 초기화 성공: 등록된 상품 목록 ---");
+        foreach (var product in controller.products.all)
+        {
+            Debug.Log($"ID: {product.definition.id} | 제목: {product.metadata.localizedTitle}");
+        }
 
         storeController = controller;
         storeExtensionProvider = extensions;
@@ -101,13 +164,40 @@ public class IAPManager : IStoreListener
         Debug.Log("IOS에서는 인앱결제 사용안함 ");
         return;
 #else
+        //Product product = storeController.products.WithID(_productID);
+        //if (product != null && product.availableToPurchase)
+        //{
+        //    storeController.InitiatePurchase(product);
+        //}
+        //else
+        //    Debug.Log("상품이 없거나 현재 구매가 불가능합니다.");
+        if (storeController == null)
+        {
+            Debug.LogError("🚨 IAP ERROR: storeController가 아직 null입니다. 초기화가 안 끝났어요!");
+            return;
+        }
+
+        // 현재 등록된 모든 상품 확인
+        Debug.Log($"🔍 현재 상점에 등록된 상품 개수: {storeController.products.all.Length}");
+        foreach (var p in storeController.products.all)
+        {
+            Debug.Log($"상품 목록: {p.definition.id} | 사용가능: {p.availableToPurchase}");
+        }
+
         Product product = storeController.products.WithID(_productID);
+
         if (product != null && product.availableToPurchase)
         {
             storeController.InitiatePurchase(product);
         }
         else
-            Debug.Log("상품이 없거나 현재 구매가 불가능합니다.");
+        {
+            // 여기서 정확히 뭐가 문제인지 로그를 쪼개서 봅니다.
+            if (product == null)
+                Debug.LogError($"🚨 상품 ID가 일치하는 게 없습니다: {_productID}");
+            else if (!product.availableToPurchase)
+                Debug.LogError($"🚨 상품은 찾았는데 구매가 불가능한 상태입니다: {product.definition.id}");
+        }
 #endif
 
     }
