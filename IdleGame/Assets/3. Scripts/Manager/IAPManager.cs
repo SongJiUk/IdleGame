@@ -17,11 +17,12 @@ public class IAPManager : IStoreListener
     public Action OnPurchaseFail;
     public void InitUnityIAP()
     {
+
+        if (Managers.IAPM == null) return;
 #if UNITY_IOS
         Debug.Log("IAP disabled on IOS)");
         return;
 #else
-
         if (storeController != null) return;
 
         //초기화가 필요한데 초기화를 도와주는 코드임
