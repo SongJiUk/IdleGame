@@ -42,7 +42,7 @@ public class MonsterController : CreatureController
             float debuffValue = GetBuffValue(BuffEffectType.StatDownEffect);
             if (debuffValue > 0)
             {
-                //Debug.Log($"<color=yellow>[Buff_Step 3]</color> 몬스터 방어력 계산 중... 디버프 수치: {debuffValue}%");
+                Debug.Log($"<color=yellow>[Buff_Step 3]</color> 몬스터 방어력 계산 중... 디버프 수치: {debuffValue}%");
             }
             double finalDefense = defense * (1.0f +debuffValue);
 
@@ -132,8 +132,8 @@ public class MonsterController : CreatureController
         if (DATA.CreatureType == CreatureType.DungeonBoss)
         {
             isBoss = true;
-            int level = (Managers.GameM.gameData.DungeonClearLevel[1] + 1) * 5;
-            maxHp = (float)baseHp * level;
+            int level = (Managers.GameM.gameData.DungeonClearLevel[1] + 1);
+            maxHp = (float)baseHp * level * 40;
             hp = maxHp;
         }
     }

@@ -84,7 +84,7 @@ public class UI_SettingPopup : UI_Popup, ITickable
     {
         Managers.UpdateM.Register(this);
 
-        if (Managers.GameM.gameData.isGuest)
+        if (!Managers.GameM.gameData.isGuest)
         {
             GetButton(ButtonsType, (int)Buttons.LogOutButton).gameObject.SetActive(true);
         }

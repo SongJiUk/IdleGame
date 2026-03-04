@@ -22,7 +22,7 @@ public class UI_ShopPopup : UI_Popup
         GachaTitle,
         RemoveAdsTitle,
         GoodsTitle,
-        DailyTitle
+        //DailyTitle
 
     }
 
@@ -102,7 +102,7 @@ public class UI_ShopPopup : UI_Popup
     RectTransform gachaButtonRect;
     RectTransform removeAdsButtonRect;
     RectTransform goodsButtonRect;
-    RectTransform dailyButtonRect;
+    //RectTransform dailyButtonRect;
 
     ScrollRect scrollRect;
     RectTransform content;
@@ -158,7 +158,7 @@ public class UI_ShopPopup : UI_Popup
         gachaRect = GetObject(GameObjectsType, (int)GameObjects.GachaTitle).GetComponent<RectTransform>();
         removeAdsRect = GetObject(GameObjectsType, (int)GameObjects.RemoveAdsTitle).GetComponent<RectTransform>();
         goodsRect = GetObject(GameObjectsType, (int)GameObjects.GoodsTitle).GetComponent<RectTransform>();
-        dailyRect = GetObject(GameObjectsType, (int)GameObjects.DailyTitle).GetComponent<RectTransform>();
+        //dailyRect = GetObject(GameObjectsType, (int)GameObjects.DailyTitle).GetComponent<RectTransform>();
 
 
         scrollRect = GetObject(GameObjectsType, (int)GameObjects.ScrollView).GetComponent<ScrollRect>();
@@ -391,8 +391,8 @@ public class UI_ShopPopup : UI_Popup
 
     void OnClickDailyButton()
     {
-        ScrollToTitle(dailyRect, true);
-        MoveTarget(dailyButtonRect, true);
+        //ScrollToTitle(dailyRect, true);
+        //MoveTarget(dailyButtonRect, true);
     }
 
 

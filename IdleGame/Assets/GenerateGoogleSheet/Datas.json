@@ -408,9 +408,9 @@
   "ItemData": [
     {
       "DataID": 30000,
-      "Name": "Coin",
-      "NameKR": "코인",
-      "PrefabName": "Coin",
+      "Name": "Gold",
+      "NameKR": "골드",
+      "PrefabName": "Gold",
       "Description": "게임 내 사용되는 코인이다",
       "ItemGrade": "Legendary",
       "Probability": 0,
@@ -1109,13 +1109,13 @@
       "DataID": 70000,
       "DungeonName": "TreasureTrove",
       "DungeonNameKR": "보물창고",
-      "ResultDataID": 30000
+      "ResultDataID": 30001
     },
     {
       "DataID": 70001,
       "DungeonName": "GoldDungeon",
       "DungeonNameKR": "황금던전",
-      "ResultDataID": 30001
+      "ResultDataID": 30000
     }
   ],
   "MissionData": [
