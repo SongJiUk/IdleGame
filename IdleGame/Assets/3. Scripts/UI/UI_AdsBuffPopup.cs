@@ -79,12 +79,12 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
     public override void SetInfo()
     {
 
-
         var data = Managers.GameM.gameData.BuffAds;
         int needCount = Managers.BuffM.GetNeedCount(data.level);
         GetText(TextsType, (int)Texts.Level_Text).text = $"Lv. {data.level}";
         GetText(TextsType, (int)Texts.Count_Text).text = $"{data.count} / {needCount}";
-        GetImage(ImagesType, (int)Images.SliderFillImage).fillAmount = data.count / needCount;
+        float amount = (float)data.count / (float)needCount;
+        GetImage(ImagesType, (int)Images.SliderFillImage).fillAmount = amount;
 
 
         RefreshUI();
@@ -103,7 +103,6 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
 
     }
 
-   
 
     void RefreshTimeObject(Define.BuffType _type, float _remainTime)
     {
@@ -148,7 +147,15 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
 
     void RefreshUI()
     {
-        for(int i =0; i<3; i++)
+
+        var data = Managers.GameM.gameData.BuffAds;
+        int needCount = Managers.BuffM.GetNeedCount(data.level);
+        GetText(TextsType, (int)Texts.Level_Text).text = $"Lv. {data.level}";
+        GetText(TextsType, (int)Texts.Count_Text).text = $"{data.count} / {needCount}";
+        float amount = (float)data.count / (float)needCount;
+        GetImage(ImagesType, (int)Images.SliderFillImage).fillAmount = amount;
+
+        for (int i = 0; i < 3; i++)
         {
             var type = (Define.BuffType)i;
             bool active = Managers.BuffM.IsActive(type);
@@ -158,7 +165,7 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
             GetObject(GameObjectsType, (int)GameObjects.AttackUpLockObject + i).SetActive(!active);
             GetObject(GameObjectsType, (int)GameObjects.AttackUpCoolTimeObject + i).SetActive(active);
 
-            if(active)
+            if (active)
             {
                 float remain = Managers.BuffM.GetRemainTime(type);
                 RefreshTimeObject(type, remain);
@@ -175,10 +182,10 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
 
         bool any = false;
 
-        for(int i =0; i<3; i++)
+        for (int i = 0; i < 3; i++)
         {
             var type = (Define.BuffType)i;
-            if(Managers.BuffM.IsActive(type))
+            if (Managers.BuffM.IsActive(type))
             {
                 any = true;
                 float remain = Managers.BuffM.GetRemainTime(type);

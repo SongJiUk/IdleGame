@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System.Linq;
 
 public class UI_RelicInfoPopup : UI_Popup
 {
@@ -19,14 +20,9 @@ public class UI_RelicInfoPopup : UI_Popup
         RelicInfoText,
         RelicInfoGradeText,
         RelicInfoDescriptionText,
-        CombatPowerText,
-        AttackPowerText,
-        HelathPowerText,
         RelicLevelText,
         RelicLevelCountText,
         RelicEffectText,
-        RelicDescriptionNameText,
-        RelicDescriptionText
     }
 
     enum Images
@@ -34,7 +30,7 @@ public class UI_RelicInfoPopup : UI_Popup
         RelicInfoBackGroundImage,
         RelicInfoImage,
         RelicLevelCountFill,
-        RelicDescriptionImage,
+        //RelicDescriptionImage,
     }
 
 
@@ -77,15 +73,6 @@ public class UI_RelicInfoPopup : UI_Popup
         GetImage(ImagesType, (int)Images.RelicInfoImage).SetNativeSize();
 
 
-        // var damage = Managers.PlayerM.GetAttack(data.CharacterGrade, Managers.GameM.gameData.Characters_Data[data.Name]);
-        // var hp = Managers.PlayerM.GetHP(data.CharacterGrade, Managers.GameM.gameData.Characters_Data[data.Name]);
-        //GetText(TextsType, (int)Texts.CombatPowerText).text = Utils.ToCurrencyString(damage + hp);
-
-        //GetText(TextsType, (int)Texts.AttackPowerText).text = $"+ {Utils.ToCurrencyString(damage)}";
-        //GetText(TextsType, (int)Texts.HelathPowerText).text = $"+ {Utils.ToCurrencyString(hp)}";
-
-
-
         Managers.GameM.gameData.Item_Data.TryGetValue(data.Name, out var itemData);
         if (itemData != null)
         {
@@ -95,15 +82,10 @@ public class UI_RelicInfoPopup : UI_Popup
             GetImage(ImagesType, (int)Images.RelicLevelCountFill).fillAmount = (float)itemData.holder.Count / (float)(needCount);
         }
 
-        // Managers.DataM.SkillDataDic.TryGetValue(data.SkillDataID, out var skillData);
-        // if (skillData != null)
-        // {
-        //     //TODO : 스킬 이미지 뽑아서 하기
-        //     //GetImage(ImagesType, (int)Images.SkillIDescriptionImage).sprite = Managers.ResourceM.GetAtlas(skillData.SkillName);
-        //     GetText(TextsType, (int)Texts.SkillEffectText).text = "짱 쎔";
-        //     GetText(TextsType, (int)Texts.SkillDescriptionNameText).text = skillData.SkillNameKR;
-        //     GetText(TextsType, (int)Texts.SkillDescriptionText).text = skillData.Description;
-        // }
+        var values = itemData.GetCurrentValues();
+        object[] args = values.Select(val => (object)val.ToString("0.#")).ToArray();
+
+        GetText(TextsType, (int)Texts.RelicEffectText).text = string.Format(itemData.data.RelicEffectDes, args);
 
     }
 
@@ -120,18 +102,24 @@ public class UI_RelicInfoPopup : UI_Popup
 
     void OnClickEnforceButton()
     {
-        if (Managers.GameM.gameData.Characters_Data.TryGetValue(data.Name, out var characterData))
+        if (Managers.GameM.gameData.Item_Data.TryGetValue(data.Name, out var itemData))
         {
-            int needCount = characterData.holder.Level * 5;
-            if (needCount <= characterData.holder.Count)
+            if (itemData.holder.Level < 20)
             {
-                characterData.holder.Count -= needCount;
-                characterData.holder.Level++;
-                OnChangeRelicInfo?.Invoke();
-                RefreshUI();
+                int needCount = itemData.holder.Level * 5;
+                if (needCount <= itemData.holder.Count)
+                {
+                    itemData.holder.Count -= needCount;
+                    itemData.holder.Level++;
+                    OnChangeRelicInfo?.Invoke();
+                    RefreshUI();
+                }
+                else
+                    Managers.UIM.ShowToast("유물의 개수가 부족합니다.");
             }
-            else
-                Managers.UIM.ShowToast("캐릭터의 개수가 부족합니다.");
+            else Managers.UIM.ShowToast("유물의 최대 레벨입니다.");
+
+
         }
     }
 }

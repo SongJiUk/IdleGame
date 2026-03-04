@@ -143,10 +143,44 @@ namespace Data
         public string NameKR;
         public string PrefabName;
         public string Description;
+        public string RelicEffectDes;
         public Define.Grade ItemGrade;
         public float Probability;
         public Define.ItemType ItemType;
         public int MinStage;
+        public string BaseValue;
+        public float GrowValue;
+        public int MaxLevel;
+        public List<float> BaseValueList { get; private set; } = new List<float>();
+
+        public void ParseRawData()
+        {
+            BaseValueList = ParseIdList(BaseValue);
+        }
+
+        List<float> ParseIdList(string _rawData)
+        {
+            List<float> result = new List<float>();
+            if (string.IsNullOrEmpty(_rawData)) return result;
+            string[] idStrings = _rawData.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string idString in idStrings)
+            {
+                string trimmedId = idString.Trim();
+
+                if (int.TryParse(trimmedId, out int id))
+                {
+                    if (id == 0) continue;
+
+                    result.Add(id);
+                }
+                else
+                {
+                    Debug.LogError($"[SkillData {DataID}] ID 파싱 오류: '{trimmedId}'는 유효한 정수가 아닙니다.");
+                }
+            }
+            return result;
+        }
     }
 
     [Serializable]
@@ -160,6 +194,7 @@ namespace Data
             Dictionary<int, ItemData> dic = new Dictionary<int, ItemData>();
             foreach (var data in dataList)
             {
+                data.ParseRawData();
                 dic.Add(data.DataID, data);
             }
 

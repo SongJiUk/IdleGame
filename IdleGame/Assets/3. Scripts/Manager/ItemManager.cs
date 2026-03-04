@@ -31,6 +31,18 @@ public class ItemManager
 
             if (Managers.GameM.gameData.relics[i].Name == _name) Managers.GameM.gameData.relics[i] = null;
         }
+
+        Managers.RelicM.Init();
+    }
+    public ItemHolder GetItemData(string _name)
+    {
+        Managers.GameM.gameData.Item_Data.TryGetValue(_name, out var itemHolder);
+
+        // if (ItemCheck(_name)) return itemHolder;
+        // else return null;
+        if (itemHolder != null) return itemHolder;
+        else return null;
+
     }
 
 

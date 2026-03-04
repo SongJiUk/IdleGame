@@ -18,17 +18,19 @@ public class IAPManager : IStoreListener
     private IExtensionProvider storeExtensionProvider; // 플랫폼 위한 확정 처리
 
 
+    public bool IsInitialized => storeController != null && storeExtensionProvider != null;
     public Action OnPurchaseSuccess;
     public Action OnPurchaseFail;
     public void InitUnityIAP()
     {
 
-        if (Managers.IAPM == null) return;
+
 #if UNITY_IOS
-        Debug.Log("IAP disabled on IOS)");
+        Debug.LogWarning("### [IAP] iOS 플랫폼 감지: IAP 기능을 비활성화합니다. (포트폴리오용 스킵) ###");
         return;
 #else
-        if (storeController != null) return;
+
+        if(IsInitialized) return;
 
         //초기화가 필요한데 초기화를 도와주는 코드임
         var module = StandardPurchasingModule.Instance();
@@ -112,12 +114,7 @@ public class IAPManager : IStoreListener
 
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
-        Debug.Log("--- 초기화 성공: 등록된 상품 목록 ---");
-        foreach (var product in controller.products.all)
-        {
-            Debug.Log($"ID: {product.definition.id} | 제목: {product.metadata.localizedTitle}");
-        }
-
+        Debug.Log("### [IAP] 초기화 성공! 등록된 상품: " + controller.products.all.Length + "개 ###");
         storeController = controller;
         storeExtensionProvider = extensions;
     }
@@ -125,7 +122,7 @@ public class IAPManager : IStoreListener
 
     public void OnInitializeFailed(InitializationFailureReason error, string message = null)
     {
-        Debug.LogError("초기화 실패");
+        Debug.LogError($"### [IAP] 초기화 실패: {error} ###");
     }
 
     public void OnInitializeFailed(InitializationFailureReason error)
@@ -135,13 +132,12 @@ public class IAPManager : IStoreListener
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
     {
-        Debug.LogError("구매 실패");
+        Debug.LogError($"### [IAP] 구매 최종 실패: {product.definition.id} | 사유: {failureReason} ###");
     }
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
     {
-        Debug.Log($"구매 성공: {args.purchasedProduct.definition.id}");
-        Debug.Log($"TransactionID: {args.purchasedProduct.transactionID}");
+        Debug.Log($"### [IAP] 구매 성공 이벤트 수신: {args.purchasedProduct.definition.id} ###");
 
         string purchaseName = args.purchasedProduct.definition.id;
 
@@ -171,33 +167,28 @@ public class IAPManager : IStoreListener
         //}
         //else
         //    Debug.Log("상품이 없거나 현재 구매가 불가능합니다.");
-        if (storeController == null)
+        if (IsInitialized)
         {
-            Debug.LogError("🚨 IAP ERROR: storeController가 아직 null입니다. 초기화가 안 끝났어요!");
+            Debug.LogError("### [IAP] 결제 실패: IAP 시스템이 아직 초기화되지 않았습니다. ###");
+            return;
+        }
+        
+        Product product = storeController.products.WithID(_productID);
+        if (product == null)
+        {
+            Debug.LogError($"### [IAP] 결제 실패: {_productID} ID를 가진 상품을 찾을 수 없습니다. (ID 오타 확인!) ###");
             return;
         }
 
-        // 현재 등록된 모든 상품 확인
-        Debug.Log($"🔍 현재 상점에 등록된 상품 개수: {storeController.products.all.Length}");
-        foreach (var p in storeController.products.all)
+        // 3. 구매 가능 여부 체크
+        if (!product.availableToPurchase)
         {
-            Debug.Log($"상품 목록: {p.definition.id} | 사용가능: {p.availableToPurchase}");
+            Debug.LogError($"### [IAP] 결제 실패: {product.metadata.localizedTitle} 상품은 현재 구매 불가능 상태입니다. ###");
+            return;
         }
 
-        Product product = storeController.products.WithID(_productID);
-
-        if (product != null && product.availableToPurchase)
-        {
-            storeController.InitiatePurchase(product);
-        }
-        else
-        {
-            // 여기서 정확히 뭐가 문제인지 로그를 쪼개서 봅니다.
-            if (product == null)
-                Debug.LogError($"🚨 상품 ID가 일치하는 게 없습니다: {_productID}");
-            else if (!product.availableToPurchase)
-                Debug.LogError($"🚨 상품은 찾았는데 구매가 불가능한 상태입니다: {product.definition.id}");
-        }
+        Debug.Log($"### [IAP] 구매 시도: {product.metadata.localizedTitle} ###");
+        storeController.InitiatePurchase(product);
 #endif
 
     }

@@ -233,4 +233,14 @@ public static class Define
         Hero,
         Relic
     }
+
+    public enum RelicName
+    {
+        Gold_Dice,
+        Axe,
+        GoddessTears,
+        BronzeRing,
+        SilverRing,
+        GoldenRing,
+    }
 }

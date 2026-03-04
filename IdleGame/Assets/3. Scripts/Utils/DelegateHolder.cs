@@ -27,6 +27,7 @@ public class DelegateHolder
     public static event PlayerAttack PlayerAttackEvent;
     public static event PlayerHit PlayerHitEvent;
 
+
     public static void Clear()
     {
         MonsterDeadEvent = null;

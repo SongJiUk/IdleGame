@@ -120,7 +120,7 @@ public class UI_RelicsPopup : UI_Popup
 
     public override void SetInfo()
     {
-        
+
 
         RefreshUI();
         InitEquippedRelicsUI();
@@ -158,13 +158,13 @@ public class UI_RelicsPopup : UI_Popup
     {
         var slots = Managers.GameM.gameData.relics;
 
-        for (int i = 0; i<slots.Length; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
             var data = slots[i];
             Buttons btn = (Buttons)i;
 
             relicMaps.TryGetValue(btn, out var map);
-            if(data != null)
+            if (data != null)
             {
                 Managers.ItemM.SetItem((int)btn, data.Name);
 
@@ -181,7 +181,6 @@ public class UI_RelicsPopup : UI_Popup
     }
 
 
-    //NOTE : 놓이는곳 클릭
     void OnClickRelicButton(Buttons _button)
     {
         if (clickRelic == null) return;

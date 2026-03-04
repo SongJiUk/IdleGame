@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BuffManager : IUnScaledTickable
 {
@@ -19,7 +20,7 @@ public class BuffManager : IUnScaledTickable
 
         int need = GetNeedCount(data.level);
 
-        if(data.count >= need)
+        if (data.count >= need)
         {
             data.count = 0;
             data.level++;

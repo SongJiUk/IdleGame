@@ -45,6 +45,20 @@ public class ItemHolder
 {
     public Data.ItemData data;
     public Holder holder;
+
+    public List<float> GetCurrentValues()
+    {
+        List<float> currentValues = new List<float>();
+
+        for (int i = 0; i < data.BaseValueList.Count; i++)
+        {
+            float grow = data.GrowValue;
+
+            float value = data.BaseValueList[i] + (grow * (holder.Level - 1));
+            currentValues.Add(value);
+        }
+        return currentValues;
+    }
 }
 
 [Serializable]
@@ -60,6 +74,7 @@ public class Holder
 {
     public int Level = 1;
     public int Count = 0;
+
 }
 
 public class GameData
@@ -95,7 +110,7 @@ public class GameData
     public int[] DungeonClearLevel = { 0, 0 };
     public int[] TeamPlacementID = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
     public bool ADS_Remove = false;
-    public BuffAdProgress BuffAds = new BuffAdProgress();
+    public BuffAdProgress BuffAds = new BuffAdProgress() { level = 1, count = 0 };
     public Dictionary<string, CharacterHolder> Characters_Data = new Dictionary<string, CharacterHolder>();
     public Dictionary<string, Holder> Character_Holder = new Dictionary<string, Holder>();
 

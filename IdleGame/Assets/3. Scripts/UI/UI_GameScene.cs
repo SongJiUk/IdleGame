@@ -291,6 +291,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Managers.StageM.OnChangeCount += OnCheckTreasureTroveMonsterCount;
         Managers.CharacterM.OnCharacterAdd += OnRegisterCharacterEvents;
         Managers.QuestM.OnQuestDataChanged += OnChangeQuestInfo;
+        Managers.RelicM.OnChangeUI += ChangeLevelUpButtonUI;
 
         //TODO :여기선 mPlayer가 null값이 떠서 사용 x(나중에 메인 플레이어를 알고 있는 상태면 미리 생성해놓고 사용? 어떡할지 고민좀해보자)
         // Managers.GameM.mPlayer.OnPlayerDataUpdate += OnCheckStageMonsterCount;
@@ -369,7 +370,11 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetText(TextsType, (int)Texts.RewardItemText).text = Managers.QuestM.GetReward().ToString();
         GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(Managers.QuestM.isGetReward());
 
-
+#if UNITY_ANDROID
+        GetButton(ButtonsType, (int)Buttons.LeaderBoardButton).gameObject.SetActive(true);
+#elif UNITY_IOS
+        GetButton(ButtonsType, (int)Buttons.LeaderBoardButton).gameObject.SetActive(false);
+#endif
         //TODO : 튜토리얼 임시
         //GetObject(GameObjectsType, (int)GameObjects.TutorialObject).gameObject.SetActive(false);
         //TODO : 게임씬 입장시 이거
@@ -402,6 +407,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Managers.StageM.OnChangeCount -= OnCheckStageMonsterCount;
         Managers.StageM.OnChangeCount -= OnCheckTreasureTroveMonsterCount;
         Managers.QuestM.OnQuestDataChanged -= OnChangeQuestInfo;
+        Managers.RelicM.OnChangeUI -= ChangeLevelUpButtonUI;
 
         if (Managers.CharacterM != null)
         {
@@ -498,7 +504,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 break;
 
             case Buttons.LeaderBoardButton:
+#if UNITY_ANDROID
                 Managers.GPGSM.ShowLeaderboardUI();
+#endif
                 break;
             case Buttons.QuestButton:
                 bool isReward;
@@ -1048,20 +1056,20 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     public void CheckCharactersState()
     {
         int index = 1;
-        for (int i = 0; i < Managers.CharacterM.Characters.Length-1; i++)
+        for (int i = 0; i < Managers.CharacterM.Characters.Length - 1; i++)
         {
-            if (Managers.CharacterM.Characters[i+1] != null)
+            if (Managers.CharacterM.Characters[i + 1] != null)
             {
-               
+
                 GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + i).gameObject.SetActive(false);
                 GetImage(ImagesType, (int)Images.Character1_Icon + i).gameObject.SetActive(true);
-                GetImage(ImagesType, (int)Images.Character1_Icon + i).sprite = Managers.ResourceM.GetAtlas(Managers.CharacterM.Characters[i+1].data.Name);
+                GetImage(ImagesType, (int)Images.Character1_Icon + i).sprite = Managers.ResourceM.GetAtlas(Managers.CharacterM.Characters[i + 1].data.Name);
                 GetImage(ImagesType, (int)Images.Character1_Icon + i).SetNativeSize();
                 //GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).rectTransform.localScale = GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).rectTransform.localScale / 6;
 
 
                 //지금 스폰 되어있는거랑 아닌거랑 비교하기?
-                if (Managers.CharacterM.players[i+1] != null)
+                if (Managers.CharacterM.players[i + 1] != null)
                 {
                     //만약 생성되어있다면.
                     GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i).gameObject.SetActive(false);
@@ -1248,13 +1256,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetText(TextsType, (int)Texts.StageText).text = stageForward.ToString() + " - " + stageBack.ToString();
 
 
-        GetImage(ImagesType, (int)Images.Exp_FillImage).fillAmount = Managers.PlayerM.ExpPercent();
-        GetText(TextsType, (int)Texts.ExpText).text = string.Format("{0:0.00}", Managers.PlayerM.ExpPercent() * 100.0f) + "%";
-        GetText(TextsType, (int)Texts.AttackText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.Damage())}";
-        GetText(TextsType, (int)Texts.HpText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.HP())}";
-        GetText(TextsType, (int)Texts.NeedLevelUpText).text = Utils.ToCurrencyString(needGold);
-        GetText(TextsType, (int)Texts.NeedLevelUpText).color = Utils.CoinCheck(needGold) ? Color.green : Color.red;
-        GetText(TextsType, (int)Texts.GetExpText).text = $"<color=#00FF00>EXP</color> + {string.Format("{0:0.00}", Managers.PlayerM.NextExp())}%";
+
+        ChangeLevelUpButtonUI();
+
 
         GetText(TextsType, (int)Texts.CoinText).text = Utils.ToCurrencyString(Managers.GameM.Gold);
         GetText(TextsType, (int)Texts.DiaText).text = Utils.ToCurrencyString(Managers.GameM.Dia);
@@ -1267,6 +1271,18 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetText(TextsType, (int)Texts.CharacterLevelText).text = $"LV : {Managers.GameM.Level}";
         GetText(TextsType, (int)Texts.UserNameText).text = Managers.GameM.gameData.playerName;
         GetText(TextsType, (int)Texts.UserCombatPowerText).text = Utils.ToCurrencyString(Managers.PlayerM.AverageCombatPower());
+    }
+
+    public void ChangeLevelUpButtonUI()
+    {
+        GetImage(ImagesType, (int)Images.Exp_FillImage).fillAmount = Managers.PlayerM.ExpPercent();
+        GetText(TextsType, (int)Texts.ExpText).text = string.Format("{0:0.00}", Managers.PlayerM.ExpPercent() * 100.0f) + "%";
+        GetText(TextsType, (int)Texts.AttackText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.Damage())}";
+        GetText(TextsType, (int)Texts.HpText).text = $"+ {Utils.ToCurrencyString(Utils.Datas.levelData.HP())}";
+        GetText(TextsType, (int)Texts.NeedLevelUpText).text = Utils.ToCurrencyString(needGold);
+        GetText(TextsType, (int)Texts.NeedLevelUpText).color = Utils.CoinCheck(needGold) ? Color.green : Color.red;
+        float exp = Managers.PlayerM.NextExp();
+        GetText(TextsType, (int)Texts.GetExpText).text = $"<color=#00FF00>EXP</color> + {string.Format("{0:0.00}", exp)}%";
     }
 
     IEnumerator coPush()
@@ -1599,7 +1615,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             int hour = Mathf.FloorToInt(FastremainTime % 60f);
             string timeString = string.Format("{0:00} : {1:00}", min, hour);
             GetText(TextsType, (int)Texts.FastTimeText).text = timeString;
-            GetImage(ImagesType, (int)Images.FastSliderFill).fillAmount = FastremainTime / 1800f;
+            GetImage(ImagesType, (int)Images.FastSliderFill).fillAmount = FastremainTime / 600f;
         }
         else
         {
@@ -1706,6 +1722,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         }
 
 
-        OnClickAnyButtons(Buttons.ShopButton);
+        OnClickAnyButtons(Buttons.ShopButton).Forget();
     }
 }
