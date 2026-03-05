@@ -91,6 +91,7 @@ public class GameData
     public int questLevel = 1;
     public double exp;
     public int stage = 1;
+    public int clearStage = 0;
 
     public float[] buff_Timers = { 0.0f, 0.0f, 0.0f };
     public float fast_Timer = 0.0f;
@@ -102,6 +103,7 @@ public class GameData
 
     public int relicsSummonCount = 0;
     public int relicsConfirmedLegendaryCount = 0;
+    public long LastSaveTimeTicks;
     public string startDate;
     public string endDate;
 

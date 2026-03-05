@@ -34,6 +34,7 @@ public class UI_Toast : UI_Base
 
     public void SetInfo(string _detail)
     {
+        transform.SetAsLastSibling();
         var text = GetText(TextsType, (int)Texts.ToastMessageValueText);
         var image = GetImage(ImagesType, (int)Images.BackgroundImage);
 

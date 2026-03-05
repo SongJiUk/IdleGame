@@ -356,7 +356,8 @@ public class CreatureController : BaseController
         finalDamage *= reduction;
         if (finalDamage < 1) finalDamage = 1;
 
-        Debug.Log($"<color=red>[Buff_Step 4]</color> 최종 피격 데미지: {finalDamage} (적용 방어력: {currentDefense})");
+        //TODO : 피격데미지 확인하는곳
+        //Debug.Log($"<color=red>[Buff_Step 4]</color> 최종 피격 데미지: {finalDamage} (적용 방어력: {currentDefense})");
 
         hp -= finalDamage;
         bool isMonster = false;

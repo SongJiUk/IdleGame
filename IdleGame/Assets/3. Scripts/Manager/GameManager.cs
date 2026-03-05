@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 
 public class GameManager
@@ -208,4 +209,65 @@ public class GameManager
         OnGoodsChanged?.Invoke();
 
     }
+    /*
+    "모바일 운영체제의 정책상 백그라운드 실시간 연산은 불가능합니다. 그래서 OnApplicationPause를 활용한 타임스탬프 기반 정산 시스템을 구현하여, 앱이 꺼져있는 동안의 보상을 논리적으로 계산했습니다."
+    */
+
+    public void OnApplicationPause(bool _pauseStatus)
+    {
+        if (_pauseStatus)
+        {
+            Time.timeScale = 0f;
+            Managers.UpdateM.PauseTicking(true);
+
+            Debug.Log("앱이 일시정지되었습니다. 데이터를 저장합니다.");
+            SaveGameOnPause();
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            Managers.UpdateM.PauseTicking(false);
+
+            Debug.Log("앱이 다시 켜졌습니다. 데이터를 동기화합니다.");
+            ReloadAndCheckOfflineReward();
+        }
+    }
+
+    private async void SaveGameOnPause()
+    {
+        Managers.GameM.gameData.LastSaveTimeTicks = TimerNTP.NowTime.Ticks;
+
+        await Managers.FirebaseM.WriteData();
+
+        Debug.Log("앱 일시정지 : 데이터 자동 저장 완료");
+    }
+
+    async void ReloadAndCheckOfflineReward()
+    {
+        double elapsedSeconds = GetOfflineSeconds();
+        await Managers.FirebaseM.SyncDataOnly();
+
+
+        if (elapsedSeconds >= 10.0d)
+        {
+            Managers.UIM.ShowPopup<UI_OfflinePopup>().Forget();
+        }
+
+        Debug.Log($"앱 복귀: {elapsedSeconds}초 동안 오프라인 상태였습니다.");
+    }
+
+    private double GetOfflineSeconds()
+    {
+        long lastTicks = Managers.GameM.gameData.LastSaveTimeTicks;
+        long nowTicks = TimerNTP.NowTime.Ticks;
+
+        if (lastTicks == 0) return 0;
+
+        long elapsedTicks = nowTicks - lastTicks;
+        double elapsedSeconds = (double)elapsedTicks / TimeSpan.TicksPerSecond;
+
+        return elapsedSeconds < 0 ? 0 : elapsedSeconds;
+    }
+
+
 }

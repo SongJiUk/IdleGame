@@ -69,7 +69,7 @@ public class PlayerController : CreatureController
             return baseDef * (1.0f + buffRatio);
         }
     }
-    
+
     void OnEnable()
     {
         Managers.UpdateM.Register(this);
@@ -406,7 +406,7 @@ public class PlayerController : CreatureController
 
         AnimatorChange(CreatureState.Idle);
 
-        Debug.Log($"[Skill] {gameObject.name} 스킬 종료 및 상태 복구 완료");
+        //Debug.Log($"[Skill] {gameObject.name} 스킬 종료 및 상태 복구 완료");
     }
 
     public void SkillEnd()

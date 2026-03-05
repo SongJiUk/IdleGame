@@ -11,7 +11,6 @@ using TMPro;
 
 public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 {
-    //TODO : 이거 UI다 나누는게 편할거같긴함.(UI_TOP, Bottom으로 크개 두개로 나눠서 하던가, 아니면 그냥 연관있는것끼리 모아서 하던가)
     #region Enum
     enum GameObjects
     {
@@ -381,10 +380,10 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         StartSpawn();
 
 
-        if (Utils.TimerCheck() >= 10.0d)
-        {
-            Managers.UIM.ShowPopup<UI_OfflinePopup>().Forget();
-        }
+        // if (Utils.TimerCheck() >= 10.0d)
+        // {
+        //     Managers.UIM.ShowPopup<UI_OfflinePopup>().Forget();
+        // }
 
         return true;
     }

@@ -19,41 +19,29 @@ public partial class FirebaseManager
     public bool IsLoading { get; private set; } = false;
     public async UniTask WriteData()
     {
-        if (reference == null || CurrentUser == null)
-        {
-            return;
-        }
+        if (reference == null || CurrentUser == null) return;
         if (IsLoading) return;
 
 
         GameData data = Managers.GameM.gameData;
-        data.SyncToSave();
         if (data == null || data.Character_Holder.Count == 0)
         {
             Debug.LogWarning("데이터가 비어있어 저장을 취소합니다.");
             return;
         }
+        data.SyncToSave();
+        data.LastSaveTimeTicks = TimerNTP.NowTime.Ticks;
+
+        if (IsNewDay(data.LastSaveTimeTicks, TimerNTP.NowTime))
+        {
+            Managers.GameM.gameData.DungeonKey[0] = 2;
+            Managers.GameM.gameData.DungeonKey[1] = 2;
+            Managers.GameM.gameData.ResetDailyMission();
+        }
+
+
         try
         {
-            Managers.GameM.EndDate = TimerNTP.NowTime.ToString();
-            if (!DateTime.TryParse(Managers.GameM.EndDate, out DateTime endDate))
-            {
-                endDate = TimerNTP.NowTime;
-            }
-
-
-            if (GetDateItem(endDate, DateTime.Now))
-            {
-                Managers.GameM.gameData.DungeonKey[0] = 2;
-                Managers.GameM.gameData.DungeonKey[1] = 2;
-
-                //foreach (var mission in Managers.GameM.gameData.MissionDic)
-                //{
-                //    mission.Value.Progress = 0;
-                //    mission.Value.isRewarded = false;
-                //}
-            }
-
             string default_json = JsonConvert.SerializeObject(data);
             string character_json = JsonConvert.SerializeObject(data.Character_Holder);
             string item_json = JsonConvert.SerializeObject(data.Item_Holder);
@@ -89,31 +77,22 @@ public partial class FirebaseManager
             {
                 string json = dataSnap.GetRawJsonValue();
                 JsonConvert.PopulateObject(json, Managers.GameM.gameData);
+
+                MigrateTimeData(Managers.GameM.gameData);
             }
             else
             {
-                Managers.GameM.EndDate = TimerNTP.NowTime.ToString();
+                Managers.GameM.gameData.LastSaveTimeTicks = TimerNTP.NowTime.Ticks;
             }
 
-            Managers.GameM.StartDate = TimerNTP.NowTime.ToString();
 
-            if (string.IsNullOrEmpty(Managers.GameM.EndDate))
+            if (IsNewDay(Managers.GameM.gameData.LastSaveTimeTicks, TimerNTP.NowTime))
             {
-                Managers.GameM.EndDate = TimerNTP.NowTime.ToString();
-            }
-
-            DateTime startDate = TimerNTP.NowTime;
-
-            if (DateTime.TryParse(Managers.GameM.EndDate, out DateTime endDate))
-            {
-                if (GetDateItem(startDate, endDate))
-                {
-                    Managers.GameM.gameData.DungeonKey[0] = 2;
-                    Managers.GameM.gameData.DungeonKey[1] = 2;
+                Managers.GameM.gameData.DungeonKey[0] = 2;
+                Managers.GameM.gameData.DungeonKey[1] = 2;
 
 
-                    Managers.GameM.gameData.ResetDailyMission();
-                }
+                Managers.GameM.gameData.ResetDailyMission();
             }
 
 
@@ -178,12 +157,33 @@ public partial class FirebaseManager
         }
     }
 
-    private bool GetDateItem(DateTime _startTime, DateTime _endTime)
+    public async UniTask SyncDataOnly()
     {
-        if (_startTime.Day != _endTime.Day)
+        var dataSnap = await reference.Child("users").Child(CurrentUser.UserId).Child("DATA").GetValueAsync().AsUniTask();
+
+        if (dataSnap.Exists)
         {
-            return true;
+            string json = dataSnap.GetRawJsonValue();
+            JsonConvert.PopulateObject(json, Managers.GameM.gameData);
         }
-        return false;
+    }
+
+    bool IsNewDay(long _lastTicks, DateTime _now)
+    {
+        if (_lastTicks == 0) return true;
+        DateTime lastDate = new DateTime(_lastTicks);
+        return lastDate.Date != _now.Date;
+    }
+    public void MigrateTimeData(GameData _data)
+    {
+        if (_data.LastSaveTimeTicks != 0) return;
+
+        if (!string.IsNullOrEmpty(_data.endDate))
+        {
+            DateTime oldTime = DateTime.Parse(_data.endDate);
+            _data.LastSaveTimeTicks = oldTime.Ticks;
+
+            Debug.Log("데이터 마이그레이션 완료: string -> long(Ticks)");
+        }
     }
 }

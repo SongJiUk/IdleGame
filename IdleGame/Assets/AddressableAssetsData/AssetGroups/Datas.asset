@@ -17,17 +17,18 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 519badd7bd908d149b41cb05f3faa152
   m_SerializeEntries:
+  - m_GUID: b810258db060c428eb3ba555214cd71d
+    m_Address: LevelDesignData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ece76cad0ca6c4d10915910cbb7d74d2
     m_Address: Datas.json
     m_ReadOnly: 0
     m_SerializedLabels:
     - PrevLoad
-  - m_GUID: b810258db060c428eb3ba555214cd71d
-    m_Address: LevelDesignData
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - AlwaysNeed
-    - PrevLoad
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ca570c7d28bbb4267b961b4eeab1c88e, type: 2}
   m_SchemaSet:

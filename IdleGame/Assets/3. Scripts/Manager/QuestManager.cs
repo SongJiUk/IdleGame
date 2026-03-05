@@ -112,9 +112,9 @@ public class QuestManager
         {
             int key = data.Key;
             bool isCompleted = false;
-            if(AchievementDic.TryGetValue(key, out isCompleted))
+            if (AchievementDic.TryGetValue(key, out isCompleted))
             {
-                if(isCompleted)
+                if (isCompleted)
                 {
                     achievement_Status.GetStatusData(data.Value.RewardStatus, data.Value.RewardValue);
                 }
@@ -130,10 +130,12 @@ public class QuestManager
     #endregion
     public void Init()
     {
+
         FixAchievementDatas();
         LoadAchievementDatas();
         NextQuest();
     }
+
     public void UpdateQuest()
     {
         isGetReward();
@@ -144,7 +146,7 @@ public class QuestManager
         switch (_questType)
         {
             case Define.QuestType.Monster: return monsterIndex;
-            case Define.QuestType.Stage: return Managers.GameM.Stage;
+            case Define.QuestType.Stage: return Managers.GameM.gameData.clearStage;
             case Define.QuestType.Gold: return Managers.GameM.gameData.DungeonClearLevel[1];
             case Define.QuestType.Dia: return Managers.GameM.gameData.DungeonClearLevel[0];
             case Define.QuestType.Upgrade: return Managers.GameM.UpgradeCount;
@@ -157,6 +159,7 @@ public class QuestManager
     public void NextQuest()
     {
         monsterIndex = 0;
+
         int totalQuestCount = Managers.DataM.QuestDataDic.Count;
 
         int questAllClearCount = Managers.GameM.QuestCount / totalQuestCount;
@@ -207,7 +210,6 @@ public class QuestManager
 
     public Define.QuestType GetState()
     {
-        //TODO ; 여기서 계속 높여가면 될거같음(레벨로 높이면 이거 스테이지나 뽑기 이런거 답 없기때문에, 그냥 데이터로 몇배 해줄지 정해놔야할거같음)
         int questCount = Managers.GameM.QuestCount % Managers.DataM.QuestDataDic.Count;
         quest = Managers.DataM.QuestDataDic[questCount];
         questType = quest.QuestType;

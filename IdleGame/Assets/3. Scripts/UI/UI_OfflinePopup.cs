@@ -47,54 +47,61 @@ public class UI_OfflinePopup : UI_Popup
 
         parent = GetObject(GameObjectsType, (int)GameObjects.Content).transform;
 
-        money = (Utils.Money() * Utils.TimerCheck()) / 3;
-        GetText(TextsType, (int)Texts.OfflinePopupGoldText).text = Utils.ToCurrencyString(money);
 
-        TimeSpan span = TimeSpan.FromSeconds(Utils.TimerCheck());
-        GetText(TextsType, (int)Texts.OfflinePopupTimeText).text = span.Hours + " : " + span.Minutes;
-
-        GetItem();
-
-        foreach(var item in itemsDic)
-        {
-            UI_Item ui_item =  Managers.UIM.MakeSubItem<UI_Item>(parent);
-            ui_item.Init().Forget();
-            ui_item.SetInfo(item.Value);
-        }
 
         return true;
     }
 
+
+    public override void SetInfo()
+    {
+        money = Utils.CalculateOfflineMoney(Utils.TimerCheck());
+
+        GetText(TextsType, (int)Texts.OfflinePopupGoldText).text = Utils.ToCurrencyString(money);
+
+        TimeSpan span = TimeSpan.FromSeconds(Utils.TimerCheck());
+        GetText(TextsType, (int)Texts.OfflinePopupTimeText).text = span.ToString(@"hh\:mm\:ss");
+
+        GetItem();
+
+        foreach (var item in itemsDic)
+        {
+            UI_Item ui_item = Managers.UIM.MakeSubItem<UI_Item>(parent);
+            ui_item.Init().Forget();
+            ui_item.SetInfo(item.Value);
+        }
+    }
+
     void GetItem()
     {
-        int value = (int)Utils.TimerCheck() / 3;
-        for (int i = 0; i < value; i++)
+        double maxOfflineSeconds = 1200;
+        double actualSeconds = Math.Min(Utils.TimerCheck(), maxOfflineSeconds);
+
+
+        int totalDrops = (int)(actualSeconds / 3);
+        var allDropItems = Managers.ItemM.GetBatchDropItems(totalDrops);
+
+
+        foreach (var item in allDropItems)
         {
-            var item = Managers.ItemM.GetDropItem();
-
-            for (int j = 0; j < item.Count; j++)
+            if (itemsDic.ContainsKey(item.Name))
             {
-                if (itemsDic.ContainsKey(item[j].Name))
-                {
-                    itemsDic[item[j].Name].holder.Count++;
-                }
-                else
-                {
-                    var itemData = new ItemHolder();
-                    itemData.data = item[j];
-                    itemData.holder = new Holder();
-                    itemData.holder.Count = 1;
-
-                    itemsDic.Add(item[j].Name, itemData);
-                }
+                itemsDic[item.Name].holder.Count++;
+            }
+            else
+            {
+                var itemData = new ItemHolder();
+                itemData.data = item;
+                itemData.holder = new Holder();
+                itemData.holder.Count = 1;
+                itemsDic.Add(item.Name, itemData);
             }
         }
     }
     void OnClickGetButton()
     {
-        //TODO :Managers.InventoryM.items
         Managers.GameM.gameData.gold += money;
-        foreach(var item in itemsDic)
+        foreach (var item in itemsDic)
         {
             Managers.InventoryM.GetItem(item.Value.data, item.Value.holder.Count);
         }

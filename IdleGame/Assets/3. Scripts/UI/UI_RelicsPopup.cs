@@ -283,7 +283,9 @@ public class UI_RelicsPopup : UI_Popup
             var data = relic.Value;
             if (data.data.ItemType == Define.ItemType.Equipment)
             {
+                if (data.holder.Level >= data.data.MaxLevel) continue;
                 if (data.holder.Level == 0) continue;
+
                 int needCount = data.holder.Level * 5;
                 if (needCount < data.holder.Count)
                 {

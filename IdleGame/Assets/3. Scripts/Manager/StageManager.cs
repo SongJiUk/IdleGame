@@ -85,6 +85,7 @@ public class StageManager
                 case StageState.Clear:
                     count = 0;
                     clearEvent?.Invoke();
+                    Managers.GameM.gameData.clearStage++;
                     Managers.GameM.Stage++;
 
                     Managers.QuestM.GetMission(Define.MissionTarget.StageClear).Progress++;
@@ -155,13 +156,13 @@ public class StageManager
 
     public bool CanChangeToReady()
     {
-        if(stageState ==StageState.Boss || stageState == StageState.BossPlay)
+        if (stageState == StageState.Boss || stageState == StageState.BossPlay)
         {
             Managers.UIM.ShowToast("보스 진행중엔 투입할 수 없습니다.");
             return false;
         }
 
-        if(stageState == StageState.Dungeon ||
+        if (stageState == StageState.Dungeon ||
             stageState == StageState.DungeonClear ||
             stageState == StageState.DungeonFail ||
             stageState == StageState.DungeonOut)

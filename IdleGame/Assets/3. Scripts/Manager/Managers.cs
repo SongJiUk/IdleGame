@@ -106,4 +106,33 @@ public class Managers : MonoBehaviour
         PoolM.Clear();
     }
 
+    void OnApplicationPause(bool _pause)
+    {
+        GameM.OnApplicationPause(_pause);
+    }
+
+    void OnApplicationQuit()
+    {
+        GameM.OnApplicationPause(true);
+    }
+
+    public void TestManualSave()
+    {
+        Debug.Log("<color=yellow>[개발용] 수동 저장 테스트 시작</color>");
+        OnApplicationPause(true); // 동일한 로직 실행
+    }
+
+    public void TestManualLoad()
+    {
+        Debug.Log("<color=cyan>[개발용] 수동 로드 테스트 시작</color>");
+        OnApplicationPause(false); // 동일한 로직 실행
+    }
+    void Update()
+    {
+        // 에디터에서만 작동하게 제한
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.F)) TestManualSave();
+        if (Input.GetKeyDown(KeyCode.R)) TestManualLoad();
+#endif
+    }
 }

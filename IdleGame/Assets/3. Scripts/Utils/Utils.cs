@@ -301,7 +301,11 @@ public static class Utils
 
         return spawnPos;
     }
+    public static double CalculateOfflineMoney(double _timeSeconds)
+    {
+        return (Money() * _timeSeconds) / 3;
 
+    }
     #region 지수증가 공식(레벨, 스테이지데이터)
     public static double Money()
     {
@@ -579,24 +583,17 @@ public static class Utils
     #region Time
     public static double TimerCheck()
     {
-        if (Managers.GameM.EndDate == "" || Managers.GameM.StartDate == "")
-        {
-            return 0.0d;
-        }
 
-        DateTime startDate = DateTime.Parse(Managers.GameM.StartDate);
-        if (Managers.GameM.EndDate != null && Managers.GameM.EndDate != "")
-        {
-            DateTime endDate = DateTime.Parse(Managers.GameM.EndDate);
+        if (Managers.GameM.gameData.LastSaveTimeTicks == 0) return 0.0d;
 
-            TimeSpan timer = startDate - endDate;
-            double timeCount = timer.TotalSeconds;
+        long lastTicks = Managers.GameM.gameData.LastSaveTimeTicks;
+        long nowTicks = TimerNTP.NowTime.Ticks;
 
-            return timeCount;
+        long elapsedTicks = nowTicks - lastTicks;
 
-        }
-        else return 0;
+        double elapsedSeconds = (double)elapsedTicks / System.TimeSpan.TicksPerSecond;
 
+        return elapsedSeconds < 0 ? 0.0d : elapsedSeconds;
     }
 
     public static string NextDayTimer()

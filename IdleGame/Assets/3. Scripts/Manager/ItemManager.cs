@@ -54,28 +54,65 @@ public class ItemManager
 
     public List<Data.ItemData> GetDropItem()
     {
-        List<Data.ItemData> dropitems = new List<Data.ItemData>();
-        int currentStage = Managers.GameM.Stage;
+        List<Data.ItemData> dropItems = new List<Data.ItemData>();
+        var candidates = GetCandidateItems();
 
-        float bounus = Managers.PlayerM.ItemDrop();
+        float bonus = Managers.PlayerM.ItemDrop();
 
-        foreach (var data in Managers.GameM.gameData.Item_Data)
+        foreach (var item in candidates)
         {
-            var item = data.Value.data;
-
-            if (data.Value.data.ItemType == Define.ItemType.Currency) continue;
-            if (item.MinStage > currentStage) continue;
 
             float randValue = Random.Range(0, 100f);
-            float finalProb = item.Probability + bounus;
+            float finalProb = item.Probability + bonus;
 
-            finalProb = Mathf.Clamp(finalProb, 0f, 100f);
-            if (randValue <= finalProb)
+            if (randValue <= Mathf.Clamp(finalProb, 0f, 100f))
             {
-                dropitems.Add(data.Value.data);
+                dropItems.Add(item);
             }
         }
 
-        return dropitems;
+        return dropItems;
+    }
+
+    public List<Data.ItemData> GetBatchDropItems(int _dropCount)
+    {
+        List<Data.ItemData> allRewards = new List<Data.ItemData>();
+
+        var candidates = GetCandidateItems();
+        float bonus = Managers.PlayerM.ItemDrop();
+
+        for (int i = 0; i < _dropCount; i++)
+        {
+            foreach (var item in candidates)
+            {
+                float randValue = Random.Range(0, 100f);
+                float finalProb = item.Probability + bonus;
+
+                if (randValue <= Mathf.Clamp(finalProb, 0f, 100f))
+                {
+                    allRewards.Add(item);
+                }
+            }
+        }
+
+        return allRewards;
+    }
+
+    public List<Data.ItemData> GetCandidateItems()
+    {
+        List<Data.ItemData> candidates = new List<Data.ItemData>();
+
+        int currentStage = Managers.GameM.Stage;
+
+        foreach (var entry in Managers.GameM.gameData.Item_Data)
+        {
+            var item = entry.Value.data;
+            if (item.ItemType == Define.ItemType.Currency) continue;
+            if (item.MinStage > currentStage) continue;
+
+            candidates.Add(item);
+        }
+
+        return candidates;
     }
 }
