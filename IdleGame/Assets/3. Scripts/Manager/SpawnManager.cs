@@ -25,6 +25,7 @@ public class SpawnManager : MonoBehaviour, ITickable
     UI_GameScene scene = null;
     int dungeonDataID;
     bool isDelay = true;
+    bool isSpawning = false;
 
 
     //TODO : 처음 시작할땐 플레이어 스폰이 되있어야될거같긴함
@@ -165,12 +166,19 @@ public class SpawnManager : MonoBehaviour, ITickable
 
     public void StartSpawn()
     {
+        if (isSpawning) return;
         Managers.UpdateM.Register(this);
         spawnTime = 0f;
+        isSpawning = true;
+        Debug.Log("Start Spawn");
     }
     public void StopSpawn()
     {
+        if (!isSpawning) return;
+
         Managers.UpdateM.UnRegister(this);
+        isSpawning = false;
+        Debug.Log("Spawn Stop");
     }
 
     void SpawnMonster(int _count)
@@ -211,6 +219,7 @@ public class SpawnManager : MonoBehaviour, ITickable
             Managers.ObjectM.DeSpawn(Managers.ObjectM.pcList[i]);
         }
     }
+
     void DeSpawnMonster()
     {
         var monsters = Managers.ObjectM.mcList.ToList();
@@ -224,6 +233,10 @@ public class SpawnManager : MonoBehaviour, ITickable
 
     public void Tick(float _deltaTime)
     {
+
+        if (Managers.StageM.stageState == Define.StageState.Boss || Managers.StageM.stageState == Define.StageState.BossPlay) return;
+
+
         spawnTime -= _deltaTime;
         if (spawnTime <= 0f)
         {

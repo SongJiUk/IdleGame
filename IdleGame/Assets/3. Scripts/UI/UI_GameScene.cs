@@ -363,12 +363,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         UpdateUIState();
 
         //TODO : 퀘스트(옮겨주기)
-        GetText(TextsType, (int)Texts.QuestTitleText).text = $"퀘스트 {Managers.GameM.gameData.questCount + 1}";
-        GetText(TextsType, (int)Texts.QuestDescriptionText).text = Managers.QuestM.Localization_Counting(Managers.QuestM.GetState());
-        GetText(TextsType, (int)Texts.QuestTutorialText).text = $"({Managers.QuestM.Counting(Managers.QuestM.GetState())} / {Managers.QuestM.Quest.Value})";
-        GetText(TextsType, (int)Texts.QuestTutorialText).color = Managers.QuestM.GetCountColor();
-        GetText(TextsType, (int)Texts.RewardItemText).text = Managers.QuestM.GetReward().ToString();
-        GetImage(ImagesType, (int)Images.TutorialHandImage).gameObject.SetActive(Managers.QuestM.isGetReward());
+
+        OnChangeQuestInfo();
 
 #if UNITY_ANDROID
         GetButton(ButtonsType, (int)Buttons.LeaderBoardButton).gameObject.SetActive(true);
@@ -421,8 +417,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetObject(GameObjectsType, (int)GameObjects.StageMonsterCountObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.BossBoardObject).SetActive(false);
         GetObject(GameObjectsType, (int)GameObjects.DungeonBoardObject).SetActive(false);
-        // GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject).SetActive(false);
-        // GetObject(GameObjectsType, (int)GameObjects.GoldDungeonObject).SetActive(false);
 
         GetButton(ButtonsType, (int)Buttons.DeadFrameButton).gameObject.SetActive(false);
 
@@ -939,12 +933,6 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         {
             GetImage(ImagesType, (int)Images.BossHpImage).fillAmount = (float)hp;
             GetText(TextsType, (int)Texts.BossHPText).text = string.Format("{0:0.0}", hp * 100.0f) + "%";
-
-            int stageValue = Managers.GameM.Stage;
-            int stageForward = (stageValue / 20) + 1;
-            int stageBack = stageValue % 20;
-
-            GetText(TextsType, (int)Texts.BossBoardStageText).text = stageForward.ToString() + " - " + stageBack.ToString();
         }
 
 
@@ -998,6 +986,12 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         GetImage(ImagesType, (int)Images.BossHpImage).fillAmount = 1f;
         GetText(TextsType, (int)Texts.BossHPText).text = "100%";
+
+        int stageValue = Managers.GameM.Stage;
+        int stageForward = ((stageValue - 1) / 20) + 1;
+        int stageBack = ((stageValue - 1) % 20) + 1;
+
+        GetText(TextsType, (int)Texts.BossBoardStageText).text = stageForward.ToString() + " - " + stageBack.ToString();
     }
 
     public void ResetDungeonBoard()
@@ -1175,19 +1169,38 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
     public void OnDungeon(int _dungeonDataID)
     {
+        AllOff();
+        ResetDungeonBoard();
+        GetObject(GameObjectsType, (int)GameObjects.DungeonBoardObject).SetActive(true);
+
 
         type = Define.DungeonType.TreasureTrove;
         dungeonDataID = _dungeonDataID;
         if (_dungeonDataID == 70000) type = Define.DungeonType.TreasureTrove;
         else type = Define.DungeonType.GoldDungeon;
+        int level = 0;
+        switch (_dungeonDataID)
+        {
+            case 70000:
+                type = Define.DungeonType.TreasureTrove;
+                level = Managers.GameM.gameData.DungeonClearLevel[0] + 1;
+                GetText(TextsType, (int)Texts.DungeonBoardStageText).text = $"보물창고 Lv.{level}";
+                GetObject(GameObjectsType, (int)GameObjects.GoldDungeonObject).SetActive(false);
+                GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject).SetActive(true);
+                break;
+
+            case 70001:
+                type = Define.DungeonType.GoldDungeon;
+                level = Managers.GameM.gameData.DungeonClearLevel[1] + 1;
+                GetText(TextsType, (int)Texts.DungeonBoardStageText).text = $"골드던전 Lv.{level}";
+                GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject).SetActive(false);
+                GetObject(GameObjectsType, (int)GameObjects.GoldDungeonObject).SetActive(true);
+                break;
+        }
+
 
         OnReady();
-        AllOff();
 
-        GetObject(GameObjectsType, (int)GameObjects.DungeonBoardObject).SetActive(true);
-        GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject + (int)type).SetActive(true);
-
-        ResetDungeonBoard();
     }
 
     public async void OnDungeonClear()
@@ -1249,9 +1262,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetText(TextsType, (int)Texts.StageStateText).color = Managers.StageM.isDead ? Color.yellow : Color.blue;
 
         int stageValue = Managers.GameM.Stage;
-        int stageForward = (stageValue / 20) + 1;
-        int stageBack = stageValue % 20;
-        if (stageBack == 0) stageBack = 1;
+        int stageForward = ((stageValue - 1) / 20) + 1;
+        int stageBack = ((stageValue - 1) % 20) + 1;
 
         GetText(TextsType, (int)Texts.StageText).text = stageForward.ToString() + " - " + stageBack.ToString();
 

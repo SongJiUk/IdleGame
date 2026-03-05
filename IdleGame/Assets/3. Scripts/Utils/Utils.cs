@@ -133,6 +133,8 @@ public static class Utils
 
         foreach (PlayerController player in pList)
         {
+            if (player.IsDead) continue;
+
             if (lowestHpPlayer == null)
             {
                 lowestHpPlayer = player;
@@ -594,7 +596,7 @@ public static class Utils
 
         }
         else return 0;
-       
+
     }
 
     public static string NextDayTimer()
