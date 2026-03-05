@@ -159,10 +159,6 @@ public class UI_TitleScene : UI_Scene
 
         await Managers.FirebaseM.Init();
 
-
-        Managers.QuestM.Init();
-
-
         hasSeenLogin = PlayerPrefs.GetInt("HasSeenLogin", 0) == 1;
         if (!hasSeenLogin || !Managers.FirebaseM.IsLoggedIn())
         {

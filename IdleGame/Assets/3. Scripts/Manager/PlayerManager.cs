@@ -174,6 +174,13 @@ public class PlayerManager
         float achievement = (float)Managers.QuestM.Achievement_Status_Data.item;
         return smelt + achievement;
     }
+    public float GetAttackSpeedBonusPercent()
+    {
+        float smelt = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.AttackSpeed) * 0.01f;
+        float achievement = (float)Managers.QuestM.Achievement_Status_Data.attackSpeed * 0.01f;
+
+        return (smelt + achievement) * 100f;
+    }
 
     public float AttackSpeed(float _baseSpeed = 0.75f)
     {

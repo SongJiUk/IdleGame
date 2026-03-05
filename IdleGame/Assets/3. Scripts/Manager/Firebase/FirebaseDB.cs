@@ -159,6 +159,7 @@ public partial class FirebaseManager
             Managers.GameM.gameData.SyncFromSave();
             Managers.RelicM.Init();
 
+            Managers.QuestM.Init();
 
             Debug.Log("모든 데이터 로드 및 초기화 완료");
         }

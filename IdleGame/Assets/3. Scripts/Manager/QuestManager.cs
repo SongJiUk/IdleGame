@@ -84,7 +84,7 @@ public class QuestManager
 
     #region Achievement 
 
-    public List<Data.AchievementData> AchievementList = new List<Data.AchievementData>();
+    //public List<Data.AchievementData> AchievementList = new List<Data.AchievementData>();
     public Achievement_Status Achievement_Status_Data = new Achievement_Status();
     public Dictionary<int, bool> AchievementDic
     {
@@ -106,13 +106,22 @@ public class QuestManager
     }
     public void LoadAchievementDatas()
     {
+        Debug.Log($"[Debug] 로드 시점 AchievementDic 개수: {AchievementDic.Count}");
         Achievement_Status achievement_Status = new Achievement_Status();
         foreach (var data in Managers.DataM.AchievementDataDic)
         {
             int key = data.Key;
-            if (AchievementDic[key])
+            bool isCompleted = false;
+            if(AchievementDic.TryGetValue(key, out isCompleted))
             {
-                achievement_Status.GetStatusData(data.Value.RewardStatus, data.Value.RewardValue);
+                if(isCompleted)
+                {
+                    achievement_Status.GetStatusData(data.Value.RewardStatus, data.Value.RewardValue);
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"[DataWarning] 업적 ID {key}가 세이브 데이터에 없습니다. 로딩 순서를 확인하세요!");
             }
         }
 
