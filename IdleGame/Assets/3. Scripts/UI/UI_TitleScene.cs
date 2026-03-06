@@ -85,16 +85,7 @@ public class UI_TitleScene : UI_Scene
 
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(false);
 
-        GetButton(ButtonsType, (int)Buttons.StartButton).gameObject.BindEvent(async () =>
-        {
-            if (isLoadEnd)
-            {
-                isLoadEnd = false;
-                await Managers.SceneM.LoadSceneAsync(Define.SceneType.GameScene);
-                KillBlinkTween();
-            }
-
-        });
+        GetButton(ButtonsType, (int)Buttons.StartButton).gameObject.BindEvent(OnClickStartButton);
         GetButton(ButtonsType, (int)Buttons.GoogleLoginButton).gameObject.BindEvent(OnClickGoogleLoginButton);
         //GetButton(ButtonsType, (int)Buttons.AppleLoginButton).gameObject.BindEvent(OnClickAppleLoginButton);
 
@@ -208,8 +199,20 @@ public class UI_TitleScene : UI_Scene
         }
     }
 
+    async void OnClickStartButton()
+    {
+        Managers.SoundM.PlayButtonClick();
+        if (isLoadEnd)
+        {
+            isLoadEnd = false;
+            await Managers.SceneM.LoadSceneAsync(Define.SceneType.GameScene);
+            KillBlinkTween();
+        }
+    }
+
     void OnClickGoogleLoginButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Debug.Log("[LOGIN] Google Login Button Clicked");
         Managers.FirebaseM.LinkGoogleToCurrentUser().Forget();
     }

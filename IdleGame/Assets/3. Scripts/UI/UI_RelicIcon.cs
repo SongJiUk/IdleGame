@@ -98,11 +98,11 @@ public class UI_RelicIcon : UI_Base
     {
         isUseRelic = false;
 
-        for (int i = 0; i < Managers.GameM.gameData.relics.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.EquippedRelics.Length; i++)
         {
-            if (Managers.GameM.gameData.relics[i] == null) continue;
+            if (Managers.GameM.gameData.EquippedRelics[i] == null) continue;
 
-            if (Managers.GameM.gameData.relics[i] == data)
+            if (Managers.GameM.gameData.EquippedRelics[i] == data)
             {
                 isUseRelic = true;
             }
@@ -123,6 +123,7 @@ public class UI_RelicIcon : UI_Base
 
     async void OnClickRelicInfo()
     {
+        Managers.SoundM.PlayButtonClick();
         var popup = await Managers.UIM.ShowPopup<UI_RelicInfoPopup>();
         popup.SetInfo(data);
         popup.OnChangeRelicInfo -= CheckRelicInfo;
@@ -136,6 +137,7 @@ public class UI_RelicIcon : UI_Base
 
     void OnClickRelic()
     {
+        Managers.SoundM.PlayButtonClick();
         if (isUseRelic)
         {
             parent.SetClickIcon(this, true);

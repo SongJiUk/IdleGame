@@ -74,7 +74,7 @@ public class UI_AchievementPopup : UI_Popup
         RefreshUI();
     }
     void RefreshUI()
-    {        
+    {
         for (int i = 0; i < itemPool.Count; i++)
         {
             if (Managers.QuestM.AchievementDic[itemPool[i].data.AchievementID])
@@ -88,7 +88,7 @@ public class UI_AchievementPopup : UI_Popup
         LocalTemp(Define.Status_Holder.HP, Managers.QuestM.Achievement_Status_Data.hp),
         LocalTemp(Define.Status_Holder.Money, Managers.QuestM.Achievement_Status_Data.money),
         LocalTemp(Define.Status_Holder.Item, Managers.QuestM.Achievement_Status_Data.item),
-        LocalTemp(Define.Status_Holder.Skill, Managers.QuestM.Achievement_Status_Data.skill),
+        LocalTemp(Define.Status_Holder.Exp, Managers.QuestM.Achievement_Status_Data.exp),
         LocalTemp(Define.Status_Holder.AttackSpeed, Managers.QuestM.Achievement_Status_Data.attackSpeed),
         LocalTemp(Define.Status_Holder.CriticalP, Managers.QuestM.Achievement_Status_Data.criticalP),
         LocalTemp(Define.Status_Holder.CriticalD, Managers.QuestM.Achievement_Status_Data.criticalD)
@@ -103,21 +103,22 @@ public class UI_AchievementPopup : UI_Popup
     private string LocalTemp(Define.Status_Holder _holder, double _value)
     {
         string color;
-        if(_value != 0 )
-        { 
-        color = Utils.StringToColorGrade(Define.Grade.UnCommon);
+        if (_value != 0)
+        {
+            color = Utils.StringToColorGrade(Define.Grade.UnCommon);
         }
         else
-        color = Utils.StringToColorGrade(Define.Grade.Common);
-        
+            color = Utils.StringToColorGrade(Define.Grade.Common);
 
-        string temp = color + Managers.LocalM.localData[_holder.ToString()].GetData() + PlusOrMinus(_value) + _value.ToString() + "%" +"</color>";
+
+        string temp = color + Managers.LocalM.localData[_holder.ToString()].GetData() + PlusOrMinus(_value) + _value.ToString() + "%" + "</color>";
 
         return temp;
     }
 
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.ClosePopup(this).Forget();
 
     }

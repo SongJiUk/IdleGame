@@ -137,7 +137,7 @@ public class UI_MissionItem : UI_Base
 
     async void OnClickAcceptButton(int _num)
     {
-        //Managers.SoundM.PlayButtonClick();
+        Managers.SoundM.PlayButtonClick();
 
         int count = data.RewardCount;
         UI_Reward reward = await Managers.UIM.ShowPopup<UI_Reward>();

@@ -67,7 +67,7 @@ public class UI_MissionPopup : UI_Popup
 
         for (int i = 0; i < itemPool.Count; i++)
         {
-            if(Managers.QuestM.MissionDic[itemPool[i].data.MissionTarget.ToString()].isRewarded)
+            if (Managers.QuestM.MissionDic[itemPool[i].data.MissionTarget.ToString()].isRewarded)
             {
                 itemPool[i].transform.SetAsLastSibling();
             }
@@ -86,6 +86,7 @@ public class UI_MissionPopup : UI_Popup
 
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.ClosePopup(this).Forget();
     }
 

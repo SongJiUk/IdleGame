@@ -41,7 +41,7 @@ public class UI_Reward : UI_Base
     }
 
     public void SetInfo(int _count)
-    {
+    {   //Sound : reward Sound
         GetRewardInit("Dia", _count);
     }
 
@@ -73,6 +73,8 @@ public class UI_Reward : UI_Base
 
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
+
         Managers.IAPM.NotifyPurchaseSucces();
         Managers.UIM.ClosePopup(this).Forget();
     }

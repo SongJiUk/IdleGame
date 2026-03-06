@@ -262,7 +262,7 @@ public class PlayerController : CreatureController
     private void OnClear()
     {
         if (isDead) return;
-        //TODO : 환호 애니메이션으로 변경하기
+
         AnimatorChange(CreatureState.Idle);
     }
 
@@ -271,8 +271,10 @@ public class PlayerController : CreatureController
         AnimatorChange(CreatureState.Idle);
         isDead = false;
         target = null;
-        transform.position = startPos;
+        float randomX = UnityEngine.Random.Range(-3.0f, 3.0f);
+        float randomZ = UnityEngine.Random.Range(-3.0f, 3.0f);
 
+        transform.position = startPos + new Vector3(randomX, 0, randomZ);
     }
 
     void OnDungeonClear()
@@ -280,9 +282,9 @@ public class PlayerController : CreatureController
         OnDead();
     }
 
-    public async UniTask KnockBack(float _power, float _durtaion)
+    public async UniTask KnockBack(float _power, float _duration)
     {
-        float t = _durtaion;
+        float t = _duration;
         Vector3 force = transform.forward * -_power;
         force.y = 0f;
 

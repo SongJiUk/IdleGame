@@ -40,7 +40,7 @@ public class UI_Inventory : UI_Base
     RectTransform equipmentRect;
     RectTransform consumableRect;
     RectTransform othersRect;
-    
+
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -112,6 +112,7 @@ public class UI_Inventory : UI_Base
     }
     void OnClickAllButton()
     {
+        Managers.SoundM.PlayButtonClick();
         //Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
         //Vector3 endPos = GetButton(ButtonsType, (int)Buttons.AllButton).transform.position;
 
@@ -127,6 +128,7 @@ public class UI_Inventory : UI_Base
 
     void OnClickEquipmentButton()
     {
+        Managers.SoundM.PlayButtonClick();
         //Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
         //Vector3 endPos = GetButton(ButtonsType, (int)Buttons.EquipmentButton).transform.position;
 
@@ -158,6 +160,7 @@ public class UI_Inventory : UI_Base
 
     void OnClickConsumableButton()
     {
+        Managers.SoundM.PlayButtonClick();
         //Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
         //Vector3 endPos = GetButton(ButtonsType, (int)Buttons.ConsumableButton).transform.position;
 
@@ -189,6 +192,7 @@ public class UI_Inventory : UI_Base
 
     void OnClickOthersButton()
     {
+        Managers.SoundM.PlayButtonClick();
         //Transform targetTr = GetObject(GameObjectsType, (int)GameObjects.BarObject).transform;
         //Vector3 endPos = GetButton(ButtonsType, (int)Buttons.OthersButton).transform.position;
 
@@ -220,6 +224,7 @@ public class UI_Inventory : UI_Base
 
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.ClosePopup();
         DOTween.Kill(this);
     }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_SettingPopup : UI_Popup, ITickable
+public class UI_SettingPopup : UI_Popup
 {
     #region enum
 
@@ -73,8 +73,9 @@ public class UI_SettingPopup : UI_Popup, ITickable
 
         GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.SetActive(false);
         GetText(TextsType, (int)Texts.UserIDText).text = $"Unique ID : {Managers.FirebaseM.CurrentUser.UserId}";
-        GetSlider(SlidersType, (int)Sliders.BgmSlider).value = Managers.SoundM.BgmValue;
-        GetSlider(SlidersType, (int)Sliders.EffectSlider).value = Managers.SoundM.EffectValue;
+
+        GetSlider(SlidersType, (int)Sliders.BgmSlider).onValueChanged.AddListener(OnBgmVolumeChange);
+        GetSlider(SlidersType, (int)Sliders.EffectSlider).onValueChanged.AddListener(OnEffectVolumeChange);
 
         CameraShakeCheck();
         return true;
@@ -82,7 +83,6 @@ public class UI_SettingPopup : UI_Popup, ITickable
 
     public override void SetInfo()
     {
-        Managers.UpdateM.Register(this);
 
         if (!Managers.GameM.gameData.isGuest)
         {
@@ -92,6 +92,7 @@ public class UI_SettingPopup : UI_Popup, ITickable
 
     async void OnClickLanguageButton(Buttons _button)
     {
+        Managers.SoundM.PlayButtonClick();
         var popup = await Managers.UIM.ShowPopup<UI_ChangeLanguagePopup>();
         string language = "";
         switch (_button)
@@ -113,9 +114,10 @@ public class UI_SettingPopup : UI_Popup, ITickable
 
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
+
         PlayerPrefs.SetFloat("BGM", GetSlider(SlidersType, (int)Sliders.BgmSlider).value);
         PlayerPrefs.SetFloat("EFFECT", GetSlider(SlidersType, (int)Sliders.EffectSlider).value);
-        Managers.UpdateM.UnRegister(this);
 
         Managers.UIM.ClosePopup(this).Forget();
     }
@@ -127,13 +129,14 @@ public class UI_SettingPopup : UI_Popup, ITickable
     }
     void OnClickCameraShakeButton()
     {
-
+        Managers.SoundM.PlayButtonClick();
         PlayerPrefs.SetInt("CAM", CameraShakeCheck() == true ? 1 : 0);
         CameraShakeCheck();
     }
 
     void OnClickPrivacyPolicyButton()
     {
+        Managers.SoundM.PlayButtonClick();
         OpenURL("https://deserted-bream-361.notion.site/KOR-2f0ea58668dd80de93d3d0bee603c964?pvs=73");
     }
 
@@ -144,19 +147,27 @@ public class UI_SettingPopup : UI_Popup, ITickable
 
     void OnClickUniqueClipboard()
     {
+        Managers.SoundM.PlayButtonClick();
         GUIUtility.systemCopyBuffer = Managers.FirebaseM.CurrentUser.UserId;
         Managers.UIM.ShowToast("복사 완료");
     }
-    public void Tick(float _deltaTime)
+
+
+    void OnBgmVolumeChange(float _value)
     {
-        Managers.SoundM.BgmValue = GetSlider(SlidersType, (int)Sliders.BgmSlider).value;
-        Managers.SoundM.audioSources[0].volume = Managers.SoundM.BgmValue;
-        Managers.SoundM.EffectValue = GetSlider(SlidersType, (int)Sliders.EffectSlider).value;
-        Managers.SoundM.audioSources[1].volume = Managers.SoundM.EffectValue;
+        Managers.SoundM.BgmValue = _value;
+        Managers.SoundM.audioSources[0].volume = _value;
     }
 
+    void OnEffectVolumeChange(float _value)
+    {
+
+        Managers.SoundM.EffectValue = _value;
+        Managers.SoundM.audioSources[1].volume = _value;
+    }
     async void OnClickLogOutButton()
     {
+        Managers.SoundM.PlayButtonClick();
         await Managers.UIM.ShowPopup<UI_LogOutPopup>();
 
     }

@@ -29,7 +29,7 @@ public partial class FirebaseManager
             Debug.LogWarning("데이터가 비어있어 저장을 취소합니다.");
             return;
         }
-        data.SyncToSave();
+        //data.SyncToSave();
         data.LastSaveTimeTicks = TimerNTP.NowTime.Ticks;
 
         if (IsNewDay(data.LastSaveTimeTicks, TimerNTP.NowTime))
@@ -45,7 +45,7 @@ public partial class FirebaseManager
             string default_json = JsonConvert.SerializeObject(data);
             string character_json = JsonConvert.SerializeObject(data.Character_Holder);
             string item_json = JsonConvert.SerializeObject(data.Item_Holder);
-            string smelt_json = JsonConvert.SerializeObject(data.Smelts);
+            string smelt_json = JsonConvert.SerializeObject(data.EquippedSmelts);
 
             await UniTask.WhenAll(
                 reference.Child("users").Child(CurrentUser.UserId).Child("DATA").SetRawJsonValueAsync(default_json).AsUniTask(),
@@ -130,12 +130,12 @@ public partial class FirebaseManager
             {
                 string rawJson = smeltSnap.GetRawJsonValue();
                 var smeltList = JsonConvert.DeserializeObject<List<SmeltHolder>>(rawJson);
-                Managers.GameM.gameData.Smelts = smeltList ?? new List<SmeltHolder>();
+                Managers.GameM.gameData.EquippedSmelts = smeltList ?? new List<SmeltHolder>();
             }
 
             Managers.GameM.gameData.Init();
             Managers.GPGSM.Init();
-            Managers.GameM.gameData.SyncFromSave();
+            //Managers.GameM.gameData.SyncFromSave();
             Managers.RelicM.Init();
 
             Managers.QuestM.Init();

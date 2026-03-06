@@ -133,6 +133,7 @@ public class UI_DungeonResultInfoPopup : UI_Popup
 
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         isClickCloseButton = true;
         Managers.StageM.StateChange(Define.StageState.DungeonOut);
         Managers.UIM.ClosePopup(this).Forget();

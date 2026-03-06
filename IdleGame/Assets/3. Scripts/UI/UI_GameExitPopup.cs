@@ -31,11 +31,13 @@ public class UI_GameExitPopup : UI_Popup
 
     void OnClickGameExitButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Application.Quit();
     }
 
     void OnClickKeepGameButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.ClosePopup(this).Forget();
     }
 }

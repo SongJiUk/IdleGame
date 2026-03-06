@@ -1281,8 +1281,8 @@
       "AchievementID": 90001,
       "AchievementType": "Hero",
       "Title": "신속한 사냥꾼",
-      "RewardStatus": "Skill",
-      "RewardValue": -3,
+      "RewardStatus": "Exp",
+      "RewardValue": 5,
       "AchievementCharacters": "2/3",
       "AchievementCharactersLevel": "10/10",
       "AchievementRelic": ""
@@ -1431,7 +1431,7 @@
       "DataID": 110000,
       "Name": "Damage",
       "Grade": "Common",
-      "Description": "스킬 쿨타임 감소",
+      "Description": "데미지 증가",
       "Min": 3,
       "Max": 5,
       "Probability": 50
@@ -1440,7 +1440,7 @@
       "DataID": 110001,
       "Name": "Damage",
       "Grade": "UnCommon",
-      "Description": "스킬 쿨타임 감소",
+      "Description": "데미지 증가",
       "Min": 5,
       "Max": 8,
       "Probability": 25
@@ -1449,7 +1449,7 @@
       "DataID": 110002,
       "Name": "Damage",
       "Grade": "Rare",
-      "Description": "스킬 쿨타임 감소",
+      "Description": "데미지 증가",
       "Min": 8,
       "Max": 11,
       "Probability": 15
@@ -1458,7 +1458,7 @@
       "DataID": 110003,
       "Name": "Damage",
       "Grade": "Unique",
-      "Description": "스킬 쿨타임 감소",
+      "Description": "데미지 증가",
       "Min": 11,
       "Max": 15,
       "Probability": 9
@@ -1467,7 +1467,7 @@
       "DataID": 110004,
       "Name": "Damage",
       "Grade": "Legendary",
-      "Description": "스킬 쿨타임 감소",
+      "Description": "데미지 증가",
       "Min": 15,
       "Max": 20,
       "Probability": 1
@@ -1609,45 +1609,45 @@
     },
     {
       "DataID": 114000,
-      "Name": "Skill",
+      "Name": "Exp",
       "Grade": "Common",
-      "Description": "스킬 쿨타임 감소",
+      "Description": "경험치 획득량 증가",
       "Min": 3,
       "Max": 5,
       "Probability": 50
     },
     {
       "DataID": 114001,
-      "Name": "Skill",
+      "Name": "Exp",
       "Grade": "UnCommon",
-      "Description": "스킬 쿨타임 감소",
+      "Description": "경험치 획득량 증가",
       "Min": 5,
       "Max": 8,
       "Probability": 25
     },
     {
       "DataID": 114002,
-      "Name": "Skill",
+      "Name": "Exp",
       "Grade": "Rare",
-      "Description": "스킬 쿨타임 감소",
+      "Description": "경험치 획득량 증가",
       "Min": 8,
       "Max": 11,
       "Probability": 15
     },
     {
       "DataID": 114003,
-      "Name": "Skill",
+      "Name": "Exp",
       "Grade": "Unique",
-      "Description": "스킬 쿨타임 감소",
+      "Description": "경험치 획득량 증가",
       "Min": 11,
       "Max": 15,
       "Probability": 9
     },
     {
       "DataID": 114004,
-      "Name": "Skill",
+      "Name": "Exp",
       "Grade": "Legendary",
-      "Description": "스킬 쿨타임 감소",
+      "Description": "경험치 획득량 증가",
       "Min": 15,
       "Max": 20,
       "Probability": 1
@@ -2030,16 +2030,16 @@
       "ja": "アイテムドロップ率"
     },
     {
-      "Key": "Skill",
-      "ko": "스킬 쿨타임",
-      "en": "SkillCoolTime",
+      "Key": "Exp",
+      "ko": "경험치 획득량",
+      "en": "Experience gained",
       "ja": "スキルクールタイム"
     },
     {
       "Key": "AttackSpeed",
       "ko": "공격속도",
       "en": "AttackSpeed",
-      "ja": "攻撃速度"
+      "ja": "経験値獲得量"
     },
     {
       "Key": "CriticalP",

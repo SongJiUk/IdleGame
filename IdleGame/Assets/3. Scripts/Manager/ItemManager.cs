@@ -8,11 +8,11 @@ public class ItemManager
 
     public bool ItemCheck(string _name)
     {
-        for (int i = 0; i < Managers.GameM.gameData.relics.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.EquippedRelics.Length; i++)
         {
-            if (Managers.GameM.gameData.relics[i] == null) continue;
+            if (Managers.GameM.gameData.EquippedRelics[i] == null) continue;
 
-            if (Managers.GameM.gameData.relics[i].Name == _name) return true;
+            if (Managers.GameM.gameData.EquippedRelics[i].Name == _name) return true;
         }
 
         return false;
@@ -20,16 +20,16 @@ public class ItemManager
 
     public void SetItem(int _value, string _name)
     {
-        Managers.GameM.gameData.relics[_value] = Managers.GameM.gameData.Item_Data[_name].data;
+        Managers.GameM.gameData.EquippedRelics[_value] = Managers.GameM.gameData.Item_Data[_name].data;
     }
 
     public void RemoveItem(string _name)
     {
-        for (int i = 0; i < Managers.GameM.gameData.relics.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.EquippedRelics.Length; i++)
         {
-            if (Managers.GameM.gameData.relics[i] == null) continue;
+            if (Managers.GameM.gameData.EquippedRelics[i] == null) continue;
 
-            if (Managers.GameM.gameData.relics[i].Name == _name) Managers.GameM.gameData.relics[i] = null;
+            if (Managers.GameM.gameData.EquippedRelics[i].Name == _name) Managers.GameM.gameData.EquippedRelics[i] = null;
         }
 
         Managers.RelicM.Init();
@@ -48,7 +48,7 @@ public class ItemManager
 
     public void DisableItem(int _value)
     {
-        Managers.GameM.gameData.relics[_value] = null;
+        Managers.GameM.gameData.EquippedRelics[_value] = null;
     }
 
 

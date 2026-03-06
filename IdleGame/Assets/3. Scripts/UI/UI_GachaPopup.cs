@@ -167,6 +167,7 @@ public class UI_GachaPopup : UI_Popup
     }
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         if (isUsingButton) return;
 
         ResetIcon();
@@ -177,6 +178,7 @@ public class UI_GachaPopup : UI_Popup
 
     void OnClickOneMoreButton()
     {
+        Managers.SoundM.PlayButtonClick();
         if (isUsingButton) return;
 
         ResetIcon();

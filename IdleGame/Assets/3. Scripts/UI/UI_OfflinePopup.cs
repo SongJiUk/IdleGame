@@ -47,8 +47,6 @@ public class UI_OfflinePopup : UI_Popup
 
         parent = GetObject(GameObjectsType, (int)GameObjects.Content).transform;
 
-
-
         return true;
     }
 
@@ -100,6 +98,7 @@ public class UI_OfflinePopup : UI_Popup
     }
     void OnClickGetButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.GameM.gameData.gold += money;
         foreach (var item in itemsDic)
         {
@@ -111,6 +110,7 @@ public class UI_OfflinePopup : UI_Popup
 
     void OnClickAdGetButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Action rewardedAction = () =>
         {
             Managers.GameM.gameData.gold += (money * 2);

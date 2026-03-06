@@ -67,6 +67,7 @@ public class UI_GachaListPopup : UI_Popup
 
     void OnClickLevelBeforeButton()
     {
+        Managers.SoundM.PlayButtonClick();
         int value = Level - 1;
 
         if (value <= 0) value = 10;
@@ -77,6 +78,7 @@ public class UI_GachaListPopup : UI_Popup
 
     void OnClickLevelNextButton()
     {
+        Managers.SoundM.PlayButtonClick();
         int value = Level + 1;
         if (value > 10) value = 1;
         Level = value;
@@ -86,6 +88,7 @@ public class UI_GachaListPopup : UI_Popup
 
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.ClosePopup(this).Forget();
     }
 }

@@ -27,6 +27,7 @@ public class UI_LogOutPopup : UI_Popup
 
     void OnClickLogOutButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.FirebaseM.SignOutFM();
 
 #if UNITY_ANDROID || UNITY_IOS
@@ -40,16 +41,16 @@ public class UI_LogOutPopup : UI_Popup
         PlayerPrefs.DeleteKey("HasSeenLogin");
         PlayerPrefs.Save();
 
+        Managers.GameM.ResetGameData();
         Managers.GameM.gameData.isGuest = true;
         Managers.GameM.gameData.playerName = "Guest";
-
-        Managers.GameM.ResetGameData();
 
         Managers.SceneM.LoadSceneAsync(Define.SceneType.TitleScene).Forget();
     }
 
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.ClosePopup(this).Forget();
     }
 

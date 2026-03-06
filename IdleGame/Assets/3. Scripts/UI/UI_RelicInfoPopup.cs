@@ -91,17 +91,20 @@ public class UI_RelicInfoPopup : UI_Popup
 
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.ClosePopup(this).Forget();
     }
 
     void OnClickGachaButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.CloseAllPopup();
         Managers.UIM.ShowPopup<UI_ShopPopup>().Forget();
     }
 
     void OnClickEnforceButton()
     {
+        Managers.SoundM.PlayButtonClick();
         if (Managers.GameM.gameData.Item_Data.TryGetValue(data.Name, out var itemData))
         {
             if (itemData.holder.Level < 20)

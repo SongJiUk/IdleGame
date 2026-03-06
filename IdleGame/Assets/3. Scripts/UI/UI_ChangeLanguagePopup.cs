@@ -43,12 +43,14 @@ public class UI_ChangeLanguagePopup : UI_Popup
     }
     void OnClickYesButton()
     {
-        PlayerPrefs.SetString("LOCAL", language);
+        Managers.SoundM.PlayButtonClick();
+        Managers.GameM.gameData.language = language;
         Application.Quit();
     }
 
     void OnClickNoButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.ClosePopup(this).Forget();
     }
 }

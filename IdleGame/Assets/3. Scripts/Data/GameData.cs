@@ -27,6 +27,7 @@ public class Percentage
     int min, max;
 }
 
+[Serializable]
 public class SmeltHolder
 {
     public Define.Status_Holder holder;
@@ -34,13 +35,13 @@ public class SmeltHolder
     public float value;
     public bool isLock;
 }
-
+[Serializable]
 public class CharacterHolder
 {
     public Data.CreatureData data;
     public Holder holder;
 }
-
+[Serializable]
 public class ItemHolder
 {
     public Data.ItemData data;
@@ -79,6 +80,7 @@ public class Holder
 
 public class GameData
 {
+    public string language = "ko";
     public bool isGuest = true;
     public string playerName;
     public double damage;
@@ -119,41 +121,13 @@ public class GameData
     public Dictionary<string, ItemHolder> Item_Data = new Dictionary<string, ItemHolder>();
     public Dictionary<string, Holder> Item_Holder = new Dictionary<string, Holder>();
 
-    public List<SmeltHolder> Smelts = new List<SmeltHolder>();
+    public List<SmeltHolder> EquippedSmelts = new List<SmeltHolder>();
 
-    [JsonIgnore]
-    public Data.ItemData[] relics = new Data.ItemData[6];
-    public Dictionary<string, Data.ItemData> RelicsSave = new();
+    public Data.ItemData[] EquippedRelics = new Data.ItemData[6];
+    public Dictionary<string, Data.ItemData> SaveEquippedRelics = new();
 
     public Dictionary<string, MissionInfo> MissionDic = new();
     public Dictionary<int, bool> AchievementDic = new();
-
-
-    public void SyncFromSave()
-    {
-        Array.Clear(relics, 0, relics.Length);
-
-        if (RelicsSave == null) return;
-
-        foreach (var kv in RelicsSave)
-        {
-            if (int.TryParse(kv.Key, out int index))
-            {
-                if (index >= 0 && index < relics.Length)
-                    relics[index] = kv.Value;
-            }
-        }
-    }
-    public void SyncToSave()
-    {
-        if (RelicsSave == null) RelicsSave = new Dictionary<string, ItemData>();
-        else RelicsSave.Clear();
-
-        for (int i = 0; i < relics.Length; i++)
-        {
-            if (relics[i] != null) RelicsSave[i.ToString()] = relics[i];
-        }
-    }
 
     public void ResetDailyMission()
     {
@@ -303,11 +277,11 @@ public class GameData
     {
         float value = 0.0f;
 
-        for (int i = 0; i < Smelts.Count; i++)
+        for (int i = 0; i < EquippedSmelts.Count; i++)
         {
-            if (Smelts[i].holder == _status)
+            if (EquippedSmelts[i].holder == _status)
             {
-                value += Smelts[i].value;
+                value += EquippedSmelts[i].value;
             }
         }
 

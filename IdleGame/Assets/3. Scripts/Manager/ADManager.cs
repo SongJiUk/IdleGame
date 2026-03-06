@@ -126,6 +126,8 @@ public class ADManager
 
         if (rewardedAd != null && rewardedAd.CanShowAd())
         {
+
+            AudioListener.pause = true;
             rewardedAd.Show((Reward reward) =>
             {
                 Debug.Log($"보상형 광고 보상 지급 : {reward.Type} / {reward.Amount}");
@@ -135,6 +137,8 @@ public class ADManager
                     OnRewardedCallback?.Invoke();
                     OnRewardedCallback = null;
                 }
+
+                AudioListener.pause = false;
             });
         }
         else

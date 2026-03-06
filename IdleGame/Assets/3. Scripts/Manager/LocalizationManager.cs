@@ -44,7 +44,7 @@ public class LocalizationManager
     {
         Dictionary<string, StringData> value = new Dictionary<string, StringData>();
 
-        if(Managers.DataM == null || Managers.DataM.LocalizationDic == null)
+        if (Managers.DataM == null || Managers.DataM.LocalizationDic == null)
         {
             Debug.Log("Localization 초기화 확인하기");
             return value;
@@ -86,27 +86,13 @@ public class LocalizationManager
 
     void SetLanguage()
     {
-        string localCheck = PlayerPrefs.GetString("LOCAL");
+        string language = Managers.GameM.gameData.language;
 
-        if (localCheck == "" || localCheck == null)
+        if (!string.IsNullOrEmpty(language))
         {
-            SystemLanguage language = Application.systemLanguage;
-
-            switch (language)
-            {
-                case SystemLanguage.Korean: LocalAccess = "ko"; break;
-                case SystemLanguage.Japanese: LocalAccess = "ja"; break;
-                default: LocalAccess = "en"; break;
-            }
-
+            LocalAccess = language;
         }
-        else
-        {
-            LocalAccess = localCheck;
-        }
-
-        //TODO : 영어 테스트 
-        //LocalAccess = "en";
+        else LocalAccess = "ko";
     }
 
     public string Get(string _key)
@@ -114,7 +100,7 @@ public class LocalizationManager
         if (localData == null)
             return "";
 
-        if(!localData.ContainsKey(_key))
+        if (!localData.ContainsKey(_key))
         {
             Debug.Log($"Localization key not found : {_key}");
             return _key;

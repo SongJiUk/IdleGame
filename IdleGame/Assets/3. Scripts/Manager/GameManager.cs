@@ -245,8 +245,9 @@ public class GameManager
     async void ReloadAndCheckOfflineReward()
     {
         double elapsedSeconds = GetOfflineSeconds();
-        await Managers.FirebaseM.SyncDataOnly();
 
+
+        await Managers.FirebaseM.SyncDataOnly();
 
         if (elapsedSeconds >= 10.0d)
         {

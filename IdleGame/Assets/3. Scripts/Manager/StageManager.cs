@@ -66,7 +66,8 @@ public class StageManager
             switch (stageState)
             {
                 case StageState.Ready:
-                    maxCount = Managers.DataM.StageDataDic[Managers.GameM.Stage].StageClearMaxCount;
+                    int stageForward = ((Managers.GameM.Stage - 1) / 20) + 1;
+                    maxCount = Managers.DataM.StageDataDic[stageForward].StageClearMaxCount;
                     count = 0;
                     readyEvent?.Invoke();
                     AsyncAction(() => StateChange(StageState.Play), 1f, token).Forget();

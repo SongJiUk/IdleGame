@@ -77,6 +77,7 @@ public class UI_UpgradePopup : UI_Popup
     }
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         ClearUI();
         Managers.UIM.ClosePopup(this).Forget();
     }

@@ -370,20 +370,12 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 #elif UNITY_IOS
         GetButton(ButtonsType, (int)Buttons.LeaderBoardButton).gameObject.SetActive(false);
 #endif
-        //TODO : 튜토리얼 임시
-        //GetObject(GameObjectsType, (int)GameObjects.TutorialObject).gameObject.SetActive(false);
-        //TODO : 게임씬 입장시 이거
+
         Managers.BuffM.RestoreFromSave();
 
 
         AllOff();
         StartSpawn();
-
-
-        // if (Utils.TimerCheck() >= 10.0d)
-        // {
-        //     Managers.UIM.ShowPopup<UI_OfflinePopup>().Forget();
-        // }
 
         return true;
     }
@@ -463,6 +455,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     async UniTaskVoid OnClickAnyButtons(Buttons _clickButtonType)
     {
         clickedButton = null;
+        if (_clickButtonType != Buttons.LevelUpButton)
+            Managers.SoundM.PlayButtonClick();
+
         //Managers.UIM.CloseAllPopup();
         switch (_clickButtonType)
         {
@@ -768,8 +763,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     }
     public void OnClickGetFast()
     {
+        Managers.SoundM.PlayButtonClick();
         bool fast = !Managers.isFast;
-
         if (fast)
         {
             if (FastremainTime <= 0.0f)
@@ -1007,12 +1002,14 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     }
     public async void OnClickInventory()
     {
+        Managers.SoundM.PlayButtonClick();
         await Managers.UIM.ShowPopup<UI_Inventory>();
     }
 
     #region 하단 캐릭터들 정보 업데이트
     public async void OnClickCharacterPlus(int _index)
     {
+        Managers.SoundM.PlayButtonClick();
         //await Managers.UIM.ShowPopup<UI_HeroPopup>(_isFade: true);
         if (selectedButton != heroBtn && currentBottomPopup != null)
         {
@@ -1241,6 +1238,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     double needGold;
     public void OnClickLevelupButton()
     {
+        Managers.SoundM.Play(Define.Sound.Effect, "LevelUpButton");
         needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.Level, Utils.Datas.levelData.Player_Gold);
         if (Managers.GameM.Gold >= needGold)
         {

@@ -278,47 +278,59 @@ public class UI_ShopPopup : UI_Popup
 
     async void OnClickHeroAdGachaButton()
     {
+        Managers.SoundM.PlayButtonClick();
         if (!Managers.UIM.ClickLock(0.5f)) return;
 
         var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
         popup.OnGachaFinished = RefreshUI;
-        await popup.GetGachaHero(11);
+        await popup.GetGachaHero(1);
         RefreshUI();
-        Managers.QuestM.GetMission(Define.MissionTarget.HeroGacha).Progress += 11;
+        Managers.QuestM.GetMission(Define.MissionTarget.HeroGacha).Progress += 1;
 
     }
 
     async void OnClickHeroOneGachaButton()
     {
+        Managers.SoundM.PlayButtonClick();
         if (!Managers.UIM.ClickLock(0.5f)) return;
 
         if (Managers.GameM.Dia >= 300)
         {
-            //TODO : 성공시 Refresh()
-
+            Managers.GameM.Dia -= 300;
+            var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
+            popup.OnGachaFinished = RefreshUI;
+            await popup.GetGachaHero(1);
+            RefreshUI();
             Managers.QuestM.GetMission(Define.MissionTarget.HeroGacha).Progress++;
         }
         else
         {
-            //TODO : Toast
+            Managers.UIM.ShowToast("다이아가 부족합니다.");
         }
     }
 
     async void OnClickHeroElevenGachaButton()
     {
+        Managers.SoundM.PlayButtonClick();
         if (!Managers.UIM.ClickLock(0.5f)) return;
         if (Managers.GameM.Dia >= 3000)
         {
+            Managers.GameM.Dia -= 3000;
+            var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
+            popup.OnGachaFinished = RefreshUI;
+            await popup.GetGachaHero(11);
+            RefreshUI();
             Managers.QuestM.GetMission(Define.MissionTarget.HeroGacha).Progress += 11;
         }
         else
         {
-            //TODO : Toast
+            Managers.UIM.ShowToast("다이아가 부족합니다.");
         }
     }
 
     void OnClickHeroGachaListButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.ShowPopup<UI_GachaListPopup>().Forget();
 
     }
@@ -327,29 +339,57 @@ public class UI_ShopPopup : UI_Popup
     #region RelicButton
     async void OnClickRelicAdGachaButton()
     {
+        Managers.SoundM.PlayButtonClick();
         if (!Managers.UIM.ClickLock(0.5f)) return;
+
         var popup = await Managers.UIM.ShowPopup<UI_RelicGachaPopup>();
         popup.OnGachaFinished = RefreshUI;
-        await popup.GetGachaRelic(11);
+        await popup.GetGachaRelic(1);
         RefreshUI();
 
-        Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress += 11;
+        Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress += 1;
+
     }
 
-    void OnClickRelicOneGachaButton()
+    async void OnClickRelicOneGachaButton()
     {
+        Managers.SoundM.PlayButtonClick();
         if (!Managers.UIM.ClickLock(0.5f)) return;
-        Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress++;
+
+        if (Managers.GameM.Dia >= 300)
+        {
+            Managers.GameM.Dia -= 300;
+            var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
+            popup.OnGachaFinished = RefreshUI;
+            await popup.GetGachaHero(1);
+            RefreshUI();
+            Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress++;
+        }
+        else Managers.UIM.ShowToast("다이아가 부족합니다.");
+
     }
 
-    void OnClickRelicElevenGachaButton()
+    async void OnClickRelicElevenGachaButton()
     {
+        Managers.SoundM.PlayButtonClick();
         if (!Managers.UIM.ClickLock(0.5f)) return;
-        Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress += 11;
+        if (Managers.GameM.Dia >= 3000)
+        {
+            Managers.GameM.Dia -= 3000;
+            var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
+            popup.OnGachaFinished = RefreshUI;
+            await popup.GetGachaHero(11);
+            RefreshUI();
+            Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress += 11;
+        }
+        else Managers.UIM.ShowToast("다이아가 부족합니다.");
+
+
     }
 
-    void OnClickRelicGachaListButton()
+    async void OnClickRelicGachaListButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.ShowPopup<UI_GachaListPopup>().Forget();
     }
     #endregion
@@ -373,18 +413,21 @@ public class UI_ShopPopup : UI_Popup
     #region bottom Button
     void OnClickGachaButton()
     {
+        Managers.SoundM.PlayButtonClick();
         ScrollToTitle(gachaRect, true);
         MoveTarget(gachaButtonRect, true);
     }
 
     void OnClickPackageButton()
     {
+        Managers.SoundM.PlayButtonClick();
         ScrollToTitle(removeAdsRect, true);
         MoveTarget(removeAdsButtonRect, true);
     }
 
     void OnClickGoodsButton()
     {
+        Managers.SoundM.PlayButtonClick();
         ScrollToTitle(goodsRect, true);
         MoveTarget(goodsButtonRect, true);
     }
@@ -465,6 +508,7 @@ public class UI_ShopPopup : UI_Popup
 
     void OnClickGoodsButton(Buttons _clickButton)
     {
+        Managers.SoundM.PlayButtonClick();
         switch (_clickButton)
         {
             case Buttons.RemoveAdsButton:
@@ -498,6 +542,7 @@ public class UI_ShopPopup : UI_Popup
     }
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.GameM.OnGoodsChanged -= CheckGoodsCount;
         Managers.IAPM.OnPurchaseSuccess -= OnCheckRemoveAD;
         TriggerClose(this, true).Forget();

@@ -186,7 +186,7 @@ public static class Define
         HP, //체력 
         Money, //골드 획득량
         Item, //아이템 드랍률
-        Skill,// 스킬 쿨타임
+        Exp,//경험치 획득량
         AttackSpeed, //공격속도
         CriticalP, //크리티컬 확률
         CriticalD // 크리티컬 데미지

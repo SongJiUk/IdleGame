@@ -156,7 +156,7 @@ public class UI_RelicsPopup : UI_Popup
     }
     void InitEquippedRelicsUI()
     {
-        var slots = Managers.GameM.gameData.relics;
+        var slots = Managers.GameM.gameData.EquippedRelics;
 
         for (int i = 0; i < slots.Length; i++)
         {
@@ -185,7 +185,7 @@ public class UI_RelicsPopup : UI_Popup
     {
         if (clickRelic == null) return;
 
-
+        Managers.SoundM.PlayButtonClick();
         InitRelic(_button);
 
     }
@@ -219,9 +219,9 @@ public class UI_RelicsPopup : UI_Popup
 
     void RemoveRelic()
     {
-        for (int i = 0; i < Managers.GameM.gameData.relics.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.EquippedRelics.Length; i++)
         {
-            if (Managers.GameM.gameData.relics[i] == null)
+            if (Managers.GameM.gameData.EquippedRelics[i] == null)
             {
                 Buttons btn = (Buttons)i;
                 GetImage(ImagesType, (int)relicMaps[btn].bg).color = Utils.HexToColor("#FFFFFF");
@@ -235,6 +235,7 @@ public class UI_RelicsPopup : UI_Popup
 
     async void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         await TriggerClose(this, false);
 
         ClearIcons();
@@ -252,6 +253,7 @@ public class UI_RelicsPopup : UI_Popup
 
     async void OnClickGachaButton()
     {
+        Managers.SoundM.PlayButtonClick();
         //if (!Managers.UIM.ClickLock(0.5f)) return;
         var gameScene = Managers.UIM.SceneUI as UI_GameScene;
         if (gameScene != null)
@@ -264,6 +266,7 @@ public class UI_RelicsPopup : UI_Popup
 
     async void OnClickEnforceButton()
     {
+        Managers.SoundM.PlayButtonClick();
         if (CheckUpgradeRelic())
         {
             var popup = await Managers.UIM.ShowPopup<UI_UpgradePopup>();
@@ -316,9 +319,9 @@ public class UI_RelicsPopup : UI_Popup
         {
             clickRelic = _clickRelic;
 
-            for (int i = 0; i < Managers.GameM.gameData.relics.Length; i++)
+            for (int i = 0; i < Managers.GameM.gameData.EquippedRelics.Length; i++)
             {
-                var data = Managers.GameM.gameData.relics[i];
+                var data = Managers.GameM.gameData.EquippedRelics[i];
                 if (data != null)
                 {
                     if (data == clickRelic.DATA)

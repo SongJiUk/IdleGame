@@ -16,6 +16,7 @@ public class UI_HeroStatPopup : UI_Popup
         HealthText,
         GoldDropRateText,
         ItemDropRateText,
+        ExpUpRateText,
         AttackSpeedText,
         CriticalChanceText,
         CriticalDamageText,
@@ -95,13 +96,17 @@ public class UI_HeroStatPopup : UI_Popup
         GetText(TextsType, (int)Texts.AttackPowerText).text = Utils.ToCurrencyString(Managers.PlayerM.MainAttack());
         GetText(TextsType, (int)Texts.HealthText).text = Utils.ToCurrencyString(Managers.PlayerM.MainHP());
 
-        GetText(TextsType, (int)Texts.GoldDropRateText).text = string.Format("{0:0}%", Managers.PlayerM.GoldDrop() * 100f);
-        GetText(TextsType, (int)Texts.ItemDropRateText).text = string.Format("{0:0}%", Managers.PlayerM.ItemDrop());
+        GetText(TextsType, (int)Texts.GoldDropRateText).text = string.Format("+{0:0}%", Managers.PlayerM.GoldDrop() * 100f);
+        GetText(TextsType, (int)Texts.ItemDropRateText).text = string.Format("+{0:0}%", 100f + Managers.PlayerM.ItemDrop());
+
+        float finalExp = Managers.PlayerM.GetExpUpPercent();
+        GetText(TextsType, (int)Texts.ExpUpRateText).text = string.Format("+{0:0}%", 100f + finalExp);
+
         float finalSpeed = Managers.PlayerM.GetAttackSpeedBonusPercent();
         GetText(TextsType, (int)Texts.AttackSpeedText).text = string.Format("+{0:0}%", 100f + finalSpeed);
 
-        GetText(TextsType, (int)Texts.CriticalChanceText).text = string.Format("{0:0}%", Managers.PlayerM.CriticalChance());
-        GetText(TextsType, (int)Texts.CriticalDamageText).text = string.Format("{0:0}%", Managers.PlayerM.CriticalDamage());
+        GetText(TextsType, (int)Texts.CriticalChanceText).text = string.Format("+{0:0}%", Managers.PlayerM.CriticalChance());
+        GetText(TextsType, (int)Texts.CriticalDamageText).text = string.Format("+{0:0}%", Managers.PlayerM.CriticalDamage());
     }
 
 
@@ -159,6 +164,7 @@ public class UI_HeroStatPopup : UI_Popup
 
     async void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         await TriggerClose(this, true);
     }
 

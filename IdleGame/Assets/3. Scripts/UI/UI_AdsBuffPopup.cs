@@ -134,6 +134,7 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
 
     void OnClickUpButton(Define.BuffType _type)
     {
+        Managers.SoundM.PlayButtonClick();
         Action rewardedAction = () =>
         {
             Managers.BuffM.OnWatchAd();
@@ -174,6 +175,7 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
     }
     void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         Managers.UIM.ClosePopup(this).Forget();
     }
 

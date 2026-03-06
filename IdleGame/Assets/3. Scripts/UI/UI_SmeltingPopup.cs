@@ -75,11 +75,11 @@ public class UI_SmeltingPopup : UI_Popup
             GetObject(GameObjectsType, (int)GameObjects.Smelting_1_Object + i).SetActive(false);
         }
 
-        if (Managers.GameM.gameData.Smelts.Count > 0)
+        if (Managers.GameM.gameData.EquippedSmelts.Count > 0)
         {
-            for (int i = 0; i < Managers.GameM.gameData.Smelts.Count; i++)
+            for (int i = 0; i < Managers.GameM.gameData.EquippedSmelts.Count; i++)
             {
-                var saveData = Managers.GameM.gameData.Smelts[i];
+                var saveData = Managers.GameM.gameData.EquippedSmelts[i];
                 RestoreSlot(saveData, i);
             }
         }
@@ -112,7 +112,7 @@ public class UI_SmeltingPopup : UI_Popup
 
     public void SetSmelt()
     {
-        Managers.GameM.gameData.Smelts.Clear();
+        Managers.GameM.gameData.EquippedSmelts.Clear();
         for (int i = 0; i < SmeltingMaxCount; i++)
         {
             GetObject(GameObjectsType, (int)GameObjects.Smelting_1_Object + i).SetActive(false);
@@ -191,7 +191,7 @@ public class UI_SmeltingPopup : UI_Popup
             }
         });
 
-        Managers.GameM.gameData.Smelts.Add(new SmeltHolder
+        Managers.GameM.gameData.EquippedSmelts.Add(new SmeltHolder
         {
             holder = _statusName,
             grade = localData.Grade,
@@ -245,11 +245,14 @@ public class UI_SmeltingPopup : UI_Popup
 
     async void OnClickCloseButton()
     {
+        Managers.SoundM.PlayButtonClick();
         await TriggerClose(this, false);
     }
 
     void OnClickSmeltingButton()
     {
+        Managers.SoundM.PlayButtonClick();
+
         if (Managers.InventoryM.UseItem(UseItemName, NeedCount))
         {
             SetSmelt();

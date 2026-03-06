@@ -69,7 +69,7 @@ public class UI_AchievementItem : UI_Base
         {
             case Define.AchievementType.Hero:
                 bool isCanCollectHero = true;
-                
+
                 for (int i = 0; i < data.AchievementCharactersList.Count; i++)
                 {
                     UI_AchievementIcon icon;
@@ -109,7 +109,7 @@ public class UI_AchievementItem : UI_Base
 
             case Define.AchievementType.Relic:
                 bool isCanCollectRelic = true;
-                
+
                 for (int i = 0; i < data.AchievementRelicList.Count; i++)
                 {
                     UI_AchievementIcon icon;
@@ -126,7 +126,7 @@ public class UI_AchievementItem : UI_Base
                     }
 
                     int dataID = data.AchievementRelicList[i];
-                    var itemData = Managers .DataM.ItemDataDic[dataID];
+                    var itemData = Managers.DataM.ItemDataDic[dataID];
 
                     var item = Managers.GameM.gameData.Item_Data[itemData.Name];
                     if (item.holder.Count == 0)
@@ -146,6 +146,7 @@ public class UI_AchievementItem : UI_Base
 
     void OnClickCollectButton(int _achievementID, bool _isCollect)
     {
+        Managers.SoundM.PlayButtonClick();
         if (_isCollect)
         {
             Managers.QuestM.AchievementDic[_achievementID] = true;

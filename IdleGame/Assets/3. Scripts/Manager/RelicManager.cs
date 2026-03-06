@@ -24,7 +24,7 @@ public class RelicManager
     {
         EquippedRelics.Clear();
 
-        for (int i = 0; i < Managers.GameM.gameData.relics.Length; i++)
+        for (int i = 0; i < Managers.GameM.gameData.EquippedRelics.Length; i++)
         {
             if (Managers.ItemM.ItemCheck((Define.RelicName.Gold_Dice + i).ToString()))
             {

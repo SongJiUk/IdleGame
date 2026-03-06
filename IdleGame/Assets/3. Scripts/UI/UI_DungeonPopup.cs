@@ -108,9 +108,8 @@ public class UI_DungeonPopup : UI_Popup, ITickable
 
     void OnClickDungeonStartButton(Buttons _btn)
     {
-
+        Managers.SoundM.PlayButtonClick();
         StartDungeonButtonPress(_btn).Forget();
-
     }
 
     async UniTaskVoid StartDungeonButtonPress(Buttons _btn)
@@ -168,7 +167,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
 
     void OnClickMinusButton(Buttons _btn)
     {
-
+        Managers.SoundM.PlayButtonClick();
         switch (_btn)
         {
             case Buttons.TreasureTroveMinusButton:
@@ -207,6 +206,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
 
     void OnClickPlusButton(Buttons _btn)
     {
+        Managers.SoundM.PlayButtonClick();
         switch (_btn)
         {
             case Buttons.TreasureTrovePlusButton:

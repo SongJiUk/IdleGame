@@ -34,7 +34,7 @@ public class UI_HeroPopup : UI_Popup
         Circle6Button,
         HeroGachaButton,
         HeroEnforceButton,
-        
+
     }
     UI_CharacterIcon clickCharacter;
     RectTransform rect;
@@ -110,14 +110,14 @@ public class UI_HeroPopup : UI_Popup
         }
 
         //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(true);
-    }   
+    }
 
 
     async void OnClickHeroGachaButton()
     {
         //if (!Managers.UIM.ClickLock(0.5f)) return;
         var gameScene = Managers.UIM.SceneUI as UI_GameScene;
-        if(gameScene != null)
+        if (gameScene != null)
         {
             //await Managers.UIM.ClosePopup(this);
             gameScene.OpenShopFormOtherUI().Forget();
@@ -162,7 +162,7 @@ public class UI_HeroPopup : UI_Popup
 
     async void OnClickCloseButton()
     {
-
+        Managers.SoundM.PlayButtonClick();
         await TriggerClose(this, true);
 
         ClearIcons();
@@ -183,17 +183,18 @@ public class UI_HeroPopup : UI_Popup
 
     void OnClickCircleButton(Buttons _clickButton)
     {
+        Managers.SoundM.PlayButtonClick();
         //일단 선택된 캐릭터가 없으면 return
         if (clickCharacter == null) return;
         if (_clickButton > Buttons.Circle6Button) return;
-        if(_clickButton < Buttons.Circle1Button) return;
+        if (_clickButton < Buttons.Circle1Button) return;
         InitCharacter(_clickButton);
     }
 
     void InitCharacter(Buttons _clickButton)
     {
 
-        if(!Managers.StageM.CanChangeToReady())
+        if (!Managers.StageM.CanChangeToReady())
         {
             return;
         }
@@ -216,7 +217,7 @@ public class UI_HeroPopup : UI_Popup
             clickCharacter = null;
             //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(true);
             Managers.StageM.StateChange(Define.StageState.Ready);
-            
+
         }
         else
         {
@@ -256,7 +257,7 @@ public class UI_HeroPopup : UI_Popup
         OnValueChange?.Invoke();
         clickCharacter = null;
 
-        Managers.StageM.StateChange(Define.StageState.Ready); 
+        Managers.StageM.StateChange(Define.StageState.Ready);
     }
 
     public void SetClick(UI_CharacterIcon _clickCharacter, bool _isMinusClick = false)

@@ -6,10 +6,12 @@ public class PlayerManager
 {
     public void ExpUp()
     {
-
         float relicBouns = Managers.RelicM.GetPassiveBonus(Define.RelicName.GoldenRing.ToString());
+        float smeltBonus = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Exp);
         double baseExp = Utils.Datas.levelData.Exp();
-        double finalExp = baseExp * (1.0f + (relicBouns / 100f));
+
+        float totalBonusPercent = (relicBouns + smeltBonus) / 100f;
+        double finalExp = baseExp * (1.0f + totalBonusPercent);
 
         Managers.GameM.Exp += finalExp;
 
@@ -18,6 +20,16 @@ public class PlayerManager
             double remainExp = Managers.GameM.Exp - Utils.Datas.levelData.MaxExp();
             LevelUp(remainExp);
         }
+    }
+
+    public float GetExpUpPercent()
+    {
+        float relicBouns = Managers.RelicM.GetPassiveBonus(Define.RelicName.GoldenRing.ToString());
+        float smeltBonus = Managers.GameM.gameData.GetValueSmelt(Define.Status_Holder.Exp);
+
+        float bonus = relicBouns + smeltBonus;
+
+        return bonus;
     }
 
     public float ExpPercent()

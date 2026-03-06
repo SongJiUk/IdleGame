@@ -199,19 +199,34 @@ public class SpawnManager : MonoBehaviour, ITickable
         if (scene == null) scene = Managers.UIM.SceneUI as UI_GameScene;
         boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
 
-        Vector3 Pos = boss.transform.position;
+        ApplyKnockBackWithDelay(boss).Forget();
+
+    }
+
+    async UniTaskVoid ApplyKnockBackWithDelay(MonsterController _boss)
+    {
+
+        await UniTask.NextFrame();
+
+        Vector3 bossPos = _boss.transform.position;
 
         foreach (var player in Managers.CharacterM.AlivePlayers)
         {
-            if (Vector3.Distance(Pos, player.transform.position) <= 2.0f)
+
+            Vector3 playerPos = player.transform.position;
+            float dist = Vector3.Distance(bossPos, playerPos);
+
+            if (dist <= 2.0f)
             {
-                player.transform.LookAt(Pos);
+                Vector3 knockBackDir = (playerPos - bossPos).normalized;
+                if (knockBackDir == Vector3.zero) knockBackDir = Vector3.forward;
+
+                player.transform.LookAt(bossPos);
+
                 player.KnockBack(3.0f, 0.3f).Forget();
             }
         }
     }
-
-
     void DeSpawnPlayer()
     {
         for (int i = Managers.ObjectM.pcList.Count - 1; i >= 0; i--)

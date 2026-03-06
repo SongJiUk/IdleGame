@@ -590,7 +590,6 @@ public static class Utils
         long nowTicks = TimerNTP.NowTime.Ticks;
 
         long elapsedTicks = nowTicks - lastTicks;
-
         double elapsedSeconds = (double)elapsedTicks / System.TimeSpan.TicksPerSecond;
 
         return elapsedSeconds < 0 ? 0.0d : elapsedSeconds;

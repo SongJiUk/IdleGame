@@ -16,7 +16,7 @@ public class Achievement_Status
     public double hp;
     public double money;
     public double item;
-    public double skill;
+    public double exp;
     public double attackSpeed;
     public double criticalP;
     public double criticalD;
@@ -29,7 +29,7 @@ public class Achievement_Status
             case Define.Status_Holder.HP: hp += _value; break;
             case Define.Status_Holder.Money: money += _value; break;
             case Define.Status_Holder.Item: item += _value; break;
-            case Define.Status_Holder.Skill: skill += _value; break;
+            case Define.Status_Holder.Exp: exp += _value; break;
             case Define.Status_Holder.AttackSpeed: attackSpeed += _value; break;
             case Define.Status_Holder.CriticalP: criticalP += _value; break;
             case Define.Status_Holder.CriticalD: criticalD += _value; break;

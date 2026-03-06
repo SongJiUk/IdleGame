@@ -7,15 +7,14 @@ public class SoundManager
 {
     public AudioSource[] audioSources = new AudioSource[(int)Define.Sound.Max];
     Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
-    public bool IsSoundOn { get; private set; } = true;
 
     GameObject soundRoot = null;
 
-    public float BgmValue = 1.0f, EffectValue = 1.0f;
+    public float BgmValue, EffectValue;
     public void Init()
     {
-        BgmValue = PlayerPrefs.GetFloat("BGM");
-        EffectValue = PlayerPrefs.GetFloat("EFFECT");
+        BgmValue = PlayerPrefs.GetFloat("BGM", 1.0f);
+        EffectValue = PlayerPrefs.GetFloat("EFFECT", 1.0f);
 
         if (soundRoot != null) return;
         soundRoot = GameObject.Find("@SoundRoot");
@@ -45,7 +44,6 @@ public class SoundManager
 
     public void Play(Define.Sound _sound, string _label, float _pitch = 1f)
     {
-        if (!IsSoundOn) return;
         AudioSource audio = audioSources[(int)_sound];
         PlayInternal(_sound, _label, _pitch, audio);
     }
@@ -88,12 +86,12 @@ public class SoundManager
                 break;
 
             default:
-                //if (Managers.GameM.EffectSoundOn)
-                _source.PlayOneShot(_clip);
+                if (PlayerPrefs.GetFloat("EFFECT") > 0)
+                    _source.PlayOneShot(_clip);
                 break;
         }
     }
-    public void PlayButtonClick() => Play(Define.Sound.Effect, "lick");
+    public void PlayButtonClick() => Play(Define.Sound.Effect, "Click");
     public void PlayPopupClose() => Play(Define.Sound.Effect, "PopupClose");
 
 
@@ -102,12 +100,5 @@ public class SoundManager
     {
         AudioSource audio = audioSources[(int)_sound];
         if (audio.isPlaying) audio.Stop();
-    }
-
-
-    public void ToggleSound()
-    {
-        IsSoundOn = !IsSoundOn;
-        AudioListener.volume = IsSoundOn ? 1f : 0f;
     }
 }

@@ -116,6 +116,7 @@ public class Managers : MonoBehaviour
         GameM.OnApplicationPause(true);
     }
 
+    //TODO : 테스트 코드 지우기
     public void TestManualSave()
     {
         Debug.Log("<color=yellow>[개발용] 수동 저장 테스트 시작</color>");
