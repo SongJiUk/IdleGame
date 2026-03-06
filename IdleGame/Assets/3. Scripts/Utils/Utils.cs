@@ -28,16 +28,17 @@ using System.Linq;
 
 public static class Utils
 {
+    #region constData
+
 
     public const int GoodsDirectingDataID = 69101;
     public const int DamageFontDataID = 69102;
     public const int SpeechBubbleDataID = 69103;
     public const int DropItemDataID = 69104;
 
-
     public const int GachaMaxLevel = 10;
     public const int GradeCount = 5;
-    //NOTE: 레벨 데이터 값
+    #endregion
     private static LevelDesign datas;
     public static LevelDesign Datas
     {

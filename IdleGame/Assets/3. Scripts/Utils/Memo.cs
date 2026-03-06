@@ -68,7 +68,7 @@ public class Memo
     설정에서 배경음, 효과음 처음에는 풀로 맞춰놓기 => 했음
 
 
-    TODO : 게임 효과음 추가
+    TODO : 게임 효과음 추가 (다 추가는 해놨음, 이제 맞추기만 하면 될듯)
     TODO : 만들긴했는데, 테스트 해봐야됌
     TODO ; 로그아웃 이미지, 애플로그인 일단 삭제했음, 로그아웃 테스트
     TODO : 로그인하고 ID 메인씬에 적용하기
@@ -88,6 +88,6 @@ public class Memo
     갑자기 영웅 사라지는거 확인
     구글 로그인을 해도 누르면 게스트로 로그인이 되는듯 이것도 확인해봐야함
     
-    
+    Sound Effect by <a href="https://pixabay.com/ko/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=108175">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=108175">Pixabay</a>
     */
 }

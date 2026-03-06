@@ -201,9 +201,10 @@ public class UI_TitleScene : UI_Scene
 
     async void OnClickStartButton()
     {
-        Managers.SoundM.PlayButtonClick();
+
         if (isLoadEnd)
         {
+            Managers.SoundM.PlayButtonClick();
             isLoadEnd = false;
             await Managers.SceneM.LoadSceneAsync(Define.SceneType.GameScene);
             KillBlinkTween();
