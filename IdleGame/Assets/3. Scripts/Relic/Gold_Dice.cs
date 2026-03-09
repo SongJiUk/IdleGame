@@ -30,7 +30,7 @@ public class Gold_Dice : MonoBehaviour
         try
         {
             transform.DOScale(0.5f, 0.2f).SetEase(Ease.OutBack);
-
+            Managers.SoundM.PlayGoldDice();
             for (int i = 0; i < 10; i++)
             {
                 int randnum = UnityEngine.Random.Range(1, 7);

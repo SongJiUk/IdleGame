@@ -8,7 +8,7 @@ public class Assassin_Skill : SkillBase
     {
     }
 
-    public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
+    public override async UniTask<bool> UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         CreatureController target = null;
         InitSkillData(_caster);
@@ -30,7 +30,7 @@ public class Assassin_Skill : SkillBase
             }
 
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
-
+            Managers.SoundM.Play(Define.Sound.Effect, "AssassinSkill");
             return true;
         }
         else

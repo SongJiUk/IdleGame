@@ -83,6 +83,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
 
     public override void SetInfo()
     {
+        Managers.SoundM.MuteEffectVolume(true);
 
         for (int i = 0; i < Managers.GameM.gameData.DungeonKey.Length; i++)
         {

@@ -18,6 +18,7 @@ public class UI_SettingPopup : UI_Popup
         JaButton,
         LogOutButton,
         RestoreButton,
+        GameResetButton,
     }
     enum Sliders
     {
@@ -65,6 +66,8 @@ public class UI_SettingPopup : UI_Popup
 
         GetButton(ButtonsType, (int)Buttons.LogOutButton).gameObject.BindEvent(OnClickLogOutButton);
         GetButton(ButtonsType, (int)Buttons.LogOutButton).gameObject.SetActive(false);
+
+        GetButton(ButtonsType, (int)Buttons.GameResetButton).gameObject.BindEvent(OnClickResetButton);
 #if UNITY_IOS
         GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.SetActive(true);
         GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.BindEvent(() => Managers.IAPM.RestorePurchase());
@@ -161,14 +164,18 @@ public class UI_SettingPopup : UI_Popup
 
     void OnEffectVolumeChange(float _value)
     {
-
-        Managers.SoundM.EffectValue = _value;
-        Managers.SoundM.audioSources[1].volume = _value;
+        Managers.SoundM.SetEffectVolume(_value);
     }
     async void OnClickLogOutButton()
     {
         Managers.SoundM.PlayButtonClick();
         await Managers.UIM.ShowPopup<UI_LogOutPopup>();
+    }
+
+    async void OnClickResetButton()
+    {
+        Managers.SoundM.PlayButtonClick();
+        await Managers.UIM.ShowPopup<UI_ResetPopup>();
 
     }
 }

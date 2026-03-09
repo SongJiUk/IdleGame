@@ -4,6 +4,8 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using Firebase;
+using Firebase.Auth;
 
 public class UI_TitleScene : UI_Scene
 {
@@ -211,11 +213,39 @@ public class UI_TitleScene : UI_Scene
         }
     }
 
-    void OnClickGoogleLoginButton()
+    async void OnClickGoogleLoginButton()
     {
         Managers.SoundM.PlayButtonClick();
         Debug.Log("[LOGIN] Google Login Button Clicked");
-        Managers.FirebaseM.LinkGoogleToCurrentUser().Forget();
+        try
+        {
+            await Managers.FirebaseM.LinkGoogleToCurrentUser();
+
+            GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
+            Managers.UIM.ShowToast("구글 계정 연동 성공!");
+        }
+        catch(FirebaseException e)
+        {
+            Debug.LogError($"[ERROR] 구글 연동 실패: {e.Message} (코드: {e.ErrorCode})");
+
+            if(e.ErrorCode == (int)AuthError.CredentialAlreadyInUse)
+            {
+                var conflictPopup = await Managers.UIM.ShowPopup<UI_AccountConflictPopup>();
+                conflictPopup.SetCallBack(async () =>
+                {
+                    bool success = await Managers.FirebaseM.SwitchToGoogleAccount();
+                    if (success)
+                    {
+                        Managers.UIM.ShowToast("구글 계정으로 전환되었습니다.");
+                        GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
+                    }
+                });
+            }
+            else
+            {
+                Managers.UIM.ShowToast("연동에 실패했습니다.");
+            }
+        }
     }
 
     void OnClickAppleLoginButton()

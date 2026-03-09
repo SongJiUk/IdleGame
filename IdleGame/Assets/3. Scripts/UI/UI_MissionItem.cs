@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UnityEngine.EventSystems;
 
 public class UI_MissionItem : UI_Base
 {
@@ -64,15 +65,15 @@ public class UI_MissionItem : UI_Base
     {
         data = _data;
         num = _num;
-        GetButton(ButtonsType, (int)Buttons.AcceptButton).onClick.RemoveAllListeners();
+        GameObject btnObj = GetButton(ButtonsType, (int)Buttons.AcceptButton).gameObject;
 
-        GetButton(ButtonsType, (int)Buttons.AcceptButton).gameObject.BindEvent(() => OnClickAcceptButton(_num));
+        EventTrigger trigger = btnObj.GetComponent<EventTrigger>();
+        if (trigger != null) trigger.triggers.Clear();
+        btnObj.BindEvent(() => OnClickAcceptButton(_num));
+
         GetObject(GameObjectsType, (int)GameObjects.CollectObject).SetActive(false);
         GetImage(ImagesType, (int)Images.AcceptBlockImage).gameObject.SetActive(true);
         Refresh();
-
-
-
 
     }
 

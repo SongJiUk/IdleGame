@@ -25,7 +25,7 @@ public abstract class SkillBase
 
     protected List<ISkillEffect> effects = new();
     protected List<GameObject> activeVFXs = new List<GameObject>();
-    public virtual bool UseSkill(CreatureController _caster, CreatureController _target) { return false; }
+    public abstract UniTask<bool> UseSkill(CreatureController _caster, CreatureController _target);
 
 
     protected void GetBuffFactory(string _name, float _duration, float _ratio, float _interval = 0, CreatureController _owner = null)
@@ -281,6 +281,7 @@ public abstract class SkillBase
                 CreatureController enemy = Utils.FindRandomPlayer(_caster);
                 SetDamage(_caster, enemy);
                 ShowEffect(enemy);
+                Managers.SoundM.Play(Define.Sound.Effect, "BossSkill");
             }
             else
             {

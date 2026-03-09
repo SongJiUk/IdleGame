@@ -12,7 +12,7 @@ public class Boss_Electric : SkillBase
 
     public Boss_Electric() { }
 
-    public override bool UseSkill(CreatureController _caster, CreatureController _target)
+    public override async UniTask<bool> UseSkill(CreatureController _caster, CreatureController _target)
     {
 
         if (!IsUseSkill())
@@ -57,6 +57,7 @@ public class Boss_Electric : SkillBase
 
             var go = Managers.ResourceM.Instantiate("Boss_Electric", _pooling: true);
             go.transform.position = player.transform.position;
+            
 
             await Managers.CameraM.CameraShake();
 
@@ -65,6 +66,7 @@ public class Boss_Electric : SkillBase
 
                 player.GetDamage(cc.Damage * 1.2, cc);
             }
+            
             await UniTask.WaitForSeconds(0.2f);
 
         }

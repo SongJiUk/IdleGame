@@ -77,10 +77,12 @@ public class StageManager
                     playEvent?.Invoke(_prevStage);
                     break;
                 case StageState.Boss:
+                    Managers.SoundM.Play(Sound.Effect, "BossStage");
                     count = 0;
                     bossEvent?.Invoke();
                     break;
                 case StageState.BossPlay:
+                    Managers.SoundM.Play(Sound.Effect, "BossSound");
                     bossPlayEvent?.Invoke();
                     break;
                 case StageState.Clear:

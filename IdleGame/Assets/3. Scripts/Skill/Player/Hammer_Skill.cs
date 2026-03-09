@@ -8,13 +8,14 @@ public class Hammer_Skill : SkillBase
     {
     }
 
-    public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
+    public override async UniTask<bool> UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         InitSkillData(_caster);
 
 
         LoopSkill(_caster).Forget();
         ResetSkillStateAsync(_caster, skill_Duration).Forget();
+        Managers.SoundM.Play(Define.Sound.Effect, "HammerSkill");
         return true;
         //TODO : 쿨타임 처리 해야함
     }

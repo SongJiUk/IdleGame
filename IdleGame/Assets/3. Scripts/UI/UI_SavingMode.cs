@@ -63,6 +63,8 @@ public class UI_SavingMode : UI_Popup, ITickable
         cam.enabled = false;
         Managers.UpdateM.Register(this);
         Managers.RenderM.Show(RenderType.Saving, rawImage);
+        Managers.SoundM.MuteEffectVolume(true);
+        Managers.SoundM.MuteBgmVolume(true);
     }
 
 
@@ -191,6 +193,8 @@ public class UI_SavingMode : UI_Popup, ITickable
         cam.enabled = true;
         (Managers.UIM.SceneUI as UI_GameScene).isSavingMode = false;
 
+        Managers.SoundM.MuteEffectVolume(false);
+        Managers.SoundM.MuteBgmVolume(false);
         Managers.UIM.ClosePopup(this).Forget();
     }
 

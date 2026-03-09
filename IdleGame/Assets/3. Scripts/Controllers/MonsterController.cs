@@ -170,19 +170,22 @@ public class MonsterController : CreatureController
         Managers.ObjectM.Spawn<MeleeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
     }
 
-    public override void Projectile()
+    public override async void Projectile()
     {
         if (target == null || target.IsDead) return;
 
-        if (!UseSkill())
+        bool isUseSkill = await UseSkill();
+
+        if (!isUseSkill)
             Managers.ObjectM.Spawn<RangeAttackController>(transform.position, DATA.ProjectileDataID, this, target);
 
 
 
     }
-    bool UseSkill()
+    async UniTask<bool> UseSkill()
     {
-        return skillController.UseSkill();
+        bool isUseSkill = await skillController.UseSkill();
+        return isUseSkill;
     }
 
     public void KnockBack(Vector3 _dir, float _power = 3f, float _duration = 0.3f)

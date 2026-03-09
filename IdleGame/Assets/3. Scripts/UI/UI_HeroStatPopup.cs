@@ -84,6 +84,7 @@ public class UI_HeroStatPopup : UI_Popup
     public override void SetInfo()
     {
         Managers.RenderM.Show(RenderType.HereStat, rawImage);
+        Managers.SoundM.MuteEffectVolume(true);
         RefreshUI();
 
     }

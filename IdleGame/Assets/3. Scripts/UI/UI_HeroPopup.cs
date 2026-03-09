@@ -75,6 +75,7 @@ public class UI_HeroPopup : UI_Popup
     //처음에만 사용할것인지? 아이템을 뽑거나 할때는 수정이 되어야함
     public override void SetInfo()
     {
+        Managers.SoundM.MuteEffectVolume(true);
         GetText(TextsType, (int)Texts.AttackText).text = Utils.ToCurrencyString(Managers.PlayerM.AverageCombatPower());
 
         GetObject(GameObjectsType, (int)GameObjects.CircleButtonsObject).SetActive(false);
@@ -164,7 +165,6 @@ public class UI_HeroPopup : UI_Popup
     {
         Managers.SoundM.PlayButtonClick();
         await TriggerClose(this, true);
-
         ClearIcons();
     }
 

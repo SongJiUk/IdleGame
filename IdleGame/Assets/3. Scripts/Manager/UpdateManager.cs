@@ -70,7 +70,7 @@ public class UpdateManager : MonoBehaviour
         if (isPaused) return;
 
 
-        if (isStartFirebase && !Managers.FirebaseM.IsLoading && !isWriting)
+        if (isStartFirebase && !Managers.FirebaseM.IsLoading && !isWriting && !Managers.FirebaseM.IsDeleting)
         {
             Managers.save_Timer += Time.unscaledDeltaTime;
             if (Managers.save_Timer >= 10.0f)

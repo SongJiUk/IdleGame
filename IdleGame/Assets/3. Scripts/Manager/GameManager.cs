@@ -220,7 +220,6 @@ public class GameManager
             Time.timeScale = 0f;
             Managers.UpdateM.PauseTicking(true);
 
-            Debug.Log("앱이 일시정지되었습니다. 데이터를 저장합니다.");
             SaveGameOnPause();
         }
         else
@@ -228,7 +227,6 @@ public class GameManager
             Time.timeScale = 1f;
             Managers.UpdateM.PauseTicking(false);
 
-            Debug.Log("앱이 다시 켜졌습니다. 데이터를 동기화합니다.");
             ReloadAndCheckOfflineReward();
         }
     }
@@ -239,22 +237,23 @@ public class GameManager
 
         await Managers.FirebaseM.WriteData();
 
-        Debug.Log("앱 일시정지 : 데이터 자동 저장 완료");
     }
 
     async void ReloadAndCheckOfflineReward()
     {
-        double elapsedSeconds = GetOfflineSeconds();
-
+        await UniTask.WaitUntil(() => Managers.FirebaseM.CurrentUser != null);
 
         await Managers.FirebaseM.SyncDataOnly();
 
+        double elapsedSeconds = GetOfflineSeconds();
+
+
         if (elapsedSeconds >= 10.0d)
         {
-            Managers.UIM.ShowPopup<UI_OfflinePopup>().Forget();
+            var popup = await Managers.UIM.ShowPopup<UI_OfflinePopup>();
+            popup.SetInfo();
         }
 
-        Debug.Log($"앱 복귀: {elapsedSeconds}초 동안 오프라인 상태였습니다.");
     }
 
     private double GetOfflineSeconds()

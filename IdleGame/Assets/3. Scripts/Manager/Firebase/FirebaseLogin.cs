@@ -14,32 +14,25 @@ public partial class FirebaseManager
     private FirebaseUser user;
 
 
-    public async void GoogleLogin()
+    public async UniTask<bool> GoogleLogin()
     {
-        configuration = new GoogleSignInConfiguration()
-        {
-            WebClientId = webClientId,
-            RequestIdToken = true,
-            RequestEmail = true
-        };
-
 #if UNITY_EDITOR
         Debug.LogWarning("Google Login은 에디터에서 동작하지 않습니다. 디바이스에서 테스트하세요.");
-        return;
+        return false;
 #endif
 
 #if UNITY_ANDROID || UNITY_IOS
         try
         {
-            configuration = GetGoogleConfig();
+            SetupGoogleConfig();
             GoogleSignIn.Configuration = configuration;
 
             GoogleSignInUser googleUser = await GoogleSignIn.DefaultInstance.SignIn();
 
             if (googleUser == null || string.IsNullOrEmpty(googleUser.IdToken))
             {
-                Debug.LogError("[FirebaseManager] : Google SignIn failed : user is null");
-                return;
+                Debug.LogError("[Firebase] Google SignIn 실패: 토큰 없음");
+                return false;
             }
 
             Credential credential = GoogleAuthProvider.GetCredential(googleUser.IdToken, null);
@@ -51,14 +44,16 @@ public partial class FirebaseManager
             PlayerPrefs.SetInt("HasSeenLogin", 1);
             PlayerPrefs.Save();
 
-            Debug.Log("[FirebaseManager] : Firebase Google Login Success!");
+            Debug.Log("[FirebaseManager] : 파이어베이스 로그인 성공!");
             Debug.Log($"[FirebaseManager] : UserID : {result.UserId}");
 
             await ReadData();
+            return true;
         }
         catch (System.Exception e)
         {
             Debug.LogError($"[FirebaseManager] : 구글 로그인 실패 : {e}");
+            return false;
         }
 #endif
     }
@@ -97,126 +92,72 @@ public partial class FirebaseManager
         }
     }
 
-    public async UniTask CheckOrLogin()
+    public void SetupGoogleConfig()
     {
-        if (Auth.CurrentUser != null)
+        if(configuration == null)
         {
-            CurrentUser = Auth.CurrentUser;
-            if (CurrentUser.IsAnonymous)
+            configuration = new GoogleSignInConfiguration()
             {
-                Managers.GameM.gameData.isGuest = true;
-                Managers.GameM.gameData.playerName = "Guest";
-            }
-            else
-            {
-                Managers.GameM.gameData.isGuest = false;
-                string name = CurrentUser.DisplayName;
-
-                if (string.IsNullOrEmpty(name))
-                {
-                    if (!string.IsNullOrEmpty(CurrentUser.Email))
-                        name = CurrentUser.Email;
-                    else
-                        name = "Player";
-                }
-                Managers.GameM.gameData.playerName = name;
-            }
-
-
-            Debug.Log("자동 로그인 성공! 사용자 ID : " + CurrentUser.UserId);
-
-            await ReadData();
-        }
-        else
-        {
-            await GuestLogin();
+                WebClientId = webClientId,
+                RequestIdToken = true,
+                RequestEmail = true
+            };
+            GoogleSignIn.Configuration = configuration;
         }
     }
 
-
     public async UniTask LinkGoogleToCurrentUser()
     {
-        Debug.Log("[LOGIN] LinkGoogleToCurrentUser START");
         if (Auth.CurrentUser == null || !Auth.CurrentUser.IsAnonymous)
         {
-
             Debug.LogWarning("게스트가 아니거나 유저가 없음. Link 불가");
             return;
         }
 
-        Debug.Log($"[LOGIN] IsAnonymous: {Auth.CurrentUser.IsAnonymous}");
-
         try
         {
-            // configuration = GetGoogleConfig();
-            // GoogleSignIn.Configuration = configuration; ;
-
-            // GoogleSignInUser googleUser = await GoogleSignIn.DefaultInstance.SignIn();
-            // if (googleUser == null || string.IsNullOrEmpty(googleUser.IdToken))
-            // {
-            //     Debug.LogError("google SignIn 실패");
-            //     return;
-            // }
-
-            // Credential credential = GoogleAuthProvider.GetCredential(googleUser.IdToken, null);
-            // var result = await Auth.CurrentUser.LinkWithCredentialAsync(credential);
-
-            // CurrentUser = result;
-            // ApplyUserToGameData(CurrentUser);
-
-            // PlayerPrefs.SetInt("HasSeenLogin", 1);
-            // PlayerPrefs.Save();
-
-            // Debug.Log("게스트 -> 구글 계정 연동 성공 : UID : " + result.UserId);
-
-            // await ReadData();
-            Debug.Log("[LOGIN] Set Google Configuration");
-            configuration = GetGoogleConfig();
+            SetupGoogleConfig();
             GoogleSignIn.Configuration = configuration;
-
-            Debug.Log("[LOGIN] Call GoogleSignIn.SignIn()");
             GoogleSignInUser gUser = await GoogleSignIn.DefaultInstance.SignIn();
 
-            Debug.Log("[LOGIN] GoogleSignIn returned");
 
-            if (gUser == null)
-            {
-                Debug.LogError("[LOGIN] GoogleSignInUser is NULL");
-                return;
-            }
-
-            Debug.Log("[LOGIN] Got IdToken");
-            if (string.IsNullOrEmpty(gUser.IdToken))
-            {
-                Debug.LogError("[LOGIN] IdToken is NULL or EMPTY");
-                return;
-            }
+            if (gUser == null || string.IsNullOrEmpty(gUser.IdToken)) return;
 
             Credential credential = GoogleAuthProvider.GetCredential(gUser.IdToken, null);
-
-            Debug.Log("[LOGIN] Call LinkWithCredentialAsync()");
             var result = await Auth.CurrentUser.LinkWithCredentialAsync(credential);
-
-            Debug.Log("[LOGIN] LinkWithCredentialAsync SUCCESS");
 
             CurrentUser = result;
             ApplyUserToGameData(CurrentUser);
 
-            Debug.Log("[LOGIN] ApplyUserToGameData DONE");
-
-            PlayerPrefs.SetInt("HasSeenLogin", 1);
-            PlayerPrefs.Save();
-
-            Debug.Log("[LOGIN] PlayerPrefs Saved");
-
             await ReadData();
 
-            Debug.Log("[LOGIN] ReadData DONE");
+            Debug.Log("[LOGIN] 구글계정 연동 성공");
         }
-        catch (System.Exception e)
+        catch (FirebaseException e)
         {
-            Debug.LogError("[LOGIN] EXCEPTION: " + e);
-            //Debug.Log("계정 연동 실패 : " + e);
+            throw e;
+
+        }
+    }
+
+   
+    void ApplyUserToGameData(FirebaseUser _user)
+    {
+        if (_user == null) return;
+
+        bool isGuest = _user.IsAnonymous;
+        Managers.GameM.gameData.isGuest = isGuest;
+
+        if (isGuest)
+        {
+            Managers.GameM.gameData.playerName = "Guest";
+        }
+        else
+        {
+            string name = !string.IsNullOrEmpty(_user.DisplayName) ? _user.DisplayName :
+                     (!string.IsNullOrEmpty(_user.Email) ? _user.Email : "Player");
+
+            Managers.GameM.gameData.playerName = name;
         }
     }
 
@@ -229,41 +170,6 @@ public partial class FirebaseManager
             Debug.Log("자동 로그인 적용 : " + CurrentUser.UserId);
             await ReadData();
         }
-    }
-    void ApplyUserToGameData(FirebaseUser _user)
-    {
-
-        if (_user == null || _user.IsAnonymous)
-        {
-            Managers.GameM.gameData.isGuest = true;
-            Managers.GameM.gameData.playerName = "Guest";
-        }
-        else
-        {
-            Managers.GameM.gameData.isGuest = false;
-
-            string name = user.DisplayName;
-
-            if (string.IsNullOrEmpty(name))
-            {
-                if (!string.IsNullOrEmpty(user.Email))
-                    name = user.Email;
-                else
-                    name = "Player";
-            }
-
-            Managers.GameM.gameData.playerName = name;
-        }
-    }
-
-    GoogleSignInConfiguration GetGoogleConfig()
-    {
-        return new GoogleSignInConfiguration()
-        {
-            WebClientId = webClientId,
-            RequestIdToken = true,
-            RequestEmail = true
-        };
     }
 
 }

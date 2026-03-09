@@ -10,7 +10,7 @@ public class Enchantress_Skill : SkillBase
     {
     }
 
-    public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
+    public override async UniTask<bool> UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         InitSkillData(_caster);
 
@@ -37,7 +37,7 @@ public class Enchantress_Skill : SkillBase
             ShowEffect(randPlayer);
 
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
-
+            Managers.SoundM.Play(Define.Sound.Effect, "EnchantressSkill");
             return true;
         }
         else

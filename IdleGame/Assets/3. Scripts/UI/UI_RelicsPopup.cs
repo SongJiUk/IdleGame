@@ -121,7 +121,7 @@ public class UI_RelicsPopup : UI_Popup
     public override void SetInfo()
     {
 
-
+        Managers.SoundM.MuteEffectVolume(true);
         RefreshUI();
         InitEquippedRelicsUI();
         InitRelicIcon();

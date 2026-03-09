@@ -507,6 +507,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                 var GoodsDirecting = Managers.ObjectM.Spawn<GoodsDirecting>(pos, Utils.GoodsDirectingDataID);
                 GoodsDirecting.Init(Define.GoodsType.Dia, pos, rewardcount, false);
 
+                Managers.SoundM.Play(Define.Sound.Effect, "Reward");
                 break;
 
 
@@ -526,6 +527,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                         ScaleDownSelectButton();
                         GetObject(GameObjectsType, (int)GameObjects.StatButtonCloseObject).SetActive(false);
                         stat.ClosePopup(true).Forget();
+                        Managers.SoundM.MuteEffectVolume(false);
                     }
                     return;
                 }
@@ -541,6 +543,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                     ScaleDownSelectButton();
                     GetObject(GameObjectsType, (int)GameObjects.StatButtonCloseObject).SetActive(false);
                     if (currentBottomPopup == statPopup) currentBottomPopup = null;
+                    Managers.SoundM.MuteEffectVolume(false);
                     statPopup = null;
                 };
 
@@ -564,6 +567,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                         ScaleDownSelectButton();
                         GetObject(GameObjectsType, (int)GameObjects.HeroButtonCloseObject).SetActive(false);
                         hero.ClosePopup(true).Forget();
+                        Managers.SoundM.MuteEffectVolume(false);
                     }
                     return;
                 }
@@ -579,6 +583,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                     ScaleDownSelectButton();
                     GetObject(GameObjectsType, (int)GameObjects.HeroButtonCloseObject).SetActive(false);
                     if (currentBottomPopup == heroPopup) currentBottomPopup = null;
+                    Managers.SoundM.MuteEffectVolume(false);
                 };
 
                 break;
@@ -597,6 +602,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                         ScaleDownSelectButton();
                         GetObject(GameObjectsType, (int)GameObjects.RelicsButtonCloseObject).SetActive(false);
                         relics.ClosePopup(false).Forget();
+                        Managers.SoundM.MuteEffectVolume(false);
                     }
                     return;
                 }
@@ -613,6 +619,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                     GetObject(GameObjectsType, (int)GameObjects.RelicsButtonCloseObject).SetActive(false);
                     if (currentBottomPopup == relicPopup) currentBottomPopup = null;
                     relicPopup = null;
+                    Managers.SoundM.MuteEffectVolume(false);
                 };
                 break;
 
@@ -630,6 +637,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                         ScaleDownSelectButton();
                         GetObject(GameObjectsType, (int)GameObjects.DungeonButtonCloseObject).SetActive(false);
                         dungeon.ClosePopup(true).Forget();
+                        Managers.SoundM.MuteEffectVolume(false);
                     }
                     return;
                 }
@@ -645,6 +653,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                     ScaleDownSelectButton();
                     GetObject(GameObjectsType, (int)GameObjects.DungeonButtonCloseObject).SetActive(false);
                     if (currentBottomPopup == dungeonPopup) currentBottomPopup = null;
+                    Managers.SoundM.MuteEffectVolume(false);
                     dungeonPopup = null;
                 };
 
@@ -664,6 +673,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                         ScaleDownSelectButton();
                         GetObject(GameObjectsType, (int)GameObjects.SmeltingButtonCloseObject).SetActive(false);
                         smelting.ClosePopup(false).Forget();
+                        Managers.SoundM.MuteEffectVolume(false);
                     }
                     return;
                 }
@@ -698,6 +708,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                         ScaleDownSelectButton();
                         GetObject(GameObjectsType, (int)GameObjects.ShopButtonCloseObject).SetActive(false);
                         shop.ClosePopup(true).Forget();
+                        Managers.SoundM.MuteEffectVolume(false);
                     }
                     return;
                 }
@@ -714,6 +725,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                     GetObject(GameObjectsType, (int)GameObjects.ShopButtonCloseObject).SetActive(false);
                     if (currentBottomPopup == shopPopup) currentBottomPopup = null;
                     shopPopup = null;
+                    Managers.SoundM.MuteEffectVolume(false);
                 };
 
                 break;
@@ -777,6 +789,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                     UpdateFastUI();
                     Managers.UpdateM.Register(_unscaledTickable: this);
                     StartBlinkTween();
+                    Managers.SoundM.Play(Define.Sound.Effect, "Reward");
                 };
 
                 Managers.AdM.ShowRewardedAd(rewardedAction, resumeAction);
@@ -873,19 +886,19 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         if (Managers.StageM.isDungeon) return;
 
-        float value = (float)Managers.StageM.COUNT / (float)Managers.StageM.maxCount;
-        if (value >= 1.0f)
+        float maxCount = (float)Managers.StageM.maxCount;
+        if (maxCount <= 0) maxCount = 1.0f;
+
+        float rawValue = (float)Managers.StageM.COUNT / maxCount;
+        float clampedValue = Mathf.Clamp01(rawValue);
+
+        if(clampedValue >= 1.0f && Managers.StageM.stageState != Define.StageState.Boss)
         {
-            value = 1.0f;
-            if (Managers.StageM.stageState != Define.StageState.Boss)
-            {
-                Managers.StageM.StateChange(Define.StageState.Boss);
-            }
-            GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = 0;
-            GetText(TextsType, (int)Texts.StageMonsterCountText).text = string.Format("{0:0.0}", 0 * 100.0f) + "%";
+            Managers.StageM.StateChange(Define.StageState.Boss);
         }
-        GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = value;
-        GetText(TextsType, (int)Texts.StageMonsterCountText).text = string.Format("{0:0.0}", value * 100.0f) + "%";
+        GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = clampedValue;
+        GetText(TextsType, (int)Texts.StageMonsterCountText).text = string.Format("{0:0.0}", clampedValue * 100.0f) + "%";
+      
     }
 
     void OnCheckTreasureTroveMonsterCount()

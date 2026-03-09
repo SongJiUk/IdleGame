@@ -16,11 +16,12 @@ public class IAPManager : IStoreListener
 
     private IStoreController storeController; // 구매 과정 제어
     private IExtensionProvider storeExtensionProvider; // 플랫폼 위한 확정 처리
-
+    private bool isUserRequestedPurchase = false;
 
     public bool IsInitialized => storeController != null && storeExtensionProvider != null;
     public Action OnPurchaseSuccess;
     public Action OnPurchaseFail;
+    
     public void InitUnityIAP()
     {
 
@@ -45,69 +46,6 @@ public class IAPManager : IStoreListener
         builder.AddProduct(dia13000, ProductType.Consumable);
         builder.AddProduct(removeADS, ProductType.NonConsumable);
 
-        //builder.AddProduct(
-        //    dia300,
-        //    ProductType.Consumable,
-        //    new StoreSpecificIds
-        //{
-        //    {dia300, GooglePlay.Name },
-        //    {dia300, AppleAppStore.Name }
-        //});
-
-        //builder.AddProduct(
-        //    dia550,
-        //    ProductType.Consumable,
-        //    new StoreSpecificIds
-        //{
-        //    {dia550, GooglePlay.Name },
-        //    {dia550, AppleAppStore.Name }
-        //});
-
-        //builder.AddProduct(
-        //    dia1200,
-        //    ProductType.Consumable,
-        //    new StoreSpecificIds
-        //{
-        //    {dia1200, GooglePlay.Name },
-        //    {dia1200, AppleAppStore.Name }
-        //});
-
-        //builder.AddProduct(
-        //    dia4000,
-        //    ProductType.Consumable,
-        //    new StoreSpecificIds
-        //{
-        //    {dia4000, GooglePlay.Name },
-        //    {dia4000, AppleAppStore.Name }
-        //});
-
-        //builder.AddProduct(
-        //    dia7000,
-        //    ProductType.Consumable,
-        //    new StoreSpecificIds
-        //{
-        //    {dia7000, GooglePlay.Name },
-        //    {dia7000, AppleAppStore.Name }
-        //});
-
-        //builder.AddProduct(
-        //    dia13000,
-        //    ProductType.Consumable,
-        //    new StoreSpecificIds
-        //{
-        //    {dia13000, GooglePlay.Name },
-        //    {dia300, AppleAppStore.Name }
-        //});
-
-        //builder.AddProduct(
-        //    removeADS,
-        //    ProductType.NonConsumable,
-        //    new StoreSpecificIds
-        //{
-        //    {removeADS, GooglePlay.Name },
-        //    {removeADS, AppleAppStore.Name }
-        //});
-
         UnityPurchasing.Initialize(this, builder);
 #endif
     }
@@ -117,6 +55,9 @@ public class IAPManager : IStoreListener
         Debug.Log("### [IAP] 초기화 성공! 등록된 상품: " + controller.products.all.Length + "개 ###");
         storeController = controller;
         storeExtensionProvider = extensions;
+
+        //앱 시작시 구매 이력 복구 광고제거상태 동기화
+        CheckPurchasedProducts();
     }
 
 
@@ -137,14 +78,37 @@ public class IAPManager : IStoreListener
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
     {
-        Debug.Log($"### [IAP] 구매 성공 이벤트 수신: {args.purchasedProduct.definition.id} ###");
+        string productId = args.purchasedProduct.definition.id;
+        bool isNewPurchase = isUserRequestedPurchase;
+        isUserRequestedPurchase = false;
+        Debug.Log($"### [IAP] 구매 처리 시작: {productId} ###");
 
-        string purchaseName = args.purchasedProduct.definition.id;
+        if (!Enum.TryParse(productId, out Define.IAP iapType))
+        {
+            return PurchaseProcessingResult.Complete;
+        }
 
-        Define.IAP iap = (Define.IAP)Enum.Parse(typeof(Define.IAP), purchaseName);
-        HandlePurchaseAsync(iap).Forget();
+        if (productId == removeADS)
+        {
+            ApplyRemoveAds();
+        }
 
-        return PurchaseProcessingResult.Complete;
+        bool isShowPopup = isNewPurchase || args.purchasedProduct.definition.type == ProductType.Consumable;
+        ApplyPurchaseReward(iapType, isShowPopup);
+
+        return PurchaseProcessingResult.Complete;  
+    }
+
+    private void ApplyPurchaseReward(Define.IAP _type, bool _showPopup)
+    {
+        if(_showPopup)
+        {
+            HandlePurchaseAsync(_type).Forget();
+        }
+        else
+        {
+            Debug.Log($"### [IAP] {_type} 자동 복구 완료 (팝업 없음) ###");
+        }
     }
 
     public async UniTask HandlePurchaseAsync(Define.IAP _iap)
@@ -156,39 +120,27 @@ public class IAPManager : IStoreListener
 
     public void Purchase(string _productID)
     {
+
 #if UNITY_IOS
+        Managers.UIM.ShowToast("IOS에서는 인앱결제를 사용하지 않습니다.");
         Debug.Log("IOS에서는 인앱결제 사용안함 ");
         return;
 #else
-        //Product product = storeController.products.WithID(_productID);
-        //if (product != null && product.availableToPurchase)
-        //{
-        //    storeController.InitiatePurchase(product);
-        //}
-        //else
-        //    Debug.Log("상품이 없거나 현재 구매가 불가능합니다.");
-        if (IsInitialized)
+        if (!IsInitialized)
         {
             Debug.LogError("### [IAP] 결제 실패: IAP 시스템이 아직 초기화되지 않았습니다. ###");
             return;
         }
         
         Product product = storeController.products.WithID(_productID);
-        if (product == null)
+        if (product != null && product.availableToPurchase)
         {
-            Debug.LogError($"### [IAP] 결제 실패: {_productID} ID를 가진 상품을 찾을 수 없습니다. (ID 오타 확인!) ###");
-            return;
+            Debug.Log($"### [IAP] 구매 시도: {product.metadata.localizedTitle} ###");
+            isUserRequestedPurchase = true;
+            storeController.InitiatePurchase(product);
         }
 
-        // 3. 구매 가능 여부 체크
-        if (!product.availableToPurchase)
-        {
-            Debug.LogError($"### [IAP] 결제 실패: {product.metadata.localizedTitle} 상품은 현재 구매 불가능 상태입니다. ###");
-            return;
-        }
-
-        Debug.Log($"### [IAP] 구매 시도: {product.metadata.localizedTitle} ###");
-        storeController.InitiatePurchase(product);
+        
 #endif
 
     }
@@ -223,6 +175,7 @@ public class IAPManager : IStoreListener
                 if (succes)
                 {
                     Debug.Log("Restore Succes");
+                    CheckPurchasedProducts();
                 }
                 else
                 {
@@ -235,6 +188,26 @@ public class IAPManager : IStoreListener
             Debug.Log("Restore Purchase is not support");
         }
 #endif
+    }
+    private void CheckPurchasedProducts()
+    {
+        if (storeController == null) return;
+        foreach (var product in storeController.products.all)
+        {
+            if (product.hasReceipt && product.definition.id == removeADS)
+            {
+                ApplyRemoveAds();
+                break;
+            }
+        }
+    }
+
+    public void ApplyRemoveAds()
+    {
+        PlayerPrefs.SetInt("IsRemoveAds", 1);
+        PlayerPrefs.Save();
+
+        Managers.GameM.gameData.ADS_Remove = true;
     }
 
     public void NotifyPurchaseSucces()

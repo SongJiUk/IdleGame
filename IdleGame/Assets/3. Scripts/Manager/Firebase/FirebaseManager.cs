@@ -58,11 +58,51 @@ public partial class FirebaseManager
     {
         if (Auth != null)
         {
+            Debug.Log($"[DEBUG] 로그아웃 시작. 유저 ID: {CurrentUser?.UserId}");
+            Auth.StateChanged -= OnAuthStateChanged;
             Auth.SignOut();
+
+            //Managers.GameM.gameData.ResetAllData();
+            Managers.GameM.gameData.isGuest = true;
             CurrentUser = null;
+
+            Debug.Log("[DEBUG] 로그아웃 및 데이터 초기화 완료");
         }
     }
 
+    public async UniTask<bool> SignInWithCredentialOnly(Credential _credential)
+    {
+        try
+        {
+            var result = await Auth.SignInWithCredentialAsync(_credential);
+            CurrentUser = result;
+            ApplyUserToGameData(CurrentUser);
+            await ReadData();
+            return true;
+        }
+        catch { return false; }
+    }
 
+    public async UniTask<bool> SwitchToGoogleAccount()
+    {
+        try
+        {
+            Auth.SignOut();
+
+            bool success = await GoogleLogin();
+
+            if (success)
+            {
+                Debug.Log("[Firebase] 구글 계정으로 성공적으로 전환되었습니다.");
+                return true;
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[Firebase] 전환 실패: {e.Message}");
+        }
+        return false;
+
+    }
 }
 

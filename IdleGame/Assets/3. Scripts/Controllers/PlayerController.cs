@@ -179,7 +179,7 @@ public class PlayerController : CreatureController
         if (go != null)
         {
             //Debug.Log("<color=white>[Projectile Step 3-Success] 원거리 투사체 생성 완료!</color>");
-            GetMp(30);
+            GetMp(50);
         }
 
     }
@@ -210,7 +210,7 @@ public class PlayerController : CreatureController
         if (go != null)
         {
             DelegateHolder.PlayerAttack(this, currentTarget);
-            GetMp(5);
+            GetMp(50);
         }
 
         TrailDisable().Forget();
@@ -243,6 +243,8 @@ public class PlayerController : CreatureController
 
     private void OnPlay(Define.StageState _state)
     {
+        if (isDead) return;
+
         base.AnimatorChange(CreatureState.Idle);
         OnPlayerDataUpdate?.Invoke(this);
     }
@@ -262,7 +264,6 @@ public class PlayerController : CreatureController
     private void OnClear()
     {
         if (isDead) return;
-
         AnimatorChange(CreatureState.Idle);
     }
 
@@ -276,7 +277,14 @@ public class PlayerController : CreatureController
 
         transform.position = startPos + new Vector3(randomX, 0, randomZ);
     }
-
+    public override void AnimatorChange(CreatureState _state)
+    {
+        if(_state == CreatureState.Idle)
+        {
+            Debug.Log($"{gameObject.name}이(가) Idle로 전환됨. 호출 스택: {System.Environment.StackTrace}");
+        }
+        base.AnimatorChange(_state);
+    }
     void OnDungeonClear()
     {
         OnDead();
@@ -302,6 +310,7 @@ public class PlayerController : CreatureController
         if (Managers.StageM.stageState != StageState.Play && Managers.StageM.stageState != StageState.BossPlay) return;
 
         if (isUsingSkill || isDead || isAttacking) return;
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 
         if (target == null || target.IsDead)
         {
@@ -360,16 +369,14 @@ public class PlayerController : CreatureController
     }
     protected override void OnAttackDelayEnd()
     {
-        //TODO : 스킬쓸때 무적으로 만들까?
         if (mp >= MaxMp)
         {
-            UsePlayerSkill();
+            UsePlayerSkill().Forget();
         }
     }
     public void GetMp(int _value)
     {
-        //TODO : bool값 체크
-        //if (isUsingSkill) return;
+        if (isUsingSkill) return;
 
         mp += _value;
         if (mp >= MaxMp)
@@ -379,13 +386,15 @@ public class PlayerController : CreatureController
         OnPlayerDataUpdate?.Invoke(this);
     }
 
-    void UsePlayerSkill()
+    async UniTaskVoid UsePlayerSkill()
     {
-        if (skillController.UseSkill(_target: target))
-        {
-            mp = 0;
-            isUsingSkill = true;
+        bool isSuccess = await skillController.UseSkill(_target: target);
 
+        if (isSuccess)
+        {
+            mp =0;
+            isUsingSkill = true;
+              
             HandleSkillEnd().Forget();
             OnPlayerDataUpdate?.Invoke(this);
         }
@@ -404,8 +413,10 @@ public class PlayerController : CreatureController
 
         await UniTask.Delay(TimeSpan.FromSeconds(duration));
 
-        isUsingSkill = false;
+        if (IsDead) return;
 
+
+        isUsingSkill = false;
         AnimatorChange(CreatureState.Idle);
 
         //Debug.Log($"[Skill] {gameObject.name} 스킬 종료 및 상태 복구 완료");

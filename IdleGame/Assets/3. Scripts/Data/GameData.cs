@@ -287,4 +287,12 @@ public class GameData
 
         return value;
     }
+
+    public void ResetAllData()
+    {
+        var newData = new GameData();
+        newData.isGuest = true;
+        Managers.GameM.gameData = newData;
+        Debug.Log("[GameData] 새로운 인스턴스로 데이터가 완전히 교체되었습니다.");
+    }
 }

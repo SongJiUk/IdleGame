@@ -9,7 +9,7 @@ public class Cleric_Skill : SkillBase
     {
     }
 
-    public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
+    public override async UniTask<bool> UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         //팀원중 hp가 가장 낮은 플레이어를 찾아 사용
         CreatureController target = Utils.FindLowestHpPlayer();
@@ -26,7 +26,7 @@ public class Cleric_Skill : SkillBase
             }
             ShowEffect(target);
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
-
+            Managers.SoundM.Play(Define.Sound.Effect, "ClericSkill");
             return true;
         }
         else

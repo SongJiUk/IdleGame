@@ -9,7 +9,7 @@ public class SpearMan_Skill : SkillBase
     {
     }
 
-    public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
+    public override async UniTask<bool> UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         InitSkillData(_caster);
 
@@ -24,7 +24,7 @@ public class SpearMan_Skill : SkillBase
             }
 
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
-
+            Managers.SoundM.Play(Define.Sound.Effect, "SpearManSkill");
             return true;
         }
         else

@@ -8,7 +8,7 @@ public class Mage_M_Skill : SkillBase
     {
     }
 
-    public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
+    public override async UniTask<bool> UseSkill(CreatureController _caster, CreatureController _target = null)
     {
 
 
@@ -29,11 +29,11 @@ public class Mage_M_Skill : SkillBase
         {
             if (target.IsDead) return false;
 
-            //TODO : 하드코딩 없애기
             SetDamage(_caster, target, 1.2f);
 
             ShowEffect(target);
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
+            Managers.SoundM.Play(Define.Sound.Effect, "Mage_MSkill");
             return true;
         }
         else

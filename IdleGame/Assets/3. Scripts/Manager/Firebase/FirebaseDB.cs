@@ -6,6 +6,7 @@ using Firebase.Extensions;
 using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 
 public class User
 {
@@ -159,13 +160,30 @@ public partial class FirebaseManager
 
     public async UniTask SyncDataOnly()
     {
-        var dataSnap = await reference.Child("users").Child(CurrentUser.UserId).Child("DATA").GetValueAsync().AsUniTask();
-
-        if (dataSnap.Exists)
+        if (IsDeleting || CurrentUser == null || reference == null)
         {
-            string json = dataSnap.GetRawJsonValue();
-            JsonConvert.PopulateObject(json, Managers.GameM.gameData);
+            Debug.LogWarning("Firebase 동기화 불가: 삭제 중이거나 유저가 로그인되어 있지 않습니다.");
+            return;
         }
+
+        try
+        {
+            var dataSnap = await reference.Child("users").Child(CurrentUser.UserId).Child("DATA").GetValueAsync().AsUniTask();
+
+            if (dataSnap.Exists)
+            {
+                string json = dataSnap.GetRawJsonValue();
+                if (!string.IsNullOrEmpty(json))
+                {
+                    JsonConvert.PopulateObject(json, Managers.GameM.gameData);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"SyncDataOnly 도중 에러: {e.Message}");
+        }
+        
     }
 
     bool IsNewDay(long _lastTicks, DateTime _now)
@@ -185,5 +203,42 @@ public partial class FirebaseManager
 
             Debug.Log("데이터 마이그레이션 완료: string -> long(Ticks)");
         }
+    }
+
+
+    public bool IsDeleting { get; private set; } = false;
+    public async UniTask DeleteUserData()
+    {
+        if (CurrentUser == null) { Debug.LogError("[ERROR] 삭제 실패: 로그인된 유저 없음"); return; }
+
+        Debug.Log($"[DEBUG] 서버 데이터 삭제 요청: {CurrentUser.UserId}");
+        IsDeleting = true;
+
+        try
+        {
+            Auth.StateChanged -= OnAuthStateChanged;
+
+            await reference.Child("users").Child(CurrentUser.UserId).RemoveValueAsync().AsUniTask();
+
+            PlayerPrefs.DeleteAll();
+            Managers.GameM.gameData.ResetAllData();
+            Debug.Log("서버 및 로컬 데이터 삭제 완료");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[ERROR] 삭제 프로세스 중 오류: {e.Message}");
+        }
+        finally
+        {
+            IsDeleting = false;
+        }
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+
+#else
+        Application.Quit();
+#endif
+
     }
 }

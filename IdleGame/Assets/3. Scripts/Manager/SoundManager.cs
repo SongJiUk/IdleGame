@@ -8,6 +8,8 @@ public class SoundManager
     public AudioSource[] audioSources = new AudioSource[(int)Define.Sound.Max];
     Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
 
+    List<AudioSource> effectSources = new List<AudioSource>();
+    private int maxEffectsSources = 10;
     GameObject soundRoot = null;
 
     public float BgmValue, EffectValue;
@@ -24,15 +26,18 @@ public class SoundManager
             UnityEngine.Object.DontDestroyOnLoad(soundRoot);
         }
 
-        string[] soundTypeNames = Enum.GetNames(typeof(Define.Sound));
-        for (int count = 0; count < soundTypeNames.Length - 1; count++)
-        {
-            GameObject go = new GameObject { name = soundTypeNames[count] };
-            audioSources[count] = go.AddComponent<AudioSource>();
-            go.transform.parent = soundRoot.transform;
-        }
+        GameObject bgmGo = new GameObject { name = "BgmChannel" };
+        audioSources[(int)Define.Sound.Bgm] = bgmGo.AddComponent<AudioSource>();
+        bgmGo.transform.parent = soundRoot.transform;
         audioSources[(int)Define.Sound.Bgm].loop = true;
 
+
+        for(int i =0; i<maxEffectsSources; i++)
+        {
+            GameObject go = new GameObject { name = $"EffectSource_{i}" };
+            go.transform.parent = soundRoot.transform;
+            effectSources.Add(go.AddComponent<AudioSource>());
+        }
     }
     public void Clear()
     {
@@ -44,8 +49,19 @@ public class SoundManager
 
     public void Play(Define.Sound _sound, string _label, float _pitch = 1f)
     {
-        AudioSource audio = audioSources[(int)_sound];
-        PlayInternal(_sound, _label, _pitch, audio);
+
+        if(_sound ==Define.Sound.Effect)
+        {
+            AudioSource freeSoucre = effectSources.Find(s => !s.isPlaying);
+            if (freeSoucre == null) freeSoucre = effectSources[0];
+            PlayInternal(_sound, _label, _pitch, freeSoucre);
+        }
+        else
+        {
+
+            AudioSource audio = audioSources[(int)_sound];
+            PlayInternal(_sound, _label, _pitch, audio);
+        }
     }
 
     private void PlayInternal(Define.Sound _sound, string _key, float _pitch, AudioSource _source)
@@ -68,21 +84,26 @@ public class SoundManager
 
     private void DoPlay(Define.Sound _sound, AudioSource _source, AudioClip _clip, float _pitch)
     {
-        _source.pitch = _pitch;
+        
         switch (_sound)
         {
             case Define.Sound.Bgm:
+                _source.pitch = _pitch;
                 if (_source.isPlaying) _source.Stop();
                 _source.clip = _clip;
                 _source.volume = BgmValue;
+                _source.loop = true;
                 _source.Play();
                 break;
 
             case Define.Sound.Effect:
-                if (_source.isPlaying) _source.Stop();
-                _source.clip = _clip;
-                _source.volume = EffectValue;
-                _source.Play();
+                AudioSource availableSource = effectSources.Find(s => !s.isPlaying);
+                if (availableSource == null) availableSource = effectSources[0];
+
+                availableSource.clip = _clip;
+                availableSource.volume = EffectValue;
+                availableSource.Play();
+
                 break;
 
             default:
@@ -94,11 +115,42 @@ public class SoundManager
     public void PlayButtonClick() => Play(Define.Sound.Effect, "Click");
     public void PlayPopupClose() => Play(Define.Sound.Effect, "PopupClose");
 
+    public void PlayGoldDice() => Play(Define.Sound.Effect, "Dice");
+
 
 
     public void Stop(Define.Sound _sound)
     {
         AudioSource audio = audioSources[(int)_sound];
         if (audio.isPlaying) audio.Stop();
+    }
+
+    public void SetEffectVolume(float _value)
+    {
+        EffectValue = _value;
+        foreach(AudioSource source in effectSources)
+        {
+            if(source != null)
+            {
+                source.volume = _value;
+            }
+        }
+        PlayerPrefs.SetFloat("EFFECT", _value);
+        PlayerPrefs.Save();
+    }
+
+    public void MuteEffectVolume(bool _isMute)
+    {
+        foreach(AudioSource source in effectSources)
+        {
+            if(source != null)
+            {
+                source.mute = _isMute;
+            }
+        }
+    }
+    public void MuteBgmVolume(bool _isMute)
+    {
+        audioSources[(int)Define.Sound.Bgm].mute = _isMute;
     }
 }

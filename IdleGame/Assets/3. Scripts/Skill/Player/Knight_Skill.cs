@@ -9,7 +9,7 @@ public class Knight_Skill : SkillBase
     {
     }
 
-    public override bool UseSkill(CreatureController _caster, CreatureController _target = null)
+    public override async UniTask<bool> UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         InitSkillData(_caster);
         List<CreatureController> enemiesInArea = Utils.FindEnemyForwardArea(_caster, skill_Length, skill_Width);
@@ -23,6 +23,7 @@ public class Knight_Skill : SkillBase
 
 
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
+            Managers.SoundM.Play(Define.Sound.Effect, "KnightSkill");
             return true;
         }
         else

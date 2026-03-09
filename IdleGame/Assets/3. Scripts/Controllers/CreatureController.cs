@@ -216,6 +216,13 @@ public class CreatureController : BaseController
     {
         if (animator == null) return;
 
+        if (isDead && _state != CreatureState.Dead)
+        {
+            Debug.LogWarning($"{gameObject.name}이(가) 죽은 상태인데 {_state}로 전환하려고 함! 차단됨.");
+            return;
+        }
+
+
         int stateIndex = (int)_state;
         animator.SetInteger(Define.AnimState, stateIndex);
     }
@@ -228,21 +235,34 @@ public class CreatureController : BaseController
         {
             AnimatorChange(Define.CreatureState.Move);
 
+            Vector3 dir = SpawnPos - transform.position;
 
-            transform.LookAt(SpawnPos);
+            if (dir.sqrMagnitude > 0.05f)
+            {
+                transform.rotation = Quaternion.LookRotation(dir);
+            }
+
             transform.position = Vector3.MoveTowards(transform.position, SpawnPos, _deltaTime);
         }
         else
+        {
             AnimatorChange(Define.CreatureState.Idle);
+        }
     }
 
     public void MoveToTarget(float _deltaTime)
     {
-        AnimatorChange(Define.CreatureState.Move);
-        Vector3 lookPos = target.transform.position;
-        lookPos.y = transform.position.y;
+        if (target == null) return;
 
-        transform.LookAt(lookPos);
+        AnimatorChange(Define.CreatureState.Move);
+        Vector3 dir = target.transform.position - transform.position;
+        dir.y = 0; 
+
+        if (dir.sqrMagnitude > 0.05f)
+        {
+            transform.rotation = Quaternion.LookRotation(dir);
+        }
+
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _deltaTime);
     }
 
@@ -363,6 +383,7 @@ public class CreatureController : BaseController
         bool isMonster = false;
         if (_attacker as MonsterController) isMonster = true;
 
+        Managers.SoundM.Play(Sound.Effect, "Hit");
         Managers.ObjectM.ShowDamageFont(transform.position, finalDamage, isMonster, isCritical, _isSkill);
     }
 

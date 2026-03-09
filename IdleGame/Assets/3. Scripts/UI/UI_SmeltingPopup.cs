@@ -91,6 +91,7 @@ public class UI_SmeltingPopup : UI_Popup
 
     public void RestoreSlot(SmeltHolder _holder, int _count)
     {
+        Managers.SoundM.MuteEffectVolume(true);
         GameObject slot = GetObject(GameObjectsType, (int)GameObjects.Smelting_1_Object + _count);
         slot.SetActive(true);
 

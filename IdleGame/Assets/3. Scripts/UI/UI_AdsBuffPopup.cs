@@ -140,6 +140,7 @@ public class UI_AdsBuffPopup : UI_Popup, IUnScaledTickable
             Managers.BuffM.OnWatchAd();
             Managers.BuffM.StartBuff(_type, 1800f);
             RefreshUI();
+            Managers.SoundM.Play(Define.Sound.Effect, "Reward");
             Managers.UpdateM.Register(_unscaledTickable: this);
         };
         Managers.AdM.ShowRewardedAd(rewardedAction, null);

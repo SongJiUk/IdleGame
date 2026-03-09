@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
-
+using Cysharp.Threading.Tasks;
 public class SkillController : MonoBehaviour
 {
     List<SkillBase> skills = new List<SkillBase>();
@@ -36,7 +36,7 @@ public class SkillController : MonoBehaviour
     }
 
 
-    public bool UseSkill(int _skillIndex = 0, CreatureController _target = null)
+    public async UniTask<bool> UseSkill(int _skillIndex = 0, CreatureController _target = null)
     {
         if (_skillIndex < 0 || _skillIndex >= skills.Count)
         {
@@ -46,7 +46,7 @@ public class SkillController : MonoBehaviour
 
         SkillBase useSkill = skills[_skillIndex];
         CreatureController caster = owner;
-        bool skillExecuted = useSkill.UseSkill(owner, _target);
+        bool skillExecuted = await useSkill.UseSkill(owner, _target);
 
         if (skillExecuted)
         {

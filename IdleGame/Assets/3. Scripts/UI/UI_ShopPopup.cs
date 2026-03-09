@@ -168,6 +168,7 @@ public class UI_ShopPopup : UI_Popup
     }
     public override void SetInfo()
     {
+        Managers.SoundM.MuteEffectVolume(true);
         ScrollToTitle(gachaRect, true);
         MoveTarget(gachaButtonRect, false);
         RefreshUI();
@@ -536,6 +537,10 @@ public class UI_ShopPopup : UI_Popup
                 break;
 
             case Buttons.Dia13000Button:
+
+#if UNITY_IOS
+Managers.GameM.Dia += 13000;
+#endif
                 GetProuduct(Define.IAP.dia13000.ToString());
                 break;
         }

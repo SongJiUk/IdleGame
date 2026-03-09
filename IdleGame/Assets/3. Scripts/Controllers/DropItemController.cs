@@ -171,7 +171,7 @@ public class DropItemController : UIDirecting
         }
         catch (System.Exception e)
         {
-            Debug.LogError("������ ȹ�� ���� : " + e.Message);
+            Debug.LogError(e.Message);
         }
 
     }

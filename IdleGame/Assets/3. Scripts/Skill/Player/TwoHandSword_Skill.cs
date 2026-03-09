@@ -9,7 +9,7 @@ public class TwoHandSword_Skill : SkillBase
     {
     }
 
-    override public bool UseSkill(CreatureController _caster, CreatureController _target = null)
+    override public async UniTask<bool> UseSkill(CreatureController _caster, CreatureController _target = null)
     {
         InitSkillData(_caster);
 
@@ -23,6 +23,7 @@ public class TwoHandSword_Skill : SkillBase
                 SetDamage(_caster, enemy);
             }
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
+            Managers.SoundM.Play(Define.Sound.Effect, "TwoHandSwordSkill");
             return true;
         }
         else

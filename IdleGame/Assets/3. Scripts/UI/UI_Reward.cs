@@ -41,8 +41,9 @@ public class UI_Reward : UI_Base
     }
 
     public void SetInfo(int _count)
-    {   //Sound : reward Sound
+    {
         GetRewardInit("Dia", _count);
+        Managers.SoundM.Play(Define.Sound.Effect, "Reward");
     }
 
     public void GetIAPReward(Define.IAP _iap)
@@ -55,18 +56,43 @@ public class UI_Reward : UI_Base
             case Define.IAP.dia300:
                 GetRewardInit("Dia", 300);
                 break;
+            case Define.IAP.dia550:
+                GetRewardInit("Dia", 550);
+                break;
+            case Define.IAP.dia1200:
+                GetRewardInit("Dia", 1200);
+                break;
+
+            case Define.IAP.dia4000:
+                GetRewardInit("Dia",4000);
+                break;
+
+            case Define.IAP.dia7000:
+                GetRewardInit("Dia", 7000);
+                break;
+
+            case Define.IAP.dia13000:
+                GetRewardInit("Dia", 13000);
+                break;
+
         }
     }
 
-    public void GetRewardInit(string _itemName, int _count)
+    public void GetRewardInit(string _itemName, int _count, bool isPopup = true)
     {
-        GetImage(ImagesType, (int)Images.RewardImage).sprite = Managers.ResourceM.GetAtlas(_itemName);
-        GetText(TextsType, (int)Texts.RewardCountText).text = _count <= 1 ? "" : $"x{_count}";
+        if(isPopup)
+        {
+            GetImage(ImagesType, (int)Images.RewardImage).sprite = Managers.ResourceM.GetAtlas(_itemName);
+            GetText(TextsType, (int)Texts.RewardCountText).text = _count <= 1 ? "" : $"x{_count}";
+        }
+
 
         switch (_itemName)
         {
             case "Dia": Managers.GameM.Dia += _count; break;
-            case "ADS": Managers.GameM.gameData.ADS_Remove = true; break;
+            case "ADS":
+                Managers.GameM.gameData.ADS_Remove = true;
+                PlayerPrefs.SetInt("IsRemoveAds", 1); break;
         }
 
     }
