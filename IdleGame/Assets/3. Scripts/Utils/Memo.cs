@@ -89,7 +89,7 @@ public class Memo
     TODO : 게임씬 나눠주기    
     TODO : 갑자기 영웅 사라지는거 확인 => 아직 확인 못함
     TODO : 사망했을때 던전 못들어가게하기(멈춰버림
-    TODO : 아이폰 홀드시 pause왜 안되는지? => 시간찍어서 확인해보기
+    TODO : 아이폰 홀드시 pause왜 안되는지? => 시간찍어서 확인해보기(되는데, 시간 확인이안됌 => 수정해야될듯)
     
     Sound Effect by <a href="https://pixabay.com/ko/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=108175">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=108175">Pixabay</a>
     */
