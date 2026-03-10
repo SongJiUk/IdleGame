@@ -102,10 +102,23 @@ public class Managers : MonoBehaviour
             Debug.LogError("RenderManager가 이미 할당되어있음.");
     }
 
-    public static void ResetManagersToInitialState()
+    public static void ClearAll()
     {
+        Debug.Log("<color=yellow>[System] 로그아웃 / 초기화를 위한 모든 매니저 초기화 시작 </color>");
+        UpdateM.Clear();
+        StageM.Clear();
+        SpawnM.Clear();
+
         ObjectM.Clear();
-        ItemM.Clear();
+        PoolM.Clear();
+        ResourceM.UnLoadAll();
+        SoundM.Clear();
+        UIM.Clear();
+        GameM.ResetGameData();
+        FirebaseM.SignOutFM();
+
+        Debug.Log("<color=green>[System] 로그아웃 / 초기화 완료 : 모든 매니저가 초기화됌 </color>");
+
     }
 
     public static void Clear()

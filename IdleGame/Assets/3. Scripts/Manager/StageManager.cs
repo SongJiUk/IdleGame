@@ -177,5 +177,31 @@ public class StageManager
         }
         return true;
     }
+
+    public void Clear()
+    {
+        stateCts?.Cancel();
+        stateCts.Dispose();
+        stateCts = null;
+
+        stageState = StageState.None;
+        count = 0;
+        isDead = false;
+        isDungeon = false;
+
+        readyEvent = null;
+        playEvent = null;
+        bossEvent = null;
+        bossPlayEvent = null;
+        clearEvent = null;
+        deadEvent = null;
+        dungeonEvent = null;
+        dungeonClearEvent = null;
+        dungeonFailEvent = null;
+        dungeonOutEvent = null;
+
+        Debug.Log("[StageManager] 스테이지 상태 초기화 및 이벤트 구독 해제 완료");
+
+    }
 }
 

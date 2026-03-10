@@ -222,4 +222,27 @@ public class ADManager
         bannerView?.Destroy();
         bannerView = null;
     }
+
+    public void Clear()
+    {
+        if (bannerView != null)
+        {
+            bannerView.Destroy();
+            bannerView = null;
+        }
+
+        if (interstitialAd != null)
+        {
+            interstitialAd.Destroy();
+            interstitialAd = null;
+        }
+
+        if (rewardedAd != null)
+        {
+            rewardedAd.Destroy();
+            rewardedAd = null;
+        }
+
+        Debug.Log("[ADManger] 광고 객체들 정리 완료");
+    }
 }

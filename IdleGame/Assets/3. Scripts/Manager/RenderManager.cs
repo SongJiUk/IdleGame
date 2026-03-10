@@ -89,7 +89,7 @@ public class RenderManager : MonoBehaviour
         if (heroStatObject != null) heroStatObject.SetActive(false);
         if (savingObject != null) savingObject.SetActive(false);
 
-        
+
     }
 
     public void DisableAllCamera()
@@ -112,7 +112,7 @@ public class RenderManager : MonoBehaviour
 
     Camera GetCamera(RenderType _type)
     {
-        switch(_type)
+        switch (_type)
         {
             case RenderType.Hero: return heroCamera;
             case RenderType.Gacha: return gachaCamera;
@@ -138,7 +138,7 @@ public class RenderManager : MonoBehaviour
 
     public void DungeonNPC()
     {
-        for(int i =0; i<npcs.Count; i++)
+        for (int i = 0; i < npcs.Count; i++)
         {
             npcs[i].SetInfo();
         }
@@ -149,10 +149,10 @@ public class RenderManager : MonoBehaviour
         Hide();
 
         currentGameObject = GetObject(_type);
-        if(currentGameObject != null) currentGameObject.SetActive(true);
+        if (currentGameObject != null) currentGameObject.SetActive(true);
 
         var cam = GetCamera(_type);
-        if(cam == null)
+        if (cam == null)
         {
             Debug.LogError($"RenderManager : Camera for {_type} is null");
             return;
@@ -180,7 +180,7 @@ public class RenderManager : MonoBehaviour
 
     public void Hide()
     {
-        if(currentCamera != null)
+        if (currentCamera != null)
         {
             currentCamera.targetTexture = null;
             currentCamera.enabled = false;
@@ -188,17 +188,27 @@ public class RenderManager : MonoBehaviour
             currentCamera = null;
         }
 
-        if(currentRT != null)
+        if (currentRT != null)
         {
             currentRT.Release();
             Destroy(currentRT);
             currentRT = null;
         }
 
-        if(currentGameObject  != null)
+        if (currentGameObject != null)
         {
             currentGameObject.SetActive(false);
             currentGameObject = null;
+        }
+    }
+
+    public void Clear()
+    {
+        Hide();
+
+        if (npcs != null)
+        {
+            npcs.Clear();
         }
     }
 }

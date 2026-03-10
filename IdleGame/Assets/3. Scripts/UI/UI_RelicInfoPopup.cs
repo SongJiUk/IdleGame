@@ -98,8 +98,12 @@ public class UI_RelicInfoPopup : UI_Popup
     void OnClickGachaButton()
     {
         Managers.SoundM.PlayButtonClick();
-        Managers.UIM.CloseAllPopup();
-        Managers.UIM.ShowPopup<UI_ShopPopup>().Forget();
+        var gameScene = Managers.UIM.SceneUI as UI_GameScene;
+        if (gameScene != null)
+        {
+            Managers.UIM.ClosePopup(this).Forget();
+            gameScene.OpenShopFormOtherUI().Forget();
+        }
     }
 
     void OnClickEnforceButton()

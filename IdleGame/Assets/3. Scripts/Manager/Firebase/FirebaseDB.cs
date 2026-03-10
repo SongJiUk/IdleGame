@@ -63,9 +63,11 @@ public partial class FirebaseManager
 
     public async UniTask ReadData()
     {
+        if (IsLoading) return;
         try
         {
             IsLoading = true;
+            if (CurrentUser == null) return;
             var userId = CurrentUser.UserId;
 
             var (dataSnap, charSnap, itemSnap, smeltSnap) = await UniTask.WhenAll(
@@ -108,19 +110,19 @@ public partial class FirebaseManager
                 string rawJson = itemSnap.GetRawJsonValue();
                 Debug.Log($"[1. 서버 원본 데이터]: {rawJson}");
                 var itemDic = JsonConvert.DeserializeObject<Dictionary<string, Holder>>(itemSnap.GetRawJsonValue());
-                foreach (var key in itemDic.Keys)
-                {
-                    Debug.Log($"[2. 서버에 존재하는 키]: '{key}' (글자수: {key.Length})");
-                }
-                string targetKey = "Axe";
-                if (itemDic.ContainsKey(targetKey))
-                {
-                    Debug.Log($"[3. 결과] {targetKey} 찾기 성공! 개수: {itemDic[targetKey].Count}");
-                }
-                else
-                {
-                    Debug.LogWarning($"[3. 결과] {targetKey} 찾기 실패! 서버 키 목록을 다시 확인하세요.");
-                }
+                // foreach (var key in itemDic.Keys)
+                // {
+                //     Debug.Log($"[2. 서버에 존재하는 키]: '{key}' (글자수: {key.Length})");
+                // }
+                // string targetKey = "Axe";
+                // if (itemDic.ContainsKey(targetKey))
+                // {
+                //     //Debug.Log($"[3. 결과] {targetKey} 찾기 성공! 개수: {itemDic[targetKey].Count}");
+                // }
+                // else
+                // {
+                //     Debug.LogWarning($"[3. 결과] {targetKey} 찾기 실패! 서버 키 목록을 다시 확인하세요.");
+                // }
                 Managers.GameM.gameData.Item_Holder = itemDic ?? new Dictionary<string, Holder>();
 
                 if (itemDic != null && itemDic.TryGetValue("Axe", out var axe))
@@ -185,7 +187,7 @@ public partial class FirebaseManager
             Debug.LogError($"SyncDataOnly 도중 에러: {e.Message}");
         }
         return false;
-        
+
     }
 
     bool IsNewDay(long _lastTicks, DateTime _now)
@@ -222,8 +224,7 @@ public partial class FirebaseManager
 
             await reference.Child("users").Child(CurrentUser.UserId).RemoveValueAsync().AsUniTask();
 
-            PlayerPrefs.DeleteAll();
-            Managers.GameM.gameData.ResetAllData();
+            Managers.ClearAll();
             Debug.Log("서버 및 로컬 데이터 삭제 완료");
         }
         catch (Exception e)
@@ -234,13 +235,5 @@ public partial class FirebaseManager
         {
             IsDeleting = false;
         }
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-
-#else
-        Application.Quit();
-#endif
-
     }
 }

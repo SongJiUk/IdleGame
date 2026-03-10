@@ -83,7 +83,7 @@ public class UI_TitleScene : UI_Scene
         BindText(TextsType);
 
         GetText(TextsType, (int)Texts.DataLoadText).text = "데이터를 로딩중입니다,";
-        GetText(TextsType, (int)Texts.VersionText).text = "Versoin. " + Application.version;
+        GetText(TextsType, (int)Texts.VersionText).text = "Version. " + Application.version;
 
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(false);
 
@@ -151,9 +151,13 @@ public class UI_TitleScene : UI_Scene
         Managers.LocalM.Init();
 
         await Managers.FirebaseM.Init();
+        await UniTask.WaitUntil(() => Managers.FirebaseM.Auth != null);
+        await UniTask.Delay(500);
 
         hasSeenLogin = PlayerPrefs.GetInt("HasSeenLogin", 0) == 1;
-        if (!hasSeenLogin || !Managers.FirebaseM.IsLoggedIn())
+        bool isLoggedIn = Managers.FirebaseM.IsLoggedIn();
+
+        if (!hasSeenLogin || !isLoggedIn)
         {
             var popup = await Managers.UIM.ShowPopup<UI_LoadingLogin>();
             popup.transform.SetParent(this.transform);
@@ -162,16 +166,17 @@ public class UI_TitleScene : UI_Scene
         else
         {
             await Managers.FirebaseM.CheckAndApplyCurrentUser();
+        }
 
-            bool isGuest = Managers.GameM.gameData.isGuest;
-            GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(isGuest);
+        bool isGuest = Managers.GameM.gameData.isGuest;
+        GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(isGuest);
 
 #if UNITY_ANDROID
         GetButton(ButtonsType, (int)Buttons.GoogleLoginButton).transform.SetAsFirstSibling();
 #elif UNITY_IOS
-            //GetButton(ButtonsType, (int)Buttons.AppleLoginButton).transform.SetAsFirstSibling();
+        //GetButton(ButtonsType, (int)Buttons.AppleLoginButton).transform.SetAsFirstSibling();
 #endif
-        }
+
 
         GetImage(ImagesType, (int)Images.TapToStartImage).gameObject.SetActive(true);
         GetText(TextsType, (int)Texts.DataLoadText).text = "데이터가 정상적으로 로딩되었습니다,";
@@ -224,11 +229,11 @@ public class UI_TitleScene : UI_Scene
             GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
             Managers.UIM.ShowToast("구글 계정 연동 성공!");
         }
-        catch(FirebaseException e)
+        catch (FirebaseException e)
         {
             Debug.LogError($"[ERROR] 구글 연동 실패: {e.Message} (코드: {e.ErrorCode})");
 
-            if(e.ErrorCode == (int)AuthError.CredentialAlreadyInUse)
+            if (e.ErrorCode == (int)AuthError.CredentialAlreadyInUse)
             {
                 var conflictPopup = await Managers.UIM.ShowPopup<UI_AccountConflictPopup>();
                 conflictPopup.SetCallBack(async () =>

@@ -170,7 +170,7 @@ public class SpawnManager : MonoBehaviour, ITickable
         Managers.UpdateM.Register(this);
         spawnTime = 0f;
         isSpawning = true;
-        Debug.Log("Start Spawn");
+        //Debug.Log("Start Spawn");
     }
     public void StopSpawn()
     {
@@ -178,7 +178,7 @@ public class SpawnManager : MonoBehaviour, ITickable
 
         Managers.UpdateM.UnRegister(this);
         isSpawning = false;
-        Debug.Log("Spawn Stop");
+        //Debug.Log("Spawn Stop");
     }
 
     void SpawnMonster(int _count)
@@ -258,5 +258,33 @@ public class SpawnManager : MonoBehaviour, ITickable
             spawnTime = spawnInterval;
             SpawnMonster(spawnMaxCount);
         }
+    }
+
+    public void Clear()
+    {
+        StopSpawn();
+
+        if (Managers.StageM != null)
+        {
+            Managers.StageM.readyEvent -= OnReady;
+            Managers.StageM.playEvent -= OnPlay;
+            Managers.StageM.bossEvent -= OnBoss;
+            Managers.StageM.clearEvent -= OnClear;
+            Managers.StageM.deadEvent -= OnDead;
+            Managers.StageM.dungeonEvent -= OnDungeon;
+            Managers.StageM.dungeonClearEvent -= OnDungeonClear;
+            Managers.StageM.dungeonFailEvent -= OnDungeonFail;
+            Managers.StageM.dungeonOutEvent -= OnDungeonOut;
+        }
+
+        DeSpawnMonster();
+        if (boss != null)
+        {
+            boss.OnMonsterInfoUpdate -= scene.UpdateBossInfo;
+            boss = null;
+        }
+
+        scene = null;
+        Debug.Log("[SpawnManager] 스폰 로직 및 이벤트 구독 해제 완료");
     }
 }

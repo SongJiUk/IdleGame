@@ -7,14 +7,18 @@ using GooglePlayGames.BasicApi;
 #endif
 public class GPGSManager
 {
-
+    private bool isInitialized = false;
     public void Init()
     {
+
+        if (isInitialized) return;
 #if UNITY_ANDROID
         SignIn(Managers.GameM.Level);
 #else
         Debug.Log("이 플랫폼은 google Play Games를 지원하지 않습니다.");
 #endif
+
+        isInitialized = true;
     }
 
     public void SignIn(int _score)
@@ -55,5 +59,14 @@ public class GPGSManager
             }
         });
 #endif
+    }
+
+    public void Clear()
+    {
+#if UNITY_ANDROID
+        PlayGamesPlatform.instance.SignOut();
+        Debug.Log("[GPGSManager] 구글 플레이 게임 로그아웃 완료");
+#endif
+        isInitialized = false;
     }
 }

@@ -133,4 +133,16 @@ public class BuffManager : IUnScaledTickable
 
         return 30.0f + level * 1.0f;
     }
+
+    public void Clear()
+    {
+        for (int i = 0; i < Timers.Length; i++)
+        {
+            Timers[i] = 0f;
+        }
+
+        Managers.UpdateM.UnRegister(_unscaledTickable: this);
+
+        Debug.Log("[BuffManager] 버프 데이터 초기화");
+    }
 }

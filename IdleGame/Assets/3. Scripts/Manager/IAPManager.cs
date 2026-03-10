@@ -21,7 +21,7 @@ public class IAPManager : IStoreListener
     public bool IsInitialized => storeController != null && storeExtensionProvider != null;
     public Action OnPurchaseSuccess;
     public Action OnPurchaseFail;
-    
+
     public void InitUnityIAP()
     {
 
@@ -96,12 +96,12 @@ public class IAPManager : IStoreListener
         bool isShowPopup = isNewPurchase || args.purchasedProduct.definition.type == ProductType.Consumable;
         ApplyPurchaseReward(iapType, isShowPopup);
 
-        return PurchaseProcessingResult.Complete;  
+        return PurchaseProcessingResult.Complete;
     }
 
     private void ApplyPurchaseReward(Define.IAP _type, bool _showPopup)
     {
-        if(_showPopup)
+        if (_showPopup)
         {
             HandlePurchaseAsync(_type).Forget();
         }
@@ -215,4 +215,14 @@ public class IAPManager : IStoreListener
         OnPurchaseSuccess?.Invoke();
     }
 
+
+    public void Clear()
+    {
+        OnPurchaseSuccess = null;
+        OnPurchaseFail = null;
+
+        isUserRequestedPurchase = false;
+
+        Debug.Log("[IAPManager] 유저 구매 상태 및 이벤트 초기화 완료");
+    }
 }

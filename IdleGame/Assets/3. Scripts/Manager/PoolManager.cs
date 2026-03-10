@@ -65,6 +65,17 @@ class Pool
     {
         GameObject.Destroy(_go);
     }
+
+    public void DestroyPool()
+    {
+        if (root != null)
+        {
+            GameObject.Destroy(root.gameObject);
+            root = null;
+        }
+
+        pool.Clear();
+    }
 }
 
 public class PoolManager
@@ -104,6 +115,12 @@ public class PoolManager
 
     public void Clear()
     {
+        foreach (var pool in pools.Values)
+        {
+            pool.DestroyPool();
+        }
+
         pools.Clear();
+        Debug.Log("[PoolManager] 모든 풀이 파괴되고 딕셔너리가 비워졌습니다.");
     }
 }

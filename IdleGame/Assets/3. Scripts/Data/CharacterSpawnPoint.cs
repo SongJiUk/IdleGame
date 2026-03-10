@@ -58,27 +58,34 @@ public class CharacterSpawnPoint : MonoBehaviour
             pc.index = i;
             Managers.CharacterM.AddPlayerReference(i, pc);
         }
-
-
-
-        //TODO: 메인캐릭터는 클레릭 고정임(지금은 테스트한다고 바꿔놓은거.)
-        //Managers.CharacterM.players[Managers.CharacterM.Characters.Length - 1] = Managers.ObjectM.Spawn<PlayerController>(pos, 3);
-        //for (int i = 0; i < Managers.CharacterM.Characters.Length; i++)
-        //{
-
-        //    if (Managers.CharacterM.Characters[i] == null) continue;
-        //    int dataID = Managers.CharacterM.Characters[i].data.DataID;
-
-        //    Vector3 spawnPos = SpawnTr[i].position;
-        //    PlayerController pc = Managers.ObjectM.Spawn<PlayerController>(spawnPos, dataID);
-        //    pc.index = i;
-        //    Managers.CharacterM.players[i] = pc;
-        //    if (pc != null)
-        //    {
-        //        Managers.CharacterM.OnNotifyCharacter(pc);
-        //    }
-        //}
-
-        //Managers.SpawnM.players = Managers.ObjectM.pcList.ToList();
     }
+    private void OnDestroy()
+    {
+        if (Managers.StageM != null)
+        {
+            Managers.StageM.readyEvent -= OnReady;
+            Managers.StageM.dungeonEvent -= OnDungeon;
+        }
+    }
+
+
+    //TODO: 메인캐릭터는 클레릭 고정임(지금은 테스트한다고 바꿔놓은거.)
+    //Managers.CharacterM.players[Managers.CharacterM.Characters.Length - 1] = Managers.ObjectM.Spawn<PlayerController>(pos, 3);
+    //for (int i = 0; i < Managers.CharacterM.Characters.Length; i++)
+    //{
+
+    //    if (Managers.CharacterM.Characters[i] == null) continue;
+    //    int dataID = Managers.CharacterM.Characters[i].data.DataID;
+
+    //    Vector3 spawnPos = SpawnTr[i].position;
+    //    PlayerController pc = Managers.ObjectM.Spawn<PlayerController>(spawnPos, dataID);
+    //    pc.index = i;
+    //    Managers.CharacterM.players[i] = pc;
+    //    if (pc != null)
+    //    {
+    //        Managers.CharacterM.OnNotifyCharacter(pc);
+    //    }
+    //}
+
+    //Managers.SpawnM.players = Managers.ObjectM.pcList.ToList();
 }

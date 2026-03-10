@@ -13,18 +13,18 @@ public class Archer_Skill : SkillBase
     {
         InitSkillData(_caster);
         CreatureController randTarget = _target;
-        if(randTarget == null || randTarget.IsDead) 
+        if (randTarget == null || randTarget.IsDead)
             randTarget = Utils.FindRandomEnemyInRange(_caster, _caster.DATA.AttackRange * 2);
-        
+
         if (randTarget == null || randTarget.IsDead)
         {
-            Debug.Log("아처 스킬 타겟이 없음");
+            //Debug.Log("아처 스킬 타겟이 없음");
             return false;
         }
 
         bool CanShoot = await WaitAndCheckTarget(_caster, randTarget);
 
-        if(CanShoot)
+        if (CanShoot)
         {
             Managers.SoundM.Play(Define.Sound.Effect, "ArcherSkill");
             ResetSkillStateAsync(_caster, anim_Duration).Forget();
@@ -32,7 +32,7 @@ public class Archer_Skill : SkillBase
         }
 
         return false;
-       
+
     }
 
     async UniTask<bool> WaitAndCheckTarget(CreatureController _caster, CreatureController _target)
@@ -64,5 +64,5 @@ public class Archer_Skill : SkillBase
 
         return true;
     }
-    
+
 }

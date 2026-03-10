@@ -20,7 +20,7 @@ public class HealBuff : BuffBase
     {
         target = _target;
         timeSinceLastTick = 0f;
-        Debug.Log("[HealBuff] 힐 시작");
+        //Debug.Log("[HealBuff] 힐 시작");
 
     }
 
@@ -33,10 +33,13 @@ public class HealBuff : BuffBase
         {
             timeSinceLastTick = 0f;
             target.Heal(healPerTick);
-            Debug.Log($"[HealBuff] 틱 회복 : {healPerTick}");
+            //Debug.Log($"[HealBuff] 틱 회복 : {healPerTick}");
         }
     }
 
-    public override void Remove(CreatureController _target) { Debug.Log("[HealBuff] 종료"); }
+    public override void Remove(CreatureController _target)
+    {
+        //Debug.Log("[HealBuff] 종료"); 
+    }
     public override Define.BuffEffectType GetBuffTypes() => Define.BuffEffectType.None;
 }

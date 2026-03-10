@@ -9,8 +9,8 @@ public class UI_AccountConflictPopup : UI_Popup
     #region enum
     enum Buttons
     {
-    ConfirmButton,
-    CancelButton
+        ConfirmButton,
+        CancelButton
     }
 
     #endregion

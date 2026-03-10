@@ -360,9 +360,9 @@ public class UI_ShopPopup : UI_Popup
         if (Managers.GameM.Dia >= 300)
         {
             Managers.GameM.Dia -= 300;
-            var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
+            var popup = await Managers.UIM.ShowPopup<UI_RelicGachaPopup>();
             popup.OnGachaFinished = RefreshUI;
-            await popup.GetGachaHero(1);
+            await popup.GetGachaRelic(1);
             RefreshUI();
             Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress++;
         }
@@ -377,9 +377,9 @@ public class UI_ShopPopup : UI_Popup
         if (Managers.GameM.Dia >= 3000)
         {
             Managers.GameM.Dia -= 3000;
-            var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
+            var popup = await Managers.UIM.ShowPopup<UI_RelicGachaPopup>();
             popup.OnGachaFinished = RefreshUI;
-            await popup.GetGachaHero(11);
+            await popup.GetGachaRelic(11);
             RefreshUI();
             Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress += 11;
         }
@@ -539,7 +539,7 @@ public class UI_ShopPopup : UI_Popup
             case Buttons.Dia13000Button:
 
 #if UNITY_IOS
-Managers.GameM.Dia += 13000;
+                Managers.GameM.Dia += 13000;
 #endif
                 GetProuduct(Define.IAP.dia13000.ToString());
                 break;

@@ -31,7 +31,7 @@ public class Cleric_Skill : SkillBase
         }
         else
         {
-            Debug.Log("[Cleric_Skill] : 아군이 없음.");
+            //Debug.Log("[Cleric_Skill] : 아군이 없음.");
             return false;
         }
     }

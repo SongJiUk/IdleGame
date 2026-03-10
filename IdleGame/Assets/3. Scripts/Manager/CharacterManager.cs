@@ -25,7 +25,7 @@ public class CharacterManager
 
     public void ClearAllPlayers()
     {
-        for(int i =0; i< players.Length; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             players[i] = null;
         }
@@ -52,11 +52,18 @@ public class CharacterManager
 
     public void LevelUpPlayer()
     {
-        for(int i =0; i< players.Length; i++)
+        for (int i = 0; i < players.Length; i++)
         {
             if (players[i] == null) continue;
             players[i].SetStat();
             players[i].OnPlayerDataUpdate?.Invoke(players[i]);
         }
+    }
+
+    public void Clear()
+    {
+        ClearAllPlayers();
+        OnCharacterAdd = null;
+        Debug.Log("[CharacterManager] 캐릭터 및 플레이어 정보 초기화 완료");
     }
 }

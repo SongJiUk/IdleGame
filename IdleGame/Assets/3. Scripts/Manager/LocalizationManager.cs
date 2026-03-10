@@ -38,6 +38,7 @@ public class LocalizationManager
 
     public void Init()
     {
+        if (localData != null) localData.Clear();
         localData = CreateDictionary();
     }
     private Dictionary<string, StringData> CreateDictionary()
@@ -107,6 +108,13 @@ public class LocalizationManager
         }
 
         return localData[_key].GetData();
+    }
+
+    public void Clear()
+    {
+        if (localData != null) localData.Clear();
+        localData = null;
+        Debug.Log("[LocalizationManager] 초기화 완료");
     }
 }
 

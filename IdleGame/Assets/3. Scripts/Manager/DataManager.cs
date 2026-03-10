@@ -17,6 +17,8 @@ public interface ILoader<key, value>
 }
 public class DataManager
 {
+
+    private bool isInitialized = false;
     public Dictionary<int, Data.CreatureData> CreatureDataDic = new Dictionary<int, Data.CreatureData>();
     //public Dictionary<int, Data.WeaponData> WeaponDataDic = new Dictionary<int, Data.WeaponData>();
     public Dictionary<int, Data.ProjectileData> ProjectileDataDic = new Dictionary<int, Data.ProjectileData>();
@@ -37,6 +39,13 @@ public class DataManager
 
     public void Init()
     {
+        if (isInitialized)
+        {
+            Debug.Log("DataManager는 이미 초기화되었습니다.");
+            return;
+        }
+
+
         TextAsset jsonAsset = Managers.ResourceM.Load<TextAsset>("Datas.json");
         if (jsonAsset == null)
         {
@@ -63,6 +72,8 @@ public class DataManager
         NPCDataDic = LoadJson<Data.NPCDataLoader, int, Data.NPCData>(jsonObj, "NPCData").MakeDict();
         SmeltDataDic = LoadJson<Data.SmeltDataLoader, int, Data.SmeltData>(jsonObj, "SmeltData").MakeDict();
         LocalizationDic = LoadJson<Data.LocalizationLoader, string, Data.Localization>(jsonObj, "Localization").MakeDict();
+
+        isInitialized = true;
     }
 
     Loader LoadJson<Loader, Tkey, TValue>(JObject _jsonObj, string _dataName) where Loader : ILoader<Tkey, TValue> where TValue : class

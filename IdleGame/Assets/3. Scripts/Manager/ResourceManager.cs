@@ -215,4 +215,15 @@ public class ResourceManager
         }
     }
     #endregion
+
+    public void Clear()
+    {
+        UnLoadAll();
+        resourceDic.Clear();
+        keyToLabelDic.Clear();
+
+        if (atlas != null) atlas = null;
+
+        Debug.Log("[ResourceManager] 메모리 및 에셋 캐시 전체 초기화 완료");
+    }
 }

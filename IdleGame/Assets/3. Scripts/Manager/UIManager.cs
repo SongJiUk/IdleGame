@@ -229,6 +229,20 @@ public class UIManager
         isGolbalLock = false;
     }
 
-    //TODO : 뒤로가기 게임종료 팝업 
+
+    public void Clear()
+    {
+        CloseAllPopup();
+        if (sceneUI != null)
+        {
+            Managers.ResourceM.Destroy(sceneUI.gameObject);
+            sceneUI = null;
+        }
+
+        isGolbalLock = false;
+        OnDungeonPopupState = null;
+
+        Debug.Log("[UIManager] 모든 UI요소 및 팝업 정리 완료");
+    }
 
 }

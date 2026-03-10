@@ -32,7 +32,7 @@ public class SoundManager
         audioSources[(int)Define.Sound.Bgm].loop = true;
 
 
-        for(int i =0; i<maxEffectsSources; i++)
+        for (int i = 0; i < maxEffectsSources; i++)
         {
             GameObject go = new GameObject { name = $"EffectSource_{i}" };
             go.transform.parent = soundRoot.transform;
@@ -42,15 +42,19 @@ public class SoundManager
     public void Clear()
     {
         foreach (AudioSource audio in audioSources)
-            audio.Stop();
+            if (audio != null) audio.Stop();
+
+        foreach (var effectSource in effectSources)
+            if (effectSource != null) effectSource.Stop();
 
         audioClips.Clear();
+        Debug.Log("[SoundManager] 모든 사운드 정지 및 캐시 초기화 완료");
     }
 
     public void Play(Define.Sound _sound, string _label, float _pitch = 1f)
     {
 
-        if(_sound ==Define.Sound.Effect)
+        if (_sound == Define.Sound.Effect)
         {
             AudioSource freeSoucre = effectSources.Find(s => !s.isPlaying);
             if (freeSoucre == null) freeSoucre = effectSources[0];
@@ -84,7 +88,7 @@ public class SoundManager
 
     private void DoPlay(Define.Sound _sound, AudioSource _source, AudioClip _clip, float _pitch)
     {
-        
+
         switch (_sound)
         {
             case Define.Sound.Bgm:
@@ -128,9 +132,9 @@ public class SoundManager
     public void SetEffectVolume(float _value)
     {
         EffectValue = _value;
-        foreach(AudioSource source in effectSources)
+        foreach (AudioSource source in effectSources)
         {
-            if(source != null)
+            if (source != null)
             {
                 source.volume = _value;
             }
@@ -141,9 +145,9 @@ public class SoundManager
 
     public void MuteEffectVolume(bool _isMute)
     {
-        foreach(AudioSource source in effectSources)
+        foreach (AudioSource source in effectSources)
         {
-            if(source != null)
+            if (source != null)
             {
                 source.mute = _isMute;
             }

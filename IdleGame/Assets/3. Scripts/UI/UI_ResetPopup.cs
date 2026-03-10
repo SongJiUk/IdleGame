@@ -33,9 +33,16 @@ public class UI_ResetPopup : UI_Popup
     void OnClickResetButton()
     {
         Managers.SoundM.PlayButtonClick();
-        Managers.FirebaseM.DeleteUserData().Forget();
+        Managers.UIM.ClosePopup(this).Forget();
+        DeleteProcess().Forget();
     }
 
+    async UniTaskVoid DeleteProcess()
+    {
+        await Managers.FirebaseM.DeleteUserData();
+
+        await Managers.SceneM.LoadSceneAsync(Define.SceneType.TitleScene);
+    }
     void OnClickCloseButton()
     {
         Managers.SoundM.PlayButtonClick();

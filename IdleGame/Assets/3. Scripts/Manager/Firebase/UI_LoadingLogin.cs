@@ -50,7 +50,7 @@ public class UI_LoadingLogin : UI_Popup
                 if (e.ErrorCode == (int)AuthError.CredentialAlreadyInUse)
                 {
                     var conflictPopup = await Managers.UIM.ShowPopup<UI_AccountConflictPopup>();
-
+                    conflictPopup.transform.SetParent(this.transform);
                     conflictPopup.SetCallBack(async () =>
                     {
                         bool success = await Managers.FirebaseM.SwitchToGoogleAccount();
@@ -106,7 +106,7 @@ public class UI_LoadingLogin : UI_Popup
 
         bool success = await Managers.FirebaseM.GoogleLogin();
 
-        if(success)
+        if (success)
         {
             Managers.UIM.ShowToast("기존 계정 데이터로 전환되었습니다.");
             Managers.UIM.ClosePopup(this).Forget();

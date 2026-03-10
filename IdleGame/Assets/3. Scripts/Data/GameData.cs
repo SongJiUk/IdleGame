@@ -200,11 +200,11 @@ public class GameData
             {
                 holder = new Holder();
                 Item_Holder.Add(data.Name, holder);
-                Debug.Log($"[신규 아이템 생성] {targetName}");
+                //Debug.Log($"[신규 아이템 생성] {targetName}");
             }
             else
             {
-                Debug.Log($"[서버 데이터 유지] {targetName}: {holder.Count}개");
+                //Debug.Log($"[서버 데이터 유지] {targetName}: {holder.Count}개");
             }
 
             var item = new ItemHolder { data = data, holder = holder };
@@ -288,11 +288,4 @@ public class GameData
         return value;
     }
 
-    public void ResetAllData()
-    {
-        var newData = new GameData();
-        newData.isGuest = true;
-        Managers.GameM.gameData = newData;
-        Debug.Log("[GameData] 새로운 인스턴스로 데이터가 완전히 교체되었습니다.");
-    }
 }

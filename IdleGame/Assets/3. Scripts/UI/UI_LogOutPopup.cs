@@ -32,7 +32,7 @@ public class UI_LogOutPopup : UI_Popup
         Time.timeScale = 0f;
         Managers.UpdateM.PauseTicking(true);
 
-        Managers.FirebaseM.SignOutFM();
+        Managers.ClearAll();
 
 #if UNITY_ANDROID || UNITY_IOS
         try
@@ -45,13 +45,12 @@ public class UI_LogOutPopup : UI_Popup
         PlayerPrefs.DeleteKey("HasSeenLogin");
         PlayerPrefs.Save();
 
-        Managers.GameM.ResetGameData();
-
         await Managers.SceneM.LoadSceneAsync(Define.SceneType.TitleScene);
 
-        Managers.ObjectM.Clear();
         Time.timeScale = 1f;
         Managers.UpdateM.PauseTicking(false);
+
+        Debug.Log("로그아웃 프로세스 완료: 타이틀 씬으로 복귀했습니다.");
     }
 
     void OnClickCloseButton()

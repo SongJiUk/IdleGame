@@ -11,7 +11,7 @@ public class StatDownBuff : BuffBase
 
     public override void Apply(CreatureController _target)
     {
-        Debug.Log($"{_target.name}에게 종합 디버프 적용중 : {ratio}%");
+        //Debug.Log($"{_target.name}에게 종합 디버프 적용중 : {ratio}%");
     }
 
     public override void Remove(CreatureController _target)

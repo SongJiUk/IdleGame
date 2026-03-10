@@ -154,4 +154,18 @@ public class RelicManager
         }
         return false;
     }
+
+    public void Clear()
+    {
+        DelegateHolder.MonsterDeadEvent -= GoldDice;
+        DelegateHolder.PlayerAttackEvent -= Axe;
+        DelegateHolder.PlayerHitEvent -= GoddessTears;
+
+        EquippedRelics.Clear();
+
+        OnChangeUI = null;
+
+        Debug.Log("[RelicManager] 유물 장착 상태 및 이벤트 구독 해제 완료");
+    }
 }
+

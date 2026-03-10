@@ -25,4 +25,10 @@ public class CustomSceneManager
     {
         return Enum.GetName(typeof(Define.SceneType), _sceneType);
     }
+
+    public void Clear()
+    {
+        CurrentScene = Define.SceneType.None;
+        Debug.Log("[CustomSceneManager] 씬 정보 초기화 완료");
+    }
 }

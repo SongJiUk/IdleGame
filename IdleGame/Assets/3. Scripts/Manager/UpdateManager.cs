@@ -136,5 +136,11 @@ public class UpdateManager : MonoBehaviour
         unScaledTickables.Clear();
         unScaledToAdd.Clear();
         unScaledToRemove.Clear();
+
+        isStartFirebase = false;
+        Managers.save_Timer = 0.0f;
+        isWriting = false;
+
+        Debug.Log("[UpdateManager] 틱 업데이트 및 저장 타이머 초기화 완료");
     }
 }

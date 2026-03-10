@@ -38,7 +38,7 @@ public class Mage_M_Skill : SkillBase
         }
         else
         {
-            Debug.Log("[Mage_M_Skill] : 유효한 적이 없음");
+            //Debug.Log("[Mage_M_Skill] : 유효한 적이 없음");
             return false;
         }
 

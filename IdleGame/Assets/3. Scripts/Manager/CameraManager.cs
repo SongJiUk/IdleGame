@@ -12,11 +12,19 @@ public class CameraManager
     {
         if (_cc != null) cc = _cc;
     }
+
+    public void Clear()
+    {
+        cc = null;
+        Debug.Log("[CameraManager] 카메라 참조 초기화 완료");
+    }
     public async UniTask CameraShake()
     {
+
+        if (cc == null) return;
         if (PlayerPrefs.GetInt("CAM") == 1) return;
 
-        if (cc == null || cc.isCameraShake) return;
+        if (cc.isCameraShake) return;
         cc.isCameraShake = true;
 
 

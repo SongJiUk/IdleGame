@@ -15,7 +15,7 @@ public class UI_SettingPopup : UI_Popup
         UserIDButton,
         KoButton,
         EnButton,
-        JaButton,
+        //JaButton,
         LogOutButton,
         RestoreButton,
         GameResetButton,
@@ -62,19 +62,20 @@ public class UI_SettingPopup : UI_Popup
 
         GetButton(ButtonsType, (int)Buttons.KoButton).gameObject.BindEvent(() => OnClickLanguageButton(Buttons.KoButton));
         GetButton(ButtonsType, (int)Buttons.EnButton).gameObject.BindEvent(() => OnClickLanguageButton(Buttons.EnButton));
-        GetButton(ButtonsType, (int)Buttons.JaButton).gameObject.BindEvent(() => OnClickLanguageButton(Buttons.JaButton));
+        // GetButton(ButtonsType, (int)Buttons.JaButton).gameObject.BindEvent(() => OnClickLanguageButton(Buttons.JaButton));
 
         GetButton(ButtonsType, (int)Buttons.LogOutButton).gameObject.BindEvent(OnClickLogOutButton);
         GetButton(ButtonsType, (int)Buttons.LogOutButton).gameObject.SetActive(false);
 
         GetButton(ButtonsType, (int)Buttons.GameResetButton).gameObject.BindEvent(OnClickResetButton);
+        GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.SetActive(false);
 #if UNITY_IOS
         GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.SetActive(true);
         GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.BindEvent(() => Managers.IAPM.RestorePurchase());
 #endif
 
 
-        GetButton(ButtonsType, (int)Buttons.RestoreButton).gameObject.SetActive(false);
+
         GetText(TextsType, (int)Texts.UserIDText).text = $"Unique ID : {Managers.FirebaseM.CurrentUser.UserId}";
 
         GetSlider(SlidersType, (int)Sliders.BgmSlider).onValueChanged.AddListener(OnBgmVolumeChange);
@@ -108,9 +109,9 @@ public class UI_SettingPopup : UI_Popup
                 language = "en";
                 break;
 
-            case Buttons.JaButton:
-                language = "ja";
-                break;
+                // case Buttons.JaButton:
+                //     language = "ja";
+                //     break;
         }
         popup.SetInfo(language);
     }

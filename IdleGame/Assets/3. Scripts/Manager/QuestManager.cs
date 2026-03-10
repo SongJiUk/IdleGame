@@ -106,7 +106,7 @@ public class QuestManager
     }
     public void LoadAchievementDatas()
     {
-        Debug.Log($"[Debug] 로드 시점 AchievementDic 개수: {AchievementDic.Count}");
+        //Debug.Log($"[Debug] 로드 시점 AchievementDic 개수: {AchievementDic.Count}");
         Achievement_Status achievement_Status = new Achievement_Status();
         foreach (var data in Managers.DataM.AchievementDataDic)
         {
@@ -237,6 +237,17 @@ public class QuestManager
     public int GetReward()
     {
         return quest.Reward * Managers.GameM.QuestLevel / 2;
+    }
+
+    public void Clear()
+    {
+        monsterIndex = 0;
+        isGetEnemy = false;
+        isReward = false;
+
+        Achievement_Status_Data = new Achievement_Status();
+        OnQuestDataChanged = null;
+        Debug.Log("[QuestManager] 퀘스트 및 업적 상태 초기화 완료");
     }
 }
 

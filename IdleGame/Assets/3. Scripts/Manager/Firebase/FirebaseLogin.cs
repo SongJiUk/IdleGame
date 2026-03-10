@@ -94,7 +94,7 @@ public partial class FirebaseManager
 
     public void SetupGoogleConfig()
     {
-        if(configuration == null)
+        if (configuration == null)
         {
             configuration = new GoogleSignInConfiguration()
             {
@@ -140,7 +140,7 @@ public partial class FirebaseManager
         }
     }
 
-   
+
     void ApplyUserToGameData(FirebaseUser _user)
     {
         if (_user == null) return;

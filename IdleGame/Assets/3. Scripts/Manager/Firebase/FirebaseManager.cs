@@ -16,7 +16,7 @@ public partial class FirebaseManager
     public DatabaseReference reference;
 
     GoogleSignInConfiguration configuration;
-
+    bool isInitializing = true;
     public async UniTask Init()
     {
         var status = await FirebaseApp.CheckAndFixDependenciesAsync();
@@ -30,7 +30,8 @@ public partial class FirebaseManager
         DB = FirebaseDatabase.DefaultInstance.RootReference;
         reference = DB;
         Auth.StateChanged += OnAuthStateChanged;
-        OnAuthStateChanged(this, null);
+
+        isInitializing = false;
 
         Managers.UpdateM.isStartFirebase = true;
         Debug.Log("Firebase 초기화 성공");
@@ -38,6 +39,9 @@ public partial class FirebaseManager
 
     private void OnAuthStateChanged(object _sender, EventArgs _eventArgs)
     {
+
+        if (isInitializing) return;
+
         if (Auth.CurrentUser != CurrentUser)
         {
             CurrentUser = Auth.CurrentUser;

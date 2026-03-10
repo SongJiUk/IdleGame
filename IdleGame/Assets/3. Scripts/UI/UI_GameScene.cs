@@ -271,6 +271,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     private UI_SmeltingPopup ui_smeltingPopup;
     private UI_ShopPopup ui_shopPopup;
     private UI_Popup currentBottomPopup;
+    private Buttons currentBottomPopupButton;
     #endregion
     public override async UniTask<bool> Init()
     {
@@ -404,7 +405,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             Managers.CharacterM.OnCharacterAdd -= OnRegisterCharacterEvents;
         }
 
-        
+
     }
 
     void AllOff()
@@ -542,6 +543,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
                 UI_HeroStatPopup statPopup = await Managers.UIM.ShowPopup<UI_HeroStatPopup>(_isFade: true, _parent: GetPopUpLayer());
                 currentBottomPopup = statPopup;
+                currentBottomPopupButton = Buttons.StatButton;
                 statPopup.OnThisPopupClosed = () =>
                 {
                     ScaleDownSelectButton();
@@ -582,6 +584,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
                 UI_HeroPopup heroPopup = await Managers.UIM.ShowPopup<UI_HeroPopup>(_isFade: true, _parent: GetPopUpLayer());
                 currentBottomPopup = heroPopup;
+                currentBottomPopupButton = Buttons.HeroButton;
                 heroPopup.OnThisPopupClosed = () =>
                 {
                     ScaleDownSelectButton();
@@ -617,6 +620,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
                 UI_RelicsPopup relicPopup = await Managers.UIM.ShowPopup<UI_RelicsPopup>(_isFade: false, _parent: GetPopUpLayer());
                 currentBottomPopup = relicPopup;
+                currentBottomPopupButton = Buttons.RelicsButton;
                 relicPopup.OnThisPopupClosed = () =>
                 {
                     ScaleDownSelectButton();
@@ -652,6 +656,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
                 UI_DungeonPopup dungeonPopup = await Managers.UIM.ShowPopup<UI_DungeonPopup>(_isFade: true, _parent: GetPopUpLayer());
                 currentBottomPopup = dungeonPopup;
+                currentBottomPopupButton = Buttons.DungeonButton;
                 dungeonPopup.OnThisPopupClosed = () =>
                 {
                     ScaleDownSelectButton();
@@ -688,6 +693,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
                 UI_SmeltingPopup smeltingPopup = await Managers.UIM.ShowPopup<UI_SmeltingPopup>(_isFade: false, _parent: GetPopUpLayer());
                 currentBottomPopup = smeltingPopup;
+                currentBottomPopupButton = Buttons.SmeltingButton;
                 smeltingPopup.OnThisPopupClosed = () =>
                 {
                     ScaleDownSelectButton();
@@ -723,6 +729,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
                 UI_ShopPopup shopPopup = await Managers.UIM.ShowPopup<UI_ShopPopup>(_isFade: true, _parent: GetPopUpLayer());
                 currentBottomPopup = shopPopup;
+                currentBottomPopupButton = Buttons.ShopButton;
                 shopPopup.OnThisPopupClosed = () =>
                 {
                     ScaleDownSelectButton();
@@ -896,13 +903,13 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         float rawValue = (float)Managers.StageM.COUNT / maxCount;
         float clampedValue = Mathf.Clamp01(rawValue);
 
-        if(clampedValue >= 1.0f && Managers.StageM.stageState != Define.StageState.Boss)
+        if (clampedValue >= 1.0f && Managers.StageM.stageState != Define.StageState.Boss)
         {
             Managers.StageM.StateChange(Define.StageState.Boss);
         }
         GetImage(ImagesType, (int)Images.StageMonsterCountImage).fillAmount = clampedValue;
         GetText(TextsType, (int)Texts.StageMonsterCountText).text = string.Format("{0:0.0}", clampedValue * 100.0f) + "%";
-      
+
     }
 
     void OnCheckTreasureTroveMonsterCount()
@@ -1621,11 +1628,20 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         {
             if (Managers.UIM.popupStack.Count > 0)
             {
-                Managers.UIM.CloseAllPopup();
-            }
-            else
-            {
-                Managers.UIM.ShowPopup<UI_GameExitPopup>().Forget();
+                var topPopup = Managers.UIM.popupStack.Peek();
+
+                if (currentBottomPopup == topPopup)
+                {
+                    currentBottomPopup.ClosePopup(true).Forget();
+                    currentBottomPopup = null;
+                    return;
+                }
+
+                if (topPopup != null && topPopup.gameObject.activeSelf)
+                {
+                    Managers.UIM.ClosePopup(topPopup).Forget();
+                    return;
+                }
             }
         }
     }
@@ -1753,22 +1769,21 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
     void HandleAppResume(bool _isPause)
     {
-        if(!_isPause)
+        if (!_isPause)
         {
-            CheckOffLineReward().Forget();
+            Managers.FirebaseM.SyncDataOnly().Forget();
+
+            CheckOffLineReward();
         }
     }
 
-    async  UniTaskVoid CheckOffLineReward()
+    void CheckOffLineReward()
     {
-        await Managers.FirebaseM.SyncDataOnly();
-
         double elapsedSeconds = GetOfflineSeconds();
 
         if (elapsedSeconds >= 10.0d)
         {
-            var popup = await Managers.UIM.ShowPopup<UI_OfflinePopup>();
-            popup.SetInfo();
+            Managers.UIM.ShowPopup<UI_OfflinePopup>().Forget();
         }
     }
 
@@ -1777,11 +1792,9 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         long lastTicks = Managers.GameM.gameData.LastSaveTimeTicks;
         long nowTicks = TimerNTP.NowTime.Ticks;
 
-        if (lastTicks == 0) return 0;
+        if (lastTicks == 0 || lastTicks > nowTicks) return 0;
 
         long elapsedTicks = nowTicks - lastTicks;
-        double elapsedSeconds = (double)elapsedTicks / TimeSpan.TicksPerSecond;
-
-        return elapsedSeconds < 0 ? 0 : elapsedSeconds;
+        return (double)elapsedTicks / TimeSpan.TicksPerSecond;
     }
 }

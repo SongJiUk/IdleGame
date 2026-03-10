@@ -68,24 +68,28 @@ public class Memo
     설정에서 배경음, 효과음 처음에는 풀로 맞춰놓기 => 했음
     게임 효과음 추가 (다 추가는 해놨음, 이제 맞추기만 하면 될듯) => 효과음 추가 완료
     인앱 항목 찾을수 없음 => 일단 전 버전은 됐는데 이름 바꿔서 빌드해서 테스트해봐야함 => 성공
-    
-    TODO ; 로그아웃 이미지, 애플로그인 일단 삭제했음, 로그아웃 테스트
-    TODO : 로그인하고 ID 메인씬에 적용하기
-    TODO : 언어에서 일본어 빼던가 넣어주던가 하기
+    로그아웃, 리셋버튼하면 게임 아예 재시작되게 => 바꿈
+    로그인하고 ID 메인씬에 적용하기 => 했음
+    로그아웃, 리셋 테스트 => 다 잘됌
+    언어에서 일본어 빼던가 넣어주던가 하기 => 뺌
+    구글 로그인을 해도 누르면 게스트로 로그인이 되는듯 이것도 확인해봐야함 => 수정 했음
+    렐릭 인포에서 소환 누르면 하단 없어짐 => 해결
+    상점 재화부분 애플에서는 안되니까 대충이라도 해놓기 => 해놨음
+    애플 테스트할때 Restore기능 확인하기, 시작할때 ATT도 확인() => ReStore는 결제안해서 못하고, ATT는 처음에 나온거 확인하면 됌
+    BackKey로 팝업닫으면 오류 생김 => 해결함
+    TODO : 타이틀씬에서도 확인해보기(그리고 좀 자연스럽게 바꾸기)
+
+
+    TODO : 계정 연동 오류 팝업 크기 맞추기 => 해놨음 테스트 해보기
     TODO : 게스트로 했을때 => 구글로그인하기 or 게스트로 계속하기 => 처음에 로그인할때
     TODO : 랭킹 시스템
-    TODO : 애플 테스트할때 Restore기능 확인하기, 시작할때 ATT도 확인() => 안나와있음
     TODO : 아이템 , 이름 등등도 Localization해주자(시트 하나 더 만들어서 하는게 나을수도있을듯)
-    
     TODO : Localization 추가하기
-    TODO : 도중에 몬스터와 보스가 같이나오는 경우가 있음
-    TODO : 게임씬 나눠주기
-    TODO : 계정 연동 오류 팝업 크기 맞추기
-    TODO : 로그아웃, 리셋버튼하면 게임 아예 재시작되게
-    
-    상점 재화부분 애플에서는 안되니까 대충이라도 해놓기
-    갑자기 영웅 사라지는거 확인
-    구글 로그인을 해도 누르면 게스트로 로그인이 되는듯 이것도 확인해봐야함
+    TODO : 도중에 몬스터와 보스가 같이나오는 경우가 있음 => 아직 확인안됌
+    TODO : 게임씬 나눠주기    
+    TODO : 갑자기 영웅 사라지는거 확인 => 아직 확인 못함
+    TODO : 사망했을때 던전 못들어가게하기(멈춰버림
+    TODO : 아이폰 홀드시 pause왜 안되는지? => 시간찍어서 확인해보기
     
     Sound Effect by <a href="https://pixabay.com/ko/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=108175">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=108175">Pixabay</a>
     */

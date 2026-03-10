@@ -198,16 +198,16 @@ public class GameManager
 
     public void ResetGameData()
     {
+        OnGoodsChanged = null;
+
         gameData = new GameData();
         gameData.isGuest = true;
         gameData.playerName = "Guest";
-
-        //TODO : 이거 테스트 해야됌(로그아웃 되는지 확인해보기) 로그아웃이 된다하면 타이틀씬으로 이동되는데, 모든값들 초기화되는지 확인하세요
         gameData.Init();
 
-        OnGoodsChanged?.Invoke();
-
+        Debug.Log("[GameManager] 게임 데이터가 완전히 초기화되었습니다.");
     }
+
     /*
     "모바일 운영체제의 정책상 백그라운드 실시간 연산은 불가능합니다. 그래서 OnApplicationPause를 활용한 타임스탬프 기반 정산 시스템을 구현하여, 앱이 꺼져있는 동안의 보상을 논리적으로 계산했습니다."
     */
@@ -220,11 +220,13 @@ public class GameManager
             Managers.UpdateM.PauseTicking(true);
 
             SaveGameOnPause();
+            Debug.Log("[기기 정지]");
         }
         else
         {
             Time.timeScale = 1f;
             Managers.UpdateM.PauseTicking(false);
+            Debug.Log("[기기 재개]");
         }
     }
 
@@ -236,8 +238,8 @@ public class GameManager
 
     }
 
-    
-   
+
+
 
 
 }

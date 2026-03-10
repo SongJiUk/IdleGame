@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -124,7 +125,7 @@ public class ObjectManager
     public T Spawn<T>(Vector3 _pos, int _tempId = 0, CreatureController _owner = null, CreatureController _target = null, bool _isSkillProjectile = false) where T : BaseController
     {
 
-        if(Managers.GameM.gameData == null)
+        if (Managers.GameM.gameData == null)
         {
             Debug.LogWarning($"[ObjectManager] 게임 데이터가 null입니다. Spawn 중단 시도 ID: {_tempId}");
             return null;
@@ -160,11 +161,11 @@ public class ObjectManager
             {
                 initAction(controller, _pos, _tempId, _owner, _target, _isSkillProjectile);
             }
-           catch(Exception e)
+            catch (Exception e)
             {
                 Debug.LogError($"[ObjectManager] InitAction 에러 ({type.Name}): {e.Message}");
             }
-            
+
         }
         else
         {
@@ -229,10 +230,16 @@ public class ObjectManager
 
     public void Clear()
     {
+        foreach (var pc in pcList.ToList()) Managers.ResourceM.Destroy(pc.gameObject);
+        foreach (var mc in mcList.ToList()) Managers.ResourceM.Destroy(mc.gameObject);
+        foreach (var pj in pjList.ToList()) Managers.ResourceM.Destroy(pj.gameObject);
+        foreach (var oc in ocList.ToList()) Managers.ResourceM.Destroy(oc.gameObject);
         pcList.Clear();
         mcList.Clear();
         pjList.Clear();
         ocList.Clear();
         mPlayer = null;
+
+        Debug.Log("[ObjectManager] 모든 오브젝트 디스폰 및 리스트 초기화 완료");
     }
 }

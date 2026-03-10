@@ -28,7 +28,7 @@ public class Knight_Skill : SkillBase
         }
         else
         {
-            Debug.Log("[양손검 스킬] : 범위 내에 적이 없음");
+            //Debug.Log("[양손검 스킬] : 범위 내에 적이 없음");
             return false;
         }
     }

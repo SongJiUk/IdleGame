@@ -35,7 +35,7 @@ public class Assassin_Skill : SkillBase
         }
         else
         {
-            Debug.Log("[어쌔신 스킬] : 유효한 적이 없음]");
+            //Debug.Log("[어쌔신 스킬] : 유효한 적이 없음]");
             return false;
         }
     }

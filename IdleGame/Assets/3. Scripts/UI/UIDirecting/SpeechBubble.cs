@@ -6,7 +6,7 @@ public class SpeechBubble : UIDirecting
 {
     [SerializeField] TextMeshProUGUI text;
 
-    private readonly Vector3 PosOffset = new Vector3(-1.1f, 1f, 0);
+    private readonly Vector3 PosOffset = new Vector3(0f, 1.0f, 0);
 
     Camera cam;
     RectTransform myRect;
@@ -30,8 +30,9 @@ public class SpeechBubble : UIDirecting
         parentRect = (Managers.UIM.SceneUI as UI_GameScene).WorldSpeechParent.GetComponent<RectTransform>();
         transform.SetParent(parentRect, false);
 
-        transform.localScale = Vector3.one;
-        transform.localRotation = Quaternion.identity;
+        // transform.localScale = Vector3.one;
+        transform.localScale = Vector3.zero;
+        // transform.localRotation = Quaternion.identity;
 
         if (_data != null && _data.SpeechList != null && _data.SpeechList.Count > 0)
         {
@@ -81,7 +82,7 @@ public class SpeechBubble : UIDirecting
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
             parentRect,
             screenPos,
-            null, // Overlay Canvas면 null
+            null,
             out localPoint))
         {
             myRect.anchoredPosition = localPoint;

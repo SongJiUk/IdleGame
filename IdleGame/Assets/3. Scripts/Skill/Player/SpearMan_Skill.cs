@@ -15,7 +15,7 @@ public class SpearMan_Skill : SkillBase
 
         List<CreatureController> enemiesInArea = Utils.FindEnemyForwardArea(_caster, skill_Length, skill_Width);
 
-       
+
         if (enemiesInArea.Count > 0)
         {
             foreach (CreatureController enemy in enemiesInArea)
@@ -29,7 +29,7 @@ public class SpearMan_Skill : SkillBase
         }
         else
         {
-            Debug.Log("[스피어맨 스킬] : 범위 내에 적이 없음");
+            //Debug.Log("[스피어맨 스킬] : 범위 내에 적이 없음");
             return false;
         }
     }
