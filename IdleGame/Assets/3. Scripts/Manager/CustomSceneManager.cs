@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 
 public class CustomSceneManager
 {
+    public Define.SceneType CurrentScene { get; private set; }
 
     public async UniTask LoadSceneAsync(Define.SceneType _sceneType)
     {
@@ -15,12 +16,13 @@ public class CustomSceneManager
 
         await SceneManager.LoadSceneAsync(GetScene(_sceneType));
 
+        CurrentScene = _sceneType;
+
 
     }
 
     public string GetScene(Define.SceneType _sceneType)
     {
-        string sceneName = Enum.GetName(typeof(Define.SceneType), _sceneType);
-        return sceneName;
+        return Enum.GetName(typeof(Define.SceneType), _sceneType);
     }
 }

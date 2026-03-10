@@ -115,4 +115,9 @@ public class ItemManager
 
         return candidates;
     }
+
+    public void Clear()
+    {
+
+    }
 }

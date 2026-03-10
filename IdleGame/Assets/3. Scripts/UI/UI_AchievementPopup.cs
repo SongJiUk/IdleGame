@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
+using System.Linq;
 
 public class UI_AchievementPopup : UI_Popup
 {
@@ -68,6 +69,10 @@ public class UI_AchievementPopup : UI_Popup
             item.OnCollected = RefreshUI;
             index++;
         }
+        for(int i = index; i <itemPool.Count; i++)
+        {
+            itemPool[i].gameObject.SetActive(false);
+        }
 
         Canvas.ForceUpdateCanvases();
         scrollRect.verticalNormalizedPosition = 1f;
@@ -75,6 +80,9 @@ public class UI_AchievementPopup : UI_Popup
     }
     void RefreshUI()
     {
+        var sortedList = itemPool.OrderBy(x => Managers.QuestM.AchievementDic[x.data.AchievementID] ? 1 : 0)
+            .ToList();
+
         for (int i = 0; i < itemPool.Count; i++)
         {
             if (Managers.QuestM.AchievementDic[itemPool[i].data.AchievementID])
@@ -121,5 +129,15 @@ public class UI_AchievementPopup : UI_Popup
         Managers.SoundM.PlayButtonClick();
         Managers.UIM.ClosePopup(this).Forget();
 
+    }
+
+    public void OnDestroy()
+    {
+        foreach(var item in itemPool)
+        {
+            if (item != null) Destroy(item.gameObject);
+        }
+
+        itemPool.Clear();
     }
 }

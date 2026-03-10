@@ -124,6 +124,13 @@ public class ObjectManager
     public T Spawn<T>(Vector3 _pos, int _tempId = 0, CreatureController _owner = null, CreatureController _target = null, bool _isSkillProjectile = false) where T : BaseController
     {
 
+        if(Managers.GameM.gameData == null)
+        {
+            Debug.LogWarning($"[ObjectManager] 게임 데이터가 null입니다. Spawn 중단 시도 ID: {_tempId}");
+            return null;
+
+        }
+
         string prefabName = GetPrefabNames<T>(_tempId);
         if (string.IsNullOrEmpty(prefabName))
         {
@@ -149,7 +156,15 @@ public class ObjectManager
         Type type = controller.GetType();
         if (initActions.TryGetValue(type, out var initAction))
         {
-            initAction(controller, _pos, _tempId, _owner, _target, _isSkillProjectile);
+            try
+            {
+                initAction(controller, _pos, _tempId, _owner, _target, _isSkillProjectile);
+            }
+           catch(Exception e)
+            {
+                Debug.LogError($"[ObjectManager] InitAction 에러 ({type.Name}): {e.Message}");
+            }
+            
         }
         else
         {
@@ -161,11 +176,8 @@ public class ObjectManager
 
     public T SpawnUI<T>(string _prefabName) where T : UI_Base
     {
-        if (string.IsNullOrEmpty(_prefabName))
-        {
-            Debug.LogError("[ObjectManager] UI 프리팹 이름이 비어있음 ");
-            return null;
-        }
+        if (string.IsNullOrEmpty(_prefabName)) return null;
+
         GameObject go = Managers.ResourceM.Instantiate(_prefabName, _pooling: true);
         if (go == null)
         {
@@ -213,5 +225,14 @@ public class ObjectManager
         //DamageFont damageFont = go.GetOrAddComponent<DamageFont>();
         damageFont.Init(_pos, _dmg, _isMonster, _isCritical, _isSkill);
 
+    }
+
+    public void Clear()
+    {
+        pcList.Clear();
+        mcList.Clear();
+        pjList.Clear();
+        ocList.Clear();
+        mPlayer = null;
     }
 }

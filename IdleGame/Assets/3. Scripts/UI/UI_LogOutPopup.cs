@@ -25,27 +25,33 @@ public class UI_LogOutPopup : UI_Popup
         return true;
     }
 
-    void OnClickLogOutButton()
+    async void OnClickLogOutButton()
     {
         Managers.SoundM.PlayButtonClick();
+
+        Time.timeScale = 0f;
+        Managers.UpdateM.PauseTicking(true);
+
         Managers.FirebaseM.SignOutFM();
 
 #if UNITY_ANDROID || UNITY_IOS
         try
         {
-            Google.GoogleSignIn.DefaultInstance.SignOut();
+            Google.GoogleSignIn.DefaultInstance?.SignOut();
         }
-        catch { }
+        catch (System.Exception e) { Debug.Log($"Google SignOut Error: {e.Message}"); }
 #endif
 
         PlayerPrefs.DeleteKey("HasSeenLogin");
         PlayerPrefs.Save();
 
         Managers.GameM.ResetGameData();
-        Managers.GameM.gameData.isGuest = true;
-        Managers.GameM.gameData.playerName = "Guest";
 
-        Managers.SceneM.LoadSceneAsync(Define.SceneType.TitleScene).Forget();
+        await Managers.SceneM.LoadSceneAsync(Define.SceneType.TitleScene);
+
+        Managers.ObjectM.Clear();
+        Time.timeScale = 1f;
+        Managers.UpdateM.PauseTicking(false);
     }
 
     void OnClickCloseButton()

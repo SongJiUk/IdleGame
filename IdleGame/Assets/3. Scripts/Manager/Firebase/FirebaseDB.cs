@@ -158,12 +158,12 @@ public partial class FirebaseManager
         }
     }
 
-    public async UniTask SyncDataOnly()
+    public async UniTask<bool> SyncDataOnly()
     {
         if (IsDeleting || CurrentUser == null || reference == null)
         {
             Debug.LogWarning("Firebase 동기화 불가: 삭제 중이거나 유저가 로그인되어 있지 않습니다.");
-            return;
+            return false;
         }
 
         try
@@ -176,6 +176,7 @@ public partial class FirebaseManager
                 if (!string.IsNullOrEmpty(json))
                 {
                     JsonConvert.PopulateObject(json, Managers.GameM.gameData);
+                    return true;
                 }
             }
         }
@@ -183,6 +184,7 @@ public partial class FirebaseManager
         {
             Debug.LogError($"SyncDataOnly 도중 에러: {e.Message}");
         }
+        return false;
         
     }
 

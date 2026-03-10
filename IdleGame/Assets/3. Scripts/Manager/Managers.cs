@@ -8,6 +8,7 @@ public class Managers : MonoBehaviour
     static Managers instance;
     static bool init = false;
 
+    public static event Action<bool> OnAppPause;
 
     UpdateManager updateManager = null;
     SpawnManager spawnManager = null;
@@ -101,6 +102,12 @@ public class Managers : MonoBehaviour
             Debug.LogError("RenderManager가 이미 할당되어있음.");
     }
 
+    public static void ResetManagersToInitialState()
+    {
+        ObjectM.Clear();
+        ItemM.Clear();
+    }
+
     public static void Clear()
     {
         PoolM.Clear();
@@ -108,15 +115,16 @@ public class Managers : MonoBehaviour
 
     void OnApplicationPause(bool _pause)
     {
+        OnAppPause?.Invoke(_pause);
         GameM.OnApplicationPause(_pause);
     }
 
     void OnApplicationQuit()
     {
+        OnAppPause?.Invoke(true);
         GameM.OnApplicationPause(true);
     }
 
-    //TODO : 테스트 코드 지우기
     public void TestManualSave()
     {
         Debug.Log("<color=yellow>[개발용] 수동 저장 테스트 시작</color>");

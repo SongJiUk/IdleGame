@@ -292,6 +292,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Managers.QuestM.OnQuestDataChanged += OnChangeQuestInfo;
         Managers.RelicM.OnChangeUI += ChangeLevelUpButtonUI;
 
+        Managers.OnAppPause += HandleAppResume;
+
         //TODO :여기선 mPlayer가 null값이 떠서 사용 x(나중에 메인 플레이어를 알고 있는 상태면 미리 생성해놓고 사용? 어떡할지 고민좀해보자)
         // Managers.GameM.mPlayer.OnPlayerDataUpdate += OnCheckStageMonsterCount;
         // Managers.GameM.mPlayer.OnPlayerDataUpdate += OnPlayerStatChange;
@@ -395,12 +397,14 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         Managers.StageM.OnChangeCount -= OnCheckTreasureTroveMonsterCount;
         Managers.QuestM.OnQuestDataChanged -= OnChangeQuestInfo;
         Managers.RelicM.OnChangeUI -= ChangeLevelUpButtonUI;
+        Managers.OnAppPause -= HandleAppResume;
 
         if (Managers.CharacterM != null)
         {
             Managers.CharacterM.OnCharacterAdd -= OnRegisterCharacterEvents;
         }
 
+        
     }
 
     void AllOff()
@@ -1745,5 +1749,39 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
 
         OnClickAnyButtons(Buttons.ShopButton).Forget();
+    }
+
+    void HandleAppResume(bool _isPause)
+    {
+        if(!_isPause)
+        {
+            CheckOffLineReward().Forget();
+        }
+    }
+
+    async  UniTaskVoid CheckOffLineReward()
+    {
+        await Managers.FirebaseM.SyncDataOnly();
+
+        double elapsedSeconds = GetOfflineSeconds();
+
+        if (elapsedSeconds >= 10.0d)
+        {
+            var popup = await Managers.UIM.ShowPopup<UI_OfflinePopup>();
+            popup.SetInfo();
+        }
+    }
+
+    private double GetOfflineSeconds()
+    {
+        long lastTicks = Managers.GameM.gameData.LastSaveTimeTicks;
+        long nowTicks = TimerNTP.NowTime.Ticks;
+
+        if (lastTicks == 0) return 0;
+
+        long elapsedTicks = nowTicks - lastTicks;
+        double elapsedSeconds = (double)elapsedTicks / TimeSpan.TicksPerSecond;
+
+        return elapsedSeconds < 0 ? 0 : elapsedSeconds;
     }
 }

@@ -47,8 +47,8 @@ public class SpawnManager : MonoBehaviour, ITickable
     #region 이벤트
     public void OnReady()
     {
-        spawnMaxCount = Managers.DataM.StageDataDic[Managers.GameM.Stage].SpawnMaxCount;
-        spawnInterval = Managers.DataM.StageDataDic[Managers.GameM.Stage].SpawnTimer;
+        spawnMaxCount = Managers.StageM.maxCount;
+        spawnInterval = Managers.StageM.spawnInterval;
         StopSpawn();
         DeSpawnMonster();
         if (scene != null) scene.CheckTexts();

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-
 public class GameManager
 {
     public PlayerController mPlayer { get { return Managers.ObjectM?.mPlayer; } }
@@ -226,8 +225,6 @@ public class GameManager
         {
             Time.timeScale = 1f;
             Managers.UpdateM.PauseTicking(false);
-
-            ReloadAndCheckOfflineReward();
         }
     }
 
@@ -239,35 +236,8 @@ public class GameManager
 
     }
 
-    async void ReloadAndCheckOfflineReward()
-    {
-        await UniTask.WaitUntil(() => Managers.FirebaseM.CurrentUser != null);
-
-        await Managers.FirebaseM.SyncDataOnly();
-
-        double elapsedSeconds = GetOfflineSeconds();
-
-
-        if (elapsedSeconds >= 10.0d)
-        {
-            var popup = await Managers.UIM.ShowPopup<UI_OfflinePopup>();
-            popup.SetInfo();
-        }
-
-    }
-
-    private double GetOfflineSeconds()
-    {
-        long lastTicks = Managers.GameM.gameData.LastSaveTimeTicks;
-        long nowTicks = TimerNTP.NowTime.Ticks;
-
-        if (lastTicks == 0) return 0;
-
-        long elapsedTicks = nowTicks - lastTicks;
-        double elapsedSeconds = (double)elapsedTicks / TimeSpan.TicksPerSecond;
-
-        return elapsedSeconds < 0 ? 0 : elapsedSeconds;
-    }
+    
+   
 
 
 }

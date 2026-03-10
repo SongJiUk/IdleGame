@@ -30,6 +30,8 @@ public class UI_OfflinePopup : UI_Popup
     Transform parent = null;
     double money;
     Dictionary<string, ItemHolder> itemsDic = new Dictionary<string, ItemHolder>();
+
+    List<UI_Item> itemPool = new List<UI_Item>();
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -51,7 +53,7 @@ public class UI_OfflinePopup : UI_Popup
     }
 
 
-    public override void SetInfo()
+    public void SetInfo()
     {
         money = Utils.CalculateOfflineMoney(Utils.TimerCheck());
 
@@ -62,11 +64,30 @@ public class UI_OfflinePopup : UI_Popup
 
         GetItem();
 
-        foreach (var item in itemsDic)
+        int index = 0;
+
+        foreach(var item in itemsDic)
         {
-            UI_Item ui_item = Managers.UIM.MakeSubItem<UI_Item>(parent);
-            ui_item.Init().Forget();
+            UI_Item ui_item;
+            if(index < itemPool.Count)
+            {
+                ui_item = itemPool[index];
+                ui_item.gameObject.SetActive(true);
+            }
+            else
+            {
+                ui_item = Managers.UIM.MakeSubItem<UI_Item>(parent);
+                ui_item.Init().Forget();
+                itemPool.Add(ui_item);
+            }
+
             ui_item.SetInfo(item.Value);
+            index++;
+        }
+
+        for(int i =index; i<itemPool.Count; i++)
+        {
+            itemPool[i].gameObject.SetActive(false);
         }
     }
 
@@ -125,5 +146,16 @@ public class UI_OfflinePopup : UI_Popup
         (Managers.UIM.SceneUI as UI_GameScene).OnRefreshGoods();
 
         Managers.UIM.ClosePopup(this).Forget();
+    }
+
+    private void OnDestroy()
+    {
+        foreach(var item in itemPool)
+        {
+            if (item != null) Managers.ResourceM.Destroy(item.gameObject);
+        }
+
+        itemPool.Clear();
+
     }
 }
