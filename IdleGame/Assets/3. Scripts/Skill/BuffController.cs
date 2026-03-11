@@ -13,7 +13,7 @@ public class BuffController : MonoBehaviour, ITickable
         owner = GetComponent<CreatureController>();
         if (owner == null)
         {
-            Debug.LogError("CreatureController ����");  
+            Debug.LogError("CreatureController ����");
         }
     }
 
@@ -24,7 +24,7 @@ public class BuffController : MonoBehaviour, ITickable
             Managers.UpdateM.UnRegister(this);
             return;
         }
-            
+
         for (int i = activeBuffs.Count - 1; i >= 0; i--)
         {
             if (i >= activeBuffs.Count)
@@ -72,7 +72,7 @@ public class BuffController : MonoBehaviour, ITickable
 
         if (total != 0)
         {
-            Debug.Log($"<color=yellow>[Buff_Step 3]</color> {owner.name} 스탯 계산 중 ({_type}): 총 합산 비율 {total * 100}%");
+            //Debug.Log($"<color=yellow>[Buff_Step 3]</color> {owner.name} 스탯 계산 중 ({_type}): 총 합산 비율 {total * 100}%");
         }
         return total;
     }

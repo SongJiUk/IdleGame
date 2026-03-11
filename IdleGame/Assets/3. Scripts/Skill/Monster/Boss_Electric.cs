@@ -17,7 +17,7 @@ public class Boss_Electric : SkillBase
 
         if (!IsUseSkill())
         {
-            Debug.Log("쿨타임");
+            //Debug.Log("쿨타임");
             return false;
         }
 
@@ -33,7 +33,7 @@ public class Boss_Electric : SkillBase
         }
         else
         {
-            Debug.Log("[Boss_Skill] : 유효한 적 없음");
+            //Debug.Log("[Boss_Skill] : 유효한 적 없음");
             return false;
         }
 
@@ -57,7 +57,7 @@ public class Boss_Electric : SkillBase
 
             var go = Managers.ResourceM.Instantiate("Boss_Electric", _pooling: true);
             go.transform.position = player.transform.position;
-            
+
 
             await Managers.CameraM.CameraShake();
 
@@ -66,7 +66,7 @@ public class Boss_Electric : SkillBase
 
                 player.GetDamage(cc.Damage * 1.2, cc);
             }
-            
+
             await UniTask.WaitForSeconds(0.2f);
 
         }

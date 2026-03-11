@@ -53,7 +53,7 @@ public class UI_OfflinePopup : UI_Popup
     }
 
 
-    public void SetInfo()
+    public override void SetInfo()
     {
         money = Utils.CalculateOfflineMoney(Utils.TimerCheck());
 
@@ -66,10 +66,10 @@ public class UI_OfflinePopup : UI_Popup
 
         int index = 0;
 
-        foreach(var item in itemsDic)
+        foreach (var item in itemsDic)
         {
             UI_Item ui_item;
-            if(index < itemPool.Count)
+            if (index < itemPool.Count)
             {
                 ui_item = itemPool[index];
                 ui_item.gameObject.SetActive(true);
@@ -85,7 +85,7 @@ public class UI_OfflinePopup : UI_Popup
             index++;
         }
 
-        for(int i =index; i<itemPool.Count; i++)
+        for (int i = index; i < itemPool.Count; i++)
         {
             itemPool[i].gameObject.SetActive(false);
         }
@@ -150,7 +150,7 @@ public class UI_OfflinePopup : UI_Popup
 
     private void OnDestroy()
     {
-        foreach(var item in itemPool)
+        foreach (var item in itemPool)
         {
             if (item != null) Managers.ResourceM.Destroy(item.gameObject);
         }

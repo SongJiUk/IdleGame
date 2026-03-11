@@ -143,6 +143,6 @@ public class BuffManager : IUnScaledTickable
 
         Managers.UpdateM.UnRegister(_unscaledTickable: this);
 
-        Debug.Log("[BuffManager] 버프 데이터 초기화");
+        //Debug.Log("[BuffManager] 버프 데이터 초기화");
     }
 }

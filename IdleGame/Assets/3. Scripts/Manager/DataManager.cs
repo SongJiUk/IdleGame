@@ -41,7 +41,7 @@ public class DataManager
     {
         if (isInitialized)
         {
-            Debug.Log("DataManager는 이미 초기화되었습니다.");
+            //Debug.Log("DataManager는 이미 초기화되었습니다.");
             return;
         }
 

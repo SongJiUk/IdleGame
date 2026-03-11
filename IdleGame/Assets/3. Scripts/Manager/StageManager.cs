@@ -151,6 +151,7 @@ public class StageManager
 
     public bool CanEnterDungeon()
     {
+        if (stageState == StageState.Dungeon) return false;
         if (stageState == StageState.Changing) return false;
 
         if (stageState == StageState.Dead || stageState == StageState.Clear || stageState == StageState.BossPlay) return false;

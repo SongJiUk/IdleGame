@@ -228,6 +228,11 @@ public class ObjectManager
 
     }
 
+    public List<PlayerController> GetActivePlayers()
+    {
+        return pcList.FindAll(p => p != null);
+    }
+
     public void Clear()
     {
         foreach (var pc in pcList.ToList()) Managers.ResourceM.Destroy(pc.gameObject);

@@ -31,7 +31,6 @@ public class UI_LogOutPopup : UI_Popup
 
         Time.timeScale = 0f;
         Managers.UpdateM.PauseTicking(true);
-
         Managers.ClearAll();
 
 #if UNITY_ANDROID || UNITY_IOS

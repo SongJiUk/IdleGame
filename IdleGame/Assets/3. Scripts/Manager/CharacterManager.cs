@@ -63,7 +63,12 @@ public class CharacterManager
     public void Clear()
     {
         ClearAllPlayers();
+
+        for (int i = 0; i < Characters.Length; i++)
+        {
+            Characters[i] = null;
+        }
         OnCharacterAdd = null;
-        Debug.Log("[CharacterManager] 캐릭터 및 플레이어 정보 초기화 완료");
+        //Debug.Log("[CharacterManager] 캐릭터 및 플레이어 정보 초기화 완료");
     }
 }

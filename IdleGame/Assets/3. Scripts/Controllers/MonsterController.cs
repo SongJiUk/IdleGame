@@ -40,11 +40,11 @@ public class MonsterController : CreatureController
         get
         {
             float debuffValue = GetBuffValue(BuffEffectType.StatDownEffect);
-            if (debuffValue > 0)
-            {
-                Debug.Log($"<color=yellow>[Buff_Step 3]</color> 몬스터 방어력 계산 중... 디버프 수치: {debuffValue}%");
-            }
-            double finalDefense = defense * (1.0f +debuffValue);
+            // if (debuffValue > 0)
+            // {
+            //     Debug.Log($"<color=yellow>[Buff_Step 3]</color> 몬스터 방어력 계산 중... 디버프 수치: {debuffValue}%");
+            // }
+            double finalDefense = defense * (1.0f + debuffValue);
 
             return finalDefense > 0 ? finalDefense : 0;
         }

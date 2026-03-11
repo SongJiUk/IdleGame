@@ -48,6 +48,8 @@ public class UI_DungeonPopup : UI_Popup, ITickable
     int GoldDungeonLevel = 0;
 
     RawImage rawImage;
+    bool isEntering = false;
+
     public async override UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
@@ -116,6 +118,19 @@ public class UI_DungeonPopup : UI_Popup, ITickable
     async UniTaskVoid StartDungeonButtonPress(Buttons _btn)
     {
 
+        if (isEntering) return;
+        if (!Managers.UIM.ClickLock(0.5f)) return;
+
+
+        if (!Managers.StageM.CanEnterDungeon())
+        {
+            Managers.UIM.ShowToast("현재 상태에서는 던전에 입장할 수 없습니다.");
+            return;
+        }
+        isEntering = true;
+
+
+        await UniTask.Yield();
         if (!Managers.StageM.CanEnterDungeon())
         {
             Managers.UIM.ShowToast("현재 상태에서는 던전에 입장할 수 없습니다.");
@@ -160,7 +175,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
                 break;
         }
 
-
+        isEntering = false;
         Managers.UpdateM.UnRegister(this);
         await TriggerClose(this, true);
     }

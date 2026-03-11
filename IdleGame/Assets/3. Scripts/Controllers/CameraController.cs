@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
+using Cysharp.Threading.Tasks;
 
 public class CameraController : MonoBehaviour, ITickable
 {
@@ -28,8 +29,9 @@ public class CameraController : MonoBehaviour, ITickable
         cts.Cancel();
         cts.Dispose();
     }
-    private void Start()
+    private async void Start()
     {
+        await UniTask.Yield();
         Managers.UpdateM.Register(this);
         cam = GetComponent<Camera>();
 
@@ -44,16 +46,15 @@ public class CameraController : MonoBehaviour, ITickable
 
     float Distance()
     {
-        var players = Managers.ObjectM.pcList;
+
+        var players = Managers.ObjectM.GetActivePlayers();
+        if (players == null || players.Count == 0) return dist;
+
         float maxDist = dist;
         foreach (var player in players)
         {
             float targetDist = Vector3.Distance(Vector3.zero, player.transform.position) + standard_Distance;
-
-            if (targetDist > maxDist)
-            {
-                maxDist = targetDist;
-            }
+            if (targetDist > maxDist) maxDist = targetDist;
         }
 
         return maxDist;

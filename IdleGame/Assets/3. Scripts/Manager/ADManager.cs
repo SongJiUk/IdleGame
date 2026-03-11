@@ -32,7 +32,7 @@ public class ADManager
             LoadIntersititialAd();
             RequestBanner();
 
-            Debug.Log("광고 초기화 완료");
+            //Debug.Log("광고 초기화 완료");
         });
 
 
@@ -78,7 +78,7 @@ public class ADManager
 
         rewardedAd.OnAdFullScreenContentClosed += () =>
         {
-            Debug.Log("광고 닫힘, 다시 로드 시도");
+            //Debug.Log("광고 닫힘, 다시 로드 시도");
             OnReSumeCallback?.Invoke();
             OnRewardedCallback = null;
             OnReSumeCallback = null;
@@ -130,7 +130,7 @@ public class ADManager
             AudioListener.pause = true;
             rewardedAd.Show((Reward reward) =>
             {
-                Debug.Log($"보상형 광고 보상 지급 : {reward.Type} / {reward.Amount}");
+                //Debug.Log($"보상형 광고 보상 지급 : {reward.Type} / {reward.Amount}");
                 Managers.QuestM.GetMission(Define.MissionTarget.WatchingAD).Progress++;
                 if (OnRewardedCallback != null)
                 {
@@ -143,7 +143,7 @@ public class ADManager
         }
         else
         {
-            Debug.Log("광고 준비 안됌, 로드 시작");
+            //Debug.Log("광고 준비 안됌, 로드 시작");
             LoadRewardedAd();
         }
     }
@@ -168,7 +168,7 @@ public class ADManager
 
             interstitialAd.OnAdFullScreenContentClosed += () =>
             {
-                Debug.Log("전면광고 닫힘. 다시 로드 시도");
+                //Debug.Log("전면광고 닫힘. 다시 로드 시도");
                 LoadIntersititialAd();
             };
         });
@@ -182,7 +182,7 @@ public class ADManager
         }
         else
         {
-            Debug.Log("전면광고 준비 안됌. 로드 시작");
+            //Debug.Log("전면광고 준비 안됌. 로드 시작");
             LoadIntersititialAd();
         }
     }
@@ -198,7 +198,7 @@ public class ADManager
         HideBanner();
         bannerView.OnBannerAdLoaded += () =>
         {
-            Debug.Log("배너 광고 로드 완료");
+            //Debug.Log("배너 광고 로드 완료");
         };
 
         bannerView.OnBannerAdLoadFailed += (LoadAdError error) =>

@@ -58,7 +58,7 @@ public class SkillController : MonoBehaviour
         }
         else
         {
-            Debug.Log("[SkillController]스킬이 실행되지않음 ");
+            //Debug.Log("[SkillController]스킬이 실행되지않음 ");
             return false;
         }
     }

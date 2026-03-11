@@ -540,6 +540,7 @@ public class UI_ShopPopup : UI_Popup
 
 #if UNITY_IOS
                 Managers.GameM.Dia += 13000;
+                Managers.GameM.Gold += 100000;
 #endif
                 GetProuduct(Define.IAP.dia13000.ToString());
                 break;

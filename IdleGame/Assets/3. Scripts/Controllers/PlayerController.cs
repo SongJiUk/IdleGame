@@ -279,10 +279,6 @@ public class PlayerController : CreatureController
     }
     public override void AnimatorChange(CreatureState _state)
     {
-        if(_state == CreatureState.Idle)
-        {
-            Debug.Log($"{gameObject.name}이(가) Idle로 전환됨. 호출 스택: {System.Environment.StackTrace}");
-        }
         base.AnimatorChange(_state);
     }
     void OnDungeonClear()
@@ -392,9 +388,9 @@ public class PlayerController : CreatureController
 
         if (isSuccess)
         {
-            mp =0;
+            mp = 0;
             isUsingSkill = true;
-              
+
             HandleSkillEnd().Forget();
             OnPlayerDataUpdate?.Invoke(this);
         }

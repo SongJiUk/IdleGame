@@ -77,9 +77,9 @@ public class Memo
     상점 재화부분 애플에서는 안되니까 대충이라도 해놓기 => 해놨음
     애플 테스트할때 Restore기능 확인하기, 시작할때 ATT도 확인() => ReStore는 결제안해서 못하고, ATT는 처음에 나온거 확인하면 됌
     BackKey로 팝업닫으면 오류 생김 => 해결함
-    TODO : 타이틀씬에서도 확인해보기(그리고 좀 자연스럽게 바꾸기)
-
-
+     TODO : 아이폰 홀드시 pause왜 안되는지? => 시간찍어서 확인해보기(되는데, 시간 확인이안됌 => 수정해야될듯) => override 안해서 그런거같음
+    사망했을때 던전 못들어가게하기(멈춰버림) => 이중으로 잠궈놓긴했음
+    
     TODO : 계정 연동 오류 팝업 크기 맞추기 => 해놨음 테스트 해보기
     TODO : 게스트로 했을때 => 구글로그인하기 or 게스트로 계속하기 => 처음에 로그인할때
     TODO : 랭킹 시스템
@@ -88,8 +88,8 @@ public class Memo
     TODO : 도중에 몬스터와 보스가 같이나오는 경우가 있음 => 아직 확인안됌
     TODO : 게임씬 나눠주기    
     TODO : 갑자기 영웅 사라지는거 확인 => 아직 확인 못함
-    TODO : 사망했을때 던전 못들어가게하기(멈춰버림
-    TODO : 아이폰 홀드시 pause왜 안되는지? => 시간찍어서 확인해보기(되는데, 시간 확인이안됌 => 수정해야될듯)
+    
+   
     
     Sound Effect by <a href="https://pixabay.com/ko/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=108175">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=108175">Pixabay</a>
     */

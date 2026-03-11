@@ -29,6 +29,6 @@ public class CustomSceneManager
     public void Clear()
     {
         CurrentScene = Define.SceneType.None;
-        Debug.Log("[CustomSceneManager] 씬 정보 초기화 완료");
+        //Debug.Log("[CustomSceneManager] 씬 정보 초기화 완료");
     }
 }

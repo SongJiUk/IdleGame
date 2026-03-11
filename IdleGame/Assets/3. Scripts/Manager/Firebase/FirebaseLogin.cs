@@ -146,6 +146,7 @@ public partial class FirebaseManager
         if (_user == null) return;
 
         bool isGuest = _user.IsAnonymous;
+        Debug.Log("[확인하려는곳] " + isGuest);
         Managers.GameM.gameData.isGuest = isGuest;
 
         if (isGuest)

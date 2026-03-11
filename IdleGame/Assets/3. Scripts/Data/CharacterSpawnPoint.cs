@@ -31,6 +31,16 @@ public class CharacterSpawnPoint : MonoBehaviour
     }
     public void PlayerSpawn()
     {
+
+        for (int i = 0; i < Managers.CharacterM.Characters.Length; i++)
+        {
+            var charData = Managers.CharacterM.Characters[i];
+            if (charData != null)
+            {
+                Debug.Log($"[DEBUG_SPAWN] 스폰 전 데이터 확인: 인덱스 {i} - 영웅 ID: {charData.data.DataID}");
+            }
+        }
+
         int mainIndex = 0;
 
         if (Managers.CharacterM.players[mainIndex] == null)

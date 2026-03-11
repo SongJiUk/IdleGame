@@ -68,6 +68,7 @@ public partial class FirebaseManager
         {
             IsLoading = true;
             if (CurrentUser == null) return;
+
             var userId = CurrentUser.UserId;
 
             var (dataSnap, charSnap, itemSnap, smeltSnap) = await UniTask.WhenAll(
@@ -108,7 +109,7 @@ public partial class FirebaseManager
             if (itemSnap.Exists)
             {
                 string rawJson = itemSnap.GetRawJsonValue();
-                Debug.Log($"[1. 서버 원본 데이터]: {rawJson}");
+                //Debug.Log($"[1. 서버 원본 데이터]: {rawJson}");
                 var itemDic = JsonConvert.DeserializeObject<Dictionary<string, Holder>>(itemSnap.GetRawJsonValue());
                 // foreach (var key in itemDic.Keys)
                 // {
@@ -125,8 +126,8 @@ public partial class FirebaseManager
                 // }
                 Managers.GameM.gameData.Item_Holder = itemDic ?? new Dictionary<string, Holder>();
 
-                if (itemDic != null && itemDic.TryGetValue("Axe", out var axe))
-                    Debug.Log($"[로드 확인] Axe 개수: {axe.Count}");
+                // if (itemDic != null && itemDic.TryGetValue("Axe", out var axe))
+                //     Debug.Log($"[로드 확인] Axe 개수: {axe.Count}");
             }
 
             if (smeltSnap.Exists)
@@ -224,6 +225,9 @@ public partial class FirebaseManager
 
             await reference.Child("users").Child(CurrentUser.UserId).RemoveValueAsync().AsUniTask();
 
+
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
             Managers.ClearAll();
             Debug.Log("서버 및 로컬 데이터 삭제 완료");
         }

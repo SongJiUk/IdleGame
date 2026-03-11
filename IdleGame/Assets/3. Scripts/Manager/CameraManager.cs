@@ -16,7 +16,7 @@ public class CameraManager
     public void Clear()
     {
         cc = null;
-        Debug.Log("[CameraManager] 카메라 참조 초기화 완료");
+        //Debug.Log("[CameraManager] 카메라 참조 초기화 완료");
     }
     public async UniTask CameraShake()
     {
