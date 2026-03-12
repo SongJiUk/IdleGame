@@ -114,6 +114,7 @@ public class PlayerManager
         Managers.GameM.gameData.hp += Utils.Datas.levelData.HP();
 
         Managers.GameM.Level++;
+        Managers.GPGSM.SaveScore(Managers.GameM.Level);
         Managers.GameM.Exp = _remainExp;
         Managers.QuestM.GetMission(Define.MissionTarget.LevelUp).Progress++;
         Managers.CharacterM.LevelUpPlayer();

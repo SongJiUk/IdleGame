@@ -31,12 +31,20 @@ public class GPGSManager
         {
             if (result == SignInStatus.Success)
             {
-                Debug.Log("로그인 성공 ");
+                Debug.Log("[GPGSManager] 로그인 성공 ");
+                PlayGamesPlatform.Instance.ReportScore(_score, GPGSIds.leaderboard_combatpower, (bool _isCompleted) =>
+                {
+                    if (_isCompleted)
+                    {
+                        Debug.Log("[GPGSManager] 리더보드 저장에 성공");
+                    }
+                });
                 SaveScore(_score);
             }
             else
             {
-                Debug.Log("로그인 실패 : " + result);
+                Debug.LogError("[GPGSManager] 로그인 실패 결과값: " + result.ToString());
+                
             }
         });
 #endif
@@ -45,7 +53,26 @@ public class GPGSManager
     public void ShowLeaderboardUI()
     {
 #if UNITY_ANDROID
-        PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_combatpower);
+        if(PlayGamesPlatform.Instance.IsAuthenticated())
+        {
+            PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_combatpower);
+        }
+        else
+        {
+            Debug.Log("[GPGSManager] 인증되지 않음. 재인증 시도 중...");
+            PlayGamesPlatform.Instance.Authenticate((success) =>
+            {
+                if(success == SignInStatus.Success)
+                {
+                    PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_combatpower);
+                }
+                else
+                {
+                    Debug.LogError("[GPGSManager] 로그인 실패: 리더보드를 열 수 없습니다.");
+                }
+            });
+        }
+        
 #endif
     }
 
@@ -60,8 +87,7 @@ public class GPGSManager
         {
             if (_isCompleted)
             {
-
-                Debug.Log("리더보드 저장에 성공");
+                Debug.Log("[GPGSManager} 리더보드 저장에 성공");
             }
         });
 #endif

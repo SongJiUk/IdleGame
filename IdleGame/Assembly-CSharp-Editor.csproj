@@ -66,12 +66,12 @@
     <Compile Include="Assets\_ExternalModule\Favorites\FavoritesTab\Editor\Scripts\AboutFavoritesTab.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll" />
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.186\Google.IOSResolver.dll" />
     <None Include="Assets\GoogleSignIn\Editor\GoogleSignInDependencies.xml" />
     <None Include="Assets\GoogleSignIn\Editor\m2repository\com\google\signin\google-signin-support\maven-metadata.xml" />
     <None Include="Assets\Firebase\Editor\FirebaseAuth_version-10.2.0_manifest.txt" />
     <None Include="Assets\GoogleSignIn\Editor\google-signin-plugin_v1.0.4.txt" />
-    <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll" />
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.186\Google.PackageManagerResolver.dll" />
     <None Include="Assets\GoogleSignIn\Editor\GoogleSignInSupportDependencies.xml" />
     <None Include="Assets\ExternalDependencyManager\Editor\1.2.186\Google.VersionHandlerImpl.dll" />
