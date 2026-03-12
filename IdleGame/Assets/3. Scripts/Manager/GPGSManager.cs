@@ -8,10 +8,11 @@ using GooglePlayGames.BasicApi;
 public class GPGSManager
 {
     private bool isInitialized = false;
+    bool isLoggedIn = false;
     public void Init()
     {
 
-        if (isInitialized) return;
+        if (isInitialized || isLoggedIn) return;
 #if UNITY_ANDROID
         SignIn(Managers.GameM.Level);
 #else
@@ -24,6 +25,7 @@ public class GPGSManager
     public void SignIn(int _score)
     {
 #if UNITY_ANDROID
+        if (isLoggedIn) return;
 
         PlayGamesPlatform.Instance.Authenticate((result) =>
         {
@@ -50,6 +52,10 @@ public class GPGSManager
     public void SaveScore(int _damage)
     {
 #if UNITY_ANDROID
+        if(!isLoggedIn)
+        {
+            Debug.LogError("[GPGSManager] 로그인 되지 않아 저장을 건너뜁니다.");
+        }
         PlayGamesPlatform.Instance.ReportScore(_damage, GPGSIds.leaderboard_combatpower, (bool _isCompleted) =>
         {
             if (_isCompleted)
@@ -64,7 +70,7 @@ public class GPGSManager
     public void Clear()
     {
 #if UNITY_ANDROID
-        PlayGamesPlatform.instance.SignOut();
+        isLoggedIn = false;
         Debug.Log("[GPGSManager] 구글 플레이 게임 로그아웃 완료");
 #endif
         isInitialized = false;

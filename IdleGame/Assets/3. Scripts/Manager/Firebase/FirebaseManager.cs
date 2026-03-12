@@ -23,7 +23,7 @@ public partial class FirebaseManager
     public class SyncResult
     {
         public GameData LocalData;
-        public GameData serverData;
+        public GameData ServerData;
         public bool HasConflict;
     }
     public async UniTask Init()
@@ -98,7 +98,6 @@ public partial class FirebaseManager
         try
         {
             Auth.SignOut();
-
             bool success = await GoogleLogin();
 
             if (success)
@@ -112,6 +111,15 @@ public partial class FirebaseManager
             Debug.LogError($"[Firebase] 전환 실패: {e.Message}");
         }
         return false;
+    }
+
+    public async UniTaskVoid LoginAndLoadSequence()
+    {
+        bool success = await GoogleLogin();
+        if(success)
+        {
+            await ReadData();
+        }
     }
 
     public async UniTask<GameData> FetchServerData()
@@ -153,7 +161,7 @@ public partial class FirebaseManager
         return new SyncResult
         {
             LocalData = local,
-            serverData = server,
+            ServerData = server,
             HasConflict = hasConflict
         };
     }
@@ -164,16 +172,16 @@ public partial class FirebaseManager
         Debug.Log($"[Sync] 전환 전 UID: {Auth.CurrentUser?.UserId}");
 
         bool switchSuccess = await SwitchToGoogleAccount();
-        if (!switchSuccess) return false;
+        if (!switchSuccess || Auth.CurrentUser == null)
+        {
+            Debug.LogError("[Sync] 계정 전환 실패 또는 유저 정보 없음");
+            return false;
+        }
 
-        // 2. [중요] 세션이 완전히 바뀔 때까지 짧은 대기 (인증 지연 방지)
         await UniTask.Delay(1000);
-        Managers.GameM.gameData = _syncInfo.LocalData;
-        Managers.GameM.gameData.Character_Holder = _syncInfo.LocalData.Character_Holder;
-        Managers.GameM.gameData.Item_Holder = _syncInfo.LocalData.Item_Holder;
-        Managers.GameM.gameData.EquippedSmelts = _syncInfo.LocalData.EquippedSmelts;
 
-        Managers.GameM.gameData.LastSaveTimeTicks = _syncInfo.LocalData.LastSaveTimeTicks;
+        Debug.Log($"[Sync] 전환 후 UID: {Auth.CurrentUser.UserId}");
+        Managers.GameM.gameData = _syncInfo.LocalData;
 
         Debug.Log($"[Firebase] {Auth.CurrentUser?.UserId} 계정으로 데이터 업로드 시작...");
 
@@ -188,5 +196,20 @@ public partial class FirebaseManager
     {
         return await SwitchToGoogleAccount();
     }
+
+    public async UniTask<bool> TryLinkGoogleAcount()
+    {
+        try
+        {
+            await LinkGoogleToCurrentUser();
+            await ReadData();
+            return true;
+        }
+        catch(FirebaseException e) when(e.ErrorCode == (int)AuthError.CredentialAlreadyInUse)
+        {
+            return false;
+        }
+    }
+
 }
 

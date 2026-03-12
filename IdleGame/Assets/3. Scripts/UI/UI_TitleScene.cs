@@ -139,11 +139,8 @@ public class UI_TitleScene : UI_Scene
 
     async UniTask FinishLoadingProcess()
     {
+        await UniTask.Delay(300); 
 
-
-        await UniTask.Delay(300); // 100%가 된 모습을 잠시 보여줌
-
-        // 각종 매니저 초기화 로직
         Managers.DataM.Init();
         Managers.ObjectM.Init();
         Managers.AdM.Init();
@@ -154,7 +151,6 @@ public class UI_TitleScene : UI_Scene
         Managers.LocalM.Init();
 
         await Managers.FirebaseM.Init();
-
         await UniTask.WaitUntil(() => Managers.FirebaseM.Auth != null);
         await UniTask.Delay(500);
 
@@ -170,15 +166,15 @@ public class UI_TitleScene : UI_Scene
         else
         {
             await Managers.FirebaseM.CheckAndApplyCurrentUser();
+            await Managers.FirebaseM.ReadData();
         }
 
         bool isGuest = Managers.GameM.gameData.isGuest;
+        
         GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(isGuest);
 
 #if UNITY_ANDROID
         GetButton(ButtonsType, (int)Buttons.GoogleLoginButton).transform.SetAsFirstSibling();
-#elif UNITY_IOS
-        //GetButton(ButtonsType, (int)Buttons.AppleLoginButton).transform.SetAsFirstSibling();
 #endif
 
 
@@ -225,10 +221,10 @@ public class UI_TitleScene : UI_Scene
     async void OnClickGoogleLoginButton()
     {
         Managers.SoundM.PlayButtonClick();
-        Debug.Log("[LOGIN] Google Login Button Clicked");
         try
         {
             await Managers.FirebaseM.LinkGoogleToCurrentUser();
+            await Managers.FirebaseM.ReadData();
 
             GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
             await NativeAlert.ShowAsync(new AlertOptions
@@ -268,7 +264,7 @@ public class UI_TitleScene : UI_Scene
                         int localStageForward = ((localStageValue - 1) / 20) + 1;
                         int localStageBack = ((localStageValue - 1) % 20) + 1;
 
-                        int serverStageValue = syncInfo.serverData.stage;
+                        int serverStageValue = syncInfo.ServerData.stage;
                         int serverStageForward = ((serverStageValue - 1) / 20) + 1;
                         int serverStageBack = ((serverStageValue - 1) % 20) + 1;
 
@@ -286,12 +282,9 @@ public class UI_TitleScene : UI_Scene
 
                         if (choice == 0)
                         {
-                            //TODO : 덮어씌우기 (기기 -> 서버)
-
                             bool success = await Managers.FirebaseM.ForceUploadLocalDataToServer(syncInfo);
                             if (success)
                             {
-
                                 await NativeAlert.ShowAsync(new AlertOptions
                                 {
                                     title = "전환 성공",
@@ -307,6 +300,7 @@ public class UI_TitleScene : UI_Scene
                             bool success = await Managers.FirebaseM.LoadServerDataOnly();
                             if (success)
                             {
+                                await Managers.FirebaseM.ReadData();
                                 await NativeAlert.ShowAsync(new AlertOptions
                                 {
                                     title = "전환 성공",
@@ -323,6 +317,8 @@ public class UI_TitleScene : UI_Scene
                         bool success = await Managers.FirebaseM.LoadServerDataOnly();
                         if (success)
                         {
+                            await Managers.FirebaseM.ReadData();
+
                             await NativeAlert.ShowAsync(new AlertOptions
                             {
                                 title = "전환 성공",
@@ -345,80 +341,7 @@ public class UI_TitleScene : UI_Scene
             }
         }
     }
-    // async void OnClickGoogleLoginButton()
-    // {
-    //     Managers.SoundM.PlayButtonClick();
-    //     Debug.Log("[LOGIN] Google Login Button Clicked");
-    //     try
-    //     {
-    //         await Managers.FirebaseM.LinkGoogleToCurrentUser();
-
-    //         GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
-    //         await NativeAlert.ShowAsync(new AlertOptions
-    //         {
-    //             title = "연동 성공",
-    //             message = "구글 계정으로 연동되었습니다.",
-    //             theme = AlertTheme.Light,
-    //             buttons = new() { new() { text = "확인", style = AlertButtonStyle.Cancel } }
-    //         });
-    //     }
-    //     catch (FirebaseException e)
-    //     {
-    //         Debug.LogError($"[ERROR] 구글 연동 실패: {e.Message} (코드: {e.ErrorCode})");
-
-    //         if (e.ErrorCode == (int)AuthError.CredentialAlreadyInUse)
-    //         {
-
-    //             int result = await NativeAlert.ShowAsync(new AlertOptions
-    //             {
-    //                 title = "계정 충돌",
-    //                 message = "이 구글 계정은 이미 다른 데이터와 연동되어있습니다. 해당 계정으로 전환하시겠습니까?",
-    //                 theme = AlertTheme.System,
-    //                 buttons = new()
-    //                 {
-    //                     new() {text = "취소", style = AlertButtonStyle.Cancel},
-    //                     new() {text ="전환하기", style = AlertButtonStyle.Default}
-    //                 }
-    //             });
-
-    //             if (result == 1)
-    //             {
-    //                 bool success = await Managers.FirebaseM.SwitchToGoogleAccount();
-    //                 if (success)
-    //                 {
-    //                     GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
-    //                     await NativeAlert.ShowAsync(new AlertOptions
-    //                     {
-    //                         title = "전환 성공",
-    //                         message = "구글 계정으로 전환되었습니다.",
-    //                         theme = AlertTheme.Light,
-    //                         buttons = new() { new() { text = "확인", style = AlertButtonStyle.Cancel } }
-    //                     });
-    //                 }
-    //             }
-
-    //             var conflictPopup = await Managers.UIM.ShowPopup<UI_AccountConflictPopup>();
-    //             conflictPopup.SetCallBack(async () =>
-    //             {
-    //                 bool success = await Managers.FirebaseM.SwitchToGoogleAccount();
-    //                 if (success)
-    //                 {
-    //                     Managers.UIM.ShowToast("구글 계정으로 전환되었습니다.");
-    //                     GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
-    //                 }
-    //             });
-    //         }
-    //         else
-    //         {
-    //             await NativeAlert.ShowAsync(new AlertOptions
-    //             {
-    //                 title = "오류",
-    //                 message = "연동에 실패했습니다. 다시 시도해주세요."
-    //             });
-    //         }
-    //     }
-    // }
-
+   
     void OnClickAppleLoginButton()
     {
     }

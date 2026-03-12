@@ -43,7 +43,15 @@ public class UI_LoadingLogin : UI_Popup
             try
             {
                 await Managers.FirebaseM.LinkGoogleToCurrentUser();
+                await Managers.FirebaseM.ReadData();
                 isLoggingIn = false;
+                await NativeAlert.ShowAsync(new AlertOptions
+                {
+                    title = "연동 성공",
+                    message = "구글 계정으로 연동되었습니다.",
+                    theme = AlertTheme.Light,
+                    buttons = new() { new() { text = "확인", style = AlertButtonStyle.Cancel } }
+                });
             }
             catch (FirebaseException e)
             {
@@ -71,7 +79,7 @@ public class UI_LoadingLogin : UI_Popup
                             int localStageForward = ((localStageValue - 1) / 20) + 1;
                             int localStageBack = ((localStageValue - 1) % 20) + 1;
 
-                            int serverStageValue = syncInfo.serverData.stage;
+                            int serverStageValue = syncInfo.ServerData.stage;
                             int serverStageForward = ((serverStageValue - 1) / 20) + 1;
                             int serverStageBack = ((serverStageValue - 1) % 20) + 1;
 
@@ -92,7 +100,6 @@ public class UI_LoadingLogin : UI_Popup
                                 bool success = await Managers.FirebaseM.ForceUploadLocalDataToServer(syncInfo);
                                 if (success)
                                 {
-
                                     await NativeAlert.ShowAsync(new AlertOptions
                                     {
                                         title = "전환 성공",
@@ -107,6 +114,7 @@ public class UI_LoadingLogin : UI_Popup
                                 bool success = await Managers.FirebaseM.LoadServerDataOnly();
                                 if (success)
                                 {
+                                    await Managers.FirebaseM.ReadData();
                                     await NativeAlert.ShowAsync(new AlertOptions
                                     {
                                         title = "전환 성공",
@@ -122,6 +130,8 @@ public class UI_LoadingLogin : UI_Popup
                             bool success = await Managers.FirebaseM.LoadServerDataOnly();
                             if (success)
                             {
+                                await Managers.FirebaseM.ReadData();
+
                                 await NativeAlert.ShowAsync(new AlertOptions
                                 {
                                     title = "전환 성공",
@@ -151,6 +161,7 @@ public class UI_LoadingLogin : UI_Popup
             if (isLoginSuccess)
             {
                 Debug.Log("로그인 성공 ! 동기화 시작");
+                await Managers.FirebaseM.ReadData();
 
                 await Managers.FirebaseM.CheckAndApplyCurrentUser();
                 Managers.GameM.gameData.isGuest = false;
@@ -170,6 +181,7 @@ public class UI_LoadingLogin : UI_Popup
     async void OnClickGuestButton()
     {
         await Managers.FirebaseM.GuestLogin();
+        await Managers.FirebaseM.ReadData();
         Managers.UIM.ClosePopup(this).Forget();
     }
 

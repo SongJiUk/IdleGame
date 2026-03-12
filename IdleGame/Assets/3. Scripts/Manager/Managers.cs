@@ -106,6 +106,7 @@ public class Managers : MonoBehaviour
     {
         Debug.Log("<color=yellow>[System] 로그아웃 / 초기화를 위한 모든 매니저 초기화 시작 </color>");
         GameM.ResetGameData();
+        GPGSM.Clear();
         CharacterM.Clear();
 
         UpdateM.Clear();

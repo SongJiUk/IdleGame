@@ -47,7 +47,7 @@ public partial class FirebaseManager
             Debug.Log("[FirebaseManager] : 파이어베이스 로그인 성공!");
             Debug.Log($"[FirebaseManager] : UserID : {result.UserId}");
 
-            await ReadData();
+            //await ReadData();
             return true;
         }
         catch (System.Exception e)
@@ -68,8 +68,6 @@ public partial class FirebaseManager
     public async UniTask GuestLogin()
     {
         if (Auth == null) return;
-
-
         try
         {
             FirebaseUser user = await Auth.SignInAnonymouslyAsync();
@@ -84,7 +82,7 @@ public partial class FirebaseManager
 
             Debug.Log("게스트 로그인 성공 ! 사용자 ID : " + user.UserId);
 
-            await ReadData();
+            //await ReadData();
         }
         catch (System.Exception e)
         {
@@ -129,7 +127,7 @@ public partial class FirebaseManager
             CurrentUser = result;
             ApplyUserToGameData(CurrentUser);
 
-            await ReadData();
+            //await ReadData();
 
             Debug.Log("[LOGIN] 구글계정 연동 성공");
         }
@@ -169,7 +167,7 @@ public partial class FirebaseManager
             CurrentUser = Auth.CurrentUser;
             ApplyUserToGameData(CurrentUser);
             Debug.Log("자동 로그인 적용 : " + CurrentUser.UserId);
-            await ReadData();
+            //await ReadData();
         }
     }
 
