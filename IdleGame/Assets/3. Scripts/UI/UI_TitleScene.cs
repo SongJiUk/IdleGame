@@ -291,7 +291,7 @@ public class UI_TitleScene : UI_Scene
                                 await NativeAlert.ShowAsync(new AlertOptions
                                 {
                                     title = "전환 성공",
-                                    message = "기기 데이터로 서버를 덮어쓰고 구글 계정으로 전환되었습니다.",
+                                    message = "기기 데이터로 서버데이터를 덮어쓰고 구글 계정으로 전환되었습니다.",
                                     theme = AlertTheme.Light,
                                     buttons = new() { new() { text = "확인", style = AlertButtonStyle.Cancel } }
                                 });

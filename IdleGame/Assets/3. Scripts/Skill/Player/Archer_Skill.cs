@@ -16,11 +16,7 @@ public class Archer_Skill : SkillBase
         if (randTarget == null || randTarget.IsDead)
             randTarget = Utils.FindRandomEnemyInRange(_caster, _caster.DATA.AttackRange * 2);
 
-        if (randTarget == null || randTarget.IsDead)
-        {
-            //Debug.Log("아처 스킬 타겟이 없음");
-            return false;
-        }
+        if (randTarget == null || randTarget.IsDead) return false;
 
         bool CanShoot = await WaitAndCheckTarget(_caster, randTarget);
 

@@ -1426,6 +1426,1616 @@
       "Speech": "강해지는 데 왕도는 없지.\\n그저 묵묵히 버티는 놈이 이기는 거야./가방이 꽉 찼는지 가끔 확인해.\\n보물 흘리고 다니면 아깝잖아?/요즘 몬스터들은 예전보다 독해졌군.\\n강화는 빼먹지 않았겠지?/자고 일어났더니 이만큼이나 성장했다고?\\n세상 참 좋아졌구먼./죽지 말고 살아 돌아와라.\\n그래야 나랑 술 한잔할 거 아니냐."
     }
   ],
+  "Localization": [
+    {
+      "Key": "UINormal",
+      "ko": "보통",
+      "en": "Normal",
+      "ja": "通常"
+    },
+    {
+      "Key": "UIMonsterDefeat",
+      "ko": "몬스터 처치",
+      "en": "Monster Defeat",
+      "ja": "モンスターチャーチ\r"
+    },
+    {
+      "Key": "UISetting",
+      "ko": "설정",
+      "en": "Setting",
+      "ja": "設定"
+    },
+    {
+      "Key": "UIMailBox",
+      "ko": "우편함",
+      "en": "MailBox",
+      "ja": "メールボックス"
+    },
+    {
+      "Key": "UISavingMode",
+      "ko": "절전 모드",
+      "en": "Saving Mode",
+      "ja": "省電力モード"
+    },
+    {
+      "Key": "UIBag",
+      "ko": "가방",
+      "en": "Bag",
+      "ja": "バッグ"
+    },
+    {
+      "Key": "UIStat",
+      "ko": "스탯",
+      "en": "Stat",
+      "ja": "ステータス"
+    },
+    {
+      "Key": "UIHero",
+      "ko": "영웅",
+      "en": "Hero",
+      "ja": "ヒーロー"
+    },
+    {
+      "Key": "UIRelic",
+      "ko": "유물",
+      "en": "Relic",
+      "ja": "遺物"
+    },
+    {
+      "Key": "UIDungeon",
+      "ko": "던전",
+      "en": "Dungeon",
+      "ja": "ダンジョン"
+    },
+    {
+      "Key": "UISmelting",
+      "ko": "각인",
+      "en": "Smelting",
+      "ja": "刻印"
+    },
+    {
+      "Key": "UIShop",
+      "ko": "상점",
+      "en": "Shop",
+      "ja": "お店"
+    },
+    {
+      "Key": "UIDailyMission",
+      "ko": "데일리 미션",
+      "en": "DailyMission",
+      "ja": "デイリーミッション"
+    },
+    {
+      "Key": "UIAchievements",
+      "ko": "업적",
+      "en": "Achievements",
+      "ja": "実績"
+    },
+    {
+      "Key": "UILeaderBoard",
+      "ko": "랭킹",
+      "en": "Ranking",
+      "ja": "ランキング"
+    },
+    {
+      "Key": "UIYes",
+      "ko": "네",
+      "en": "Yes",
+      "ja": "はい"
+    },
+    {
+      "Key": "UINo",
+      "ko": "아니오",
+      "en": "No",
+      "ja": "いいえ"
+    },
+    {
+      "Key": "Crystal",
+      "ko": "크리스탈",
+      "en": "Crystal",
+      "ja": "クリスタル"
+    },
+    {
+      "Key": "Feather",
+      "ko": "깃털",
+      "en": "Feather",
+      "ja": "羽"
+    },
+    {
+      "Key": "Leather",
+      "ko": "가죽",
+      "en": "Leather",
+      "ja": "革"
+    },
+    {
+      "Key": "Monster_Energy",
+      "ko": "몬스터에너지",
+      "en": "Monster_Energy",
+      "ja": "モンスターエネルギー"
+    },
+    {
+      "Key": "Piece_Of_Scroll",
+      "ko": "스크롤",
+      "en": "Piece_Of_Scroll",
+      "ja": "スクロール"
+    },
+    {
+      "Key": "Piece_Of_Stone",
+      "ko": "돌",
+      "en": "Piece_Of_Stone",
+      "ja": "石"
+    },
+    {
+      "Key": "Gold_Dice",
+      "ko": "황금주사위",
+      "en": "Gold_Dice",
+      "ja": "ゴールデンサイコロ"
+    },
+    {
+      "Key": "Axe",
+      "ko": "도끼",
+      "en": "Axe",
+      "ja": "斧"
+    },
+    {
+      "Key": "GoddessTears",
+      "ko": "여신의 눈물",
+      "en": "GoddessTears",
+      "ja": "女神の涙"
+    },
+    {
+      "Key": "BronzeRing",
+      "ko": "동반지",
+      "en": "BronzeRing",
+      "ja": "仲間"
+    },
+    {
+      "Key": "SilverRing",
+      "ko": "은반지",
+      "en": "SilverRing",
+      "ja": "銀輪"
+    },
+    {
+      "Key": "GoldenRing",
+      "ko": "금반지",
+      "en": "GoldenRing",
+      "ja": "ゴールドリング"
+    },
+    {
+      "Key": "UIChangeLanguage",
+      "ko": "정말 언어를 변경하시겠습니까?",
+      "en": "Are you sure you want to change the language?",
+      "ja": "本当に言語を変更しますか？"
+    },
+    {
+      "Key": "UIADS01_01",
+      "ko": "모든 캐릭터 공격력 + {0}%",
+      "en": "All characters' attack power + {0}%",
+      "ja": "すべてのキャラクター攻撃力+ {0}％"
+    },
+    {
+      "Key": "UIADS01_02",
+      "ko": "모든 캐릭터 HP + {0}%",
+      "en": "All characters HP + {0}%",
+      "ja": "すべてのキャラクターHP + {0}％"
+    },
+    {
+      "Key": "UIADS01_03",
+      "ko": "골드, 아이템 획득량 + {0}%",
+      "en": "Gold and item acquisition + {0}%",
+      "ja": "ゴールド、アイテム獲得量 + {0}%"
+    },
+    {
+      "Key": "UIADS01_04",
+      "ko": "크리티컬 확률 + {0}%",
+      "en": "Critical Chance + {0}%",
+      "ja": "クリティカル確率 + {0}%"
+    },
+    {
+      "Key": "PopupGetItem01",
+      "ko": "아이템을 획득하였습니다 : {0}",
+      "en": "You have acquired the following items: {0}",
+      "ja": "アイテムを獲得しました：{0}"
+    },
+    {
+      "Key": "PopupGetItem02",
+      "ko": "{0}을(를) 획득하였습니다.",
+      "en": "You have acquired {0}.",
+      "ja": "{0}を獲得しました。"
+    },
+    {
+      "Key": "Damage",
+      "ko": "공격력",
+      "en": "Damage",
+      "ja": "攻撃力"
+    },
+    {
+      "Key": "HP",
+      "ko": "HP",
+      "en": "HP",
+      "ja": "HP"
+    },
+    {
+      "Key": "Money",
+      "ko": "골드 획득량",
+      "en": "Gold earned",
+      "ja": "ゴールド獲得量"
+    },
+    {
+      "Key": "Item",
+      "ko": "아이템 드랍률",
+      "en": "ItemDropPercentage",
+      "ja": "アイテムドロップ率"
+    },
+    {
+      "Key": "Exp",
+      "ko": "경험치 획득량",
+      "en": "Experience gained",
+      "ja": "スキルクールタイム"
+    },
+    {
+      "Key": "AttackSpeed",
+      "ko": "공격속도",
+      "en": "AttackSpeed",
+      "ja": "経験値獲得量"
+    },
+    {
+      "Key": "CriticalP",
+      "ko": "크리티컬 확률",
+      "en": "CriticalPercentage",
+      "ja": "クリティカル確率\r"
+    },
+    {
+      "Key": "CriticalD",
+      "ko": "크리티컬 데미지",
+      "en": "CriticalDamage",
+      "ja": "クリティカルダメージ"
+    },
+    {
+      "Key": "NoMaterial",
+      "ko": "재료가 부족합니다.",
+      "en": "There are no ingredients.",
+      "ja": "材料はありません。"
+    },
+    {
+      "Key": "UIRemoveAD",
+      "ko": "모든 광고를 제거하세요!",
+      "en": "Remove all ads!",
+      "ja": "すべての広告を削除してください！"
+    },
+    {
+      "Key": "UIWatchAD",
+      "ko": "광고 시청으로 버프를 강화하세요!",
+      "en": "Watch ads to boost your buffs!",
+      "ja": "広告視聴でバフを強化！"
+    },
+    {
+      "Key": "UIHeroPopupBatch",
+      "ko": "배치할곳을 선택하여주세요!",
+      "en": "Please select a location to place it!",
+      "ja": "配置する場所を選択してください！"
+    },
+    {
+      "Key": "UIDataLoading",
+      "ko": "데이터를 로딩중입니다.",
+      "en": "Loading data.",
+      "ja": "データを読み込んでいます。"
+    },
+    {
+      "Key": "UIDataLoadingSuccess",
+      "ko": "데이터가 정상적으로 로딩되었습니다.",
+      "en": "The data has been loaded successfully.",
+      "ja": "データが正常にロードされました。"
+    },
+    {
+      "Key": "UIClickScreen",
+      "ko": "화면을 눌러서 시작하세요.",
+      "en": "Press the screen to start.",
+      "ja": "画面をタップして始めます。"
+    },
+    {
+      "Key": "UIGoogleLogin",
+      "ko": "구글 로그인",
+      "en": "Google login",
+      "ja": "Google ログイン"
+    },
+    {
+      "Key": "UIQuest",
+      "ko": "퀘스트",
+      "en": "Quest",
+      "ja": "クエスト"
+    },
+    {
+      "Key": "UIMissionKillMonster",
+      "ko": "몬스터 처치",
+      "en": "Kill monsters",
+      "ja": "モンスターチャーチ"
+    },
+    {
+      "Key": "UIMissionStageClear",
+      "ko": "스테이지 클리어",
+      "en": "Stage Clear",
+      "ja": "ステージクリア"
+    },
+    {
+      "Key": "UIMissionGoldDungeonClear",
+      "ko": "골드 던전 클리어",
+      "en": "Clear Gold Dungeon",
+      "ja": "ゴールドダンジョンクリア"
+    },
+    {
+      "Key": "UIMissionTreasureDungeonClear",
+      "ko": "보물 던전 클리어",
+      "en": "Clear Treasure Dungeon",
+      "ja": "宝ダンジョンクリア"
+    },
+    {
+      "Key": "UIMissionGetExp",
+      "ko": "경험치 획득",
+      "en": "Gain experience points",
+      "ja": "経験値獲得"
+    },
+    {
+      "Key": "UIMissionHeroSummon",
+      "ko": "영웅 소환",
+      "en": "Hero Summon",
+      "ja": "ヒーロー召喚"
+    },
+    {
+      "Key": "UIRelicSummon",
+      "ko": "유물 소환",
+      "en": "Summon Relic",
+      "ja": "遺物召喚"
+    },
+    {
+      "Key": "UIBGM",
+      "ko": "배경음",
+      "en": "background music",
+      "ja": "背景音"
+    },
+    {
+      "Key": "UIEffect",
+      "ko": "효과음",
+      "en": "sound effects",
+      "ja": "効果音"
+    },
+    {
+      "Key": "UILanguage",
+      "ko": "언어",
+      "en": "language",
+      "ja": "言語"
+    },
+    {
+      "Key": "UIPrivacyPolicy",
+      "ko": "개인정보처리방침",
+      "en": "privacy policy",
+      "ja": "個人情報処理方針"
+    },
+    {
+      "Key": "UIMissionLevelUp",
+      "ko": "레벨 업",
+      "en": "Level up",
+      "ja": "レベルアップ"
+    },
+    {
+      "Key": "UIMissionEnterDungeon",
+      "ko": "던전 입장",
+      "en": "Enter Dungeon",
+      "ja": "ダンジョン入場"
+    },
+    {
+      "Key": "UIMissionClearDungeon",
+      "ko": "던전 클리어",
+      "en": "Dungeon Clear",
+      "ja": "ダンジョンクリア"
+    },
+    {
+      "Key": "UIMissionWatchAD",
+      "ko": "광고시청",
+      "en": "Watch advertisements",
+      "ja": "広告を見る"
+    },
+    {
+      "Key": "UIMissionSetSmelt",
+      "ko": "각인 설정하기",
+      "en": "Set up engraving",
+      "ja": "刻印を設定する"
+    },
+    {
+      "Key": "UIMissionDailyCheck",
+      "ko": "일일 출석",
+      "en": "Daily attendance",
+      "ja": "毎日出席"
+    },
+    {
+      "Key": "UIMissionStageClearDescription",
+      "ko": "스테이지를 클리어하세요",
+      "en": "Clear the stage",
+      "ja": "ステージをクリア"
+    },
+    {
+      "Key": "UIMissionLevelUpDescription",
+      "ko": "레벨업을 시켜보세요",
+      "en": "Try leveling up",
+      "ja": "レベルアップしてみてください"
+    },
+    {
+      "Key": "UIMissionSummonHeroDescription",
+      "ko": "영웅을 3회 뽑아보세요",
+      "en": "Try drawing a hero 3 times.",
+      "ja": "ヒーローを3回選んでください"
+    },
+    {
+      "Key": "UIMissionSummonRelicDescription",
+      "ko": "유물을 3회 뽑아보세요",
+      "en": "Try drawing artifacts 3 times.",
+      "ja": "遺物を3回抜いてみてください"
+    },
+    {
+      "Key": "UIMissionEnterDungeonDescription",
+      "ko": "던전에 입장하세요",
+      "en": "Please enter the dungeon.",
+      "ja": "ダンジョンに入る"
+    },
+    {
+      "Key": "UIMissionClearDungeonDescription",
+      "ko": "던전을 클리어하세요",
+      "en": "Clear the dungeon.",
+      "ja": "ダンジョンをクリア"
+    },
+    {
+      "Key": "UIMissionWatchADDescription",
+      "ko": "광고를 2회 시청하세요",
+      "en": "Please watch the advertisement twice.",
+      "ja": "広告を2回視聴する"
+    },
+    {
+      "Key": "UIMissionSetSmeltDescription",
+      "ko": "각인을 1회 설정하세요",
+      "en": "Please set the engraving once.",
+      "ja": "刻印を1回設定してください"
+    },
+    {
+      "Key": "UIMissionDailyCheckDescription",
+      "ko": "하루에 한번 출석하세요",
+      "en": "Please check in once a day.",
+      "ja": "1日1回出席してください"
+    },
+    {
+      "Key": "UIDailyMission",
+      "ko": "일일 미션",
+      "en": "Daily Mission",
+      "ja": "毎日のミッション"
+    },
+    {
+      "Key": "UIDailyMissionDescription",
+      "ko": "미션은 하루에 한번, 오전 00 : 00에 초기화 됩니다.",
+      "en": "Missions are reset once a day at 00:00 AM.",
+      "ja": "ミッションは1日1回、午前00:00に初期化されます。"
+    },
+    {
+      "Key": "UIAchievementDescription",
+      "ko": "업적 달성시 영구히 지속되는 능력치를 얻습니다.",
+      "en": "You gain permanent stats upon achieving an achievement.",
+      "ja": "業績達成時に永久に持続する能力値を得る。"
+    },
+    {
+      "Key": "UIAchievement_BasicTraining",
+      "ko": "기초 전술 훈련",
+      "en": "Basic tactical training",
+      "ja": "基礎戦術訓練"
+    },
+    {
+      "Key": "UIAchievement_SwiftHunter",
+      "ko": "신속한 사냥꾼",
+      "en": "Swift Hunter",
+      "ja": "迅速なハンター"
+    },
+    {
+      "Key": "UIAchievement_HolyGuardian",
+      "ko": "성스러운 수호자",
+      "en": "Holy Guardian",
+      "ja": "聖なる守護者"
+    },
+    {
+      "Key": "UIAchievement_MarchoftheIronWall",
+      "ko": "철벽의 진군",
+      "en": "March of the Iron Wall",
+      "ja": "鉄壁の陣軍"
+    },
+    {
+      "Key": "UIAchievement_VanguardDestructionUnit",
+      "ko": "선봉 파괘 부대",
+      "en": "Vanguard destruction unit",
+      "ja": "先封パグアム袋"
+    },
+    {
+      "Key": "UIAchievement_MagicResonance",
+      "ko": "마력 공명",
+      "en": "Magic Resonance",
+      "ja": "馬力共鳴"
+    },
+    {
+      "Key": "UIAchievement_CompletedExpe",
+      "ko": "완성된 원정대",
+      "en": "Completed expedition",
+      "ja": "完成した遠征隊"
+    },
+    {
+      "Key": "UIAchievement_AncientArtifaceCollector",
+      "ko": "고대 유물 수집가",
+      "en": "ancient artifact collector",
+      "ja": "古代遺物コレクター"
+    },
+    {
+      "Key": "UIAchievement_GodChoice",
+      "ko": "신의 선택",
+      "en": "God's choice",
+      "ja": "神の選択"
+    },
+    {
+      "Key": "UIAchievement_CollectorOfMyths",
+      "ko": "신화의 수집가",
+      "en": "Collector of Myths",
+      "ja": "神話のコレクター"
+    },
+    {
+      "Key": "UISavingMode_SwipScreen",
+      "ko": "화면을 밀어서 절전모드 해제하기",
+      "en": "Swipe the screen to wake from sleep mode",
+      "ja": "画面をスライドさせてスリープモードを解除する"
+    },
+    {
+      "Key": "UISavingMode_GetItem",
+      "ko": "획득 아이템",
+      "en": "Acquired items",
+      "ja": "獲得アイテム"
+    },
+    {
+      "Key": "UISavingMode_Repeat",
+      "ko": "반복중",
+      "en": "Repeating",
+      "ja": "繰り返し中"
+    },
+    {
+      "Key": "UIShop_LegendarySummon",
+      "ko": "전설 확정 소환",
+      "en": "Guaranteed Legendary Summon",
+      "ja": "伝説確定召喚"
+    },
+    {
+      "Key": "UIShop_Summon",
+      "ko": "소환",
+      "en": "recall",
+      "ja": "召喚"
+    },
+    {
+      "Key": "UIShop_1Summon",
+      "ko": "1회 소환",
+      "en": "1 summon",
+      "ja": "1回召喚"
+    },
+    {
+      "Key": "UIShop_11Summon",
+      "ko": "11회 소환",
+      "en": "11th summons",
+      "ja": "11回召喚"
+    },
+    {
+      "Key": "UIShop_ProbabilityInformation",
+      "ko": "확률 정보",
+      "en": "Probability information",
+      "ja": "確率情報"
+    },
+    {
+      "Key": "UIShop_Summon_Description",
+      "ko": "소환 횟수가 일정 수에 도달하면 소환 레벨이 증가합니다.",
+      "en": "When the number of summons reaches a certain amount, the summon level increases.",
+      "ja": "召喚回数が一定数に達すると、召喚レベルが上昇します。"
+    },
+    {
+      "Key": "UIShop_SummonLevel",
+      "ko": "소환 레벨",
+      "en": "Summon Level",
+      "ja": "召喚レベル"
+    },
+    {
+      "Key": "UIShop_RemoveAD",
+      "ko": "광고 제거",
+      "en": "Remove ads",
+      "ja": "広告を削除"
+    },
+    {
+      "Key": "UIShop_RemoveAD_Description",
+      "ko": "모든 광고를 제거하세요!",
+      "en": "Remove all ads!",
+      "ja": "すべての広告を削除してください！"
+    },
+    {
+      "Key": "UI_Goods",
+      "ko": "재화",
+      "en": "Goods",
+      "ja": "商品"
+    },
+    {
+      "Key": "UISmelt",
+      "ko": "잠재 능력",
+      "en": "potential",
+      "ja": "潜在能力"
+    },
+    {
+      "Key": "UISmelt_NeedMaterial",
+      "ko": "제련에 필요한 재료",
+      "en": "Materials needed for smelting",
+      "ja": "製錬に必要な材料"
+    },
+    {
+      "Key": "UISmelt_Smelt",
+      "ko": "제련하기",
+      "en": "Refining",
+      "ja": "精錬する"
+    },
+    {
+      "Key": "UISmelt_Smelt_Description",
+      "ko": "일정 확률로 최대 5개의 랜덤한 효과가 생성됩니다.",
+      "en": "Up to 5 random effects are generated with a certain probability.",
+      "ja": "一定確率で最大5つのランダムな効果が生成されます。"
+    },
+    {
+      "Key": "UINPC1_Talk1",
+      "ko": "와! 이번 장비 정말 멋진데요?",
+      "en": "Wow! This equipment is really cool!",
+      "ja": "うわー！今回の装備は本当にクールなんですか？"
+    },
+    {
+      "Key": "UINPC1_Talk2",
+      "ko": "오늘도 무사히 다녀오세요!",
+      "en": "Have a safe trip today!",
+      "ja": "今日も無事に行ってください！"
+    },
+    {
+      "Key": "UINPC1_Talk3",
+      "ko": "잠시 눈을 붙이고 오셔도 돼요.",
+      "en": "You can take a nap before you come.",
+      "ja": "しばらく目をつけて来てもいいです。"
+    },
+    {
+      "Key": "UINPC1_Talk4",
+      "ko": "제가 여기서 지켜보고 있을게요!",
+      "en": "I'll be watching from here!",
+      "ja": "私はここで見ているよ！"
+    },
+    {
+      "Key": "UINPC1_Talk5",
+      "ko": "방금 얻으신 그 유물,\\n전설 속에서나 보던 건데 대단해요!",
+      "en": "That artifact you just obtained... it's something you only see in legends. That's amazing!",
+      "ja": "ちょうど得たその遺物、\\n伝説の中でも見たのはすごいですよ！"
+    },
+    {
+      "Key": "UINPC1_Talk6",
+      "ko": "몬스터들이 무서워서 벌벌 떨고 있네요.\\n역시 모험가님이에요!",
+      "en": "The monsters are trembling with fear. You're truly an adventurer!",
+      "ja": "モンスターたちが怖くて罰を震わせていますね。\\nやっぱり冒険家様ですよ！"
+    },
+    {
+      "Key": "UINPC1_Talk7",
+      "ko": "지치면 언제든 돌아오세요.\\n따뜻한 포션 한 잔 준비해둘게요!",
+      "en": "Come back anytime you feel exhausted. I'll have a warm cup of potion ready for you!",
+      "ja": "疲れたらいつでも戻ってきてください。"
+    },
+    {
+      "Key": "UINPC2_Talk1",
+      "ko": "강해지는 데 왕도는 없지.\\n그저 묵묵히 버티는 놈이 이기는 거야.",
+      "en": "There is no royal road to becoming strong. The one who just silently endures wins.",
+      "ja": "強くなるのに王道はないよね。"
+    },
+    {
+      "Key": "UINPC2_Talk2",
+      "ko": "가방이 꽉 찼는지 가끔 확인해.\\n보물 흘리고 다니면 아깝잖아?",
+      "en": "Check your bag occasionally to see if it's full. It's a waste to leave treasures lying around, isn't it?",
+      "ja": "スーツケースがいっぱいであるかどうかを確認してください。"
+    },
+    {
+      "Key": "UINPC2_Talk3",
+      "ko": "요즘 몬스터들은 예전보다 독해졌군.\\n강화는 빼먹지 않았겠지?",
+      "en": "Monsters these days have gotten tougher than before. You didn't forget the upgrades, did you?",
+      "ja": "最近モンスターたちは以前より毒になったね。\\n強化は抜かなかっただろ？"
+    },
+    {
+      "Key": "UINPC2_Talk4",
+      "ko": "자고 일어났더니 이만큼이나 성장했다고?\\n세상 참 좋아졌구먼.",
+      "en": "You woke up and grew this much? The world really has gotten better.",
+      "ja": "寝て起きたらこれだけ成長したって？"
+    },
+    {
+      "Key": "UINPC2_Talk5",
+      "ko": "죽지 말고 살아 돌아와라.\\n그래야 나랑 술 한잔할 거 아니냐.",
+      "en": "Don't die, come back alive. That's the only way you can have a drink with me.",
+      "ja": "死なないで生きて帰ってください。"
+    },
+    {
+      "Key": "UIDungeon_TreasureDungeon",
+      "ko": "보물 창고",
+      "en": "treasure house",
+      "ja": "宝倉庫"
+    },
+    {
+      "Key": "UIDungeon_ClearReward",
+      "ko": "클리어 보상",
+      "en": "Clear Reward",
+      "ja": "クリア報酬"
+    },
+    {
+      "Key": "UIDungeon_SelectDifficulty",
+      "ko": "난이도 선택",
+      "en": "Select difficulty",
+      "ja": "難易度の選択"
+    },
+    {
+      "Key": "UIDungeon_DailyCountResetTime",
+      "ko": "일일 횟수 초기화까지 남은 시간",
+      "en": "Time remaining until daily count reset",
+      "ja": "毎日の数の初期化までの残り時間"
+    },
+    {
+      "Key": "UIDungeon_TreasureDungeon_Description",
+      "ko": "몬스터를 모두 처치하면 보석을 획득할 수 있습니다.",
+      "en": "You can obtain gems if you defeat all the monsters.",
+      "ja": "モンスターを全て倒せば宝石を獲得できます。"
+    },
+    {
+      "Key": "UIDungeon_GoldDungeon",
+      "ko": "골드 던전",
+      "en": "Gold Dungeon",
+      "ja": "ゴールドダンジョン"
+    },
+    {
+      "Key": "UIDungeon_GoldDungeon_Description",
+      "ko": "황금 석상을 부수면 많은양의 골드를 획득합니다.",
+      "en": "If you break the golden statue, you will obtain a large amount of gold.",
+      "ja": "黄金の石像を壊すと、大量のゴールドを獲得します。"
+    },
+    {
+      "Key": "UIEnter",
+      "ko": "입장하기",
+      "en": "Enter",
+      "ja": "入場する"
+    },
+    {
+      "Key": "UIAllEnforce",
+      "ko": "일괄 강화",
+      "en": "Batch reinforcement",
+      "ja": "一括強化"
+    },
+    {
+      "Key": "UIRelicEnforce",
+      "ko": "유물 효과",
+      "en": "Artifact effect",
+      "ja": "遺物効果"
+    },
+    {
+      "Key": "UIEffect",
+      "ko": "효과",
+      "en": "effect",
+      "ja": "効果"
+    },
+    {
+      "Key": "UIEnforce",
+      "ko": "강화",
+      "en": "enforce",
+      "ja": "強化"
+    },
+    {
+      "Key": "UIHero_Batch",
+      "ko": "영웅을 배치하세요",
+      "en": "Deploy the hero",
+      "ja": "ヒーローを配置"
+    },
+    {
+      "Key": "UISkillInfo",
+      "ko": "스킬 정보",
+      "en": "Skill Information",
+      "ja": "スキル情報"
+    },
+    {
+      "Key": "UIHeroInfo",
+      "ko": "영웅 정보",
+      "en": "Hero Information",
+      "ja": "ヒーロー情報"
+    },
+    {
+      "Key": "UICombatPower",
+      "ko": "전투력",
+      "en": "combat power",
+      "ja": "戦闘力"
+    },
+    {
+      "Key": "UIHP",
+      "ko": "체력",
+      "en": "physical strength",
+      "ja": "体力"
+    },
+    {
+      "Key": "UIGoldDropRate",
+      "ko": "골드 드랍률",
+      "en": "Gold drop rate",
+      "ja": "ゴールドドロップ率"
+    },
+    {
+      "Key": "UIItemDropRate",
+      "ko": "아이템 드랍률",
+      "en": "Item drop rate",
+      "ja": "アイテムドロップ率"
+    },
+    {
+      "Key": "UIExpUpRate",
+      "ko": "경험치 증가율",
+      "en": "Experience growth rate",
+      "ja": "経験値増加率"
+    },
+    {
+      "Key": "UIAttackSpeed",
+      "ko": "공격 속도",
+      "en": "Attack speed",
+      "ja": "攻撃速度"
+    },
+    {
+      "Key": "UICriticalChance",
+      "ko": "치명타 확률",
+      "en": "Critical hit chance",
+      "ja": "クリティカル確率"
+    },
+    {
+      "Key": "UICriticalDamage",
+      "ko": "치명타 데미지",
+      "en": "Critical hit damage",
+      "ja": "クリティカルダメージ"
+    },
+    {
+      "Key": "UIUniqueStats",
+      "ko": "고유 능력치",
+      "en": "Unique stats",
+      "ja": "固有能力値"
+    },
+    {
+      "Key": "UIAdditionalStats",
+      "ko": "부가 능력치",
+      "en": "Additional stats",
+      "ja": "付加能力値"
+    },
+    {
+      "Key": "AccountLinkingError",
+      "ko": "계정 연동 오류",
+      "en": "Account linking error",
+      "ja": "アカウント連携エラー"
+    },
+    {
+      "Key": "DataChange",
+      "ko": "데이터 교체",
+      "en": "Data replacement",
+      "ja": "データ交換"
+    },
+    {
+      "Key": "Close",
+      "ko": "닫기",
+      "en": "close",
+      "ja": "閉じる"
+    },
+    {
+      "Key": "System_LinkingSuccess",
+      "ko": "연동 성공",
+      "en": "Linking success",
+      "ja": "連動成功"
+    },
+    {
+      "Key": "System_LinkGoogleAcount",
+      "ko": "구글 계정으로 연동되었습니다.",
+      "en": "Linked to Google account.",
+      "ja": "Googleアカウントに連動しました。"
+    },
+    {
+      "Key": "Check",
+      "ko": "확인",
+      "en": "check",
+      "ja": "確認"
+    },
+    {
+      "Key": "System_AccountConflict",
+      "ko": "계정 충돌",
+      "en": "Account conflict",
+      "ja": "アカウントの競合"
+    },
+    {
+      "Key": "System_GoogleAccount_Already",
+      "ko": "이 구글 계정은 이미 다른 데이터와 연동되어있습니다. 해당 계정으로 전환하시겠습니까?",
+      "en": "This Google account is already linked to other data. Would you like to switch to that account?",
+      "ja": "このGoogleアカウントはすでに他のデータと連携しています。そのアカウントに切り替えますか？"
+    },
+    {
+      "Key": "Cancel",
+      "ko": "취소",
+      "en": "cancellation",
+      "ja": "キャンセル"
+    },
+    {
+      "Key": "System_Switch",
+      "ko": "전환하기",
+      "en": "Switch",
+      "ja": "切り替える"
+    },
+    {
+      "Key": "System_DataConflict",
+      "ko": "데이터 충돌",
+      "en": "Data conflict",
+      "ja": "データの競合"
+    },
+    {
+      "Key": "System_DataOverwrite",
+      "ko": "기기 데이터의 스테이지 {0} - {1}가 서버 데이터의 스테이지 {2} - {3}보다 앞서있습니다. 덮어 씌울까요?",
+      "en": "Stages {0} - {1} of the device data are ahead of stages {2} - {3} of the server data. Do you want to overwrite?",
+      "ja": "デバイスデータのステージ{0} - {1}は、サーバーデータのステージ{2} - {3}よりも先です。上書きされますか？"
+    },
+    {
+      "Key": "System_OverWrite",
+      "ko": "덮어씌우기",
+      "en": "Overwrite",
+      "ja": "上書き"
+    },
+    {
+      "Key": "System_Load",
+      "ko": "불러오기",
+      "en": "Load",
+      "ja": "読み込む"
+    },
+    {
+      "Key": "System_ConversionSuccess",
+      "ko": "전환 성공",
+      "en": "Conversion successful",
+      "ja": "移行成功"
+    },
+    {
+      "Key": "System_OverWriteSuccess",
+      "ko": "기기 데이터로 서버 데이터를 덮어쓰고 구글 계정으로 전환되었습니다.",
+      "en": "The server data was overwritten with device data and switched to a Google account.",
+      "ja": "デバイスデータでサーバーデータを上書きし、Googleアカウントに切り替えました。"
+    },
+    {
+      "Key": "System_LoadGoogleAcountSuccess",
+      "ko": "서버 데이터를 불러와 구글 계정으로 전환되었습니다.",
+      "en": "Server data has been retrieved and switched to the Google account.",
+      "ja": "サーバーデータを呼び出してGoogleアカウントに切り替えました。"
+    },
+    {
+      "Key": "System_Error",
+      "ko": "오류",
+      "en": "error",
+      "ja": "エラー"
+    },
+    {
+      "Key": "System_LinkingFail",
+      "ko": "연동에 실패했습니다. 다시 시도해주세요.",
+      "en": "Linking failed. Please try again.",
+      "ja": "連動に失敗しました。もう一度お試しください。"
+    },
+    {
+      "Key": "Gold",
+      "ko": "골드",
+      "en": "gold",
+      "ja": "ゴールド"
+    },
+    {
+      "Key": "Dia",
+      "ko": "다이아",
+      "en": "Diamond",
+      "ja": "ダイア"
+    },
+    {
+      "Key": "Crystal",
+      "ko": "크리스탈",
+      "en": "Crystal",
+      "ja": "クリスタル"
+    },
+    {
+      "Key": "Feathers",
+      "ko": "깃털",
+      "en": "feathers",
+      "ja": "羽"
+    },
+    {
+      "Key": "Leather",
+      "ko": "가죽",
+      "en": "leather",
+      "ja": "革"
+    },
+    {
+      "Key": "MonsterEnergy",
+      "ko": "몬스터에너지",
+      "en": "Monster Energy",
+      "ja": "モンスターエネルギー"
+    },
+    {
+      "Key": "Scroll",
+      "ko": "스크롤",
+      "en": "scroll",
+      "ja": "スクロール"
+    },
+    {
+      "Key": "Rock",
+      "ko": "돌",
+      "en": "rock",
+      "ja": "石"
+    },
+    {
+      "Key": "GoldenDice",
+      "ko": "황금주사위",
+      "en": "Golden Dice",
+      "ja": "ゴールデンサイコロ"
+    },
+    {
+      "Key": "Axe",
+      "ko": "도끼",
+      "en": "ax",
+      "ja": "斧"
+    },
+    {
+      "Key": "TearsOfTheGoddess",
+      "ko": "여신의 눈물",
+      "en": "Tears of the Goddess",
+      "ja": "女神の涙"
+    },
+    {
+      "Key": "BronzeRing",
+      "ko": "동 반지",
+      "en": "copper ring",
+      "ja": "東リング"
+    },
+    {
+      "Key": "SilverRing",
+      "ko": "은반지",
+      "en": "silver ring",
+      "ja": "銀輪"
+    },
+    {
+      "Key": "GoldRing",
+      "ko": "금반지",
+      "en": "gold ring",
+      "ja": "ゴールドリング"
+    },
+    {
+      "Key": "UIItem_Gold_Description",
+      "ko": "게임 내 사용되는 골드이다",
+      "en": "It is gold used in the game.",
+      "ja": "ゲーム内で使用されるゴールドです。"
+    },
+    {
+      "Key": "UIItem_Dia_Description",
+      "ko": "상점아이템을 구매하는 다이아이다.",
+      "en": "It is a diamond used to purchase shop items.",
+      "ja": "店舗アイテムを購入するダイヤだ。"
+    },
+    {
+      "Key": "UIItem_Crystal_Description",
+      "ko": "크리스탈이다.",
+      "en": "It is crystal.",
+      "ja": "クリスタルだ。"
+    },
+    {
+      "Key": "UIItem_Feathers_Description",
+      "ko": "깃털이다.",
+      "en": "It is a feather.",
+      "ja": "羽だ。"
+    },
+    {
+      "Key": "UIItem_Leather_Description",
+      "ko": "가죽이다.",
+      "en": "It is leather.",
+      "ja": "革です。"
+    },
+    {
+      "Key": "UIItem_MonsterEnergy_Description",
+      "ko": "몬스터에너지이다.",
+      "en": "It is Monster Energy.",
+      "ja": "モンスターエネルギーだ。"
+    },
+    {
+      "Key": "UIItem_Scroll_Description",
+      "ko": "스크롤이다.",
+      "en": "It is a scroll.",
+      "ja": "スクロールだ。"
+    },
+    {
+      "Key": "UIItem_Rock_Description",
+      "ko": "돌이다.",
+      "en": "It is a stone.",
+      "ja": "石だ。"
+    },
+    {
+      "Key": "UIItem_GoldenDice_Description",
+      "ko": "황금 주사위이다.",
+      "en": "It is a golden die.",
+      "ja": "黄金のサイコロです。"
+    },
+    {
+      "Key": "UIItem_Axe_Description",
+      "ko": "도끼다.",
+      "en": "It's an axe.",
+      "ja": "斧だ。"
+    },
+    {
+      "Key": "UIItem_TearsOfTheGoddess_Description",
+      "ko": "여신의 눈물이다.",
+      "en": "It is the tears of the goddess.",
+      "ja": "女神の涙だ。"
+    },
+    {
+      "Key": "UIItem_BronzeRing_Description",
+      "ko": "동반지이다.",
+      "en": "It is a companion.",
+      "ja": "仲間です。"
+    },
+    {
+      "Key": "UIItem_SilverRing_Description",
+      "ko": "은반지이다.",
+      "en": "It is a silver ring.",
+      "ja": "銀輪だ。"
+    },
+    {
+      "Key": "UIItem_GoldRing_Description",
+      "ko": "금반지이다.",
+      "en": "It is a gold ring.",
+      "ja": "金指輪だ。"
+    },
+    {
+      "Key": "UIItem_Gold_Effect",
+      "ko": "골드를 모아 레벨업을 해보세요!",
+      "en": "Collect gold and level up!",
+      "ja": "ゴールドを集めてレベルアップをしてみてください！"
+    },
+    {
+      "Key": "UIItem_Dia_Effect",
+      "ko": "다이아로 영웅과 유물을 뽑아보세요!",
+      "en": "Try drawing heroes and artifacts with diamonds!",
+      "ja": "ダイヤで英雄と遺物を抜いてみてください！"
+    },
+    {
+      "Key": "UIItem_Crystal_Effect",
+      "ko": "반짝반짝 빛나는 크리스탈입니다.",
+      "en": "It is a sparkling crystal.",
+      "ja": "キラキラ輝くクリスタルです。"
+    },
+    {
+      "Key": "UIItem_Feathers_Effect",
+      "ko": "깃털입니다.",
+      "en": "It is a feather.",
+      "ja": "羽です。"
+    },
+    {
+      "Key": "UIItem_Leather_Effect",
+      "ko": "가죽입니다.",
+      "en": "It is leather.",
+      "ja": "革です。"
+    },
+    {
+      "Key": "UIItem_MonsterEnergy_Effect",
+      "ko": "각인에 사용됩니다.",
+      "en": "It is used for engraving.",
+      "ja": "刻印に使用されます。"
+    },
+    {
+      "Key": "UIItem_Scroll_Effect",
+      "ko": "스크롤 입니다.",
+      "en": "This is a scroll.",
+      "ja": "スクロールです。"
+    },
+    {
+      "Key": "UIItem_Rock_Effect",
+      "ko": "그냥 돌맹이입니다.",
+      "en": "It's just a stone.",
+      "ja": "ただ石窟です。"
+    },
+    {
+      "Key": "UIItem_GoldenDice_Effect",
+      "ko": "{0} 확률로 주사위를 돌려 추가 골드 획득",
+      "en": "Roll the dice with a {0} chance to gain extra gold.",
+      "ja": "{0}確率でサイコロを回して追加ゴールドを獲得"
+    },
+    {
+      "Key": "UIItem_Axe_Effect",
+      "ko": "근접 공격시 주변적 {0}% 스플래시 데미지",
+      "en": "Deals {0}% splash damage to nearby enemies on melee attack",
+      "ja": "近接攻撃時の周囲{0}%スプラッシュダメージ"
+    },
+    {
+      "Key": "UIItem_TearsOfTheGoddess_Effect",
+      "ko": "피격시 {0}% 확률로 마나 {1} 회복",
+      "en": "{0}% chance to restore {1} mana when hit",
+      "ja": "被撃時{0}%の確率でマナ{1}回復"
+    },
+    {
+      "Key": "UIItem_BronzeRing_Effect",
+      "ko": "효과가 없지만 강화를 하다보면 생길지도?",
+      "en": "It doesn't have any effect yet, but maybe it will appear if you keep upgrading?",
+      "ja": "効果がないけど強化をしてみるとできるかも？"
+    },
+    {
+      "Key": "UIItem_SilverRing_Effect",
+      "ko": "획득 골드 {0}% 추가",
+      "en": "Add {0}% to earned gold",
+      "ja": "獲得ゴールド{0}％を追加"
+    },
+    {
+      "Key": "UIItem_GoldRing_Effect",
+      "ko": "획득 경험치 {0}% 추가",
+      "en": "Add {0}% to acquired experience points",
+      "ja": "獲得経験値{0}％を追加"
+    },
+    {
+      "Key": "Cleric",
+      "ko": "클레릭",
+      "en": "Cleric",
+      "ja": "クレリック"
+    },
+    {
+      "Key": "Archer",
+      "ko": "궁수",
+      "en": "Archer",
+      "ja": "射手"
+    },
+    {
+      "Key": "Assassin",
+      "ko": "암살자",
+      "en": "assassin",
+      "ja": "暗殺者"
+    },
+    {
+      "Key": "Hammer",
+      "ko": "망치",
+      "en": "hammer",
+      "ja": "ハンマー"
+    },
+    {
+      "Key": "Article",
+      "ko": "기사",
+      "en": "article",
+      "ja": "記事"
+    },
+    {
+      "Key": "Spearman",
+      "ko": "스피어맨",
+      "en": "Spearman",
+      "ja": "スピアマン"
+    },
+    {
+      "Key": "Two-hand test",
+      "ko": "두손검사",
+      "en": "Two-hand test",
+      "ja": "両手検査"
+    },
+    {
+      "Key": "Wizard",
+      "ko": "마법사",
+      "en": "wizard",
+      "ja": "ウィザード"
+    },
+    {
+      "Key": "Enchantress",
+      "ko": "인챈트리스",
+      "en": "Enchantress",
+      "ja": "エンチャントレス"
+    },
+    {
+      "Key": "Monster",
+      "ko": "몬스터",
+      "en": "monster",
+      "ja": "モンスター"
+    },
+    {
+      "Key": "BossMonster",
+      "ko": "보스몬스터",
+      "en": "Boss Monster",
+      "ja": "ボスモンスター"
+    },
+    {
+      "Key": "Goldstatue",
+      "ko": "골드석상",
+      "en": "Gold statue",
+      "ja": "ゴールド石像"
+    },
+    {
+      "Key": "Cleric_Description",
+      "ko": "클레릭은 신성한 신념을 바탕으로 전장의 최전선에서 동료들을 수호하는 자입니다. 단순히 상처를 고치는 것을 넘어, 아군의 사기를 높이고 절망적인 상황에서 기적을 불러일으키는 '살아있는 성소'와 같은 역할을 수행합니다.",
+      "en": "A Cleric is one who protects comrades on the front lines of the battlefield based on sacred faith. Beyond simply healing wounds, they play the role of a 'living sanctuary,' boosting the morale of allies and bringing about miracles in desperate situations.",
+      "ja": "クレリックは神聖な信念に基づいて戦場の最前線で仲間を守る者です。単に傷を直すことを超えて、味方の詐欺を高め、絶望的な状況で奇跡を引き起こす「生きている聖所」のような役割を果たします。"
+    },
+    {
+      "Key": "Archer_Description",
+      "ko": "궁수는 정면 대결보다는 적의 약점을 파고드는 데 능숙합니다. 그가 쏘는 화살촉에는 연금술로 정제된 강력한 맹독이 발려 있어, 적의 갑옷을 부식시키고 신체 기능을 마비시킵니다. 적이 고통에 몸부림칠 때, 그는 이미 다음 사냥감을 향해 시위를 당기고 있습니다.",
+      "en": "The archer is skilled at exploiting the enemy's weaknesses rather than engaging in a head-on confrontation. The arrowheads he shoots are coated with a powerful, deadly poison refined through alchemy, which corrodes the enemy's armor and paralyzes their bodily functions. While the enemy writhes in pain, he is already drawing his bowstring toward his next prey.",
+      "ja": "射手は、正面対決よりも敵の弱点を掘り下げるのに堪能です。彼が撃つ矢じりには錬金術で精製された強力な猛毒が塗られており、敵の鎧を腐食させ、身体機能を麻痺させます。敵が痛みに苦しむとき、彼はすでに次の狩りに向かってデモを引っ張っています。"
+    },
+    {
+      "Key": "Assassin_Description",
+      "ko": "암살자는 소리 없이 다가와 단 한 번의 칼날질로 모든 상황을 종료시키는 전장의 집행자입니다. 화려한 동작보다는 효율적이고 정밀한 타격을 선호하며, 적이 가장 방심한 순간 가장 취약한 곳을 뚫고 들어갑니다. 그에게 찍힌 표적은 결코 살아서 전장을 벗어날 수 없습니다.",
+      "en": "The Assassin is the executioner of the battlefield who approaches silently and ends every situation with a single blade strike. Preferring efficient and precise strikes over flashy moves, he penetrates the enemy's weakest points at the moment of their greatest complacency. A target marked by him never leaves the battlefield alive.",
+      "ja": "暗殺者は音なしで近づき、たった一回の刃ですべての状況を終了させる戦場の執行者です。ゴージャスな動作よりも効率的で正確な打撃を好み、敵が最も気をつけた瞬間、最も脆弱な場所を突き抜けて入ります。彼に撮られた標的は決して生きて戦場を抜け出せない。"
+    },
+    {
+      "Key": "Hammer_Description",
+      "ko": "망치기사는 전장의 중심에서 거대한 망치를 휘둘러 적의 진형을 붕괴시키는 파괴의 선봉장입니다. 육중한 갑옷을 입고 묵직한 무기를 다루지만, 일단 회전력을 얻기 시작하면 그 누구도 멈출 수 없는 강철의 폭풍이 됩니다.",
+      "en": "The Hammer Knight is the vanguard of destruction who wields a massive hammer at the center of the battlefield to shatter enemy formations. Although clad in heavy armor and wielding a weighty weapon, once he gains momentum, he becomes a storm of steel that no one can stop.",
+      "ja": "ハンマー騎士は、戦場の中心で巨大なハンマーを振り回して敵の陣形を崩壊させる破壊の先鋒です。陸中の鎧を着て、どっしりとした武器を扱いますが、一度回転力を得始めると、誰も止められない鋼の嵐になります。"
+    },
+    {
+      "Key": "Article_Description",
+      "ko": "기사는 전장의 선두에서 아군을 이끄는 정의의 상징입니다. 단순히 칼을 휘두르는 것에 그치지 않고, 자신의 투지와 신념을 '빛의 형상'으로 실체화하여 멀리 떨어진 적들까지 단죄합니다. 그의 검광이 번쩍일 때마다 적들은 두려움에 떨고, 동료들은 용기를 얻습니다.",
+      "en": "The Knight is a symbol of justice leading his allies at the forefront of the battlefield. He does not merely wield his sword; he materializes his fighting spirit and conviction into a 'form of light' to punish even distant enemies. Whenever the light of his sword flashes, enemies tremble in fear, and comrades gain courage.",
+      "ja": "記事は戦場の先頭から味方を導く正義の象徴です。単に剣を振り回すことにとどまらず、自分の闘志と信念を「光の形状」に実体化し、遠く離れた敵まで断罪します。彼の検光が点滅するたびに、敵は恐怖に震え、同僚は勇気を得ます。"
+    },
+    {
+      "Key": "Spearman_Description",
+      "ko": "스피어맨은 전장의 거리감을 지배하는 달인입니다. 검보다 길고 망치보다 날카로운 창을 자유자재로 휘둘러, 적이 접근하기도 전에 가로막거나 한꺼번에 쓸어버립니다. 그의 공격은 마치 몰아치는 태풍과 같아, 전방의 수많은 적을 단 한 번의 휘두름으로 저지하는 압도적인 위용을 보여줍니다.",
+      "en": "The Spearman is a master of dominating the sense of distance on the battlefield. Wielding a spear longer than a sword and sharper than a hammer with ease, he intercepts enemies before they can approach or sweeps them away in a single strike. His attacks resemble a raging typhoon, displaying an overwhelming aura that halts countless foes in front of him with a single swing.",
+      "ja": "スピアマンは戦場の距離感を支配する達人です。剣より長く、ハンマーよりも鋭い窓を自由自在に振り回し、敵が接近する前に遮るか、一度に掃きます。彼の攻撃は、まるで吹き飛ばされる台風のようなもので、前方の数多くの敵を一回の振り回しで阻止する圧倒的な威容を示しています。"
+    },
+    {
+      "Key": "Two-hand test_Description",
+      "ko": "두손검사는 자신의 몸집만 한 거대한 검을 가볍게 휘두르는 완력의 소유자입니다. 속도는 느릴지언정, 그가 휘두르는 거검의 궤적은 피할 수 없는 절망을 선사합니다.",
+      "en": "The Two-Handed Swordsman is a possessor of physical strength who effortlessly wields a massive sword as big as himself. Though his speed may be slow, the trajectory of the great sword he swings delivers inescapable despair.",
+      "ja": "両手検査は、自分の小柄な巨大な剣を軽く振り回す腕力の持ち主です。速度は遅いかどうか、彼が振り回す巨剣の軌跡は避けられない絶望を与えます。"
+    },
+    {
+      "Key": "Wizard_Description",
+      "ko": "마법사는 세상의 근원인 마나를 다스려 자연의 재해를 인위적으로 불러일으키는 자입니다. 수십 년의 연구 끝에 금지된 고위 마법인 '운석 소환'을 자유자재로 구사하게 된 그는, 적들이 전열을 가다듬기도 전에 하늘로부터 파멸을 선사합니다. 그의 지팡이가 땅을 두드리면, 전장은 곧 거대한 소멸의 장이 됩니다.",
+      "en": "The Wizard is one who controls Mana, the source of the world, to artificially conjure natural disasters. Having mastered the forbidden high-level magic of 'Meteor Summoning' after decades of research, he delivers destruction from the heavens before his enemies can even regroup. When his staff strikes the ground, the battlefield instantly becomes a massive arena of annihilation.",
+      "ja": "魔法使いは世界の源であるマナを治め、自然の災害を人為的に呼び起こす者です。数十年の研究の末に禁止された上級魔法の「隕石召喚」を自由自在に駆使することになった彼は、敵が伝熱を練る前に空から破滅をプレゼントします。彼の杖が地面を叩くと、戦場はすぐに巨大な消滅の場になります。"
+    },
+    {
+      "Key": "Enchantress_Description",
+      "ko": "신비로운 별의 마력을 다루는 그녀는 전장의 조율사입니다. 그녀의 마법은 누구에게 닿을지 예측할 수 없지만, 일단 그 빛을 받은 동료는 초인적인 힘과 철벽같은 방어력을 얻게 됩니다. 불확실성조차 승리의 변수로 만드는 그녀의 존재는 동료들에게는 가장 든든한 행운의 상징입니다.",
+      "en": "Wielding the mysterious magic of the stars, she is the orchestrator of the battlefield. While it is impossible to predict who her magic will touch, any comrade who receives its light gains superhuman strength and impenetrable defense. Her presence, which turns even uncertainty into a variable for victory, is the most reliable symbol of good fortune for her comrades.",
+      "ja": "神秘的な星の魔力を扱う彼女は戦場の調律師です。彼女の魔法は誰に届くのか予測できませんが、一度光を受けた仲間は超人的な力と鉄壁のような防御力を得ることになります。不確実性でさえ勝利の変数にする彼女の存在は、同僚にとって最も強い幸運の象徴です。"
+    },
+    {
+      "Key": "Monster_Description",
+      "ko": "몬스터이다",
+      "en": "It is a monster",
+      "ja": "モンスターだ"
+    },
+    {
+      "Key": "BossMonster_Description",
+      "ko": "보스몬스터이다",
+      "en": "It is a boss monster.",
+      "ja": "ボスモンスターだ"
+    },
+    {
+      "Key": "Goldstatue_Description",
+      "ko": "골드석상이다",
+      "en": "It is a gold statue.",
+      "ja": "ゴールド石像です"
+    },
+    {
+      "Key": "Cleric_Skill",
+      "ko": "은총의 손길",
+      "en": "Hand of grace",
+      "ja": "恵みの手"
+    },
+    {
+      "Key": "Archer_Skill",
+      "ko": "맹독의 환부",
+      "en": "Deadly poisonous wound",
+      "ja": "猛毒の患部"
+    },
+    {
+      "Key": "Assassin_Skill",
+      "ko": "심장 꿰뚫기",
+      "en": "Piercing the heart",
+      "ja": "心を突き刺す"
+    },
+    {
+      "Key": "Hammer_Skill",
+      "ko": "소용돌이 분쇄",
+      "en": "Swirl crushing",
+      "ja": "渦巻き粉砕"
+    },
+    {
+      "Key": "Article_Skill",
+      "ko": "성휘의 검기",
+      "en": "Seonghwi's Sword Energy",
+      "ja": "ソンフィの剣技"
+    },
+    {
+      "Key": "Spearman_Skill",
+      "ko": "전방 광역 휘두르기",
+      "en": "Frontal wide-area swing",
+      "ja": "前方広域の振り回し"
+    },
+    {
+      "Key": "Two-hand test_Skill",
+      "ko": "쌍월의 연참",
+      "en": "Twin Moons' Consecutive Cuts",
+      "ja": "双月の参加"
+    },
+    {
+      "Key": "Wizard_Skill",
+      "ko": "혜성 낙하",
+      "en": "Comet fall",
+      "ja": "彗星落下"
+    },
+    {
+      "Key": "Enchantress_Skill",
+      "ko": "버프",
+      "en": "buff",
+      "ja": "バフ"
+    },
+    {
+      "Key": "BossMonster_Skill",
+      "ko": "보스 스킬",
+      "en": "Boss Skill",
+      "ja": "ボススキル"
+    },
+    {
+      "Key": "Cleric_Skill_Description",
+      "ko": "가장 낮은 체력을 가진 아군 한 명에게 신성한 빛의 온기를 전달합니다. 대상의 상처를 즉시 봉합하고 일정량의 생명력을 회복시킵니다.",
+      "en": "Delivers the warmth of holy light to the ally with the lowest health. Instantly sutures the target's wounds and restores a certain amount of health.",
+      "ja": "最も低い体力を持つ味方一人に神聖な光のぬくもりを伝えます。対象の傷を直ちに縫合し、一定量の生命力を回復させます。"
+    },
+    {
+      "Key": "Archer_Skill_Description",
+      "ko": "적의 상처에 독이 퍼지게 하여 지속적인 물리 피해를 입힙니다. 독에 중독된 적은 방어력이 감소합니다.",
+      "en": "Spreads poison through the enemy's wounds, inflicting continuous physical damage. Enemies poisoned by the poison have their defense reduced.",
+      "ja": "敵の傷に毒が広がり、持続的な物理ダメージを与えます。毒に中毒された少ない防御力が減少します。"
+    },
+    {
+      "Key": "Assassin_Skill_Description",
+      "ko": "적의 빈틈을 포착하여 가장 치명적인 부위를 정확히 찌릅니다. 대상의 방어력은 무시합니다.",
+      "en": "Seize the enemy's weak point and accurately strike their most lethal spot. Ignores the target's defense.",
+      "ja": "敵の隙間を捉え、最も致命的な部位を正確に突き刺す。対象の防御力は無視します。"
+    },
+    {
+      "Key": "Hammer_Skill_Description",
+      "ko": "망치의 무게를 이용해 몸을 빠르게 회전하며 근처의 적들을 연속 공격합니다.",
+      "en": "Using the weight of the hammer, it rapidly rotates its body to continuously attack nearby enemies.",
+      "ja": "ハンマーの重さを利用して体を素早く回転させ、近くの敵を連続攻撃します。"
+    },
+    {
+      "Key": "Article_Skill_Description",
+      "ko": "검을 강하게 휘둘러 응축된 빛의 검강을 전방으로 날립니다. 검기는 직선상의 모든 적을 관통하며 피해를 입힙니다.",
+      "en": "Swing the sword forcefully to unleash a condensed sword energy of light forward. The energy penetrates all enemies in a straight line, dealing damage.",
+      "ja": "剣を強く振り、凝縮した光の検鋼を前方に飛ばします。剣士は直線上のすべての敵を突き刺し、ダメージを与えます。"
+    },
+    {
+      "Key": "Spearman_Skill_Description",
+      "ko": "창의 길이를 최대한 활용해 전방으로 부채꼴 모양의 거대한 휘두르기 공격을 가합니다. 사거리 내의 모든 적에게 강력한 물리 피해를 입힙니다.",
+      "en": "Utilizing the full length of the spear, unleash a massive fan-shaped swing attack forward. Deals powerful physical damage to all enemies within range.",
+      "ja": "窓の長さを最大限に活用し、前方に扇形のような巨大な振り回し攻撃を加えます。射程内のすべての敵に強力な物理ダメージを与えます。"
+    },
+    {
+      "Key": "Two-hand test_Skill_Description",
+      "ko": "거검을 오른쪽에서 왼쪽으로 휘둘러 적들의 균형을 무너뜨린 뒤, 반동을 이용해 즉시 반대 방향으로 강하게 되베어냅니다.",
+      "en": "Swing the great sword from right to left to disrupt the enemies' balance, then use the recoil to immediately strike back forcefully in the opposite direction.",
+      "ja": "巨剣を右から左に振り回して敵のバランスを崩した後、反動を利用して直ちに反対方向に強く戻す。"
+    },
+    {
+      "Key": "Wizard_Skill_Description",
+      "ko": "하늘이 붉게 물들며 타오르는 거대한 운석이 구름을 뚫고 낙하합니다. 충돌하는 순간 지면이 흔들리며 거대한 화염 폭풍이 휘몰아칩니다.",
+      "en": "As the sky turns red and a burning giant meteorite pierces through the clouds and falls. At the moment of impact, the ground shakes and a massive firestorm rages.",
+      "ja": "空が赤く染まり、燃える巨大な隕石が雲を突き抜け落ちます。衝突する瞬間、地面が揺れ、巨大な炎の嵐が吹き飛ばされます。"
+    },
+    {
+      "Key": "Enchantress_Skill_Description",
+      "ko": "아군 중 무작위 대상에게 성령의 기운을 불어넣습니다.",
+      "en": "Infuses a random ally with the energy of the Holy Spirit.",
+      "ja": "味方の中でランダムな対象に聖霊のオーラを吹き込みます。"
+    },
+    {
+      "Key": "BossMonster_Skill_Description",
+      "ko": "보스스킬 입니다.",
+      "en": "This is a boss skill.",
+      "ja": "ボススキルです。"
+    },
+    {
+      "Key": "Cleric_Skill_Effect",
+      "ko": "가장 낮은 아군 체력회복 + 20%",
+      "en": "Recover HP of the lowest ally +20%",
+      "ja": "最低味方体力回復+20%"
+    },
+    {
+      "Key": "Archer_Skill_Effect",
+      "ko": "초당 공격력의 20% 피해, 방어력 20%감소",
+      "en": "20% of attack damage per second, reduces defense by 20%",
+      "ja": "毎秒攻撃力の20%ダメージ、防御力20%減少"
+    },
+    {
+      "Key": "Assassin_Skill_Effect",
+      "ko": "방어무시 공격력 300%",
+      "en": "Defense-ignoring attack power 300%",
+      "ja": "防御無視攻撃力300％"
+    },
+    {
+      "Key": "Hammer_Skill_Effect",
+      "ko": "100%의 데미지로 3회 공격",
+      "en": "Attacks 3 times with 100% damage",
+      "ja": "100%のダメージで3回攻撃"
+    },
+    {
+      "Key": "Article_Skill_Effect",
+      "ko": "전방의 적 150%로 관통공격",
+      "en": "Penetrating attack on enemies in front at 150%",
+      "ja": "前方の敵150％で貫通攻撃"
+    },
+    {
+      "Key": "Spearman_Skill_Effect",
+      "ko": "부채꼴 내의 전방의 적 150%로 공격",
+      "en": "Attacks enemies in front within a fan at 150% damage.",
+      "ja": "扇形内の前方の敵150%で攻撃"
+    },
+    {
+      "Key": "Two-hand test_Skill_Effect",
+      "ko": "전방의 적 150%로 공격",
+      "en": "Attacks enemies in front with 150%",
+      "ja": "前方の敵150%で攻撃"
+    },
+    {
+      "Key": "Wizard_Skill_Effect",
+      "ko": "해당적 주변의 적의 200%로 스플래시 공격",
+      "en": "Splash attack with 200% of surrounding enemies",
+      "ja": "該当する周辺の敵の200%でスプラッシュ攻撃"
+    },
+    {
+      "Key": "Enchantress_Skill_Effect",
+      "ko": "랜덤의 아군에게 120%의 공격력 / 방어력 버프",
+      "en": "120% Attack / Defense buff to a random ally",
+      "ja": "ランダムの味方に120%の攻撃力/防御力バフ"
+    },
+    {
+      "Key": "DamageUp",
+      "ko": "데미지 증가",
+      "en": "Damage increase",
+      "ja": "ダメージ増加"
+    },
+    {
+      "Key": "HpUp",
+      "ko": "HP 증가",
+      "en": "HP increase",
+      "ja": "HP増加"
+    },
+    {
+      "Key": "GoldUp",
+      "ko": "골드 획득량 증가",
+      "en": "Increased gold acquisition",
+      "ja": "ゴールド獲得量増加"
+    },
+    {
+      "Key": "ItemDropUp",
+      "ko": "아이템 획득량 증가",
+      "en": "Increased item acquisition amount",
+      "ja": "アイテム獲得量増加"
+    },
+    {
+      "Key": "ExpUp",
+      "ko": "경험치 획득량 증가",
+      "en": "Increased experience gain",
+      "ja": "経験値獲得量増加"
+    },
+    {
+      "Key": "AttackSpeedUp",
+      "ko": "공격속도 증가",
+      "en": "Increased attack speed",
+      "ja": "攻撃速度の増加"
+    },
+    {
+      "Key": "CriticalChanceUp",
+      "ko": "크리티컬 확률 증가",
+      "en": "Increased critical hit chance",
+      "ja": "クリティカル確率増加"
+    },
+    {
+      "Key": "CriticalDamageUp",
+      "ko": "크리티컬 데미지 증가",
+      "en": "Increased critical damage",
+      "ja": "クリティカルダメージ増加"
+    }
+  ],
   "SmeltData": [
     {
       "DataID": 110000,
@@ -1786,296 +3396,6 @@
       "Min": 15,
       "Max": 20,
       "Probability": 1
-    }
-  ],
-  "Localization": [
-    {
-      "Key": "UINormal",
-      "ko": "보통",
-      "en": "Normal",
-      "ja": "通常"
-    },
-    {
-      "Key": "UIMonsterDefeat",
-      "ko": "몬스터 처치",
-      "en": "Monster Defeat",
-      "ja": "モンスターチャーチ\r"
-    },
-    {
-      "Key": "UISetting",
-      "ko": "설정",
-      "en": "Setting",
-      "ja": "設定"
-    },
-    {
-      "Key": "UIMailBox",
-      "ko": "우편함",
-      "en": "MailBox",
-      "ja": "メールボックス"
-    },
-    {
-      "Key": "UISavingMode",
-      "ko": "절전 모드",
-      "en": "Saving Mode",
-      "ja": "省電力モード"
-    },
-    {
-      "Key": "UIBag",
-      "ko": "가방",
-      "en": "Bag",
-      "ja": "バッグ"
-    },
-    {
-      "Key": "UIStat",
-      "ko": "스탯",
-      "en": "Stat",
-      "ja": "ステータス"
-    },
-    {
-      "Key": "UIHero",
-      "ko": "영웅",
-      "en": "Hero",
-      "ja": "ヒーロー"
-    },
-    {
-      "Key": "UIRelic",
-      "ko": "유물",
-      "en": "Relic",
-      "ja": "遺物"
-    },
-    {
-      "Key": "UIDungeon",
-      "ko": "던전",
-      "en": "Dungeon",
-      "ja": "ダンジョン"
-    },
-    {
-      "Key": "UISmelting",
-      "ko": "각인",
-      "en": "Smelting",
-      "ja": "刻印"
-    },
-    {
-      "Key": "UIShop",
-      "ko": "상점",
-      "en": "Shop",
-      "ja": "お店"
-    },
-    {
-      "Key": "UIDailyMission",
-      "ko": "데일리 미션",
-      "en": "DailyMission",
-      "ja": "デイリーミッション"
-    },
-    {
-      "Key": "UIAchievements",
-      "ko": "업적",
-      "en": "Achievements",
-      "ja": "実績"
-    },
-    {
-      "Key": "UILeaderBoard",
-      "ko": "랭킹",
-      "en": "Ranking",
-      "ja": "ランキング"
-    },
-    {
-      "Key": "UIYes",
-      "ko": "네",
-      "en": "Yes",
-      "ja": "はい"
-    },
-    {
-      "Key": "UINo",
-      "ko": "아니오",
-      "en": "No",
-      "ja": "いいえ"
-    },
-    {
-      "Key": "Crystal",
-      "ko": "크리스탈",
-      "en": "Crystal",
-      "ja": "クリスタル"
-    },
-    {
-      "Key": "Feather",
-      "ko": "깃털",
-      "en": "Feather",
-      "ja": "羽"
-    },
-    {
-      "Key": "Leather",
-      "ko": "가죽",
-      "en": "Leather",
-      "ja": "革"
-    },
-    {
-      "Key": "Monster_Energy",
-      "ko": "몬스터에너지",
-      "en": "Monster_Energy",
-      "ja": "モンスターエネルギー"
-    },
-    {
-      "Key": "Piece_Of_Scroll",
-      "ko": "스크롤",
-      "en": "Piece_Of_Scroll",
-      "ja": "スクロール"
-    },
-    {
-      "Key": "Piece_Of_Stone",
-      "ko": "돌",
-      "en": "Piece_Of_Stone",
-      "ja": "石"
-    },
-    {
-      "Key": "Gold_Dice",
-      "ko": "황금주사위",
-      "en": "Gold_Dice",
-      "ja": "ゴールデンサイコロ"
-    },
-    {
-      "Key": "Axe",
-      "ko": "도끼",
-      "en": "Axe",
-      "ja": "斧"
-    },
-    {
-      "Key": "GoddessTears",
-      "ko": "여신의 눈물",
-      "en": "GoddessTears",
-      "ja": "女神の涙"
-    },
-    {
-      "Key": "BronzeRing",
-      "ko": "동반지",
-      "en": "BronzeRing",
-      "ja": "仲間"
-    },
-    {
-      "Key": "SilverRing",
-      "ko": "은반지",
-      "en": "SilverRing",
-      "ja": "銀輪"
-    },
-    {
-      "Key": "GoldenRing",
-      "ko": "금반지",
-      "en": "GoldenRing",
-      "ja": "ゴールドリング"
-    },
-    {
-      "Key": "UIChangeLanguage",
-      "ko": "정말 언어를 변경하시겠습니까?",
-      "en": "Are you sure you want to change the language?",
-      "ja": "本当に言語を変更しますか？"
-    },
-    {
-      "Key": "UIADS01_01",
-      "ko": "모든 캐릭터 공격력 + {0}%",
-      "en": "All characters' attack power + {0}%",
-      "ja": "すべてのキャラクター攻撃力+ {0}％"
-    },
-    {
-      "Key": "UIADS01_02",
-      "ko": "모든 캐릭터 HP + {0}%",
-      "en": "All characters HP + {0}%",
-      "ja": "すべてのキャラクターHP + {0}％"
-    },
-    {
-      "Key": "UIADS01_03",
-      "ko": "골드, 아이템 획득량 + {0}%",
-      "en": "Gold and item acquisition + {0}%",
-      "ja": "ゴールド、アイテム獲得量 + {0}%"
-    },
-    {
-      "Key": "UIADS01_04",
-      "ko": "크리티컬 확률 + {0}%",
-      "en": "Critical Chance + {0}%",
-      "ja": "クリティカル確率 + {0}%"
-    },
-    {
-      "Key": "PopupGetItem01",
-      "ko": "아이템을 획득하였습니다 : {0}",
-      "en": "You have acquired the following items: {0}",
-      "ja": "アイテムを獲得しました：{0}"
-    },
-    {
-      "Key": "PopupGetItem02",
-      "ko": "{0}을(를) 획득하였습니다.",
-      "en": "You have acquired {0}.",
-      "ja": "{0}を獲得しました。"
-    },
-    {
-      "Key": "Damage",
-      "ko": "공격력",
-      "en": "Damage",
-      "ja": "攻撃力"
-    },
-    {
-      "Key": "HP",
-      "ko": "HP",
-      "en": "HP",
-      "ja": "HP"
-    },
-    {
-      "Key": "Money",
-      "ko": "골드 획득량",
-      "en": "Gold earned",
-      "ja": "ゴールド獲得量"
-    },
-    {
-      "Key": "Item",
-      "ko": "아이템 드랍률",
-      "en": "ItemDropPercentage",
-      "ja": "アイテムドロップ率"
-    },
-    {
-      "Key": "Exp",
-      "ko": "경험치 획득량",
-      "en": "Experience gained",
-      "ja": "スキルクールタイム"
-    },
-    {
-      "Key": "AttackSpeed",
-      "ko": "공격속도",
-      "en": "AttackSpeed",
-      "ja": "経験値獲得量"
-    },
-    {
-      "Key": "CriticalP",
-      "ko": "크리티컬 확률",
-      "en": "CriticalPercentage",
-      "ja": "クリティカル確率\r"
-    },
-    {
-      "Key": "CriticalD",
-      "ko": "크리티컬 데미지",
-      "en": "CriticalDamage",
-      "ja": "クリティカルダメージ"
-    },
-    {
-      "Key": "NoMaterial",
-      "ko": "재료가 부족합니다.",
-      "en": "There are no ingredients.",
-      "ja": "材料はありません。"
-    },
-    {
-      "Key": "UIRemoveAD",
-      "ko": "모든 광고를 제거하세요!",
-      "en": "Remove all ads!",
-      "ja": "すべての広告を削除してください！"
-    },
-    {
-      "Key": "UIWatchAD",
-      "ko": "광고 시청으로 버프를 강화하세요!",
-      "en": "Watch ads to boost your buffs!",
-      "ja": "広告視聴でバフを強化！"
-    },
-    {
-      "Key": "UIHeroPopupBatch",
-      "ko": "배치할곳을 선택하여주세요!",
-      "en": "Please select a location to place it!",
-      "ja": "配置する場所を選択してください！"
     }
   ]
 }
