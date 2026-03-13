@@ -58,7 +58,7 @@ public partial class FirebaseManager
                 userRef.Child("ITEM").SetRawJsonValueAsync(item_json).AsUniTask(),
                 userRef.Child("SMELT").SetRawJsonValueAsync(smelt_json).AsUniTask());
 
-            Debug.Log($"[WriteData] Firebase 저장 완료 (User: {userId})");
+            //Debug.Log($"[WriteData] Firebase 저장 완료 (User: {userId})");
         }
         catch (Exception e)
         {
@@ -129,7 +129,7 @@ public partial class FirebaseManager
             }
 
             if (smeltSnap.Exists)
-            { 
+            {
                 var smeltList = JsonConvert.DeserializeObject<List<SmeltHolder>>(smeltSnap.GetRawJsonValue());
                 if (smeltList != null) Managers.GameM.gameData.EquippedSmelts = smeltList;
             }
@@ -199,7 +199,7 @@ public partial class FirebaseManager
     }
 
 
-    
+
     public async UniTask DeleteUserData()
     {
         if (CurrentUser == null) { Debug.LogError("[ERROR] 삭제 실패: 로그인된 유저 없음"); return; }
@@ -210,10 +210,10 @@ public partial class FirebaseManager
         string userId = CurrentUser.UserId;
 
         try
-        { 
+        {
             await reference.Child("users").Child(CurrentUser.UserId).RemoveValueAsync().AsUniTask();
             Debug.Log($"[DeleteUserData] 서버 데이터 삭제 완료: {userId}");
-            
+
             Managers.ClearAll();
             PlayerPrefs.DeleteAll();
             PlayerPrefs.Save();

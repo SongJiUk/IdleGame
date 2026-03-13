@@ -69,7 +69,7 @@ public class UI_AchievementPopup : UI_Popup
             item.OnCollected = RefreshUI;
             index++;
         }
-        for(int i = index; i <itemPool.Count; i++)
+        for (int i = index; i < itemPool.Count; i++)
         {
             itemPool[i].gameObject.SetActive(false);
         }
@@ -119,7 +119,7 @@ public class UI_AchievementPopup : UI_Popup
             color = Utils.StringToColorGrade(Define.Grade.Common);
 
 
-        string temp = color + Managers.LocalM.localData[_holder.ToString()].GetData() + PlusOrMinus(_value) + _value.ToString() + "%" + "</color>";
+        string temp = color + Managers.LocalizationM.localData[_holder.ToString()].GetData() + PlusOrMinus(_value) + _value.ToString() + "%" + "</color>";
 
         return temp;
     }
@@ -133,7 +133,7 @@ public class UI_AchievementPopup : UI_Popup
 
     public void OnDestroy()
     {
-        foreach(var item in itemPool)
+        foreach (var item in itemPool)
         {
             if (item != null) Destroy(item.gameObject);
         }

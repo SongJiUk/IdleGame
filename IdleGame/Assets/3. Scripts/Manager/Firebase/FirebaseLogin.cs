@@ -18,10 +18,9 @@ public partial class FirebaseManager
 #if UNITY_EDITOR
         Debug.LogWarning("Google Login은 에디터에서 동작하지 않습니다. 디바이스에서 테스트하세요.");
         return false;
-        #elif UNITY_ANDROID || UNITY_IOS
+#elif UNITY_ANDROID || UNITY_IOS
         try
         {
-            Debug.Log("Config WebClientID : " + GoogleSignIn.Configuration.WebClientId);
             Debug.Log("[FirebasLogin] 구글 로그인 시작...");
             GoogleSignIn.DefaultInstance.SignOut();
             GoogleSignIn.DefaultInstance.Disconnect();
@@ -112,8 +111,8 @@ public partial class FirebaseManager
 
     public void SetupGoogleConfig()
     {
-        if (configuration != null && GoogleSignIn.Configuration != null) return;
-        Debug.Log("FirebasLogin new GoogleSignInConfiguration  전");
+        if (configuration != null) return;
+
         configuration = new GoogleSignInConfiguration()
         {
             WebClientId = webClientId,
@@ -121,6 +120,7 @@ public partial class FirebaseManager
             RequestEmail = true
         };
         GoogleSignIn.Configuration = configuration;
+
         Debug.Log("[FirebaseManager] GoogleSignInConfiguration 설정 완료: " + webClientId);
     }
 

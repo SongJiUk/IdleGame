@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using way2tushar.NativeAlerts;
 
 
-//NOTE : partial class는 이 이름으로 사용하게 해줌
 public partial class FirebaseManager
 {
     public FirebaseAuth Auth { get; private set; }
@@ -28,10 +27,10 @@ public partial class FirebaseManager
     }
     public async UniTask Init()
     {
-        var status = await FirebaseApp.CheckAndFixDependenciesAsync();
+        var status = await FirebaseApp.CheckAndFixDependenciesAsync().AsUniTask();
         if (status != DependencyStatus.Available)
         {
-            Debug.Log("Firebase 초기화 실패");
+            Debug.LogError($"Firebase 초기화 실패: {status}");
             return;
         }
 
@@ -43,16 +42,23 @@ public partial class FirebaseManager
 
         await UniTask.WaitUntil(() => Auth != null);
 
+        await UniTask.Yield();
+
+        Debug.Log($"[Init] 초기화 후 CurrentUser: {Auth.CurrentUser?.UserId ?? "null"}");
         Debug.Log("WebClientID : " + webClientId);
+
+
+        CurrentUser = Auth.CurrentUser;
 
         isInitializing = false;
         Managers.UpdateM.isStartFirebase = true;
         Debug.Log("Firebase 초기화 성공");
-
     }
 
     private void OnAuthStateChanged(object _sender, EventArgs _eventArgs)
     {
+        Debug.Log("OnAuthStateChanged Start");
+        Debug.Log("isInitializing" + isInitializing);
 
         if (isInitializing) return;
 
@@ -202,7 +208,7 @@ public partial class FirebaseManager
             await ReadData();
             return true;
         }
-        catch(FirebaseException e) when(e.ErrorCode == (int)AuthError.CredentialAlreadyInUse)
+        catch (FirebaseException e) when (e.ErrorCode == (int)AuthError.CredentialAlreadyInUse)
         {
             return false;
         }

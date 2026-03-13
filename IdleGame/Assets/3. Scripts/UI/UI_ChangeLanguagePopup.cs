@@ -38,8 +38,8 @@ public class UI_ChangeLanguagePopup : UI_Popup
     public void SetInfo(string _language)
     {
         language = _language;
-        GetText(TextsType, (int)Texts.BeforeText).text = Managers.LocalM.localData["UIChangeLanguage"].GetData();
-        GetText(TextsType, (int)Texts.AfterText).text = Managers.LocalM.localData["UIChangeLanguage"].GetData(language);
+        GetText(TextsType, (int)Texts.BeforeText).text = Managers.LocalizationM.localData["UIChangeLanguage"].GetData();
+        GetText(TextsType, (int)Texts.AfterText).text = Managers.LocalizationM.localData["UIChangeLanguage"].GetData(language);
     }
     void OnClickYesButton()
     {

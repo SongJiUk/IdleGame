@@ -139,16 +139,20 @@ public class UI_TitleScene : UI_Scene
 
     async UniTask FinishLoadingProcess()
     {
-        await UniTask.Delay(300); 
-
+        await UniTask.Delay(300);
         Managers.DataM.Init();
+        Managers.LocalizationM.Init();
+        Managers.TimeM.Init();
+
         Managers.ObjectM.Init();
+        Managers.SoundM.Init();
+
         Managers.AdM.Init();
         Managers.IAPM.InitUnityIAP();
-        Managers.TimeM.Init();
-        Managers.SoundM.Init();
+
+
         Managers.SoundM.Play(Define.Sound.Bgm, "Bgm_Title");
-        Managers.LocalM.Init();
+
 
         await Managers.FirebaseM.Init();
 
@@ -159,6 +163,7 @@ public class UI_TitleScene : UI_Scene
         {
             var popup = await Managers.UIM.ShowPopup<UI_LoadingLogin>();
             popup.transform.SetParent(this.transform);
+            popup.OnSuccessLogin += OnSuccessLogin;
             popup.transform.SetAsLastSibling();
         }
         else
@@ -168,7 +173,6 @@ public class UI_TitleScene : UI_Scene
         }
 
         bool isGuest = Managers.GameM.gameData.isGuest;
-        
         GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(isGuest);
 
 #if UNITY_ANDROID
@@ -283,6 +287,7 @@ public class UI_TitleScene : UI_Scene
                             bool success = await Managers.FirebaseM.ForceUploadLocalDataToServer(syncInfo);
                             if (success)
                             {
+                                GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
                                 await NativeAlert.ShowAsync(new AlertOptions
                                 {
                                     title = "전환 성공",
@@ -290,7 +295,7 @@ public class UI_TitleScene : UI_Scene
                                     theme = AlertTheme.Light,
                                     buttons = new() { new() { text = "확인", style = AlertButtonStyle.Cancel } }
                                 });
-                                GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
+
                             }
                         }
                         else if (choice == 1)
@@ -299,6 +304,7 @@ public class UI_TitleScene : UI_Scene
                             if (success)
                             {
                                 await Managers.FirebaseM.ReadData();
+                                GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
                                 await NativeAlert.ShowAsync(new AlertOptions
                                 {
                                     title = "전환 성공",
@@ -306,7 +312,7 @@ public class UI_TitleScene : UI_Scene
                                     theme = AlertTheme.Light,
                                     buttons = new() { new() { text = "확인", style = AlertButtonStyle.Cancel } }
                                 });
-                                GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(false);
+
                             }
                         }
                     }
@@ -339,8 +345,21 @@ public class UI_TitleScene : UI_Scene
             }
         }
     }
-   
+
+    void OnSuccessLogin()
+    {
+        bool isGuest = Managers.GameM.gameData.isGuest;
+        Debug.Log("OnSuccessLogin" + isGuest);
+        GetObject(GameObjectsType, (int)GameObjects.LoginButtonObject).SetActive(isGuest);
+    }
+
     void OnClickAppleLoginButton()
     {
+
+    }
+
+    void OnDestroy()
+    {
+
     }
 }

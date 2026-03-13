@@ -60,7 +60,7 @@ public class Managers : MonoBehaviour
     public static QuestManager QuestM { get { return Instance?.questManager; } }
     public static IAPManager IAPM { get { return Instance?.iapMamager; } }
     public static SoundManager SoundM { get { return Instance?.soundManager; } }
-    public static LocalizationManager LocalM { get { return Instance?.localizationManager; } }
+    public static LocalizationManager LocalizationM { get { return Instance?.localizationManager; } }
     public static TimeManager TimeM { get { return Instance?.timeManager; } }
     public static GPGSManager GPGSM { get { return Instance?.gpgsManager; } }
     public static BuffManager BuffM { get { return Instance?.buffManager; } }

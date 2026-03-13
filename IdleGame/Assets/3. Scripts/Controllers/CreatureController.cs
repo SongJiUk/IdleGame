@@ -165,7 +165,7 @@ public class CreatureController : BaseController
         if (HP > MaxHP)
             hp = MaxHP;
 
-        Debug.Log($"[Heal] {name} 회복량: {healValue} (비율:{_amount}) 현재HP:{HP}/{MaxHP}");
+        //Debug.Log($"[Heal] {name} 회복량: {healValue} (비율:{_amount}) 현재HP:{HP}/{MaxHP}");
     }
 
     public float GetCurrentPlayingClipDuration(Animator anim)
@@ -256,7 +256,7 @@ public class CreatureController : BaseController
 
         AnimatorChange(Define.CreatureState.Move);
         Vector3 dir = target.transform.position - transform.position;
-        dir.y = 0; 
+        dir.y = 0;
 
         if (dir.sqrMagnitude > 0.05f)
         {

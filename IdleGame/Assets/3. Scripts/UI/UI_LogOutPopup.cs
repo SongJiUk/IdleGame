@@ -41,6 +41,11 @@ public class UI_LogOutPopup : UI_Popup
         catch (System.Exception e) { Debug.Log($"Google SignOut Error: {e.Message}"); }
 #endif
 
+        if (Managers.FirebaseM.Auth != null)
+        {
+            Managers.FirebaseM.Auth.SignOut();
+            Debug.Log("Firebase Auth 로그아웃 완료");
+        }
         PlayerPrefs.DeleteKey("HasSeenLogin");
         PlayerPrefs.Save();
 

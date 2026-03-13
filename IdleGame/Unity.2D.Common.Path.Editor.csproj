@@ -471,6 +471,10 @@
       <HintPath>/Applications/Unity/Hub/Editor/2022.3.62f3/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Google.VersionHandler">
+      <HintPath>Assets/ExternalDependencyManager/Editor/Google.VersionHandler.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="GoogleMobileAds.Common">
       <HintPath>Assets/GoogleMobileAds/GoogleMobileAds.Common.dll</HintPath>
       <Private>False</Private>
@@ -517,10 +521,6 @@
     </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library/PackageCache/com.unity.collab-proxy@2.7.1/Lib/Editor/log4netPlastic.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Google.VersionHandler">
-      <HintPath>Assets/ExternalDependencyManager/Editor/Google.VersionHandler.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Firebase.Auth">

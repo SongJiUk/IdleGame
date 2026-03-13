@@ -135,7 +135,7 @@ public class DropItemController : UIDirecting
 
         itemRect.gameObject.SetActive(true);
         itemRect.SetParent(Managers.UIM.SceneUI.WorldItemParent, false);
-        text.text = Utils.StringToColorGrade(grade) + Managers.LocalM.localData[itemData.Name].GetData() + "</color>";
+        text.text = Utils.StringToColorGrade(grade) + Managers.LocalizationM.localData[itemData.Name].GetData() + "</color>";
 
         if (cam != null) itemRect.position = cam.WorldToScreenPoint(transform.position);
 

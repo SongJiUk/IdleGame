@@ -54,7 +54,7 @@ public class UI_AchievementItem : UI_Base
     {
         data = _data;
         GetText(TextsType, (int)Texts.AchievementNameText).text = data.Title;
-        GetText(TextsType, (int)Texts.AchievementEffectText).text = Managers.LocalM.localData[data.RewardStatus.ToString()].GetData() + " + " + data.RewardValue + "%";
+        GetText(TextsType, (int)Texts.AchievementEffectText).text = Managers.LocalizationM.localData[data.RewardStatus.ToString()].GetData() + " + " + data.RewardValue + "%";
 
         GetButton(ButtonsType, (int)Buttons.CollectButton).onClick.RemoveAllListeners();
 
@@ -157,7 +157,7 @@ public class UI_AchievementItem : UI_Base
         }
         else
         {
-            Managers.UIM.ShowToast(Managers.LocalM.localData["NoMaterial"].GetData());
+            Managers.UIM.ShowToast(Managers.LocalizationM.localData["NoMaterial"].GetData());
         }
 
     }

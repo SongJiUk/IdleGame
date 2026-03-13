@@ -19,6 +19,8 @@ public class UI_LoadingLogin : UI_Popup
         GuestButton
     }
     #endregion
+
+    public Action OnSuccessLogin;
     private bool isLoggingIn = false;
     public async override UniTask<bool> Init()
     {
@@ -32,6 +34,7 @@ public class UI_LoadingLogin : UI_Popup
         GetButton(ButtonsType, (int)Buttons.GuestButton).gameObject.BindEvent(OnClickGuestButton);
         return true;
     }
+
 
     async void OnClickGoogleButton()
     {
@@ -48,6 +51,7 @@ public class UI_LoadingLogin : UI_Popup
                 {
                     await Managers.FirebaseM.LinkGoogleToCurrentUser();
                     await Managers.FirebaseM.ReadData();
+                    OnSuccessLogin?.Invoke();
                     await NativeAlert.ShowAsync(new AlertOptions
                     {
                         title = "연동 성공",
@@ -103,6 +107,7 @@ public class UI_LoadingLogin : UI_Popup
                                     bool success = await Managers.FirebaseM.ForceUploadLocalDataToServer(syncInfo);
                                     if (success)
                                     {
+                                        OnSuccessLogin?.Invoke();
                                         await NativeAlert.ShowAsync(new AlertOptions
                                         {
                                             title = "전환 성공",
@@ -118,6 +123,7 @@ public class UI_LoadingLogin : UI_Popup
                                     if (success)
                                     {
                                         await Managers.FirebaseM.ReadData();
+                                        OnSuccessLogin?.Invoke();
                                         await NativeAlert.ShowAsync(new AlertOptions
                                         {
                                             title = "전환 성공",
@@ -134,7 +140,7 @@ public class UI_LoadingLogin : UI_Popup
                                 if (success)
                                 {
                                     await Managers.FirebaseM.ReadData();
-
+                                    OnSuccessLogin?.Invoke();
                                     await NativeAlert.ShowAsync(new AlertOptions
                                     {
                                         title = "전환 성공",
@@ -151,14 +157,16 @@ public class UI_LoadingLogin : UI_Popup
             // 3. 신규 구글 로그인 로직
             else
             {
+                isLoggingIn = true;
                 bool isLoginSuccess = await Managers.FirebaseM.GoogleLogin();
 
-                if(isLoginSuccess)
+                if (isLoginSuccess)
                 {
                     Debug.Log("[UI_LoadingLogin] 로그인 성공 동기화 시작");
                     await Managers.FirebaseM.CheckAndApplyCurrentUser();
                     await Managers.FirebaseM.ReadData();
-                    Managers.GameM.gameData.isGuest = true;
+                    OnSuccessLogin?.Invoke();
+                    OnSuccessLogin = null;
                     Managers.UIM.ClosePopup(this).Forget();
                 }
                 else
@@ -177,31 +185,14 @@ public class UI_LoadingLogin : UI_Popup
         finally
         {
             isLoggingIn = false;
-        }   
+        }
     }
 
     async void OnClickGuestButton()
     {
         await Managers.FirebaseM.GuestLogin();
         await Managers.FirebaseM.ReadData();
+        OnSuccessLogin = null;
         Managers.UIM.ClosePopup(this).Forget();
-    }
-
-    void OnLinkingFailed()
-    {
-        ConfirmSwitchAccount();
-    }
-
-    async void ConfirmSwitchAccount()
-    {
-        Managers.FirebaseM.SignOutFM();
-
-        bool success = await Managers.FirebaseM.GoogleLogin();
-
-        if (success)
-        {
-            Managers.UIM.ShowToast("기존 계정 데이터로 전환되었습니다.");
-            Managers.UIM.ClosePopup(this).Forget();
-        }
     }
 }

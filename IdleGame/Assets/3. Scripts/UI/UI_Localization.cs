@@ -18,14 +18,14 @@ public class UI_Localization : MonoBehaviour
 
     public void SetLocalData()
     {
-        if(LocalName != "")
+        if (LocalName != "")
         {
             string temp = "";
-            if(SemiData.Length > 0)
+            if (SemiData.Length > 0)
             {
-                temp = string.Format(Managers.LocalM.localData["UI" + LocalName].GetData(), SemiData);
+                temp = string.Format(Managers.LocalizationM.localData["UI" + LocalName].GetData(), SemiData);
             }
-            else temp = Managers.LocalM.localData["UI" + LocalName].GetData();
+            else temp = Managers.LocalizationM.localData["UI" + LocalName].GetData();
             text.text = temp;
         }
     }
