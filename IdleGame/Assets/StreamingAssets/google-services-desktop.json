@@ -8,27 +8,53 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1007607179174:ios:75845f3923eb618dbe9167",
+        "mobilesdk_app_id": "1:1007607179174:android:f8db83a18b94ba17be9167",
         "android_client_info": {
           "package_name": "com.JiUk.KnightOrderGrow"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1007607179174-bma3bk7a747gc3unijdd40579f2bh1r3.apps.googleusercontent.com"
+          "client_id": "1007607179174-ds4gem7486l5btkn2tad0bjothu635q4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.JiUk.KnightOrderGrow",
+            "certificate_hash": "14e5db87e4364f6acd6136853db5418f7dc63f9e"
+          }
+        },
+        {
+          "client_id": "1007607179174-h89qls79q4qad03cegnli5husb8l5cvi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.JiUk.KnightOrderGrow",
+            "certificate_hash": "28b98b23d7534e627aedc08f5a3b1c97f7945911"
+          }
+        },
+        {
+          "client_id": "1007607179174-nikhlhh6i3pirp3du71c24jegjv2enf8.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBXOTnSZeyDBiTr4Ns_kTyWnOnKApORWTg"
+          "current_key": "AIzaSyCq9ver9UNNsrHjWS2D1faQdh0KnFdzVmo"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 0
-        },
         "appinvite_service": {
-          "status": 1
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007607179174-nikhlhh6i3pirp3du71c24jegjv2enf8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1007607179174-bma3bk7a747gc3unijdd40579f2bh1r3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.JiUk.KnightOrderGrow"
+              }
+            }
+          ]
         }
       }
     }

@@ -39,11 +39,16 @@ public partial class FirebaseManager
         DB = FirebaseDatabase.DefaultInstance.RootReference;
         reference = DB;
         Auth.StateChanged += OnAuthStateChanged;
+        SetupGoogleConfig();
+
+        await UniTask.WaitUntil(() => Auth != null);
+
+        Debug.Log("WebClientID : " + webClientId);
 
         isInitializing = false;
-
         Managers.UpdateM.isStartFirebase = true;
         Debug.Log("Firebase 초기화 성공");
+
     }
 
     private void OnAuthStateChanged(object _sender, EventArgs _eventArgs)
@@ -63,7 +68,7 @@ public partial class FirebaseManager
 
     public bool IsLoggedIn()
     {
-        Debug.Log("[FirebaseManager] : " + CurrentUser != null);
+        Debug.Log("[FirebaseManager] CurrentUser is : " + (CurrentUser != null));
         return CurrentUser != null;
     }
 
@@ -113,14 +118,6 @@ public partial class FirebaseManager
         return false;
     }
 
-    public async UniTaskVoid LoginAndLoadSequence()
-    {
-        bool success = await GoogleLogin();
-        if(success)
-        {
-            await ReadData();
-        }
-    }
 
     public async UniTask<GameData> FetchServerData()
     {

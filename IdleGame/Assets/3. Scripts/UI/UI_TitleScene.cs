@@ -151,8 +151,6 @@ public class UI_TitleScene : UI_Scene
         Managers.LocalM.Init();
 
         await Managers.FirebaseM.Init();
-        await UniTask.WaitUntil(() => Managers.FirebaseM.Auth != null);
-        await UniTask.Delay(500);
 
         hasSeenLogin = PlayerPrefs.GetInt("HasSeenLogin", 0) == 1;
         bool isLoggedIn = Managers.FirebaseM.IsLoggedIn();

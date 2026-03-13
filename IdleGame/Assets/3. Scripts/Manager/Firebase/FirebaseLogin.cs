@@ -10,60 +10,80 @@ using System.Net;
 
 public partial class FirebaseManager
 {
-    private string webClientId = "1007607179174-eob21571uq2q6bku1i3l2s8nrmnmdkl3.apps.googleusercontent.com";
     private FirebaseUser user;
-
+    private string webClientId = "1007607179174-nikhlhh6i3pirp3du71c24jegjv2enf8.apps.googleusercontent.com";
 
     public async UniTask<bool> GoogleLogin()
     {
 #if UNITY_EDITOR
         Debug.LogWarning("Google Login은 에디터에서 동작하지 않습니다. 디바이스에서 테스트하세요.");
         return false;
-#endif
-
-#if UNITY_ANDROID || UNITY_IOS
+        #elif UNITY_ANDROID || UNITY_IOS
         try
         {
-            SetupGoogleConfig();
+            Debug.Log("Config WebClientID : " + GoogleSignIn.Configuration.WebClientId);
+            Debug.Log("[FirebasLogin] 구글 로그인 시작...");
+            GoogleSignIn.DefaultInstance.SignOut();
+            GoogleSignIn.DefaultInstance.Disconnect();
+
+            // 2. 로그인 시도
+            Debug.Log("FirebasLogin SignIn() 전");
             GoogleSignIn.Configuration = configuration;
-
             GoogleSignInUser googleUser = await GoogleSignIn.DefaultInstance.SignIn();
-
-            if (googleUser == null || string.IsNullOrEmpty(googleUser.IdToken))
+            Debug.Log("FirebasLogin SignIn() 후");
+            if (googleUser == null)
             {
-                Debug.LogError("[Firebase] Google SignIn 실패: 토큰 없음");
+                Debug.LogError("[Firebase] Google SignIn 실패: googleUser가 null입니다.");
                 return false;
             }
 
+            if (string.IsNullOrEmpty(googleUser.IdToken))
+            {
+                Debug.LogError("[Firebase] Google SignIn 실패: IdToken이 없습니다.");
+                return false;
+            }
+
+            // 3. 파이어베이스 인증 수행
             Credential credential = GoogleAuthProvider.GetCredential(googleUser.IdToken, null);
             var result = await Auth.SignInWithCredentialAsync(credential);
 
+            // 4. 성공 처리
             CurrentUser = result;
             ApplyUserToGameData(CurrentUser);
 
             PlayerPrefs.SetInt("HasSeenLogin", 1);
             PlayerPrefs.Save();
 
-            Debug.Log("[FirebaseManager] : 파이어베이스 로그인 성공!");
-            Debug.Log($"[FirebaseManager] : UserID : {result.UserId}");
-
-            //await ReadData();
+            Debug.Log($"[FirebaseManager] 로그인 성공! UserID: {result.UserId}");
             return true;
+        }
+        catch (Google.GoogleSignIn.SignInException e)
+        {
+            Debug.LogError($"[Google SignIn Error] Status: {e.Status}");
+            Debug.LogError($"Message: {e.Message}");
+            Debug.LogError($"StackTrace: {e.StackTrace}");
+            return false;
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"[FirebaseManager] : 구글 로그인 실패 : {e}");
+            // 예외 상세 출력
+            if (e is System.AggregateException agg)
+            {
+                foreach (var inner in agg.InnerExceptions)
+                {
+                    Debug.LogError($"[FirebaseManager] 내부 예외: {inner.Message}");
+                }
+            }
+            else
+            {
+                Debug.LogError($"[FirebaseManager] 예외 발생: {e.Message}\n{e.StackTrace}");
+            }
             return false;
         }
 #endif
     }
 
 
-    public void SignOut()
-    {
-        GoogleSignIn.DefaultInstance.SignOut();
-        SignOutFM();
-    }
 
     public async UniTask GuestLogin()
     {
@@ -92,16 +112,16 @@ public partial class FirebaseManager
 
     public void SetupGoogleConfig()
     {
-        if (configuration == null)
+        if (configuration != null && GoogleSignIn.Configuration != null) return;
+        Debug.Log("FirebasLogin new GoogleSignInConfiguration  전");
+        configuration = new GoogleSignInConfiguration()
         {
-            configuration = new GoogleSignInConfiguration()
-            {
-                WebClientId = webClientId,
-                RequestIdToken = true,
-                RequestEmail = true
-            };
-            GoogleSignIn.Configuration = configuration;
-        }
+            WebClientId = webClientId,
+            RequestIdToken = true,
+            RequestEmail = true
+        };
+        GoogleSignIn.Configuration = configuration;
+        Debug.Log("[FirebaseManager] GoogleSignInConfiguration 설정 완료: " + webClientId);
     }
 
     public async UniTask LinkGoogleToCurrentUser()
@@ -114,10 +134,7 @@ public partial class FirebaseManager
 
         try
         {
-            SetupGoogleConfig();
-            GoogleSignIn.Configuration = configuration;
             GoogleSignInUser gUser = await GoogleSignIn.DefaultInstance.SignIn();
-
 
             if (gUser == null || string.IsNullOrEmpty(gUser.IdToken)) return;
 

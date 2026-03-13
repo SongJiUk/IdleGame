@@ -12,13 +12,13 @@ public class GPGSManager
     public void Init()
     {
 
-        if (isInitialized || isLoggedIn) return;
+        //if (isInitialized || isLoggedIn) return;
 #if UNITY_ANDROID
-        SignIn(Managers.GameM.Level);
+        //SignIn(Managers.GameM.Level);
 #else
         Debug.Log("이 플랫폼은 google Play Games를 지원하지 않습니다.");
 #endif
-
+        Debug.Log("GPGS 비활성화됨. 구글 로그인만 테스트 중...");
         isInitialized = true;
     }
 
