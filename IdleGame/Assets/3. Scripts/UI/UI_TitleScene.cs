@@ -133,7 +133,7 @@ public class UI_TitleScene : UI_Scene
         }
         catch (System.Exception e)
         {
-            Debug.LogError(e.Message);
+            Debug.LogError(e.Message + e.ToString());
         }
     }
 

@@ -22,9 +22,20 @@ namespace Data
         public Dictionary<string, Localization> MakeDict()
         {
             Dictionary<string, Localization> dic = new Dictionary<string, Localization>();
+
+            int index = 0;
             foreach (Localization data in dataList)
             {
-                dic.Add(data.key, data);
+                index++;
+                if (!dic.ContainsKey(data.key))
+                {
+                    dic.Add(data.key, data);
+                }
+                else
+                {
+                    Debug.LogWarning($"중복된 키 발견: {data.key}, 이 값은 무시됩니다. {index}");
+                  
+                }
             }
 
             return dic;
