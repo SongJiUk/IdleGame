@@ -21,7 +21,6 @@ public class UI_HeroPopup : UI_Popup
     enum Texts
     {
         AttackText,
-        PlayerCountText,
     }
     enum Buttons
     {
