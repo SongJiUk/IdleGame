@@ -46,7 +46,7 @@ public class GoogleSheetManager : MonoBehaviour
 
 #if UNITY_EDITOR
     [ContextMenu("FetchGoogleSheet")]
-    async void FetchGoogleSheet()
+    public async void FetchGoogleSheet()
     {
         // Init
         availSheetArray = availSheets.Split('/');

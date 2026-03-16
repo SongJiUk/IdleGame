@@ -31,6 +31,17 @@ public class SpawnManager : MonoBehaviour, ITickable
     //TODO : 처음 시작할땐 플레이어 스폰이 되있어야될거같긴함
     public void Init()
     {
+        // 중복 구독 방지: 먼저 해제 후 재구독
+        Managers.StageM.readyEvent -= OnReady;
+        Managers.StageM.playEvent -= OnPlay;
+        Managers.StageM.bossEvent -= OnBoss;
+        Managers.StageM.clearEvent -= OnClear;
+        Managers.StageM.deadEvent -= OnDead;
+        Managers.StageM.dungeonEvent -= OnDungeon;
+        Managers.StageM.dungeonClearEvent -= OnDungeonClear;
+        Managers.StageM.dungeonFailEvent -= OnDungeonFail;
+        Managers.StageM.dungeonOutEvent -= OnDungeonOut;
+
         Managers.StageM.readyEvent += OnReady;
         Managers.StageM.playEvent += OnPlay;
         Managers.StageM.bossEvent += OnBoss;
@@ -42,6 +53,11 @@ public class SpawnManager : MonoBehaviour, ITickable
         Managers.StageM.dungeonOutEvent += OnDungeonOut;
 
         scene = Managers.UIM.SceneUI as UI_GameScene;
+    }
+
+    void OnDestroy()
+    {
+        Clear();
     }
 
     #region 이벤트
@@ -101,24 +117,36 @@ public class SpawnManager : MonoBehaviour, ITickable
         }
     }
 
-    public async void OnDungeon(int _dungeonDataID)
+    public void OnDungeon(int _dungeonDataID)
     {
-        dungeonDataID = _dungeonDataID;
-        StopSpawn();
-        DeSpawnMonster();
+        // 이벤트 핸들러는 void 유지, 비동기 로직은 별도 메서드로 분리
+        OnDungeonAsync(_dungeonDataID).Forget();
+    }
 
-        if (dungeonDataID == 70000)
+    async UniTaskVoid OnDungeonAsync(int _dungeonDataID)
+    {
+        try
         {
-            spawnMaxCount = 30;
-            spawnInterval = 30f;
+            dungeonDataID = _dungeonDataID;
+            StopSpawn();
+            DeSpawnMonster();
+
+            if (dungeonDataID == 70000)
+            {
+                spawnMaxCount = 30;
+                spawnInterval = 30f;
+            }
+            else if (dungeonDataID == 70001)
+            {
+                OnBoss();
+            }
+
+            await scene.AsyncFadeInOut(true);
         }
-        else if (dungeonDataID == 70001)
+        catch (Exception e)
         {
-            OnBoss();
+            Debug.LogError($"[SpawnManager] 던전 진입 처리 실패: {e.Message}");
         }
-
-        await scene.AsyncFadeInOut(true);
-
     }
 
     public void OnDungeonClear()

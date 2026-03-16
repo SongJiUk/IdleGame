@@ -200,6 +200,31 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
 
     #endregion
 
+    // 캐릭터 슬롯 UI 묶음 (Character1_ ~ Character6_, 인덱스 0~5)
+    struct CharacterSlotUI
+    {
+        public GameObject obj;
+        public GameObject hpFrame;
+        public GameObject mpFrame;
+        public GameObject readyObj;
+        public Image lockImage;
+        public Image iconImage;
+        public Button plusButton;
+    }
+
+    // 캐릭터 HP/MP 바 묶음 (Character0_ ~ Character6_, 인덱스 0~6)
+    struct CharacterHpMpUI
+    {
+        public Image hpFill;
+        public Image mpFill;
+        public TextMeshProUGUI hpText;
+        public TextMeshProUGUI mpText;
+    }
+
+    CharacterSlotUI[] charSlots;
+    CharacterHpMpUI[] charHpMpSlots;
+    GameObject[] bottomCloseObjects;
+
     Button selectedButton = null;
     Button clickedButton = null;
     Button statBtn;
@@ -318,12 +343,15 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         ItemPopupObjectRect = GetObject(GameObjectsType, (int)GameObjects.ItemPopupObject).GetComponent<RectTransform>();
         ItemPopupFrameObjectRect = GetImage(ImagesType, (int)Images.ItemPopupFrameImage).GetComponent<RectTransform>();
 
-        GameObject obj = GetObject(GameObjectsType, (int)GameObjects.ItemTextPopupObject);
-        for (int i = 0; i < obj.transform.childCount; i++)
+        itemTexts = new List<TextMeshProUGUI>
         {
-            itemTexts.Add(GetText(TextsType, (int)Texts.ItemText1 + i));
-            itemTexts[i].gameObject.SetActive(false);
-        }
+            GetText(TextsType, (int)Texts.ItemText1),
+            GetText(TextsType, (int)Texts.ItemText2),
+            GetText(TextsType, (int)Texts.ItemText3),
+            GetText(TextsType, (int)Texts.ItemText4),
+            GetText(TextsType, (int)Texts.ItemText5),
+        };
+        foreach (var t in itemTexts) t.gameObject.SetActive(false);
 
         layers = GetObject(GameObjectsType, (int)GameObjects.LayersObject).GetComponent<Transform>();
         speechLayer = GetObject(GameObjectsType, (int)GameObjects.WorldSpeechLayer).GetComponent<Transform>();
@@ -333,15 +361,52 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             GetButton(ButtonsType, (int)buttonType).gameObject.BindEvent(() => OnClickAnyButtons(buttonType).Forget());
         }
 
-        //TDOO : 하단 버튼 CloseImage
+        // 하단 팝업 닫기 오브젝트 배열로 캐싱
+        bottomCloseObjects = new GameObject[]
+        {
+            GetObject(GameObjectsType, (int)GameObjects.StatButtonCloseObject),
+            GetObject(GameObjectsType, (int)GameObjects.HeroButtonCloseObject),
+            GetObject(GameObjectsType, (int)GameObjects.RelicsButtonCloseObject),
+            GetObject(GameObjectsType, (int)GameObjects.DungeonButtonCloseObject),
+            GetObject(GameObjectsType, (int)GameObjects.SmeltingButtonCloseObject),
+            GetObject(GameObjectsType, (int)GameObjects.ShopButtonCloseObject),
+        };
+        foreach (var o in bottomCloseObjects) o.SetActive(false);
+
+        // 캐릭터 슬롯 UI 배열로 캐싱 (Character1_ ~ Character6_)
+        charSlots = new CharacterSlotUI[6];
         for (int i = 0; i < 6; i++)
         {
-            GetObject(GameObjectsType, (int)GameObjects.StatButtonCloseObject + i).SetActive(false);
+            charSlots[i] = new CharacterSlotUI
+            {
+                obj       = GetObject(GameObjectsType, (int)GameObjects.Character1_Object + i),
+                hpFrame   = GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + i),
+                mpFrame   = GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i),
+                readyObj  = GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i),
+                lockImage = GetImage(ImagesType, (int)Images.Character1_Lock + i),
+                iconImage = GetImage(ImagesType, (int)Images.Character1_Icon + i),
+                plusButton = GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + i),
+            };
         }
 
-        for (int i = 1; i < Managers.CharacterM.Characters.Length; i++)
+        // 캐릭터 HP/MP 바 배열로 캐싱 (Character0_ ~ Character6_)
+        charHpMpSlots = new CharacterHpMpUI[7];
+        for (int i = 0; i < 7; i++)
         {
-            GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + (i - 1)).gameObject.BindEvent(() => OnClickCharacterPlus(i - 1));
+            charHpMpSlots[i] = new CharacterHpMpUI
+            {
+                hpFill  = GetImage(ImagesType, (int)Images.Character0_HpFillImage + i),
+                mpFill  = GetImage(ImagesType, (int)Images.Character0_MpFillImage + i),
+                hpText  = GetText(TextsType, (int)Texts.Character0_HpText + i),
+                mpText  = GetText(TextsType, (int)Texts.Character0_MpText + i),
+            };
+        }
+
+        // 플러스 버튼 이벤트 바인딩
+        for (int i = 0; i < charSlots.Length; i++)
+        {
+            int captured = i;
+            charSlots[i].plusButton.gameObject.BindEvent(() => OnClickCharacterPlus(captured));
         }
 
         GetButton(ButtonsType, (int)Buttons.LevelUpButton).gameObject.BindEvent(ClickDown, _type: Define.UIEvent.PointerDown);
@@ -437,13 +502,13 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         //TODO : 캐릭터 수만큼
 
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < charSlots.Length; i++)
         {
-            GetImage(ImagesType, (int)Images.Character1_Lock + i).gameObject.SetActive(false);
-            GetImage(ImagesType, (int)Images.Character1_Icon + i).gameObject.SetActive(false);
-            GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + i).SetActive(false);
-            GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i).SetActive(false);
-            GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i).SetActive(false);
+            charSlots[i].lockImage.gameObject.SetActive(false);
+            charSlots[i].iconImage.gameObject.SetActive(false);
+            charSlots[i].hpFrame.SetActive(false);
+            charSlots[i].mpFrame.SetActive(false);
+            charSlots[i].readyObj.SetActive(false);
         }
 
 
@@ -1072,55 +1137,44 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         int index = 1;
         for (int i = 0; i < Managers.CharacterM.Characters.Length - 1; i++)
         {
+            var slot = charSlots[i];
             if (Managers.CharacterM.Characters[i + 1] != null)
             {
+                slot.plusButton.gameObject.SetActive(false);
+                slot.iconImage.gameObject.SetActive(true);
+                slot.iconImage.sprite = Managers.ResourceM.GetAtlas(Managers.CharacterM.Characters[i + 1].data.Name);
+                slot.iconImage.SetNativeSize();
 
-                GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + i).gameObject.SetActive(false);
-                GetImage(ImagesType, (int)Images.Character1_Icon + i).gameObject.SetActive(true);
-                GetImage(ImagesType, (int)Images.Character1_Icon + i).sprite = Managers.ResourceM.GetAtlas(Managers.CharacterM.Characters[i + 1].data.Name);
-                GetImage(ImagesType, (int)Images.Character1_Icon + i).SetNativeSize();
-                //GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).rectTransform.localScale = GetImage(ImagesType, (int)Images.Character1_Icon + (i - 1)).rectTransform.localScale / 6;
+                bool isSpawned = Managers.CharacterM.players[i + 1] != null;
+                slot.readyObj.SetActive(!isSpawned);
+                slot.hpFrame.SetActive(isSpawned);
+                slot.mpFrame.SetActive(isSpawned);
 
-
-                //지금 스폰 되어있는거랑 아닌거랑 비교하기?
-                if (Managers.CharacterM.players[i + 1] != null)
-                {
-                    //만약 생성되어있다면.
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i).gameObject.SetActive(false);
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + i).gameObject.SetActive(true);
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i).gameObject.SetActive(true);
-                }
-                else
-                {
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i).gameObject.SetActive(true);
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + i).gameObject.SetActive(false);
-                    GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i).gameObject.SetActive(false);
-                }
-
-                GetObject(GameObjectsType, (int)GameObjects.Character1_Object + i).transform.SetSiblingIndex(index);
+                slot.obj.transform.SetSiblingIndex(index);
                 index++;
             }
-            //TODO : 이거 나중에 오류나면 Icon으로 뺀것빼문임. 
+            //TODO : 이거 나중에 오류나면 Icon으로 뺀것빼문임.
             else
             {
-                GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + i).gameObject.SetActive(true);
-                GetImage(ImagesType, (int)Images.Character1_Icon + i).gameObject.SetActive(false);
-                GetImage(ImagesType, (int)Images.Character1_Icon + i).sprite = null;
-                GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i).gameObject.SetActive(false);
-                GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + i).gameObject.SetActive(false);
-                GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i).gameObject.SetActive(false);
+                slot.plusButton.gameObject.SetActive(true);
+                slot.iconImage.gameObject.SetActive(false);
+                slot.iconImage.sprite = null;
+                slot.readyObj.SetActive(false);
+                slot.hpFrame.SetActive(false);
+                slot.mpFrame.SetActive(false);
             }
         }
     }
 
     public void OnPlayerStatChange(PlayerController _pc)
     {
-        if (_pc.index == Managers.CharacterM.Characters.Length) return;
+        if (_pc.index >= charHpMpSlots.Length) return;
 
-        GetImage(ImagesType, (int)Images.Character0_HpFillImage + (_pc.index)).fillAmount = (float)_pc.HP / (float)_pc.MaxHP;
-        GetText(TextsType, (int)Texts.Character0_HpText + (_pc.index)).text = $"{Utils.ToCurrencyString(_pc.HP)} / {Utils.ToCurrencyString(_pc.MaxHP)}";
-        GetImage(ImagesType, (int)Images.Character0_MpFillImage + (_pc.index)).fillAmount = (float)_pc.MP / (float)_pc.MaxMp;
-        GetText(TextsType, (int)Texts.Character0_MpText + (_pc.index)).text = _pc.MP.ToString() + " / " + _pc.MaxMp.ToString();
+        var slot = charHpMpSlots[_pc.index];
+        slot.hpFill.fillAmount = (float)_pc.HP / (float)_pc.MaxHP;
+        slot.hpText.text = $"{Utils.ToCurrencyString(_pc.HP)} / {Utils.ToCurrencyString(_pc.MaxHP)}";
+        slot.mpFill.fillAmount = (float)_pc.MP / (float)_pc.MaxMp;
+        slot.mpText.text = _pc.MP.ToString() + " / " + _pc.MaxMp.ToString();
     }
 
     #endregion

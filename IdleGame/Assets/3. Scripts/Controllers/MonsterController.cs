@@ -50,6 +50,8 @@ public class MonsterController : CreatureController
         }
     }
 
+    float findTargetTimer = 0f;
+    const float findTargetInterval = 0.3f;
     CancellationTokenSource skillCTS;
     public override bool Init()
     {
@@ -73,6 +75,10 @@ public class MonsterController : CreatureController
         attackCTS?.Cancel();
         attackCTS?.Dispose();
         attackCTS = null;
+
+        // 풀 반환 시 이벤트 구독 해제 (누적 방지)
+        if (Managers.StageM != null)
+            Managers.StageM.deadEvent -= OnDead;
 
         Managers.UpdateM.UnRegister(this);
 
@@ -227,7 +233,13 @@ public class MonsterController : CreatureController
         {
             ResetTarget();
 
-            FindClosetTarget(Managers.CharacterM.players);
+            // 매 프레임 탐색 대신 0.3초 간격으로만 탐색
+            findTargetTimer -= _deltaTime;
+            if (findTargetTimer <= 0f)
+            {
+                findTargetTimer = findTargetInterval;
+                FindClosetTarget(Managers.CharacterM.players);
+            }
 
             if (target == null)
             {
@@ -235,9 +247,14 @@ public class MonsterController : CreatureController
                 return;
             }
         }
-        float targetDist = Vector3.Distance(transform.position, target.transform.position);
+        else
+        {
+            findTargetTimer = 0f;
+        }
 
-        if (targetDist > attackRange)
+        float targetDistSqr = (transform.position - target.transform.position).sqrMagnitude;
+
+        if (targetDistSqr > attackRange * attackRange)
         {
             if (!isAttacking)
             {

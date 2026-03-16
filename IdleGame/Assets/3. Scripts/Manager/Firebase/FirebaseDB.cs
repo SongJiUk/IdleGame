@@ -33,36 +33,56 @@ public partial class FirebaseManager
             return;
         }
 
-        try
+        data.LastSaveTimeTicks = TimerNTP.NowTime.Ticks;
+
+        if (IsNewDay(data.LastSaveTimeTicks, TimerNTP.NowTime))
         {
-            data.LastSaveTimeTicks = TimerNTP.NowTime.Ticks;
-
-            if (IsNewDay(data.LastSaveTimeTicks, TimerNTP.NowTime))
-            {
-                Managers.GameM.gameData.DungeonKey[0] = 2;
-                Managers.GameM.gameData.DungeonKey[1] = 2;
-                Managers.GameM.gameData.ResetDailyMission();
-            }
-
-            string userId = CurrentUser.UserId;
-            var userRef = reference.Child("users").Child(userId);
-
-            string default_json = JsonConvert.SerializeObject(data);
-            string character_json = JsonConvert.SerializeObject(data.Character_Holder);
-            string item_json = JsonConvert.SerializeObject(data.Item_Holder);
-            string smelt_json = JsonConvert.SerializeObject(data.EquippedSmelts);
-
-            await UniTask.WhenAll(
-                userRef.Child("DATA").SetRawJsonValueAsync(default_json).AsUniTask(),
-                userRef.Child("CHARACTER").SetRawJsonValueAsync(character_json).AsUniTask(),
-                userRef.Child("ITEM").SetRawJsonValueAsync(item_json).AsUniTask(),
-                userRef.Child("SMELT").SetRawJsonValueAsync(smelt_json).AsUniTask());
-
-            //Debug.Log($"[WriteData] Firebase 저장 완료 (User: {userId})");
+            Managers.GameM.gameData.DungeonKey[0] = 2;
+            Managers.GameM.gameData.DungeonKey[1] = 2;
+            Managers.GameM.gameData.ResetDailyMission();
         }
-        catch (Exception e)
+
+        string userId = CurrentUser.UserId;
+        var userRef = reference.Child("users").Child(userId);
+
+        string default_json = JsonConvert.SerializeObject(data);
+        string character_json = JsonConvert.SerializeObject(data.Character_Holder);
+        string item_json = JsonConvert.SerializeObject(data.Item_Holder);
+        string smelt_json = JsonConvert.SerializeObject(data.EquippedSmelts);
+
+        // 4개 노드를 단일 쓰기로 묶어 원자성 보장 (일부만 저장되는 불일치 방지)
+        var savePayload = new Dictionary<string, object>
         {
-            Debug.LogError($"[WriteData] 데이터 저장 중 상세 오류: {e.Message}\n{e.StackTrace}");
+            ["DATA"]      = JsonConvert.DeserializeObject<object>(default_json),
+            ["CHARACTER"] = JsonConvert.DeserializeObject<object>(character_json),
+            ["ITEM"]      = JsonConvert.DeserializeObject<object>(item_json),
+            ["SMELT"]     = JsonConvert.DeserializeObject<object>(smelt_json)
+        };
+        string allJson = JsonConvert.SerializeObject(savePayload);
+
+        // 네트워크 일시 오류 대비 최대 3회 재시도
+        const int maxRetry = 3;
+        for (int i = 0; i < maxRetry; i++)
+        {
+            try
+            {
+                await userRef.SetRawJsonValueAsync(allJson).AsUniTask();
+
+                //Debug.Log($"[WriteData] Firebase 저장 완료 (User: {userId})");
+                return;
+            }
+            catch (Exception e)
+            {
+                if (i == maxRetry - 1)
+                {
+                    Debug.LogError($"[WriteData] {maxRetry}회 재시도 모두 실패: {e.Message}\n{e.StackTrace}");
+                }
+                else
+                {
+                    Debug.LogWarning($"[WriteData] 저장 실패 ({i + 1}/{maxRetry}회), 2초 후 재시도...");
+                    await UniTask.WaitForSeconds(2f);
+                }
+            }
         }
     }
 
@@ -184,8 +204,24 @@ public partial class FirebaseManager
     bool IsNewDay(long _lastTicks, DateTime _now)
     {
         if (_lastTicks <= 0) return true;
-        DateTime lastDate = new DateTime(_lastTicks);
-        return lastDate.Date != _now.Date;
+
+        // DateTime 유효 범위를 벗어난 Ticks는 ArgumentOutOfRangeException 유발
+        if (_lastTicks < DateTime.MinValue.Ticks || _lastTicks > DateTime.MaxValue.Ticks)
+        {
+            Debug.LogWarning($"[IsNewDay] 유효하지 않은 Ticks 값: {_lastTicks}");
+            return true;
+        }
+
+        try
+        {
+            DateTime lastDate = new DateTime(_lastTicks);
+            return lastDate.Date != _now.Date;
+        }
+        catch (ArgumentOutOfRangeException e)
+        {
+            Debug.LogWarning($"[IsNewDay] Ticks 변환 실패: {e.Message}");
+            return true;
+        }
     }
     public void MigrateTimeData(GameData _data)
     {

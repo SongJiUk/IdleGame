@@ -90,6 +90,11 @@ public class UIManager
             }
 
             T popup = GetPopupUI<T>(_name);
+            if (popup == null)
+            {
+                Debug.LogError($"[UIManager] ShowPopup: '{_name ?? typeof(T).Name}' 팝업 표시 실패");
+                return null;
+            }
 
             if (_parent != null)
             {
@@ -131,6 +136,12 @@ public class UIManager
             _name = typeof(T).Name;
 
         T popup = Managers.ObjectM.SpawnUI<T>(_name);
+        if (popup == null)
+        {
+            Debug.LogError($"[UIManager] GetPopupUI: '{_name}' 팝업 생성 실패 (SpawnUI 반환값 null)");
+            return null;
+        }
+
         popup.gameObject.transform.SetParent(Root.transform);
 
         RectTransform rect = popup.gameObject.GetComponent<RectTransform>();

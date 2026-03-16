@@ -219,7 +219,7 @@ public class GameManager
             Time.timeScale = 0f;
             Managers.UpdateM.PauseTicking(true);
 
-            SaveGameOnPause();
+            SaveGameOnPause().Forget();
             Debug.Log("[기기 정지]");
         }
         else
@@ -230,12 +230,17 @@ public class GameManager
         }
     }
 
-    private async void SaveGameOnPause()
+    private async UniTaskVoid SaveGameOnPause()
     {
         Managers.GameM.gameData.LastSaveTimeTicks = TimerNTP.NowTime.Ticks;
-
-        await Managers.FirebaseM.WriteData();
-
+        try
+        {
+            await Managers.FirebaseM.WriteData();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[GameManager] 일시정지 저장 실패: {e.Message}");
+        }
     }
 
 

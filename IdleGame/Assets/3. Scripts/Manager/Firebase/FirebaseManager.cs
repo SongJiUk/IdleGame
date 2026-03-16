@@ -101,7 +101,18 @@ public partial class FirebaseManager
             await ReadData();
             return true;
         }
-        catch { return false; }
+        catch (FirebaseException e)
+        {
+            // Firebase 인증 오류 코드별 로그 (AuthError enum으로 구분)
+            AuthError errorCode = (AuthError)e.ErrorCode;
+            Debug.LogError($"[SignInWithCredentialOnly] Firebase 인증 실패 - 코드: {errorCode}, 메시지: {e.Message}");
+            return false;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[SignInWithCredentialOnly] 예외 발생: {e.Message}");
+            return false;
+        }
     }
 
     public async UniTask<bool> SwitchToGoogleAccount()

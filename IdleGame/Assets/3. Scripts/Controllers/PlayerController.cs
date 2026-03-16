@@ -30,6 +30,8 @@ public class PlayerController : CreatureController
 
     Vector3 startPos = Vector3.zero;
     string ownerName;
+    float findTargetTimer = 0f;
+    const float findTargetInterval = 0.3f;
     public int Level;
     public int index;
 
@@ -54,7 +56,13 @@ public class PlayerController : CreatureController
     {
         get
         {
-            return Managers.PlayerM.GetAttack(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name], this);
+            if (DATA == null) return 0;
+            if (!Managers.GameM.gameData.Characters_Data.TryGetValue(DATA.Name, out var charData))
+            {
+                Debug.LogWarning($"[PlayerController] Damage: '{DATA.Name}' 캐릭터 데이터 없음");
+                return 0;
+            }
+            return Managers.PlayerM.GetAttack(DATA.CharacterGrade, charData, this);
         }
     }
 
@@ -62,10 +70,14 @@ public class PlayerController : CreatureController
     {
         get
         {
-            double baseDef = Managers.PlayerM.GetDefense(DATA.CharacterGrade, Managers.GameM.gameData.Characters_Data[DATA.Name], this);
-
+            if (DATA == null) return 0;
+            if (!Managers.GameM.gameData.Characters_Data.TryGetValue(DATA.Name, out var charData))
+            {
+                Debug.LogWarning($"[PlayerController] Defense: '{DATA.Name}' 캐릭터 데이터 없음");
+                return 0;
+            }
+            double baseDef = Managers.PlayerM.GetDefense(DATA.CharacterGrade, charData, this);
             float buffRatio = GetBuffValue(BuffEffectType.DefenseEffect);
-
             return baseDef * (1.0f + buffRatio);
         }
     }
@@ -115,7 +127,11 @@ public class PlayerController : CreatureController
     {
         if (DATA == null) return;
 
-        var charData = Managers.GameM.gameData.Characters_Data[DATA.Name];
+        if (!Managers.GameM.gameData.Characters_Data.TryGetValue(DATA.Name, out var charData))
+        {
+            Debug.LogWarning($"[PlayerController] SetStat: '{DATA.Name}' 캐릭터 데이터 없음");
+            return;
+        }
 
         hp = Managers.PlayerM.GetHP(DATA.CharacterGrade, charData);
         maxHp = hp;
@@ -310,24 +326,34 @@ public class PlayerController : CreatureController
 
         if (target == null || target.IsDead)
         {
-            FindClosetTarget(Managers.ObjectM.mcList);
+            // 매 프레임 탐색 대신 0.3초 간격으로만 탐색
+            findTargetTimer -= _deltaTime;
+            if (findTargetTimer <= 0f)
+            {
+                findTargetTimer = findTargetInterval;
+                FindClosetTarget(Managers.ObjectM.mcList);
+            }
             if (target == null)
             {
                 GoBackToSpawn(_deltaTime);
                 return;
             }
         }
+        else
+        {
+            findTargetTimer = 0f;
+        }
 
-        float targetDist = Vector3.Distance(transform.position, target.transform.position);
+        float targetDistSqr = (transform.position - target.transform.position).sqrMagnitude;
 
-        if (targetDist > detectRange)
+        if (targetDistSqr > detectRange * detectRange)
         {
             //ResetTarget();
             GoBackToSpawn(_deltaTime);
             return;
         }
 
-        if (targetDist > attackRange)
+        if (targetDistSqr > attackRange * attackRange)
         {
             if (!isAttacking)
                 MoveToTarget(_deltaTime);

@@ -6,6 +6,8 @@ using System;
 
 public class BuffManager : IUnScaledTickable
 {
+    // 매번 캐스팅 반복을 피하기 위한 헬퍼 프로퍼티
+    UI_GameScene GameScene => Managers.UIM.SceneUI as UI_GameScene;
 
     float[] Timers => Managers.GameM.Buff_Timers;
 
@@ -32,7 +34,7 @@ public class BuffManager : IUnScaledTickable
     {
         int index = (int)_type;
         Timers[index] = _time;
-        (Managers.UIM.SceneUI as UI_GameScene).SetBuffs(_type, true);
+        GameScene?.SetBuffs(_type, true);
 
         Managers.UpdateM.Register(_unscaledTickable: this);
         Managers.FirebaseM.WriteData().Forget();
@@ -55,7 +57,7 @@ public class BuffManager : IUnScaledTickable
             if (Timers[i] > 0f)
             {
                 hasAny = true;
-                (Managers.UIM.SceneUI as UI_GameScene).SetBuffs((Define.BuffType)i, true);
+                GameScene?.SetBuffs((Define.BuffType)i, true);
             }
         }
 
@@ -80,7 +82,7 @@ public class BuffManager : IUnScaledTickable
                 if (Timers[i] <= 0f)
                 {
                     Timers[i] = 0f;
-                    (Managers.UIM.SceneUI as UI_GameScene).SetBuffs((Define.BuffType)i, false);
+                    GameScene?.SetBuffs((Define.BuffType)i, false);
                 }
                 else
                 {

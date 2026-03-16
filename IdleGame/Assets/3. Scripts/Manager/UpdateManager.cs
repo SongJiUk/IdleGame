@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,11 +59,22 @@ public class UpdateManager : MonoBehaviour
             if (!unScaledToRemove.Contains(_unscaledTickable)) unScaledToRemove.Add(_unscaledTickable);
         }
     }
-    async void ExcuteWriteData()
+    async UniTaskVoid ExcuteWriteData()
     {
         isWriting = true;
-        await Managers.FirebaseM.WriteData();
-        isWriting = false;
+        try
+        {
+            await Managers.FirebaseM.WriteData();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[UpdateManager] 자동 저장 실패: {e.Message}");
+        }
+        finally
+        {
+            // 성공/실패 관계없이 반드시 플래그 해제
+            isWriting = false;
+        }
     }
 
     private void Update()

@@ -229,9 +229,10 @@ public class CreatureController : BaseController
 
     public void GoBackToSpawn(float _deltaTime)
     {
-        float dist = Vector3.Distance(transform.position, SpawnPos);
+        // sqrMagnitude: sqrt 연산 없이 거리 비교 (0.1f → 0.01f = 0.1 * 0.1)
+        float distSqr = (transform.position - SpawnPos).sqrMagnitude;
 
-        if (dist > 0.1f)
+        if (distSqr > 0.01f)
         {
             AnimatorChange(Define.CreatureState.Move);
 
@@ -314,7 +315,9 @@ public class CreatureController : BaseController
 
         if (_targets == null || _targets.Length == 0) return;
 
-        float minDist = float.MaxValue;
+        // sqrMagnitude: sqrt 연산 없이 거리 비교 (가장 가까운 타겟 탐색)
+        float minDistSqr = float.MaxValue;
+        float detectRangeSqr = detectRange * detectRange;
 
         if (target != null)
             target.OnTargetDead -= OnTargetDeadCallBack;
@@ -328,12 +331,12 @@ public class CreatureController : BaseController
             CreatureController cc = _targets[i] as CreatureController;
             if (cc == null || cc.isDead) continue;
 
-            float dist = Vector3.Distance(this.transform.position, cc.transform.position);
-            if (dist > detectRange) continue;
+            float distSqr = (this.transform.position - cc.transform.position).sqrMagnitude;
+            if (distSqr > detectRangeSqr) continue;
 
-            if (dist < minDist)
+            if (distSqr < minDistSqr)
             {
-                minDist = dist;
+                minDistSqr = distSqr;
                 closetTarget = cc;
             }
         }

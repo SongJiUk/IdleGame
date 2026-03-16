@@ -86,8 +86,26 @@ public class Memo
     TODO : 아이템 , 이름 등등도 Localization해주자(시트 하나 더 만들어서 하는게 나을수도있을듯)
     TODO : Localization 추가하기
     TODO : 도중에 몬스터와 보스가 같이나오는 경우가 있음 => 아직 확인안됌
-    TODO : 게임씬 나눠주기    
+    TODO : 게임씬 나눠주기
     TODO : 갑자기 영웅 사라지는거 확인 => 아직 확인 못함
+
+    [MonsterController] OnDisable()에서 Managers.StageM.deadEvent -= OnDead 구독 해제 누락 => 해결 (OnDisable에 null 체크 포함하여 구독 해제 추가)
+    [SpawnManager] Init()에서 이벤트 9개 구독하지만 Clear/OnDestroy에서 해제 안 함 => 해결 (Init에 중복 구독 방지 패턴 적용, OnDestroy에서 Clear() 자동 호출 추가)
+    [PlayerController] Damage 프로퍼티에서 Characters_Data[DATA.Name] 직접 접근 => 해결 (Damage, Defense 프로퍼티, SetStat() 3곳 모두 TryGetValue()로 교체, 미발견 시 경고 로그 출력)
+    [UIManager] GetPopupUI()에서 SpawnUI() 반환값 null 체크 없이 바로 .gameObject 접근 => 해결 (GetPopupUI, ShowPopup 두 곳에 null 체크 및 에러 로그 추가)
+
+    [UpdateManager] ExcuteWriteData()가 async void => 해결 (async UniTaskVoid로 교체, try-catch-finally 추가, isWriting 플래그 finally에서 해제)
+    [GameManager] SaveGameOnPause()가 async void => 해결 (async UniTaskVoid로 교체, try-catch 추가, 호출부에 .Forget() 추가)
+    [SpawnManager] OnDungeon()이 async void => 해결 (이벤트 핸들러 void 유지, 비동기 로직을 OnDungeonAsync()로 분리 후 .Forget() 호출)
+    [FirebaseDB] WriteData() 실패 시 재시도 로직 없음 => 해결 (최대 3회, 2초 간격 재시도 추가. 3회 모두 실패 시 에러 로그 출력)
+    [FirebaseLogin] catch { return false; } 빈 catch 블록 => 해결 (SignInWithCredentialOnly에 FirebaseException/Exception 구분 처리 추가, LinkGoogleToCurrentUser의 throw e → throw; 로 교체하여 스택 트레이스 보존)
+    [PlayerController] FindClosetTarget() 매 프레임 실행 => 해결 (PlayerController, MonsterController에 0.3초 탐색 쿨다운 추가)
+    [CreatureController] Vector3.Distance() => 해결 (FindClosetTarget, GoBackToSpawn, Tick의 거리 비교 모두 sqrMagnitude로 교체)
+
+    [FirebaseDB] WriteData()에서 DATA/CHARACTER/ITEM/SMELT 4개 동시 저장 시 일부만 성공하면 데이터 불일치 => 해결 (4개를 Dictionary로 묶어 userRef 단일 경로에 SetRawJsonValueAsync 1회 호출로 원자적 저장)
+    [FirebaseDB] IsNewDay()가 클라이언트 시간 기반 => 해결 (DateTime.MinValue/MaxValue 범위 체크 추가, 변환 실패 시 try-catch로 안전하게 처리)
+    [BuffManager] SceneUI를 UI_GameScene으로 직접 캐스팅 => 해결 (GameScene 헬퍼 프로퍼티 추가, 3곳 모두 GameScene?. 로 교체하여 null 안전 접근)
+    TODO : [UIManager] popup.Init().Forget() => 예외 처리 포함한 방식으로 교체 (UniTask.Void + try-catch)
     
    
     

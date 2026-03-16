@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI_DungeonPopup : UI_Popup, ITickable
 {
@@ -47,6 +48,17 @@ public class UI_DungeonPopup : UI_Popup, ITickable
     int TreasureTroveLevel = 0;
     int GoldDungeonLevel = 0;
 
+    // 보물창고/골드던전 슬롯 UI 묶음 (인덱스 0=보물창고, 1=골드던전)
+    struct DungeonSlotUI
+    {
+        public TextMeshProUGUI countText;
+        public TextMeshProUGUI levelText;
+        public TextMeshProUGUI ingredientText;
+    }
+
+    DungeonSlotUI[] dungeonSlots;
+    TextMeshProUGUI timeText;
+
     RawImage rawImage;
     bool isEntering = false;
 
@@ -74,6 +86,22 @@ public class UI_DungeonPopup : UI_Popup, ITickable
         GetButton(ButtonsType, (int)Buttons.GoldDungeonPlusButton).gameObject.BindEvent(() => OnClickPlusButton(Buttons.GoldDungeonPlusButton));
 
         rawImage = GetObject(GameObjectsType, (int)GameObjects.RawImage).GetComponent<RawImage>();
+        timeText = GetText(TextsType, (int)Texts.TimeText);
+
+        dungeonSlots = new DungeonSlotUI[]
+        {
+            new() {
+                countText      = GetText(TextsType, (int)Texts.CrystalCountText),
+                levelText      = GetText(TextsType, (int)Texts.TreasureTroveLevelCountText),
+                ingredientText = GetText(TextsType, (int)Texts.TreasureTroveIngredientCountText),
+            },
+            new() {
+                countText      = GetText(TextsType, (int)Texts.SapphireCountText),
+                levelText      = GetText(TextsType, (int)Texts.GoldDungeonLevelCountText),
+                ingredientText = GetText(TextsType, (int)Texts.GoldDungeonIngredientCountText),
+            },
+        };
+
         TreasureTroveMaxLevel = Managers.GameM.gameData.DungeonClearLevel[0] + 1;
         GoldDungeonMaxLevel = Managers.GameM.gameData.DungeonClearLevel[1] + 1;
         TreasureTroveLevel = TreasureTroveMaxLevel;
@@ -87,15 +115,12 @@ public class UI_DungeonPopup : UI_Popup, ITickable
     {
         Managers.SoundM.MuteEffectVolume(true);
 
-        for (int i = 0; i < Managers.GameM.gameData.DungeonKey.Length; i++)
+        for (int i = 0; i < dungeonSlots.Length; i++)
         {
-            if (Managers.GameM.gameData.DungeonKey[i] != 0)
-                GetText(TextsType, (int)Texts.TreasureTroveIngredientCountText + i).color = Color.green;
-            else
-                GetText(TextsType, (int)Texts.TreasureTroveIngredientCountText + i).color = Color.red;
-
-            GetText(TextsType, (int)Texts.CrystalCountText + i).text = $"({Managers.GameM.gameData.DungeonKey[i]} / 2)";
-            GetText(TextsType, (int)Texts.TreasureTroveLevelCountText + i).text = $"{Managers.GameM.gameData.DungeonClearLevel[i] + 1}";
+            var slot = dungeonSlots[i];
+            slot.ingredientText.color = Managers.GameM.gameData.DungeonKey[i] != 0 ? Color.green : Color.red;
+            slot.countText.text = $"({Managers.GameM.gameData.DungeonKey[i]} / 2)";
+            slot.levelText.text = $"{Managers.GameM.gameData.DungeonClearLevel[i] + 1}";
         }
 
         GetText(TextsType, (int)Texts.TreasureTroveCompenstaionText).text = $"{(Managers.GameM.gameData.DungeonClearLevel[0] + 1) * 50}";
@@ -265,6 +290,6 @@ public class UI_DungeonPopup : UI_Popup, ITickable
 
     public void Tick(float _deltaTime)
     {
-        GetText(TextsType, (int)Texts.TimeText).text = Utils.NextDayTimer();
+        timeText.text = Utils.NextDayTimer();
     }
 }

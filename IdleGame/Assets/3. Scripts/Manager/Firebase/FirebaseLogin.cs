@@ -150,8 +150,10 @@ public partial class FirebaseManager
         }
         catch (FirebaseException e)
         {
-            throw e;
-
+            // throw e 는 스택 트레이스를 초기화하므로 throw; 사용
+            AuthError errorCode = (AuthError)e.ErrorCode;
+            Debug.LogError($"[LinkGoogleToCurrentUser] 연동 실패 - 코드: {errorCode}, 메시지: {e.Message}");
+            throw;
         }
     }
 
