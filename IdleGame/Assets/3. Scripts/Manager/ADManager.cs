@@ -25,6 +25,8 @@ public class ADManager
     {
         SetAdID();
 
+        // 광고 이벤트 콜백을 Unity 메인 스레드에서 실행하도록 설정
+        MobileAds.RaiseAdEventsOnUnityMainThread = true;
 
         MobileAds.Initialize(initStatus =>
         {
@@ -126,7 +128,7 @@ public class ADManager
 
         if (rewardedAd != null && rewardedAd.CanShowAd())
         {
-
+            Managers.GameM.isInternalPause = true;
             AudioListener.pause = true;
             rewardedAd.Show((Reward reward) =>
             {
@@ -178,6 +180,7 @@ public class ADManager
     {
         if (interstitialAd != null && interstitialAd.CanShowAd())
         {
+            Managers.GameM.isInternalPause = true;
             interstitialAd.Show();
         }
         else
