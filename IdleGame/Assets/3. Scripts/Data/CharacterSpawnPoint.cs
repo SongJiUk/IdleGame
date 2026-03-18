@@ -29,6 +29,8 @@ public class CharacterSpawnPoint : MonoBehaviour
 
         Maps[value].SetActive(true);
     }
+
+    
     public void PlayerSpawn()
     {
 

@@ -107,23 +107,20 @@ public class Memo
     [FirebaseDB] WriteData()에서 DATA/CHARACTER/ITEM/SMELT 4개 동시 저장 시 일부만 성공하면 데이터 불일치 => 해결 (4개를 Dictionary로 묶어 userRef 단일 경로에 SetRawJsonValueAsync 1회 호출로 원자적 저장)
     [FirebaseDB] IsNewDay()가 클라이언트 시간 기반 => 해결 (DateTime.MinValue/MaxValue 범위 체크 추가, 변환 실패 시 try-catch로 안전하게 처리)
     [BuffManager] SceneUI를 UI_GameScene으로 직접 캐스팅 => 해결 (GameScene 헬퍼 프로퍼티 추가, 3곳 모두 GameScene?. 로 교체하여 null 안전 접근)
-    TODO : [UIManager] popup.Init().Forget() => 예외 처리 포함한 방식으로 교체 (UniTask.Void + try-catch)
+    [UpdateManager] tickables.Contains() 매 프레임 O(n) 탐색 => List → HashSet으로 교체하여 O(1)로 개선
+    [CharacterManager] AlivePlayers 프로퍼티가 매 호출마다 Where().ToList() 새 List 생성 => 캐싱 또는 스팬/열거자 방식으로 교체
+    [CreatureController] FindClosetTarget(List<T>) 에서 .ToArray() 호출로 매번 배열 할당 => 오버로드 통합 or span 활용
+    [PlayerController] Damage 프로퍼티 내부에서 Dictionary 탐색 + Manager 체인 계산이 Tick마다 발생 가능 => 캐싱 도입
+    [PoolManager] ContainsKey() + [] 이중 탐색 => TryGetValue() 한 번으로 교체
+    [SpawnManager] DeSpawnMonster()에서 mcList.ToList() 불필요한 복사 => 역순 for 루프로 교체
+    [SpawnManager] AlivePlayers 반복 호출 (ApplyKnockBackWithDelay 등) => 지역 변수로 캐싱
+    [UIManager] UI_Root를 매번 GameObject.Find()로 탐색 => 최초 1회 캐싱
+    [GameManager] 재화 변경 시 OnGoodsChanged 매번 즉시 발생 => 일정 주기 배칭으로 UI 갱신 횟수 줄이기
+    [BuffController] AddBuff()에서 activeBuffs.Find() 선형 탐색 => Dictionary<BuffEffectType, IBuff> 구조로 교체
+    [GameData] GetGradeCharacter() 매 호출마다 임시 List 생성 후 랜덤 선택 => 사전에 등급별 분류 캐싱
 
-    === 성능 최적화 TODO ===
+    TODO : 유물 가차 가득차게 수정 및 가차 뽑아도 하루 3번 count 안내려가는거같음
 
-    [높음] [UpdateManager] tickables.Contains() 매 프레임 O(n) 탐색 => List → HashSet으로 교체하여 O(1)로 개선
-    [높음] [CharacterManager] AlivePlayers 프로퍼티가 매 호출마다 Where().ToList() 새 List 생성 => 캐싱 또는 스팬/열거자 방식으로 교체
-    [높음] [CreatureController] FindClosetTarget(List<T>) 에서 .ToArray() 호출로 매번 배열 할당 => 오버로드 통합 or span 활용
-    [높음] [PlayerController] Damage 프로퍼티 내부에서 Dictionary 탐색 + Manager 체인 계산이 Tick마다 발생 가능 => 캐싱 도입
-
-    [중간] [PoolManager] ContainsKey() + [] 이중 탐색 => TryGetValue() 한 번으로 교체
-    [중간] [SpawnManager] DeSpawnMonster()에서 mcList.ToList() 불필요한 복사 => 역순 for 루프로 교체
-    [중간] [SpawnManager] AlivePlayers 반복 호출 (ApplyKnockBackWithDelay 등) => 지역 변수로 캐싱
-    [중간] [UIManager] UI_Root를 매번 GameObject.Find()로 탐색 => 최초 1회 캐싱
-    [중간] [GameManager] 재화 변경 시 OnGoodsChanged 매번 즉시 발생 => 일정 주기 배칭으로 UI 갱신 횟수 줄이기
-
-    [낮음] [BuffController] AddBuff()에서 activeBuffs.Find() 선형 탐색 => Dictionary<BuffEffectType, IBuff> 구조로 교체
-    [낮음] [GameData] GetGradeCharacter() 매 호출마다 임시 List 생성 후 랜덤 선택 => 사전에 등급별 분류 캐싱
 
 
 

@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 언어 규칙
 
 모든 답변과 코드 주석은 반드시 한국어로 작성할 것.
+모든 답변시 추측하지 말고 애매한게 있으면 질문할 것.
 
 ## Project Overview
 

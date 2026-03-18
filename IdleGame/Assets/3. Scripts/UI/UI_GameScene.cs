@@ -857,10 +857,12 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         {
             if (FastremainTime <= 0.0f)
             {
-                Action rewardedAction = () => { FastremainTime = 600f; };
+                bool rewardEarned = false;
+                Action rewardedAction = () => { rewardEarned = true; };
 
                 Action resumeAction = async () =>
                 {
+                    if (rewardEarned) FastremainTime = 600f;
                     await CheckFast(fast);
                     UpdateFastUI();
                     Managers.UpdateM.Register(_unscaledTickable: this);
@@ -1697,6 +1699,10 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
                     return;
                 }
             }
+            else
+            {
+                Managers.UIM.ShowPopup<UI_GameExitPopup>().Forget();
+            }
         }
     }
 
@@ -1826,6 +1832,12 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         if (!_isPause)
         {
             Managers.FirebaseM.SyncDataOnly().Forget();
+
+            if (Managers.GameM.isInternalPause)
+            {
+                Managers.GameM.isInternalPause = false;
+                return;
+            }
 
             CheckOffLineReward();
         }

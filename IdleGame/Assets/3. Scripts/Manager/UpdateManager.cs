@@ -17,13 +17,21 @@ public interface IUnScaledTickable
 public class UpdateManager : MonoBehaviour
 {
     public bool isStartFirebase = false;
-    private readonly List<ITickable> tickables = new();
-    private readonly List<ITickable> toAdd = new();
-    private readonly List<ITickable> toRemove = new();
+    //private readonly List<ITickable> tickables = new();
+    private readonly HashSet<ITickable> tickables = new();
+    //private readonly List<ITickable> toAdd = new();
+    private readonly HashSet<ITickable> toAdd = new();
+    //private readonly List<ITickable> toRemove = new();
+    private readonly HashSet<ITickable> toRemove = new();
 
-    private readonly List<IUnScaledTickable> unScaledTickables = new();
-    private readonly List<IUnScaledTickable> unScaledToAdd = new();
-    private readonly List<IUnScaledTickable> unScaledToRemove = new();
+
+    //private readonly List<IUnScaledTickable> unScaledTickables = new();
+    //private readonly List<IUnScaledTickable> unScaledToAdd = new();
+    //private readonly List<IUnScaledTickable> unScaledToRemove = new();
+
+    private readonly HashSet<IUnScaledTickable> unScaledTickables = new();
+    private readonly HashSet<IUnScaledTickable> unScaledToAdd = new();
+    private readonly HashSet<IUnScaledTickable> unScaledToRemove = new();
 
     private bool isPaused = false;
     bool isWriting = false;
@@ -34,31 +42,17 @@ public class UpdateManager : MonoBehaviour
 
     public void Register(ITickable _tickable = null, IUnScaledTickable _unscaledTickable = null)
     {
-
-        if (_tickable != null)
-        {
-            if (!tickables.Contains(_tickable)) toAdd.Add(_tickable);
-        }
-
-
-        if (_unscaledTickable != null)
-        {
-            if (!unScaledTickables.Contains(_unscaledTickable)) unScaledToAdd.Add(_unscaledTickable);
-        }
-
-
+        if(_tickable != null) toAdd.Add(_tickable);
+        if (_unscaledTickable != null) unScaledToAdd.Add(_unscaledTickable);
     }
 
 
     public void UnRegister(ITickable _tickable = null, IUnScaledTickable _unscaledTickable = null)
     {
         if (_tickable != null) toRemove.Add(_tickable);
-
-        if (_unscaledTickable != null)
-        {
-            if (!unScaledToRemove.Contains(_unscaledTickable)) unScaledToRemove.Add(_unscaledTickable);
-        }
+        if (_unscaledTickable != null)  unScaledToRemove.Add(_unscaledTickable);
     }
+
     async UniTaskVoid ExcuteWriteData()
     {
         isWriting = true;
@@ -88,7 +82,7 @@ public class UpdateManager : MonoBehaviour
             if (Managers.save_Timer >= 10.0f)
             {
                 Managers.save_Timer = 0.0f;
-                ExcuteWriteData();
+                ExcuteWriteData().Forget();
             }
         }
 
@@ -98,41 +92,35 @@ public class UpdateManager : MonoBehaviour
 
 
         foreach (var t in toAdd)
-            if (!tickables.Contains(t)) tickables.Add(t);
+            tickables.Add(t);
         toAdd.Clear();
         foreach (var t in toRemove) tickables.Remove(t);
         toRemove.Clear();
 
         foreach (var t in unScaledToAdd)
-            if (!unScaledTickables.Contains(t)) unScaledTickables.Add(t);
+            unScaledTickables.Add(t);
         unScaledToAdd.Clear();
         foreach (var t in unScaledToRemove) unScaledTickables.Remove(t);
         unScaledToRemove.Clear();
 
-        for (int i = tickables.Count - 1; i >= 0; i--)
+
+        foreach (var tick in tickables)
         {
-            ITickable tick = tickables[i];
-            if (tick is Component component)
+            if (tick is Component component && component == null)
             {
-                if (component == null)
-                {
-                    tickables.RemoveAt(i);
-                    continue;
-                }
+                toRemove.Add(tick);
+                continue;
             }
             tick.Tick(deltaTime);
         }
 
-        for (int i = unScaledTickables.Count - 1; i >= 0; i--)
+
+        foreach (var tick in unScaledTickables)
         {
-            IUnScaledTickable tick = unScaledTickables[i];
-            if (tick is Component component)
+            if (tick is Component component && component == null)
             {
-                if (component == null)
-                {
-                    unScaledTickables.RemoveAt(i);
-                    continue;
-                }
+                unScaledToRemove.Add(tick);
+                continue;
             }
             tick.UnscaledTick(unscaledDeltaTime);
         }

@@ -92,6 +92,7 @@ public class StageManager
                     clearEvent?.Invoke();
                     Managers.GameM.gameData.clearStage++;
                     Managers.GameM.Stage++;
+                    Managers.CharacterM.aliveCount = 0;
 
                     Managers.QuestM.GetMission(Define.MissionTarget.StageClear).Progress++;
 

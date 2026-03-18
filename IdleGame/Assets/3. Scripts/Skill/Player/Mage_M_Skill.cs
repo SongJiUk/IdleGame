@@ -24,11 +24,11 @@ public class Mage_M_Skill : SkillBase
             target = Utils.FindRandomEnemyInRange(_caster, skill_Radius);
         }
 
-        _caster.transform.LookAt(target.transform);
+        
         if (target != null)
         {
             if (target.IsDead) return false;
-
+            _caster.transform.LookAt(target.transform);
             SetDamage(_caster, target, 1.2f);
 
             ShowEffect(target);

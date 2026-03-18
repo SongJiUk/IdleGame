@@ -286,6 +286,7 @@ public class PlayerController : CreatureController
     void OnDungeon(int _value)
     {
         AnimatorChange(CreatureState.Idle);
+        if (isDead) Managers.CharacterM.aliveCount++;
         isDead = false;
         target = null;
         float randomX = UnityEngine.Random.Range(-3.0f, 3.0f);
@@ -470,7 +471,8 @@ public class PlayerController : CreatureController
         base.Dead();
         isUsingSkill = false;
         AnimatorChange(CreatureState.Dead);
-        if (Managers.CharacterM.AlivePlayers.Count <= 0)
+        Managers.CharacterM.aliveCount--;
+        if (Managers.CharacterM.aliveCount <= 0)
         {
             if (Managers.StageM.isDungeon) Managers.StageM.StateChange(StageState.DungeonFail);
             else Managers.StageM.StateChange(StageState.Dead);

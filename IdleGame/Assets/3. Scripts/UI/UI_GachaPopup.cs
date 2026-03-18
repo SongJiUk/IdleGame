@@ -14,6 +14,8 @@ public class UI_GachaPopup : UI_Popup
         Horizontal_2,
         Horizontal_3,
         RawImage,
+        DiaImage,
+        AdImage,
     }
 
     enum Buttons
@@ -33,6 +35,7 @@ public class UI_GachaPopup : UI_Popup
     Transform[] horizontals = new Transform[horizontalCount];
 
     int value = 0;
+    bool isAd = false;
     List<UI_GachaHeroIcon> iconList = new List<UI_GachaHeroIcon>();
     bool isUsingButton = false;
     public Action OnGachaFinished;
@@ -65,8 +68,9 @@ public class UI_GachaPopup : UI_Popup
     {
         Managers.RenderM.Show(RenderType.Gacha, rawImage);
     }
-    public async UniTask GetGachaHero(int _count)
+    public async UniTask GetGachaHero(int _count, bool _isAd = false)
     {
+        isAd = _isAd;
         await GachaHeroes(_count);
     }
 
@@ -78,6 +82,30 @@ public class UI_GachaPopup : UI_Popup
         {
             int horizontalCount = 0;
             value = _count;
+
+            if (isAd)
+            {
+                GetText(TextsType, (int)Texts.OneMoreButtonText).text = "광고 소환";
+                GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = $"({Managers.GameM.gameData.heroFreeGachaCount}/3)";
+                GetObject(GameObjectsType, (int)GameObjects.DiaImage).SetActive(false);
+                GetObject(GameObjectsType, (int)GameObjects.AdImage).SetActive(true);
+            }
+            else
+            {
+                GetObject(GameObjectsType, (int)GameObjects.DiaImage).SetActive(true);
+                GetObject(GameObjectsType, (int)GameObjects.AdImage).SetActive(false);
+                switch (_count)
+                {
+                    case 11:
+                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = "11회 소환";
+                        GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "3000";
+                        break;
+                    case 1:
+                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = "1회 소환";
+                        GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "300";
+                        break;
+                }
+            }
 
             for (int i = 0; i < _count; i++)
             {
@@ -120,24 +148,15 @@ public class UI_GachaPopup : UI_Popup
                 Data.CreatureData data = Managers.GameM.gameData.GetGradeCharacter(grade);
                 Managers.GameM.gameData.Character_Holder[data.Name].Count++;
 
-
                 heroInfo.Init().Forget();
                 heroInfo.SetHeroIcon(data);
 
                 iconList.Add(heroInfo);
-                switch (_count)
-                {
-                    case 11:
-                        Managers.RenderM.renderGacha.GetHerosForEleven(i, data);
-                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = "11회 소환";
-                        GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "3000";
-                        break;
-                    case 1:
-                        Managers.RenderM.renderGacha.GetHero(data);
-                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = "1회 소환";
-                        GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "300";
-                        break;
-                }
+
+                if (_count == 11)
+                    Managers.RenderM.renderGacha.GetHerosForEleven(i, data);
+                else
+                    Managers.RenderM.renderGacha.GetHero(data);
 
                 Managers.GameM.gameData.ChangeCharacterInfo(data);
 
@@ -181,9 +200,29 @@ public class UI_GachaPopup : UI_Popup
         Managers.SoundM.PlayButtonClick();
         if (isUsingButton) return;
 
-        ResetIcon();
-        Managers.RenderM.renderGacha.ClearList();
-        GetGachaHero(value).Forget();
+        if (isAd)
+        {
+            if (Managers.GameM.gameData.heroFreeGachaCount <= 0)
+            {
+                Managers.UIM.ShowToast("오늘 무료 소환 횟수를 모두 사용했습니다.");
+                return;
+            }
+            Action rewardedAction = async () =>
+            {
+                Managers.GameM.gameData.heroFreeGachaCount--;
+                ResetIcon();
+                Managers.RenderM.renderGacha.ClearList();
+                await GetGachaHero(1, true);
+                OnGachaFinished?.Invoke();
+            };
+            Managers.AdM.ShowRewardedAd(rewardedAction, null);
+        }
+        else
+        {
+            ResetIcon();
+            Managers.RenderM.renderGacha.ClearList();
+            GetGachaHero(value).Forget();
+        }
     }
 
     private void OnDisable()

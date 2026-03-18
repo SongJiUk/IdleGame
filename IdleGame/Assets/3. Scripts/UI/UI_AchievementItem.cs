@@ -33,6 +33,9 @@ public class UI_AchievementItem : UI_Base
 
     public Action OnCollected;
 
+    private int currentAchievementID;
+    private bool currentIsCanCollect;
+
     List<UI_AchievementIcon> iconPool = new List<UI_AchievementIcon>();
     public async override UniTask<bool> Init()
     {
@@ -47,6 +50,9 @@ public class UI_AchievementItem : UI_Base
 
         GetObject(GameObjectsType, (int)GameObjects.CollectObject).SetActive(false);
         parent = GetObject(GameObjectsType, (int)GameObjects.Content).transform;
+
+        GetButton(ButtonsType, (int)Buttons.CollectButton).gameObject.BindEvent(() => OnClickCollectButton(currentAchievementID, currentIsCanCollect));
+
         return true;
     }
 
@@ -56,7 +62,7 @@ public class UI_AchievementItem : UI_Base
         GetText(TextsType, (int)Texts.AchievementNameText).text = data.Title;
         GetText(TextsType, (int)Texts.AchievementEffectText).text = Managers.LocalizationM.localData[data.RewardStatus.ToString()].GetData() + " + " + data.RewardValue + "%";
 
-        GetButton(ButtonsType, (int)Buttons.CollectButton).onClick.RemoveAllListeners();
+        currentAchievementID = data.AchievementID;
 
         if (Managers.QuestM.AchievementDic[data.AchievementID])
         {
@@ -64,7 +70,6 @@ public class UI_AchievementItem : UI_Base
         }
 
         int index = 0;
-        int achievementID = data.AchievementID;
         switch (data.AchievementType)
         {
             case Define.AchievementType.Hero:
@@ -104,7 +109,7 @@ public class UI_AchievementItem : UI_Base
                     iconPool[i].gameObject.SetActive(false);
                 }
 
-                GetButton(ButtonsType, (int)Buttons.CollectButton).gameObject.BindEvent(() => OnClickCollectButton(achievementID, isCanCollectHero));
+                currentIsCanCollect = isCanCollectHero;
                 break;
 
             case Define.AchievementType.Relic:
@@ -137,7 +142,7 @@ public class UI_AchievementItem : UI_Base
                     icon.SetInfo(data.AchievementRelicList[i]);
                     index++;
                 }
-                GetButton(ButtonsType, (int)Buttons.CollectButton).gameObject.BindEvent(() => OnClickCollectButton(achievementID, isCanCollectRelic));
+                currentIsCanCollect = isCanCollectRelic;
                 break;
         }
 

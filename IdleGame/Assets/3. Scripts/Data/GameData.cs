@@ -109,6 +109,9 @@ public class GameData
     public string startDate;
     public string endDate;
 
+    public int heroFreeGachaCount = 3;
+    public int relicFreeGachaCount = 3;
+
     public int[] DungeonKey = { 2, 2 };
     public int[] DungeonKeyAssets = { 0, 0 };
     public int[] DungeonClearLevel = { 0, 0 };
@@ -131,6 +134,8 @@ public class GameData
 
     public void ResetDailyMission()
     {
+        heroFreeGachaCount = 3;
+        relicFreeGachaCount = 3;
         MissionDic.Clear();
 
         foreach (var data in Managers.DataM.MissionDataDic)

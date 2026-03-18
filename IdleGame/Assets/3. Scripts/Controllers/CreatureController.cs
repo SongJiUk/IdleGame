@@ -303,17 +303,11 @@ public class CreatureController : BaseController
         target = null;
         isTargetLocked = false;
     }
-
-    protected void FindClosetTarget<T>(List<T> _targets) where T : Component
+    
+    //NOTE : 배열, 리스트 이걸로 받을 수 있음
+    protected void FindClosetTarget<T>(IReadOnlyList<T> _targets) where T : Component
     {
-        if (_targets == null) return;
-        FindClosetTarget(_targets.ToArray());
-    }
-
-    protected void FindClosetTarget<T>(T[] _targets) where T : Component
-    {
-
-        if (_targets == null || _targets.Length == 0) return;
+        if (_targets == null || _targets.Count == 0) return;
 
         // sqrMagnitude: sqrt 연산 없이 거리 비교 (가장 가까운 타겟 탐색)
         float minDistSqr = float.MaxValue;
@@ -324,7 +318,7 @@ public class CreatureController : BaseController
 
         CreatureController closetTarget = null;
 
-        for (int i = 0; i < _targets.Length; i++)
+        for (int i = 0; i < _targets.Count; i++)
         {
             if (_targets[i] == null) continue;
 

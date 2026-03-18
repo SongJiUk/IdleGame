@@ -9,6 +9,8 @@ public class GameManager
     public PlayerController mPlayer { get { return Managers.ObjectM?.mPlayer; } }
     public GameData gameData = new GameData();
 
+    public bool isInternalPause = false;
+
     #region 재화 이벤트
     public event Action OnGoodsChanged;
     #endregion

@@ -16,11 +16,14 @@ public class UIManager
 
     UI_Scene sceneUI = null;
     public UI_Scene SceneUI { get { return sceneUI; } }
+    GameObject root = null;
     public GameObject Root
     {
         get
         {
-            GameObject root = GameObject.Find("@UI_Root");
+            if (root != null) return root;
+
+            root = GameObject.Find("@UI_Root");
             if (root == null)
             {
                 root = new GameObject { name = "@UI_Root" };
@@ -252,6 +255,7 @@ public class UIManager
 
         isGolbalLock = false;
         OnDungeonPopupState = null;
+        root = null;
 
         Debug.Log("[UIManager] 모든 UI요소 및 팝업 정리 완료");
     }

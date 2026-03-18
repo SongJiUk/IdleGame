@@ -49,7 +49,7 @@ public class UI_DungeonResultIcon : UI_Base
             Managers.DataM.ItemDataDic.TryGetValue(data.ResultDataID, out var item);
 
             GetImage(ImagesType, (int)Images.ResultImage).sprite = Managers.ResourceM.GetAtlas(item.Name);
-            level = Managers.GameM.gameData.DungeonClearLevel[value];
+            level = Managers.GameM.gameData.DungeonClearLevel[value] + 1;
 
             if (_dungeonDataID == 70000)
             {

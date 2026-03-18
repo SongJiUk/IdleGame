@@ -12,6 +12,8 @@ public class UI_RelicGachaPopup : UI_Popup
         Horizontal_1,
         Horizontal_2,
         Horizontal_3,
+        DiaImage,
+        AdImage
     }
 
     enum Buttons
@@ -32,6 +34,7 @@ public class UI_RelicGachaPopup : UI_Popup
     const int horizontalCount = 3;
     Transform[] horizontals = new Transform[horizontalCount];
     bool isUsingButton = false;
+    bool isAd = false;
     int gachaCount = 0;
     List<UI_RelicGachaIcon> iconList = new List<UI_RelicGachaIcon>();
     public Action OnGachaFinished;
@@ -58,8 +61,9 @@ public class UI_RelicGachaPopup : UI_Popup
         return true;
     }
 
-    public async UniTask GetGachaRelic(int _count)
+    public async UniTask GetGachaRelic(int _count, bool _isAd = false)
     {
+        isAd = _isAd;
         await GachaRelics(_count);
     }
 
@@ -70,6 +74,30 @@ public class UI_RelicGachaPopup : UI_Popup
         {
             int horizontalCount = 0;
             gachaCount = _count;
+
+            if (isAd)
+            {
+                GetText(TextsType, (int)Texts.OneMoreButtonText).text = "광고 소환";
+                GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = $"({Managers.GameM.gameData.relicFreeGachaCount}/3)";
+                GetObject(GameObjectsType, (int)GameObjects.DiaImage).SetActive(false);
+                GetObject(GameObjectsType, (int)GameObjects.AdImage).SetActive(true);
+            }
+            else
+            {
+                GetObject(GameObjectsType, (int)GameObjects.DiaImage).SetActive(true);
+                GetObject(GameObjectsType, (int)GameObjects.AdImage).SetActive(false);
+                switch (gachaCount)
+                {
+                    case 11:
+                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = "11회 소환";
+                        GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "3000";
+                        break;
+                    case 1:
+                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = "1회 소환";
+                        GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "300";
+                        break;
+                }
+            }
 
             for (int i = 0; i < gachaCount; i++)
             {
@@ -111,20 +139,6 @@ public class UI_RelicGachaPopup : UI_Popup
                 relicInfo.SetRelicIcon(data);
 
                 iconList.Add(relicInfo);
-
-                switch (gachaCount)
-                {
-                    case 11:
-                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = "11회 소환";
-                        GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "3000";
-                        break;
-
-                    case 1:
-                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = "1회 소환";
-                        GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "300";
-                        break;
-
-                }
 
                 Managers.GameM.gameData.ChangeRelicInfo(data);
 
@@ -169,8 +183,26 @@ public class UI_RelicGachaPopup : UI_Popup
         Managers.SoundM.PlayButtonClick();
         if (isUsingButton) return;
 
-        ResetIcon();
-        GetGachaRelic(gachaCount).Forget();
-
+        if (isAd)
+        {
+            if (Managers.GameM.gameData.relicFreeGachaCount <= 0)
+            {
+                Managers.UIM.ShowToast("오늘 무료 소환 횟수를 모두 사용했습니다.");
+                return;
+            }
+            Action rewardedAction = async () =>
+            {
+                Managers.GameM.gameData.relicFreeGachaCount--;
+                ResetIcon();
+                await GetGachaRelic(1, true);
+                OnGachaFinished?.Invoke();
+            };
+            Managers.AdM.ShowRewardedAd(rewardedAction, null);
+        }
+        else
+        {
+            ResetIcon();
+            GetGachaRelic(gachaCount).Forget();
+        }
     }
 }

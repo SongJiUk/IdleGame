@@ -91,6 +91,7 @@ public class IAPManager : IStoreListener
         if (productId == removeADS)
         {
             ApplyRemoveAds();
+            NotifyPurchaseSucces();
         }
 
         bool isShowPopup = isNewPurchase || args.purchasedProduct.definition.type == ProductType.Consumable;
@@ -136,6 +137,7 @@ public class IAPManager : IStoreListener
         if (product != null && product.availableToPurchase)
         {
             Debug.Log($"### [IAP] 구매 시도: {product.metadata.localizedTitle} ###");
+            Managers.GameM.isInternalPause = true;
             isUserRequestedPurchase = true;
             storeController.InitiatePurchase(product);
         }

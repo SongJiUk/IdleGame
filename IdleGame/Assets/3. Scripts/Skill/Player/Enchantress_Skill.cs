@@ -20,11 +20,11 @@ public class Enchantress_Skill : SkillBase
             return false;
         }
 
-        CreatureController randPlayer = Utils.FindRandomPlayer(_caster); ;
-        _caster.transform.LookAt(randPlayer.transform);
+        CreatureController randPlayer = Utils.FindRandomPlayer(_caster);
         if (randPlayer != null)
         {
             if (randPlayer.IsDead) return false;
+            _caster.transform.LookAt(randPlayer.transform);
 
 
             var chosenEffect = (Random.Range(0, 2) == 0) ? effects[0] : effects[1];

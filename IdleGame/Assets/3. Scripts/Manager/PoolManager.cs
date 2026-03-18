@@ -84,24 +84,25 @@ public class PoolManager
 
     public GameObject Pop(GameObject _prefab)
     {
-        //TODO : 여기인거같은데..
         if (_prefab.IsValid() == false)
             return null;
 
-        if (!pools.ContainsKey(_prefab.name))
+        if (!pools.TryGetValue(_prefab.name, out var pool))
+        {
             CreatePool(_prefab);
+            pool = pools[_prefab.name];
+        }
 
-
-        return pools[_prefab.name].Pop();
+        return pool.Pop();
     }
 
     public bool Push(GameObject _prefab)
     {
         if (_prefab.IsValid() == false) return false;
 
-        if (!pools.ContainsKey(_prefab.name)) return false;
+        if (!pools.TryGetValue(_prefab.name, out var pool)) return false;
 
-        pools[_prefab.name].Push(_prefab);
+        pool.Push(_prefab);
 
         return true;
     }

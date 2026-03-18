@@ -110,6 +110,7 @@ public class UI_ShopPopup : UI_Popup
     {
         if (!await base.Init()) return false;
         Managers.GameM.OnGoodsChanged += CheckGoodsCount;
+        Managers.GameM.OnGoodsChanged += CheckButtonTextColor;
         Managers.IAPM.OnPurchaseSuccess += OnCheckRemoveAD;
 
         GameObjectsType = typeof(GameObjects);
@@ -186,6 +187,7 @@ public class UI_ShopPopup : UI_Popup
 
     void CheckGachaHero()
     {
+        GetText(TextsType, (int)Texts.HeroAdGachaCountText).text = $"{Managers.GameM.gameData.heroFreeGachaCount}/3";
         int level = Utils.Summon_Level(Managers.GameM.Hero_Summon_Count);
 
         if (level >= 10)
@@ -208,6 +210,7 @@ public class UI_ShopPopup : UI_Popup
     }
     void CheckGachaRelic()
     {
+        GetText(TextsType, (int)Texts.RelicAdGachaCountText).text = $"{Managers.GameM.gameData.relicFreeGachaCount}/3";
         int level = Utils.Summon_Level(Managers.GameM.Relics_Summon_Count);
 
         if (level >= 10)
@@ -282,12 +285,23 @@ public class UI_ShopPopup : UI_Popup
         Managers.SoundM.PlayButtonClick();
         if (!Managers.UIM.ClickLock(0.5f)) return;
 
-        var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
-        popup.OnGachaFinished = RefreshUI;
-        await popup.GetGachaHero(1);
-        RefreshUI();
-        Managers.QuestM.GetMission(Define.MissionTarget.HeroGacha).Progress += 1;
+        if (Managers.GameM.gameData.heroFreeGachaCount <= 0)
+        {
+            Managers.UIM.ShowToast("오늘 무료 소환 횟수를 모두 사용했습니다.");
+            return;
+        }
 
+        Action rewardedAction = async () =>
+        {
+            Managers.GameM.gameData.heroFreeGachaCount--;
+            var popup = await Managers.UIM.ShowPopup<UI_GachaPopup>();
+            popup.OnGachaFinished = RefreshUI;
+            await popup.GetGachaHero(1, true);
+            RefreshUI();
+            Managers.QuestM.GetMission(Define.MissionTarget.HeroGacha).Progress += 1;
+        };
+
+        Managers.AdM.ShowRewardedAd(rewardedAction, null);
     }
 
     async void OnClickHeroOneGachaButton()
@@ -343,13 +357,23 @@ public class UI_ShopPopup : UI_Popup
         Managers.SoundM.PlayButtonClick();
         if (!Managers.UIM.ClickLock(0.5f)) return;
 
-        var popup = await Managers.UIM.ShowPopup<UI_RelicGachaPopup>();
-        popup.OnGachaFinished = RefreshUI;
-        await popup.GetGachaRelic(1);
-        RefreshUI();
+        if (Managers.GameM.gameData.relicFreeGachaCount <= 0)
+        {
+            Managers.UIM.ShowToast("오늘 무료 소환 횟수를 모두 사용했습니다.");
+            return;
+        }
 
-        Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress += 1;
+        Action rewardedAction = async () =>
+        {
+            Managers.GameM.gameData.relicFreeGachaCount--;
+            var popup = await Managers.UIM.ShowPopup<UI_RelicGachaPopup>();
+            popup.OnGachaFinished = RefreshUI;
+            await popup.GetGachaRelic(1, true);
+            RefreshUI();
+            Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress += 1;
+        };
 
+        Managers.AdM.ShowRewardedAd(rewardedAction, null);
     }
 
     async void OnClickRelicOneGachaButton()
@@ -550,6 +574,7 @@ public class UI_ShopPopup : UI_Popup
     {
         Managers.SoundM.PlayButtonClick();
         Managers.GameM.OnGoodsChanged -= CheckGoodsCount;
+        Managers.GameM.OnGoodsChanged -= CheckButtonTextColor;
         Managers.IAPM.OnPurchaseSuccess -= OnCheckRemoveAD;
         TriggerClose(this, true).Forget();
     }

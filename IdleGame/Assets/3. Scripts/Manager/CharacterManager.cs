@@ -17,10 +17,12 @@ public class CharacterManager
     //public event Action<PlayerController> OnCharacterRemove;
 
     public List<PlayerController> AlivePlayers => players.Where(p => p != null && !p.IsDead).ToList();
+    public int aliveCount = 0;
     public void AddPlayerReference(int _index, PlayerController _pc)
     {
         players[_index] = _pc;
         OnCharacterAdd?.Invoke(_pc);
+        aliveCount++;
     }
 
     public void ClearAllPlayers()
@@ -63,12 +65,12 @@ public class CharacterManager
     public void Clear()
     {
         ClearAllPlayers();
+        aliveCount = 0;
 
         for (int i = 0; i < Characters.Length; i++)
         {
             Characters[i] = null;
         }
         OnCharacterAdd = null;
-        //Debug.Log("[CharacterManager] 캐릭터 및 플레이어 정보 초기화 완료");
     }
 }

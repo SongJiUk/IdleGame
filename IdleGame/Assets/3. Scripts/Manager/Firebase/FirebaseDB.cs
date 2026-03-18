@@ -94,9 +94,9 @@ public partial class FirebaseManager
         try
         {
             IsLoading = true;
-            if (CurrentUser == null)
+            if (CurrentUser == null || reference == null)
             {
-                Debug.LogWarning("[ReadData] CurrentUser가 null입니다.");
+                Debug.LogWarning("[ReadData] CurrentUser 또는 reference가 null입니다.");
                 return;
             }
 
@@ -125,15 +125,19 @@ public partial class FirebaseManager
             Managers.GameM.gameData.Character_Holder ??= new Dictionary<string, Holder>();
             Managers.GameM.gameData.Item_Holder ??= new Dictionary<string, Holder>();
             Managers.GameM.gameData.EquippedSmelts ??= new List<SmeltHolder>();
+            Managers.GameM.gameData.Characters_Data ??= new Dictionary<string, CharacterHolder>();
+            Managers.GameM.gameData.Item_Data ??= new Dictionary<string, ItemHolder>();
+            Managers.GameM.gameData.MissionDic ??= new Dictionary<string, MissionInfo>();
+            Managers.GameM.gameData.AchievementDic ??= new Dictionary<int, bool>();
+            Managers.GameM.gameData.SaveEquippedRelics ??= new Dictionary<string, Data.ItemData>();
+            Managers.GameM.gameData.DungeonKey ??= new int[] { 2, 2 };
 
             if (IsNewDay(Managers.GameM.gameData.LastSaveTimeTicks, TimerNTP.NowTime))
             {
                 Managers.GameM.gameData.DungeonKey[0] = 2;
                 Managers.GameM.gameData.DungeonKey[1] = 2;
                 Managers.GameM.gameData.ResetDailyMission();
-
             }
-
 
             if (charSnap.Exists)
             {
@@ -145,7 +149,6 @@ public partial class FirebaseManager
             {
                 var itemDic = JsonConvert.DeserializeObject<Dictionary<string, Holder>>(itemSnap.GetRawJsonValue());
                 if (itemDic != null) Managers.GameM.gameData.Item_Holder = itemDic;
-
             }
 
             if (smeltSnap.Exists)
