@@ -65,9 +65,9 @@ public class UI_CharacterInfoPopup : UI_Popup
 
     public void RefreshUI()
     {
-        GetText(TextsType, (int)Texts.CharacterInfoText).text = Utils.StringToColorGrade(data.CharacterGrade) + data.NameKR + "</color>";
+        GetText(TextsType, (int)Texts.CharacterInfoText).text = Utils.StringToColorGrade(data.CharacterGrade) + Managers.LocalizationM.Get(data.Name) + "</color>";
         GetText(TextsType, (int)Texts.CharacterInfoGradeText).text = Utils.StringToColorGrade(data.CharacterGrade) + data.CharacterGrade.ToString() + "</color>";
-        GetText(TextsType, (int)Texts.CharacterInfoDescriptionText).text = data.Description;
+        GetText(TextsType, (int)Texts.CharacterInfoDescriptionText).text = Managers.LocalizationM.Get($"{data.Name}_Description");
         GetImage(ImagesType, (int)Images.CharacterInfoBackGround).sprite = Managers.ResourceM.GetAtlas(data.CharacterGrade.ToString());
         GetImage(ImagesType, (int)Images.CharacterInfoImage).sprite = Managers.ResourceM.GetAtlas(data.Name);
         GetImage(ImagesType, (int)Images.CharacterInfoImage).SetNativeSize();
@@ -97,8 +97,8 @@ public class UI_CharacterInfoPopup : UI_Popup
             //TODO : 스킬 이미지 뽑아서 하기
             GetImage(ImagesType, (int)Images.SkillIDescriptionImage).sprite = Managers.ResourceM.GetAtlas(skillData.SkillName);
             GetText(TextsType, (int)Texts.SkillEffectText).text = skillData.SkillEffect;
-            GetText(TextsType, (int)Texts.SkillDescriptionNameText).text = skillData.SkillNameKR;
-            GetText(TextsType, (int)Texts.SkillDescriptionText).text = skillData.Description;
+            GetText(TextsType, (int)Texts.SkillDescriptionNameText).text = Managers.LocalizationM.Get($"{data.Name}_Skill");
+            GetText(TextsType, (int)Texts.SkillDescriptionText).text = Managers.LocalizationM.Get($"{data.Name}_Skill_Description");
         }
 
     }
@@ -135,7 +135,7 @@ public class UI_CharacterInfoPopup : UI_Popup
                 RefreshUI();
             }
             else
-                Managers.UIM.ShowToast("캐릭터의 개수가 부족합니다.");
+                Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoCharacter"));
         }
     }
 }

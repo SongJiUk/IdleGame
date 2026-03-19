@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 3845533937174454048}
   - component: {fileID: 7994124233900309031}
   - component: {fileID: 1641042103338876414}
+  - component: {fileID: 1519303580783580867}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -410,6 +411,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1519303580783580867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087220407081711372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: DailyMissionDescription
+  SemiData: []
 --- !u!1 &3019257220424418919
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,6 +436,7 @@ GameObject:
   - component: {fileID: 9051320849395628468}
   - component: {fileID: 6185874175560452715}
   - component: {fileID: 4651821875940989797}
+  - component: {fileID: 4109525086870265942}
   m_Layer: 0
   m_Name: MissionPopupText
   m_TagString: Untagged
@@ -445,7 +461,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -0.0000006556511, y: -55}
-  m_SizeDelta: {x: 218.7351, y: 91.4812}
+  m_SizeDelta: {x: 468.5768, y: 91.4812}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6185874175560452715
 CanvasRenderer:
@@ -502,10 +518,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42.16
+  m_fontSize: 72
   m_fontSizeBase: 42.16
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -544,6 +560,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4109525086870265942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3019257220424418919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: DailyMission
+  SemiData: []
 --- !u!1 &4731068462105673786
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,7 +631,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6583099583687012673
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1268,7 +1298,7 @@ RectTransform:
   m_Father: {fileID: 2993726285784867788}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 7812741941286808965}
   - component: {fileID: 103884436388046973}
   - component: {fileID: 4540092795350346295}
+  - component: {fileID: 7828677228019118597}
   m_Layer: 0
   m_Name: PopupCloseText
   m_TagString: Untagged
@@ -286,6 +287,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7828677228019118597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2740569970449605416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Dungeon_FiveSecond
+  SemiData: []
 --- !u!1 &3080745451435543804
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,6 +655,7 @@ GameObject:
   - component: {fileID: 5508802795937945347}
   - component: {fileID: 5508802795937945357}
   - component: {fileID: 5508802795937945356}
+  - component: {fileID: 722499108658081075}
   m_Layer: 0
   m_Name: TitleNameText
   m_TagString: Untagged
@@ -763,6 +779,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &722499108658081075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508802795937945346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Dungeon_Result
+  SemiData: []
 --- !u!1 &5508802796150747793
 GameObject:
   m_ObjectHideFlags: 0

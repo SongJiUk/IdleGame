@@ -349,6 +349,7 @@ GameObject:
   - component: {fileID: 7278129740471120453}
   - component: {fileID: 7278129740471120451}
   - component: {fileID: 7278129740471120450}
+  - component: {fileID: 4195067835915448109}
   m_Layer: 5
   m_Name: GetItemText
   m_TagString: Untagged
@@ -472,6 +473,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4195067835915448109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7278129740471120452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: SavingMode_GetItem
+  SemiData: []
 --- !u!1 &7278129740544370535
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,6 +680,7 @@ GameObject:
   - component: {fileID: 7278129740577867435}
   - component: {fileID: 7278129740577867433}
   - component: {fileID: 7278129740577867432}
+  - component: {fileID: 1046809597380845354}
   m_Layer: 5
   m_Name: UnLockText
   m_TagString: Untagged
@@ -788,6 +804,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1046809597380845354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7278129740577867434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: SavingMode_SwipScreen
+  SemiData: []
 --- !u!1 &7278129740642122056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,7 +1034,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -72, y: 8}
+  m_AnchoredPosition: {x: -81, y: 8}
   m_SizeDelta: {x: 58.34759, y: 58.34759}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7278129740836419619
@@ -1190,6 +1220,7 @@ GameObject:
   - component: {fileID: 7278129741376088615}
   - component: {fileID: 7278129741376088613}
   - component: {fileID: 7278129741376088612}
+  - component: {fileID: 8368750495872449926}
   m_Layer: 5
   m_Name: RoundSituationText
   m_TagString: Untagged
@@ -1314,6 +1345,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8368750495872449926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7278129741376088614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: SavingMode_Repeat
+  SemiData: []
 --- !u!1 &7278129741447597836
 GameObject:
   m_ObjectHideFlags: 0

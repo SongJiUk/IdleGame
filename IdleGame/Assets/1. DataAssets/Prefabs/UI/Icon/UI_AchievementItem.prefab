@@ -141,8 +141,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 251.2735, y: -35.5}
-  m_SizeDelta: {x: 463.9551, y: 71}
+  m_AnchoredPosition: {x: 301.3985, y: -35.5}
+  m_SizeDelta: {x: 564.2052, y: 71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3551391522307094167
 CanvasRenderer:
@@ -199,10 +199,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 63.65
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -739,7 +739,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -121, y: -47.80005}
-  m_SizeDelta: {x: 201.67, y: 71}
+  m_SizeDelta: {x: 242, y: 71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2580006064690709612
 CanvasRenderer:
@@ -796,10 +796,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 63.65
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -924,6 +924,7 @@ GameObject:
   - component: {fileID: 3622449844376976271}
   - component: {fileID: 6619167568599648295}
   - component: {fileID: 7910417388491125440}
+  - component: {fileID: 7238798339023747499}
   m_Layer: 0
   m_Name: CollectText
   m_TagString: Untagged
@@ -1047,6 +1048,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7238798339023747499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8272825234297548228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Enforce
+  SemiData: []
 --- !u!1 &8687677724289643558
 GameObject:
   m_ObjectHideFlags: 0

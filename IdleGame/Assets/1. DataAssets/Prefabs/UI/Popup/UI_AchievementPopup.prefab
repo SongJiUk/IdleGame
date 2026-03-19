@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1911317729912419134}
   - component: {fileID: 3449600613804461922}
   - component: {fileID: 7641551898539453579}
+  - component: {fileID: 4043793964131590177}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -135,6 +136,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4043793964131590177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476306418311616803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: AchievementDescription
+  SemiData: []
 --- !u!1 &743400398689408985
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,7 +168,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6689957790004735964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -425,6 +440,7 @@ GameObject:
   - component: {fileID: 8817493578423680390}
   - component: {fileID: 2602423069566899721}
   - component: {fileID: 5924750486664196577}
+  - component: {fileID: 5023605766485941277}
   m_Layer: 0
   m_Name: AchievementAbilityText
   m_TagString: Untagged
@@ -551,6 +567,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5023605766485941277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022091245159707519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: AchievementAbilitys
+  SemiData: []
 --- !u!1 &2935711051303399814
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,7 +781,7 @@ RectTransform:
   m_Father: {fileID: 8668800174273938222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 14, y: 46}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1164,6 +1194,7 @@ GameObject:
   - component: {fileID: 8602031320640798574}
   - component: {fileID: 3561204236593479953}
   - component: {fileID: 7294030283985827171}
+  - component: {fileID: 8978473019454036594}
   m_Layer: 0
   m_Name: AchievementText
   m_TagString: Untagged
@@ -1245,10 +1276,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42.16
+  m_fontSize: 72
   m_fontSizeBase: 42.16
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -1287,6 +1318,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8978473019454036594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6660286880577142496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Achievements
+  SemiData: []
 --- !u!1 &7222246475276303506
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,6 +1393,7 @@ GameObject:
   - component: {fileID: 5982783242522413637}
   - component: {fileID: 6777665493350142650}
   - component: {fileID: 2454290787332056337}
+  - component: {fileID: 2923846926785738964}
   m_Layer: 0
   m_Name: AchievementAbility
   m_TagString: Untagged
@@ -1471,6 +1517,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2923846926785738964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7948924572068080997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: AchievementAbility
+  SemiData: []
 --- !u!1 &7988341699936092254
 GameObject:
   m_ObjectHideFlags: 0

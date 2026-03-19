@@ -71,7 +71,7 @@ public class UI_DungeonResultInfoPopup : UI_Popup
         GetText(TextsType, (int)Texts.Level_Text).text = $"Lv. {Managers.GameM.gameData.DungeonClearLevel[value] + 1}";
         if (_isClear)
         {
-            GetText(TextsType, (int)Texts.ResultText).text = "클리어";
+            GetText(TextsType, (int)Texts.ResultText).text = Managers.LocalizationM.Get("UIDungeon_Clear");
             int index = 0;
             UI_DungeonResultIcon icon;
 
@@ -93,7 +93,7 @@ public class UI_DungeonResultInfoPopup : UI_Popup
         }
         else
         {
-            GetText(TextsType, (int)Texts.ResultText).text = "실패";
+            GetText(TextsType, (int)Texts.ResultText).text = Managers.LocalizationM.Get("UIDungeon_Fail");
             GetImage(ImagesType, (int)Images.DungeonFailImage).gameObject.SetActive(true);
         }
 

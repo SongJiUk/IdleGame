@@ -173,7 +173,7 @@ public class UI_RelicsPopup : UI_Popup
                 GetImage(ImagesType, (int)map.icon).sprite = Managers.ResourceM.GetAtlas(data.Name);
                 GetImage(ImagesType, (int)map.icon).SetNativeSize();
 
-                GetText(TextsType, (int)map.name).text = data.NameKR;
+                GetText(TextsType, (int)map.name).text = Managers.LocalizationM.Get(data.Name);
                 Managers.GameM.gameData.Item_Data.TryGetValue(data.Name, out var itemHolder);
                 if (itemHolder != null) GetText(TextsType, (int)map.level).text = "Lv. " + itemHolder.holder.Level.ToString();
             }
@@ -203,7 +203,7 @@ public class UI_RelicsPopup : UI_Popup
         GetImage(ImagesType, (int)map.icon).SetNativeSize();
 
 
-        GetText(TextsType, (int)map.name).text = clickRelic.DATA.NameKR;
+        GetText(TextsType, (int)map.name).text = Managers.LocalizationM.Get(clickRelic.DATA.Name);
         Managers.GameM.gameData.Item_Data.TryGetValue(clickRelic.DATA.Name, out var itemHolder);
         if (itemHolder != null) GetText(TextsType, (int)map.level).text = "Lv. " + itemHolder.holder.Level.ToString();
 
@@ -274,7 +274,7 @@ public class UI_RelicsPopup : UI_Popup
         }
         else
         {
-            Managers.UIM.ShowToast("강화가 가능한 유물이 없습니다.");
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoEnforceRelic"));
         }
     }
 

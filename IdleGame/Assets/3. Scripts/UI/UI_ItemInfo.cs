@@ -43,8 +43,8 @@ public class UI_ItemInfo : UI_Popup
     {
         transform.localScale = Vector3.one;
         GetImage(ImagesType, (int)Images.ItemImage).sprite = Managers.ResourceM.GetAtlas(_itemData.data.Name);
-        GetText(TextsType, (int)Texts.ItemNameText).text = _itemData.data.NameKR;
-        GetText(TextsType, (int)Texts.ItemDescriptionText).text = _itemData.data.Description;
+        GetText(TextsType, (int)Texts.ItemNameText).text = Managers.LocalizationM.Get(_itemData.data.Name);
+        GetText(TextsType, (int)Texts.ItemDescriptionText).text = Managers.LocalizationM.Get($"{_itemData.data.Name}_Description");
         GetText(TextsType, (int)Texts.ItemGradeText).text = Utils.StringToColorGrade(_itemData.data.ItemGrade) + _itemData.data.ItemGrade + "</color>";
 
         if (rect == null)

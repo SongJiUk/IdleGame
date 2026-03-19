@@ -77,7 +77,7 @@ public class UI_RelicGachaPopup : UI_Popup
 
             if (isAd)
             {
-                GetText(TextsType, (int)Texts.OneMoreButtonText).text = "광고 소환";
+                GetText(TextsType, (int)Texts.OneMoreButtonText).text = Managers.LocalizationM.Get("UIShop_1Summon");
                 GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = $"({Managers.GameM.gameData.relicFreeGachaCount}/3)";
                 GetObject(GameObjectsType, (int)GameObjects.DiaImage).SetActive(false);
                 GetObject(GameObjectsType, (int)GameObjects.AdImage).SetActive(true);
@@ -89,11 +89,11 @@ public class UI_RelicGachaPopup : UI_Popup
                 switch (gachaCount)
                 {
                     case 11:
-                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = "11회 소환";
+                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = Managers.LocalizationM.Get("UIShop_11Summon");
                         GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "3000";
                         break;
                     case 1:
-                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = "1회 소환";
+                        GetText(TextsType, (int)Texts.OneMoreButtonText).text = Managers.LocalizationM.Get("UIShop_1Summon");
                         GetText(TextsType, (int)Texts.OneMoreButtonPriceText).text = "300";
                         break;
                 }
@@ -187,7 +187,7 @@ public class UI_RelicGachaPopup : UI_Popup
         {
             if (Managers.GameM.gameData.relicFreeGachaCount <= 0)
             {
-                Managers.UIM.ShowToast("오늘 무료 소환 횟수를 모두 사용했습니다.");
+                Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIShop_AdSummonEnd"));
                 return;
             }
             Action rewardedAction = async () =>

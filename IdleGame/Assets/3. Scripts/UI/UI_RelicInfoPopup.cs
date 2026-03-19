@@ -65,9 +65,9 @@ public class UI_RelicInfoPopup : UI_Popup
 
     public void RefreshUI()
     {
-        GetText(TextsType, (int)Texts.RelicInfoText).text = Utils.StringToColorGrade(data.ItemGrade) + data.NameKR + "</color>";
+        GetText(TextsType, (int)Texts.RelicInfoText).text = Utils.StringToColorGrade(data.ItemGrade) + Managers.LocalizationM.Get(data.Name) + "</color>";
         GetText(TextsType, (int)Texts.RelicInfoGradeText).text = Utils.StringToColorGrade(data.ItemGrade) + data.ItemGrade.ToString() + "</color>";
-        GetText(TextsType, (int)Texts.RelicInfoDescriptionText).text = data.Description;
+        GetText(TextsType, (int)Texts.RelicInfoDescriptionText).text = Managers.LocalizationM.Get($"{data.Name}_Description");
         GetImage(ImagesType, (int)Images.RelicInfoBackGroundImage).sprite = Managers.ResourceM.GetAtlas(data.ItemGrade.ToString());
         GetImage(ImagesType, (int)Images.RelicInfoImage).sprite = Managers.ResourceM.GetAtlas(data.Name);
         GetImage(ImagesType, (int)Images.RelicInfoImage).SetNativeSize();
@@ -85,7 +85,7 @@ public class UI_RelicInfoPopup : UI_Popup
         var values = itemData.GetCurrentValues();
         object[] args = values.Select(val => (object)val.ToString("0.#")).ToArray();
 
-        GetText(TextsType, (int)Texts.RelicEffectText).text = string.Format(itemData.data.RelicEffectDes, args);
+        GetText(TextsType, (int)Texts.RelicEffectText).text = string.Format(Managers.LocalizationM.Get($"{data.Name}_Effect"), args);
 
     }
 
@@ -122,9 +122,9 @@ public class UI_RelicInfoPopup : UI_Popup
                     RefreshUI();
                 }
                 else
-                    Managers.UIM.ShowToast("유물의 개수가 부족합니다.");
+                    Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoRelic"));
             }
-            else Managers.UIM.ShowToast("유물의 최대 레벨입니다.");
+            else Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastRelicMaxLevel"));
 
 
         }

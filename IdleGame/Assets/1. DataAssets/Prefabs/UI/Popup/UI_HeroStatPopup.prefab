@@ -1903,6 +1903,7 @@ GameObject:
   - component: {fileID: 4945813883897120241}
   - component: {fileID: 3989728565609225655}
   - component: {fileID: 3737487405846458105}
+  - component: {fileID: 356814823364518402}
   m_Layer: 5
   m_Name: ExpUpRate
   m_TagString: Untagged
@@ -1984,10 +1985,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 26.55
   m_fontSizeBase: 25
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -2026,6 +2027,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &356814823364518402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4147410531796952173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ExpUpRate
+  SemiData: []
 --- !u!1 &4505453455830278641
 GameObject:
   m_ObjectHideFlags: 0
@@ -3725,6 +3740,7 @@ GameObject:
   - component: {fileID: 7955210428694317536}
   - component: {fileID: 7955210428694317538}
   - component: {fileID: 7955210428694317537}
+  - component: {fileID: 5822035947807339857}
   m_Layer: 5
   m_Name: GoldDropRate
   m_TagString: Untagged
@@ -3806,10 +3822,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 32.95
   m_fontSizeBase: 25
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -3848,6 +3864,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5822035947807339857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955210428694317535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: GoldDropRate
+  SemiData: []
 --- !u!1 &7955210428727207697
 GameObject:
   m_ObjectHideFlags: 0
@@ -4202,6 +4232,7 @@ GameObject:
   - component: {fileID: 7955210428809557232}
   - component: {fileID: 7955210428809557234}
   - component: {fileID: 7955210428809557233}
+  - component: {fileID: 5130876303292603296}
   m_Layer: 5
   m_Name: ItemDropRate
   m_TagString: Untagged
@@ -4283,10 +4314,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 26.45
   m_fontSizeBase: 25
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -4325,6 +4356,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5130876303292603296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955210428809557231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ItemDropRate
+  SemiData: []
 --- !u!1 &7955210428867796004
 GameObject:
   m_ObjectHideFlags: 0
@@ -4427,6 +4472,7 @@ GameObject:
   - component: {fileID: 7955210428932153900}
   - component: {fileID: 7955210428932153902}
   - component: {fileID: 7955210428932153901}
+  - component: {fileID: 2174402430256638851}
   m_Layer: 5
   m_Name: AttackSpeed
   m_TagString: Untagged
@@ -4508,10 +4554,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 40.5
   m_fontSizeBase: 25
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -4550,6 +4596,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2174402430256638851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955210428932153899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: AttackSpeed
+  SemiData: []
 --- !u!1 &7955210428937709755
 GameObject:
   m_ObjectHideFlags: 0
@@ -4561,6 +4621,7 @@ GameObject:
   - component: {fileID: 7955210428937709756}
   - component: {fileID: 7955210428937709758}
   - component: {fileID: 7955210428937709757}
+  - component: {fileID: 1711456338925603952}
   m_Layer: 5
   m_Name: CriticalDamage
   m_TagString: Untagged
@@ -4642,10 +4703,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 25.65
   m_fontSizeBase: 25
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -4684,6 +4745,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1711456338925603952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955210428937709755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: CriticalDamage
+  SemiData: []
 --- !u!1 &7955210428942956504
 GameObject:
   m_ObjectHideFlags: 0
@@ -5639,6 +5714,7 @@ GameObject:
   - component: {fileID: 7955210429197328445}
   - component: {fileID: 7955210429197328447}
   - component: {fileID: 7955210429197328446}
+  - component: {fileID: 3568461230176581075}
   m_Layer: 5
   m_Name: AttackPower
   m_TagString: Untagged
@@ -5720,10 +5796,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 44.8
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -5762,6 +5838,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3568461230176581075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955210429197328444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Damage
+  SemiData: []
 --- !u!1 &7955210429223393246
 GameObject:
   m_ObjectHideFlags: 0
@@ -5903,6 +5993,7 @@ GameObject:
   - component: {fileID: 7955210429244232637}
   - component: {fileID: 7955210429244232639}
   - component: {fileID: 7955210429244232638}
+  - component: {fileID: 3318167690869028904}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -5984,10 +6075,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 44.8
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -6026,6 +6117,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3318167690869028904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955210429244232636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: HP
+  SemiData: []
 --- !u!1 &7955210429251841349
 GameObject:
   m_ObjectHideFlags: 0
@@ -6319,6 +6424,7 @@ GameObject:
   - component: {fileID: 7955210429340355840}
   - component: {fileID: 7955210429340355842}
   - component: {fileID: 7955210429340355841}
+  - component: {fileID: 2841563940978552163}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -6442,6 +6548,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2841563940978552163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955210429340356095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: AdditionalStats
+  SemiData: []
 --- !u!1 &7955210429346001888
 GameObject:
   m_ObjectHideFlags: 0
@@ -6518,6 +6638,7 @@ GameObject:
   - component: {fileID: 7955210429427147726}
   - component: {fileID: 7955210429427147728}
   - component: {fileID: 7955210429427147727}
+  - component: {fileID: 7581244126021668517}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -6641,6 +6762,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7581244126021668517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955210429427147725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: UniqueStats
+  SemiData: []
 --- !u!1 &7955210429439104597
 GameObject:
   m_ObjectHideFlags: 0
@@ -7269,6 +7404,7 @@ GameObject:
   - component: {fileID: 7955210429766449881}
   - component: {fileID: 7955210429766449883}
   - component: {fileID: 7955210429766449882}
+  - component: {fileID: 7546551681378015804}
   m_Layer: 5
   m_Name: CombatPower
   m_TagString: Untagged
@@ -7350,10 +7486,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 44.8
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -7392,6 +7528,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7546551681378015804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955210429766449880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: CombatPower
+  SemiData: []
 --- !u!1 &7955210429796468927
 GameObject:
   m_ObjectHideFlags: 0
@@ -9123,6 +9273,7 @@ GameObject:
   - component: {fileID: 7955210430618133407}
   - component: {fileID: 7955210430618133409}
   - component: {fileID: 7955210430618133408}
+  - component: {fileID: 9156649672148825550}
   m_Layer: 5
   m_Name: CriticalChance
   m_TagString: Untagged
@@ -9204,10 +9355,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 31.1
   m_fontSizeBase: 25
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -9246,6 +9397,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9156649672148825550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955210430618133406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: CriticalChance
+  SemiData: []
 --- !u!1 &7955210430626068251
 GameObject:
   m_ObjectHideFlags: 0
@@ -9697,6 +9862,7 @@ GameObject:
   - component: {fileID: 7955210430683350785}
   - component: {fileID: 7955210430683350787}
   - component: {fileID: 7955210430683350786}
+  - component: {fileID: 1033529000011615771}
   m_Layer: 5
   m_Name: TitleText
   m_TagString: Untagged
@@ -9778,10 +9944,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 72
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -9820,6 +9986,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1033529000011615771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955210430683350784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: HeroInfo
+  SemiData: []
 --- !u!1 &7955210430687735671
 GameObject:
   m_ObjectHideFlags: 0

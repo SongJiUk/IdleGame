@@ -105,7 +105,7 @@ public class UI_SmeltingPopup : UI_Popup
         string colorTag = Utils.StringToColorGrade(_holder.grade);
 
 
-        GetText(TextsType, (int)Texts.Smelting_1_ContentText + _count).text = $"{colorTag}{dataInSheet.Description}</color>";
+        GetText(TextsType, (int)Texts.Smelting_1_ContentText + _count).text = $"{colorTag}{Managers.LocalizationM.Get(dataInSheet.Name)}</color>";
         GetText(TextsType, (int)Texts.Smelting_1_ProbabilityText + _count).text = $"{colorTag}{_holder.value:F2}%</color>";
 
     }
@@ -173,7 +173,7 @@ public class UI_SmeltingPopup : UI_Popup
         .SetDelay(_count * 0.1f)
         .SetEase(Ease.OutBack);
 
-        GetText(TextsType, (int)Texts.Smelting_1_ContentText + _count).text = $"{colorTag}{localData.Description}</color>";
+        GetText(TextsType, (int)Texts.Smelting_1_ContentText + _count).text = $"{colorTag}{Managers.LocalizationM.Get(localData.Name)}</color>";
 
         float startValue = 0;
 

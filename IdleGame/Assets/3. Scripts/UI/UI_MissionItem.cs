@@ -82,8 +82,8 @@ public class UI_MissionItem : UI_Base
         if (data == null) return;
 
         GetText(TextsType, (int)Texts.RewardItemCountText).text = $"x{data.RewardCount}";
-        GetText(TextsType, (int)Texts.MissionNameText).text = data.MissionName;
-        GetText(TextsType, (int)Texts.MissionDescriptionText).text = data.Description;
+        GetText(TextsType, (int)Texts.MissionNameText).text = Managers.LocalizationM.Get($"UIMission_{data.MissionTarget}");
+        GetText(TextsType, (int)Texts.MissionDescriptionText).text = Managers.LocalizationM.Get($"UIMission_{data.MissionTarget}_Description");
         GetImage(ImagesType, (int)Images.MissionTargetValueImage).fillAmount = 0;
         GetText(TextsType, (int)Texts.MissionTargetValueText).text = $"({0} / {data.MissionTargetValue})";
 

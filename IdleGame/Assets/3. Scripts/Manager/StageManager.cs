@@ -165,7 +165,7 @@ public class StageManager
     {
         if (stageState == StageState.Boss || stageState == StageState.BossPlay)
         {
-            Managers.UIM.ShowToast("보스 진행중엔 투입할 수 없습니다.");
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastBoss"));
             return false;
         }
 
@@ -174,7 +174,7 @@ public class StageManager
             stageState == StageState.DungeonFail ||
             stageState == StageState.DungeonOut)
         {
-            Managers.UIM.ShowToast("던전 진행중엔 투입할 수 없습니다.");
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastDugeon"));
             return false;
         }
         return true;

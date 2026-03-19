@@ -373,36 +373,33 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         };
         foreach (var o in bottomCloseObjects) o.SetActive(false);
 
-        // 캐릭터 슬롯 UI 배열로 캐싱 (Character1_ ~ Character6_)
         charSlots = new CharacterSlotUI[6];
         for (int i = 0; i < 6; i++)
         {
             charSlots[i] = new CharacterSlotUI
             {
-                obj       = GetObject(GameObjectsType, (int)GameObjects.Character1_Object + i),
-                hpFrame   = GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + i),
-                mpFrame   = GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i),
-                readyObj  = GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i),
+                obj = GetObject(GameObjectsType, (int)GameObjects.Character1_Object + i),
+                hpFrame = GetObject(GameObjectsType, (int)GameObjects.Character1_HpFrameObject + i),
+                mpFrame = GetObject(GameObjectsType, (int)GameObjects.Character1_MpFrameObject + i),
+                readyObj = GetObject(GameObjectsType, (int)GameObjects.Character1_ReadyObject + i),
                 lockImage = GetImage(ImagesType, (int)Images.Character1_Lock + i),
                 iconImage = GetImage(ImagesType, (int)Images.Character1_Icon + i),
                 plusButton = GetButton(ButtonsType, (int)Buttons.Character1_PlusButton + i),
             };
         }
 
-        // 캐릭터 HP/MP 바 배열로 캐싱 (Character0_ ~ Character6_)
         charHpMpSlots = new CharacterHpMpUI[7];
         for (int i = 0; i < 7; i++)
         {
             charHpMpSlots[i] = new CharacterHpMpUI
             {
-                hpFill  = GetImage(ImagesType, (int)Images.Character0_HpFillImage + i),
-                mpFill  = GetImage(ImagesType, (int)Images.Character0_MpFillImage + i),
-                hpText  = GetText(TextsType, (int)Texts.Character0_HpText + i),
-                mpText  = GetText(TextsType, (int)Texts.Character0_MpText + i),
+                hpFill = GetImage(ImagesType, (int)Images.Character0_HpFillImage + i),
+                mpFill = GetImage(ImagesType, (int)Images.Character0_MpFillImage + i),
+                hpText = GetText(TextsType, (int)Texts.Character0_HpText + i),
+                mpText = GetText(TextsType, (int)Texts.Character0_MpText + i),
             };
         }
 
-        // 플러스 버튼 이벤트 바인딩
         for (int i = 0; i < charSlots.Length; i++)
         {
             int captured = i;
@@ -952,7 +949,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     //TODO : 퀘스트
     void OnChangeQuestInfo()
     {
-        GetText(TextsType, (int)Texts.QuestTitleText).text = $"퀘스트 {Managers.GameM.QuestCount + 1}";
+        GetText(TextsType, (int)Texts.QuestTitleText).text = $"{Managers.LocalizationM.Get("UIQuestTitle")} {Managers.GameM.QuestCount + 1}";
         GetText(TextsType, (int)Texts.QuestDescriptionText).text = Managers.QuestM.Localization_Counting(Managers.QuestM.GetState());
         GetText(TextsType, (int)Texts.QuestTutorialText).text = $"({Managers.QuestM.Counting(Managers.QuestM.GetState())} / {Managers.QuestM.GetQuestValue()})";
         GetText(TextsType, (int)Texts.QuestTutorialText).color = Managers.QuestM.GetCountColor();
@@ -1260,7 +1257,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             case 70000:
                 type = Define.DungeonType.TreasureTrove;
                 level = Managers.GameM.gameData.DungeonClearLevel[0] + 1;
-                GetText(TextsType, (int)Texts.DungeonBoardStageText).text = $"보물창고 Lv.{level}";
+                GetText(TextsType, (int)Texts.DungeonBoardStageText).text = $"{Managers.LocalizationM.Get("UIDungeon_TreasureDungeon")} Lv.{level}";
                 GetObject(GameObjectsType, (int)GameObjects.GoldDungeonObject).SetActive(false);
                 GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject).SetActive(true);
                 break;
@@ -1268,7 +1265,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
             case 70001:
                 type = Define.DungeonType.GoldDungeon;
                 level = Managers.GameM.gameData.DungeonClearLevel[1] + 1;
-                GetText(TextsType, (int)Texts.DungeonBoardStageText).text = $"골드던전 Lv.{level}";
+                GetText(TextsType, (int)Texts.DungeonBoardStageText).text = $"{Managers.LocalizationM.Get("UIDungeon_GoldDungeon")} Lv.{level}";
                 GetObject(GameObjectsType, (int)GameObjects.TreasureTroveObject).SetActive(false);
                 GetObject(GameObjectsType, (int)GameObjects.GoldDungeonObject).SetActive(true);
                 break;
@@ -1335,7 +1332,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         needGold = Utils.CalculatedValue(Utils.Datas.levelData.Base_Gold, Managers.GameM.Level, Utils.Datas.levelData.Player_Gold);
 
-        GetText(TextsType, (int)Texts.StageStateText).text = Managers.StageM.isDead ? "반복중..." : "진행중...";
+        GetText(TextsType, (int)Texts.StageStateText).text = Managers.StageM.isDead ? Managers.LocalizationM.Get("UIGameSceneRepeat") : Managers.LocalizationM.Get("UIGameSceneProgress");
         GetText(TextsType, (int)Texts.StageStateText).color = Managers.StageM.isDead ? Color.yellow : Color.blue;
 
         int stageValue = Managers.GameM.Stage;
@@ -1418,7 +1415,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         GetImage(ImagesType, (int)Images.ItemPopupItemImage).sprite = Managers.ResourceM.GetAtlas(_data.Name);
         //TODO : Localiztion
         //GetText(TextsType, (int)Texts.ItemPopupText).text = Utils.StringToColorGrade(_data.ItemGrade) + _data.NameKR + "</color>을 획득하였습니다";
-        GetText(TextsType, (int)Texts.ItemPopupText).text = string.Format(Managers.LocalizationM.localData["PopupGetItem02"].GetData(), Utils.StringToColorGrade(_data.ItemGrade) + _data.NameKR);
+        GetText(TextsType, (int)Texts.ItemPopupText).text = string.Format(Managers.LocalizationM.Get("PopupGetItem02"), Utils.StringToColorGrade(_data.ItemGrade) + Managers.LocalizationM.Get(_data.Name) + "</color>");
 
         PlayLegendaryPopupAnim();
     }
@@ -1548,7 +1545,7 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         }
 
         //slotToUse.text = "아이템을 획득하였습니다 : " + Utils.StringToColorGrade(_data.ItemGrade) + "[" + _data.NameKR + "]</color>";
-        slotToUse.text = string.Format(Managers.LocalizationM.localData["PopupGetItem01"].GetData(), Utils.StringToColorGrade(_data.ItemGrade) + "[" + Managers.LocalizationM.localData[_data.Name].GetData() + "]</color>");
+        slotToUse.text = string.Format(Managers.LocalizationM.Get("PopupGetItem01"), Utils.StringToColorGrade(_data.ItemGrade) + "[" + Managers.LocalizationM.Get(_data.Name) + "]</color>");
         PlayTextFadeOut(slotToUse).Forget();
 
 

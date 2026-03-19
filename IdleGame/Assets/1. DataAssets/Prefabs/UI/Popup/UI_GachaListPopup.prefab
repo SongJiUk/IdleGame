@@ -1140,6 +1140,7 @@ GameObject:
   - component: {fileID: 8940983431046808447}
   - component: {fileID: 8940983431046808445}
   - component: {fileID: 8940983431046808444}
+  - component: {fileID: 2683737166381032210}
   m_Layer: 0
   m_Name: PopupInfo
   m_TagString: Untagged
@@ -1264,6 +1265,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2683737166381032210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940983431046808446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Shop_Summon_Description
+  SemiData: []
 --- !u!1 &8940983431063958596
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,6 +1517,7 @@ GameObject:
   - component: {fileID: 8940983431188217975}
   - component: {fileID: 8940983431188217973}
   - component: {fileID: 8940983431188217972}
+  - component: {fileID: 4250082974554728449}
   m_Layer: 0
   m_Name: GachaLevelTitle
   m_TagString: Untagged
@@ -1625,6 +1641,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4250082974554728449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940983431188217974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Shop_SummonLevel
+  SemiData: []
 --- !u!1 &8940983431226404652
 GameObject:
   m_ObjectHideFlags: 0
@@ -3439,6 +3469,7 @@ GameObject:
   - component: {fileID: 8940983432423208900}
   - component: {fileID: 8940983432423208922}
   - component: {fileID: 8940983432423208901}
+  - component: {fileID: 8670376656972461272}
   m_Layer: 0
   m_Name: ProbabilityInfoText
   m_TagString: Untagged
@@ -3562,6 +3593,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8670376656972461272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940983432423208903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Shop_ProbabilityInformation
+  SemiData: []
 --- !u!1 &8940983432446743851
 GameObject:
   m_ObjectHideFlags: 0

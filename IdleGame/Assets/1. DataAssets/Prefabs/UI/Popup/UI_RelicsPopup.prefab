@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 230008263443769367}
   - component: {fileID: 230008263443769353}
   - component: {fileID: 230008263443769366}
+  - component: {fileID: 7241650574223552796}
   m_Layer: 0
   m_Name: CharacterInfoPopupText
   m_TagString: Untagged
@@ -134,6 +135,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7241650574223552796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230008263443769364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Relic
+  SemiData: []
 --- !u!1 &230008264497116305
 GameObject:
   m_ObjectHideFlags: 0
@@ -4066,6 +4081,7 @@ GameObject:
   - component: {fileID: 6650335496032118450}
   - component: {fileID: 6650335496032118452}
   - component: {fileID: 6650335496032118453}
+  - component: {fileID: 3123882998312867503}
   m_Layer: 0
   m_Name: EnforceButtonText
   m_TagString: Untagged
@@ -4189,6 +4205,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3123882998312867503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6650335496032118451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: AllEnforce
+  SemiData: []
 --- !u!1 &6650335496348161213
 GameObject:
   m_ObjectHideFlags: 0
@@ -4442,6 +4472,7 @@ GameObject:
   - component: {fileID: 6650335496374415155}
   - component: {fileID: 6650335496374415157}
   - component: {fileID: 6650335496374415154}
+  - component: {fileID: 2356253992560565914}
   m_Layer: 0
   m_Name: GachaButtonText
   m_TagString: Untagged
@@ -4565,6 +4596,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2356253992560565914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6650335496374415152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: RelicSummon
+  SemiData: []
 --- !u!1 &6720952031585194688
 GameObject:
   m_ObjectHideFlags: 0

@@ -134,7 +134,7 @@ public class UI_HeroPopup : UI_Popup
         }
         else
         {
-            Managers.UIM.ShowToast("강화가 가능한 캐릭터가 없습니다.");
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoEnforceCharacter"));
         }
 
     }

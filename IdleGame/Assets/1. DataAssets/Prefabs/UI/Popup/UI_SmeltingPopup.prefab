@@ -328,6 +328,7 @@ GameObject:
   - component: {fileID: 4484700654504044377}
   - component: {fileID: 4484700654504044383}
   - component: {fileID: 4484700654504044376}
+  - component: {fileID: 2766164554308820204}
   m_Layer: 0
   m_Name: SmeltingButtonText
   m_TagString: Untagged
@@ -451,6 +452,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2766164554308820204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4484700654504044378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Smelt_Smelt
+  SemiData: []
 --- !u!1 &5261970833685151081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,6 +1178,7 @@ GameObject:
   - component: {fileID: 7009642615121764477}
   - component: {fileID: 7009642615121764451}
   - component: {fileID: 7009642615121764476}
+  - component: {fileID: 8947263294203945641}
   m_Layer: 0
   m_Name: PotentialPopupText
   m_TagString: Untagged
@@ -1187,7 +1203,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -0.0000006556511, y: -55}
-  m_SizeDelta: {x: 218.7351, y: 91.4812}
+  m_SizeDelta: {x: 580.4922, y: 91.4812}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7009642615121764451
 CanvasRenderer:
@@ -1244,10 +1260,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42.16
+  m_fontSize: 72
   m_fontSizeBase: 42.16
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -1286,6 +1302,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8947263294203945641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7009642615121764478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Smelt
+  SemiData: []
 --- !u!1 &9170277973320115900
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,6 +2320,7 @@ GameObject:
   - component: {fileID: 9170277974166039563}
   - component: {fileID: 9170277974166039557}
   - component: {fileID: 9170277974166039562}
+  - component: {fileID: 7529175099277800796}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -2413,6 +2444,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7529175099277800796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9170277974166039560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Smelt_NeedMaterial
+  SemiData: []
 --- !u!1 &9170277974195867443
 GameObject:
   m_ObjectHideFlags: 0
@@ -2576,6 +2621,7 @@ GameObject:
   - component: {fileID: 9170277974300834100}
   - component: {fileID: 9170277974300834102}
   - component: {fileID: 9170277974300834103}
+  - component: {fileID: 2740185474937192602}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -2700,6 +2746,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2740185474937192602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9170277974300834101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Smelt_Smelt_Description
+  SemiData: []
 --- !u!1 &9170277974319591183
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,10 +34,21 @@ public class SpeechBubble : UIDirecting
         transform.localScale = Vector3.zero;
         // transform.localRotation = Quaternion.identity;
 
-        if (_data != null && _data.SpeechList != null && _data.SpeechList.Count > 0)
+        if (_data != null)
         {
-            int rand = Random.Range(0, _data.SpeechList.Count);
-            text.text = _data.SpeechList[rand].Replace("\\n", "\n");
+            int npcNum = _data.DataID - 100000 + 1;
+            var talks = new System.Collections.Generic.List<string>();
+            int i = 1;
+            while (true)
+            {
+                string key = $"UINPC{npcNum}_Talk{i}";
+                string val = Managers.LocalizationM.Get(key);
+                if (val == key) break;
+                talks.Add(val.Replace("\\n", "\n"));
+                i++;
+            }
+            if (talks.Count > 0)
+                text.text = talks[Random.Range(0, talks.Count)];
         }
 
         OpenAnim();

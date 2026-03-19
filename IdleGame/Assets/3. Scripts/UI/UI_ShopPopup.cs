@@ -192,14 +192,14 @@ public class UI_ShopPopup : UI_Popup
 
         if (level >= 10)
         {
-            GetText(TextsType, (int)Texts.HeroGachaLevelText).text = "소환 Lv. " + level.ToString();
+            GetText(TextsType, (int)Texts.HeroGachaLevelText).text = Managers.LocalizationM.Get("UIShop_Summon") + " Lv. " + level.ToString();
             GetText(TextsType, (int)Texts.HeroGachaExpText).text = "MAX";
             GetImage(ImagesType, (int)Images.HeroGachaExpFillImage).fillAmount = 1f;
         }
         else
         {
             int levelValue = Managers.DataM.GachaDataDic[level].SummonCount;
-            GetText(TextsType, (int)Texts.HeroGachaLevelText).text = "소환 Lv. " + level.ToString();
+            GetText(TextsType, (int)Texts.HeroGachaLevelText).text = Managers.LocalizationM.Get("UIShop_Summon") + " Lv. " + level.ToString();
             GetText(TextsType, (int)Texts.HeroGachaExpText).text = $"({Managers.GameM.Hero_Summon_Count} / {levelValue})";
             GetImage(ImagesType, (int)Images.HeroGachaExpFillImage).fillAmount = (float)Managers.GameM.Hero_Summon_Count / (float)levelValue;
         }
@@ -215,14 +215,14 @@ public class UI_ShopPopup : UI_Popup
 
         if (level >= 10)
         {
-            GetText(TextsType, (int)Texts.RelicGachaLevelText).text = "소환 Lv. " + level.ToString();
+            GetText(TextsType, (int)Texts.RelicGachaLevelText).text = Managers.LocalizationM.Get("UIShop_Summon") + " Lv. " + level.ToString();
             GetText(TextsType, (int)Texts.RelicGachaExpText).text = "MAX";
             GetImage(ImagesType, (int)Images.RelicGachaExpFillImage).fillAmount = 1f;
         }
         else
         {
             int levelValue = Managers.DataM.GachaDataDic[level].SummonCount;
-            GetText(TextsType, (int)Texts.RelicGachaLevelText).text = "소환 Lv. " + level.ToString();
+            GetText(TextsType, (int)Texts.RelicGachaLevelText).text = Managers.LocalizationM.Get("UIShop_Summon") + " Lv. " + level.ToString();
             GetText(TextsType, (int)Texts.RelicGachaExpText).text = $"({Managers.GameM.Relics_Summon_Count} / {levelValue})";
             GetImage(ImagesType, (int)Images.RelicGachaExpFillImage).fillAmount = (float)Managers.GameM.Relics_Summon_Count / (float)levelValue;
         }
@@ -287,7 +287,7 @@ public class UI_ShopPopup : UI_Popup
 
         if (Managers.GameM.gameData.heroFreeGachaCount <= 0)
         {
-            Managers.UIM.ShowToast("오늘 무료 소환 횟수를 모두 사용했습니다.");
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIShop_AdSummonEnd"));
             return;
         }
 
@@ -320,7 +320,7 @@ public class UI_ShopPopup : UI_Popup
         }
         else
         {
-            Managers.UIM.ShowToast("다이아가 부족합니다.");
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDia"));
         }
     }
 
@@ -339,7 +339,7 @@ public class UI_ShopPopup : UI_Popup
         }
         else
         {
-            Managers.UIM.ShowToast("다이아가 부족합니다.");
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDia"));
         }
     }
 
@@ -359,7 +359,7 @@ public class UI_ShopPopup : UI_Popup
 
         if (Managers.GameM.gameData.relicFreeGachaCount <= 0)
         {
-            Managers.UIM.ShowToast("오늘 무료 소환 횟수를 모두 사용했습니다.");
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIShop_AdSummonEnd"));
             return;
         }
 
@@ -390,7 +390,7 @@ public class UI_ShopPopup : UI_Popup
             RefreshUI();
             Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress++;
         }
-        else Managers.UIM.ShowToast("다이아가 부족합니다.");
+        else Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDia"));
 
     }
 
@@ -407,7 +407,7 @@ public class UI_ShopPopup : UI_Popup
             RefreshUI();
             Managers.QuestM.GetMission(Define.MissionTarget.RelicGacha).Progress += 11;
         }
-        else Managers.UIM.ShowToast("다이아가 부족합니다.");
+        else Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDia"));
 
 
     }

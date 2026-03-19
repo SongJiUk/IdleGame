@@ -38,14 +38,34 @@ public class UI_ChangeLanguagePopup : UI_Popup
     public void SetInfo(string _language)
     {
         language = _language;
-        GetText(TextsType, (int)Texts.BeforeText).text = Managers.LocalizationM.localData["UIChangeLanguage"].GetData();
+        GetText(TextsType, (int)Texts.BeforeText).text = Managers.LocalizationM.Get("UIChangeLanguage");
         GetText(TextsType, (int)Texts.AfterText).text = Managers.LocalizationM.localData["UIChangeLanguage"].GetData(language);
     }
-    void OnClickYesButton()
+    async void OnClickYesButton()
     {
         Managers.SoundM.PlayButtonClick();
         Managers.GameM.gameData.language = language;
-        Application.Quit();
+        await Managers.FirebaseM.WriteData();
+
+        Time.timeScale = 0f;
+        Managers.UpdateM.PauseTicking(true);
+
+        Managers.CharacterM.Clear();
+        Managers.UpdateM.Clear();
+        Managers.StageM.Clear();
+        Managers.SpawnM.Clear();
+        Managers.ObjectM.Clear();
+        Managers.PoolM.Clear();
+        Managers.ResourceM.UnLoadAll();
+        Managers.SoundM.Clear();
+        Managers.UIM.Clear();
+
+        Managers.LocalizationM.Init();
+
+        await Managers.SceneM.LoadSceneAsync(Define.SceneType.TitleScene);
+
+        Time.timeScale = 1f;
+        Managers.UpdateM.PauseTicking(false);
     }
 
     void OnClickNoButton()

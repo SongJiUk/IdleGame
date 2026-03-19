@@ -195,17 +195,7 @@ public class QuestManager
 
     public string Localization_Counting(Define.QuestType _questType)
     {
-        switch (_questType)
-        {
-            case Define.QuestType.Monster: return "몬스터 처치";
-            case Define.QuestType.Stage: return "스테이지 클리어";
-            case Define.QuestType.Gold: return "골드 던전 클리어";
-            case Define.QuestType.Dia: return "보물 던전 클리어";
-            case Define.QuestType.Upgrade: return "경험치 획득";
-            case Define.QuestType.Hero: return "영웅 소환";
-            case Define.QuestType.Relic: return "유물 소환";
-        }
-        return null;
+        return Managers.LocalizationM.Get($"UIQuest_{_questType}");
     }
 
     public Define.QuestType GetState()

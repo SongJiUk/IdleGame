@@ -301,6 +301,7 @@ GameObject:
   - component: {fileID: 7128484120319528532}
   - component: {fileID: 7128484120319528530}
   - component: {fileID: 7128484120319528533}
+  - component: {fileID: 7381509258588281521}
   m_Layer: 0
   m_Name: AttackUpName
   m_TagString: Untagged
@@ -424,6 +425,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7381509258588281521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128484120319528535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ADS_AttackUp
+  SemiData: []
 --- !u!1 &7128484120339417818
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,6 +660,7 @@ GameObject:
   - component: {fileID: 7128484120418642740}
   - component: {fileID: 7128484120418642738}
   - component: {fileID: 7128484120418642741}
+  - component: {fileID: 3770545821760739468}
   m_Layer: 0
   m_Name: GoldUpButtonLockText
   m_TagString: Untagged
@@ -768,6 +784,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3770545821760739468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128484120418642743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ADS_Activating
+  SemiData: []
 --- !u!1 &7128484120531020738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,6 +1523,7 @@ GameObject:
   - component: {fileID: 7128484120750514305}
   - component: {fileID: 7128484120750514319}
   - component: {fileID: 7128484120750514318}
+  - component: {fileID: 7667423813836196350}
   m_Layer: 0
   m_Name: TitleNameText
   m_TagString: Untagged
@@ -1616,6 +1647,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7667423813836196350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128484120750514304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ADS_Buff
+  SemiData: []
 --- !u!1 &7128484120759788042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2224,6 +2269,7 @@ GameObject:
   - component: {fileID: 7128484120943029047}
   - component: {fileID: 7128484120943029045}
   - component: {fileID: 7128484120943029044}
+  - component: {fileID: 8890355703921547715}
   m_Layer: 0
   m_Name: AttackUpButtonText
   m_TagString: Untagged
@@ -2347,6 +2393,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8890355703921547715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128484120943029046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ADS_GetBuff
+  SemiData: []
 --- !u!1 &7128484121038492372
 GameObject:
   m_ObjectHideFlags: 0
@@ -2477,6 +2537,7 @@ GameObject:
   - component: {fileID: 7128484121149716050}
   - component: {fileID: 7128484121149716048}
   - component: {fileID: 7128484121149716051}
+  - component: {fileID: 6355793864512047260}
   m_Layer: 0
   m_Name: GoldUpName
   m_TagString: Untagged
@@ -2600,6 +2661,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6355793864512047260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128484121149716053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ADS_GoldUp
+  SemiData: []
 --- !u!1 &7128484121225853507
 GameObject:
   m_ObjectHideFlags: 0
@@ -3174,6 +3249,7 @@ GameObject:
   - component: {fileID: 7128484121478945282}
   - component: {fileID: 7128484121478945280}
   - component: {fileID: 7128484121478945283}
+  - component: {fileID: 8432848477602933910}
   m_Layer: 0
   m_Name: CriticalUpButtonText
   m_TagString: Untagged
@@ -3297,6 +3373,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8432848477602933910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128484121478945285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ADS_GetBuff
+  SemiData: []
 --- !u!1 &7128484121685852401
 GameObject:
   m_ObjectHideFlags: 0
@@ -3427,6 +3517,7 @@ GameObject:
   - component: {fileID: 7128484121717223464}
   - component: {fileID: 7128484121717223894}
   - component: {fileID: 7128484121717223465}
+  - component: {fileID: 8535567069769076985}
   m_Layer: 0
   m_Name: GoldUpButtonText
   m_TagString: Untagged
@@ -3550,6 +3641,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8535567069769076985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128484121717223467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ADS_GetBuff
+  SemiData: []
 --- !u!1 &7128484121718712857
 GameObject:
   m_ObjectHideFlags: 0
@@ -3849,6 +3954,7 @@ GameObject:
   - component: {fileID: 7128484121743131320}
   - component: {fileID: 7128484121743131302}
   - component: {fileID: 7128484121743131321}
+  - component: {fileID: 5631903873492211679}
   m_Layer: 0
   m_Name: CriticalUpName
   m_TagString: Untagged
@@ -3972,6 +4078,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5631903873492211679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128484121743131323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ADS_CiriticalUP
+  SemiData: []
 --- !u!1 &7128484121821571034
 GameObject:
   m_ObjectHideFlags: 0
@@ -4885,6 +5005,7 @@ GameObject:
   - component: {fileID: 7128484122015706693}
   - component: {fileID: 7128484122015706691}
   - component: {fileID: 7128484122015706690}
+  - component: {fileID: 4509780208331758725}
   m_Layer: 0
   m_Name: AttackUpButtonLockText
   m_TagString: Untagged
@@ -5008,6 +5129,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4509780208331758725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128484122015706692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ADS_Activating
+  SemiData: []
 --- !u!1 &7128484122037866412
 GameObject:
   m_ObjectHideFlags: 0
@@ -5239,6 +5374,7 @@ GameObject:
   - component: {fileID: 7128484122122642542}
   - component: {fileID: 7128484122122642540}
   - component: {fileID: 7128484122122642543}
+  - component: {fileID: 7692253139062678865}
   m_Layer: 0
   m_Name: CriticalUpButtonLockText
   m_TagString: Untagged
@@ -5362,6 +5498,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7692253139062678865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128484122122642529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: ADS_Activating
+  SemiData: []
 --- !u!1 &7128484122219597374
 GameObject:
   m_ObjectHideFlags: 0

@@ -54,10 +54,10 @@ public class UI_LoadingLogin : UI_Popup
                     OnSuccessLogin?.Invoke();
                     await NativeAlert.ShowAsync(new AlertOptions
                     {
-                        title = "연동 성공",
-                        message = "구글 계정으로 연동되었습니다.",
+                        title = Managers.LocalizationM.Get("System_LinkingSuccess"),
+                        message = Managers.LocalizationM.Get("System_LinkGoogleAcount"),
                         theme = AlertTheme.Light,
-                        buttons = new() { new() { text = "확인", style = AlertButtonStyle.Cancel } }
+                        buttons = new() { new() { text = Managers.LocalizationM.Get("Check"), style = AlertButtonStyle.Cancel } }
                     });
                 }
                 catch (FirebaseException e)
@@ -66,13 +66,13 @@ public class UI_LoadingLogin : UI_Popup
                     {
                         int result = await NativeAlert.ShowAsync(new AlertOptions
                         {
-                            title = "계정 충돌",
-                            message = "이 구글 계정은 이미 다른 데이터와 연동되어있습니다. 해당 계정으로 전환하시겠습니까?",
+                            title = Managers.LocalizationM.Get("System_AccountConflict"),
+                            message = Managers.LocalizationM.Get("System_GoogleAccount_Already"),
                             theme = AlertTheme.System,
                             buttons = new()
                             {
-                                new() { text = "취소", style = AlertButtonStyle.Cancel },
-                                new() { text = "전환하기", style = AlertButtonStyle.Default }
+                                new() { text = Managers.LocalizationM.Get("Cancel"), style = AlertButtonStyle.Cancel },
+                                new() { text = Managers.LocalizationM.Get("System_Switch"), style = AlertButtonStyle.Default }
                             }
                         });
 
@@ -92,13 +92,13 @@ public class UI_LoadingLogin : UI_Popup
 
                                 int choice = await NativeAlert.ShowAsync(new AlertOptions
                                 {
-                                    title = "데이터 충돌",
-                                    message = $"기기 데이터의 스테이지({localStageForward} - {localStageBack})가 서버 데이터의 스테이지({serverStageForward} - {serverStageBack})보다 앞서있습니다. 덮어 씌울까요?",
+                                    title = Managers.LocalizationM.Get("System_DataConflict"),
+                                    message = string.Format(Managers.LocalizationM.Get("System_DataOverwrite"), localStageForward, localStageBack, serverStageForward, serverStageBack),
                                     theme = AlertTheme.System,
                                     buttons = new()
                                     {
-                                        new() { text = "덮어씌우기", style = AlertButtonStyle.Cancel },
-                                        new() { text = "불러오기", style = AlertButtonStyle.Default }
+                                        new() { text = Managers.LocalizationM.Get("System_OverWrite"), style = AlertButtonStyle.Cancel },
+                                        new() { text = Managers.LocalizationM.Get("System_Load"), style = AlertButtonStyle.Default }
                                     }
                                 });
 
@@ -110,10 +110,10 @@ public class UI_LoadingLogin : UI_Popup
                                         OnSuccessLogin?.Invoke();
                                         await NativeAlert.ShowAsync(new AlertOptions
                                         {
-                                            title = "전환 성공",
-                                            message = "기기 데이터로 서버를 덮어쓰고 구글 계정으로 전환되었습니다.",
+                                            title = Managers.LocalizationM.Get("System_ConversionSuccess"),
+                                            message = Managers.LocalizationM.Get("System_OverWriteSuccess"),
                                             theme = AlertTheme.Light,
-                                            buttons = new() { new() { text = "확인", style = AlertButtonStyle.Cancel } }
+                                            buttons = new() { new() { text = Managers.LocalizationM.Get("Check"), style = AlertButtonStyle.Cancel } }
                                         });
                                     }
                                 }
@@ -126,10 +126,10 @@ public class UI_LoadingLogin : UI_Popup
                                         OnSuccessLogin?.Invoke();
                                         await NativeAlert.ShowAsync(new AlertOptions
                                         {
-                                            title = "전환 성공",
-                                            message = "서버 데이터를 불러와 구글 계정으로 전환되었습니다.",
+                                            title = Managers.LocalizationM.Get("System_ConversionSuccess"),
+                                            message = Managers.LocalizationM.Get("System_LoadGoogleAcountSuccess"),
                                             theme = AlertTheme.Light,
-                                            buttons = new() { new() { text = "확인", style = AlertButtonStyle.Cancel } }
+                                            buttons = new() { new() { text = Managers.LocalizationM.Get("Check"), style = AlertButtonStyle.Cancel } }
                                         });
                                     }
                                 }

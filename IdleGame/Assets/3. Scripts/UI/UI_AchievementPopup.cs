@@ -119,7 +119,7 @@ public class UI_AchievementPopup : UI_Popup
             color = Utils.StringToColorGrade(Define.Grade.Common);
 
 
-        string temp = color + Managers.LocalizationM.localData[_holder.ToString()].GetData() + PlusOrMinus(_value) + _value.ToString() + "%" + "</color>";
+        string temp = color + Managers.LocalizationM.Get(_holder.ToString()) + PlusOrMinus(_value) + _value.ToString() + "%" + "</color>";
 
         return temp;
     }

@@ -149,7 +149,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
 
         if (!Managers.StageM.CanEnterDungeon())
         {
-            Managers.UIM.ShowToast("현재 상태에서는 던전에 입장할 수 없습니다.");
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDungeon"));
             return;
         }
         isEntering = true;
@@ -158,7 +158,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
         await UniTask.Yield();
         if (!Managers.StageM.CanEnterDungeon())
         {
-            Managers.UIM.ShowToast("현재 상태에서는 던전에 입장할 수 없습니다.");
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDungeon"));
             return;
         }
 
@@ -176,7 +176,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
                 }
                 else
                 {
-                    Managers.UIM.ShowToast("보석이 부족합니다.");
+                    Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDia"));
                     return;
                 }
 
@@ -193,7 +193,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
                 }
                 else
                 {
-                    Managers.UIM.ShowToast("보석이 부족합니다.");
+                    Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDia"));
                     return;
                 }
 
@@ -220,7 +220,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
                 }
                 else
                 {
-                    Managers.UIM.ShowToast("최저레벨입니다.");
+                    Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastLowLevel"));
                 }
 
                 break;
@@ -239,7 +239,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
                 }
                 else
                 {
-                    Managers.UIM.ShowToast("최저레벨입니다.");
+                    Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastLowLevel"));
                 }
                 break;
         }
@@ -259,7 +259,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
                 }
                 else
                 {
-                    Managers.UIM.ShowToast("스테이지가 잠겨있습니다.");
+                    Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastStageLock"));
                 }
                 break;
 
@@ -276,7 +276,7 @@ public class UI_DungeonPopup : UI_Popup, ITickable
                 }
                 else
                 {
-                    Managers.UIM.ShowToast("스테이지가 잠겨있습니다.");
+                    Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastStageLock"));
                 }
                 break;
         }

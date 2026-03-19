@@ -123,7 +123,7 @@ public class IAPManager : IStoreListener
     {
 
 #if UNITY_IOS
-        Managers.UIM.ShowToast("IOS에서는 인앱결제를 사용하지 않습니다.");
+        Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastIOSNoIAP"));
         Debug.Log("IOS에서는 인앱결제 사용안함 ");
         return;
 #else

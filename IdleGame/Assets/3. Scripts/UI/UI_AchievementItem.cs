@@ -59,8 +59,8 @@ public class UI_AchievementItem : UI_Base
     public void SetInfo(Data.AchievementData _data)
     {
         data = _data;
-        GetText(TextsType, (int)Texts.AchievementNameText).text = data.Title;
-        GetText(TextsType, (int)Texts.AchievementEffectText).text = Managers.LocalizationM.localData[data.RewardStatus.ToString()].GetData() + " + " + data.RewardValue + "%";
+        GetText(TextsType, (int)Texts.AchievementNameText).text = Managers.LocalizationM.Get($"UIAchievement_{data.AchievementID}");
+        GetText(TextsType, (int)Texts.AchievementEffectText).text = Managers.LocalizationM.Get(data.RewardStatus.ToString()) + " + " + data.RewardValue + "%";
 
         currentAchievementID = data.AchievementID;
 
@@ -162,7 +162,7 @@ public class UI_AchievementItem : UI_Base
         }
         else
         {
-            Managers.UIM.ShowToast(Managers.LocalizationM.localData["NoMaterial"].GetData());
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("NoMaterial"));
         }
 
     }

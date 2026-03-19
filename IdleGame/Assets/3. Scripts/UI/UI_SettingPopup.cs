@@ -97,7 +97,6 @@ public class UI_SettingPopup : UI_Popup
     async void OnClickLanguageButton(Buttons _button)
     {
         Managers.SoundM.PlayButtonClick();
-        var popup = await Managers.UIM.ShowPopup<UI_ChangeLanguagePopup>();
         string language = "";
         switch (_button)
         {
@@ -113,6 +112,14 @@ public class UI_SettingPopup : UI_Popup
                 //     language = "ja";
                 //     break;
         }
+
+        if (language == LocalizationManager.LocalAccess)
+        {
+            Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastSameLanguage"));
+            return;
+        }
+
+        var popup = await Managers.UIM.ShowPopup<UI_ChangeLanguagePopup>();
         popup.SetInfo(language);
     }
 
@@ -153,7 +160,7 @@ public class UI_SettingPopup : UI_Popup
     {
         Managers.SoundM.PlayButtonClick();
         GUIUtility.systemCopyBuffer = Managers.FirebaseM.CurrentUser.UserId;
-        Managers.UIM.ShowToast("복사 완료");
+        Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoCopy"));
     }
 
 

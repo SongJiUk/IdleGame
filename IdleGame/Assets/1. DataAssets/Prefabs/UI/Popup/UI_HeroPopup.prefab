@@ -647,6 +647,7 @@ GameObject:
   - component: {fileID: 2203463975296033725}
   - component: {fileID: 2203463975296033723}
   - component: {fileID: 2203463975296033724}
+  - component: {fileID: 895979539953575103}
   m_Layer: 5
   m_Name: HeroText
   m_TagString: Untagged
@@ -728,10 +729,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 44.8
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -770,6 +771,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &895979539953575103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203463975296033726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Hero
+  SemiData: []
 --- !u!1 &2203463975423232063
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,6 +930,7 @@ GameObject:
   - component: {fileID: 2203463975680027374}
   - component: {fileID: 2203463975680027372}
   - component: {fileID: 2203463975680027373}
+  - component: {fileID: 198053361359254518}
   m_Layer: 5
   m_Name: Deco
   m_TagString: Untagged
@@ -981,6 +997,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &198053361359254518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203463975680027375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Hero
+  SemiData: []
 --- !u!1 &2203463975701692904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1353,6 +1383,7 @@ GameObject:
   - component: {fileID: 2203463976270277779}
   - component: {fileID: 2203463976270277777}
   - component: {fileID: 2203463976270277778}
+  - component: {fileID: 6435990002620468817}
   m_Layer: 5
   m_Name: HeroEnforceText
   m_TagString: Untagged
@@ -1374,10 +1405,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2203463974837625719}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2203463976270277777
 CanvasRenderer:
@@ -1434,10 +1465,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 72
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1476,6 +1507,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6435990002620468817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203463976270277780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: AllEnforce
+  SemiData: []
 --- !u!1 &2203463976317569671
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,6 +1532,7 @@ GameObject:
   - component: {fileID: 2203463976317569670}
   - component: {fileID: 2203463976317569668}
   - component: {fileID: 2203463976317569669}
+  - component: {fileID: 933800610343615007}
   m_Layer: 5
   m_Name: HeroGachaText
   m_TagString: Untagged
@@ -1508,10 +1554,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2203463975237999858}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2203463976317569668
 CanvasRenderer:
@@ -1568,10 +1614,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 72
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1610,6 +1656,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &933800610343615007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203463976317569671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Mission_HeroGacha
+  SemiData: []
 --- !u!1 &2203463976477783976
 GameObject:
   m_ObjectHideFlags: 0
@@ -1926,6 +1986,7 @@ GameObject:
   - component: {fileID: 6934845627912018429}
   - component: {fileID: 3635779549484656153}
   - component: {fileID: 4337804316227264064}
+  - component: {fileID: 1113284562517823492}
   m_Layer: 5
   m_Name: DecoText
   m_TagString: Untagged
@@ -2049,6 +2110,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1113284562517823492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3559403021537426918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: Hero_Batch
+  SemiData: []
 --- !u!1 &3942805764490951999
 GameObject:
   m_ObjectHideFlags: 0

@@ -449,6 +449,7 @@ GameObject:
   - component: {fileID: 9130979619347866138}
   - component: {fileID: 5280399936910886507}
   - component: {fileID: 5668605601647763542}
+  - component: {fileID: 2345679679300710462}
   m_Layer: 5
   m_Name: Character5_ReadyText
   m_TagString: Untagged
@@ -572,6 +573,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2345679679300710462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272395376544193044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: 
+  SemiData: []
 --- !u!1 &283299986212938862
 GameObject:
   m_ObjectHideFlags: 0
@@ -8239,8 +8254,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 288.85547, y: -105}
-  m_SizeDelta: {x: 489.7109, y: 52}
+  m_AnchoredPosition: {x: 146.145, y: -105}
+  m_SizeDelta: {x: 224.8, y: 52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2486953807303797875
 CanvasRenderer:
@@ -8297,10 +8312,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 46.6
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -13922,6 +13937,7 @@ GameObject:
   - component: {fileID: 5305101390215517337}
   - component: {fileID: 2646722304905294043}
   - component: {fileID: 7394307924710502238}
+  - component: {fileID: 2179991093076999447}
   m_Layer: 5
   m_Name: Character3_ReadyText
   m_TagString: Untagged
@@ -14045,6 +14061,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2179991093076999447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2560973065606065055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: 
+  SemiData: []
 --- !u!1 &2601117005285003881
 GameObject:
   m_ObjectHideFlags: 0
@@ -24059,6 +24089,7 @@ GameObject:
   - component: {fileID: 8149439618265504241}
   - component: {fileID: 6916285306967492097}
   - component: {fileID: 171184030718798653}
+  - component: {fileID: 1444684528567683640}
   m_Layer: 5
   m_Name: Character2_ReadyText
   m_TagString: Untagged
@@ -24182,6 +24213,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1444684528567683640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2722659809484764573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: 
+  SemiData: []
 --- !u!1 &2754303584129442665
 GameObject:
   m_ObjectHideFlags: 0
@@ -25202,6 +25247,7 @@ GameObject:
   - component: {fileID: 2697327398460523220}
   - component: {fileID: 3673376331246280503}
   - component: {fileID: 4907089225508705914}
+  - component: {fileID: 8095481002565578886}
   m_Layer: 5
   m_Name: Character1_ReadyText
   m_TagString: Untagged
@@ -25325,6 +25371,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8095481002565578886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3781459667292408420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: 
+  SemiData: []
 --- !u!1 &3798184317118730409
 GameObject:
   m_ObjectHideFlags: 0
@@ -27945,6 +28005,7 @@ GameObject:
   - component: {fileID: 669461958686668239}
   - component: {fileID: 4651316770247321941}
   - component: {fileID: 3456704981192639817}
+  - component: {fileID: 891353465129137652}
   m_Layer: 5
   m_Name: Character6_ReadyText
   m_TagString: Untagged
@@ -28068,6 +28129,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &891353465129137652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5217136904494215336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: 
+  SemiData: []
 --- !u!1 &5343813703998422137
 GameObject:
   m_ObjectHideFlags: 0
@@ -34225,6 +34300,7 @@ GameObject:
   - component: {fileID: 665080511458701548}
   - component: {fileID: 7039462410524565577}
   - component: {fileID: 6562966437483570692}
+  - component: {fileID: 3226039255134828662}
   m_Layer: 5
   m_Name: Character4_ReadyText
   m_TagString: Untagged
@@ -34348,6 +34424,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3226039255134828662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9165360640094341848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalName: 
+  SemiData: []
 --- !u!1 &9185432933365876560
 GameObject:
   m_ObjectHideFlags: 0
