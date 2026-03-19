@@ -133,8 +133,8 @@ public class PlayerController : CreatureController
             return;
         }
 
-        hp = Managers.PlayerM.GetHP(DATA.CharacterGrade, charData);
-        maxHp = hp;
+        maxHp = Managers.PlayerM.GetHP(DATA.CharacterGrade, charData);
+        if (!isDead) hp = maxHp;
         damage = Managers.PlayerM.GetAttack(DATA.CharacterGrade, charData, this);
         CriticalRate = Managers.PlayerM.CriticalChance();
 
@@ -195,7 +195,7 @@ public class PlayerController : CreatureController
         if (go != null)
         {
             //Debug.Log("<color=white>[Projectile Step 3-Success] 원거리 투사체 생성 완료!</color>");
-            GetMp(50);
+            GetMp(20);
         }
 
     }
@@ -226,7 +226,7 @@ public class PlayerController : CreatureController
         if (go != null)
         {
             DelegateHolder.PlayerAttack(this, currentTarget);
-            GetMp(50);
+            GetMp(20);
         }
 
         TrailDisable().Forget();
@@ -453,7 +453,6 @@ public class PlayerController : CreatureController
     {
         if (isDead) return;
         if (Managers.StageM.isDead) return;
-        if (isUsingSkill) return;
 
         base.GetDamage(_dmg, _attacker, _attacker.GetCritical());
         DelegateHolder.PlayerHit(this);
