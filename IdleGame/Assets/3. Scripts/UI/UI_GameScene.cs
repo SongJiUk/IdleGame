@@ -442,6 +442,8 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
         AllOff();
         StartSpawn();
 
+        CheckOffLineReward();
+
         return true;
     }
     void OnDestroy()

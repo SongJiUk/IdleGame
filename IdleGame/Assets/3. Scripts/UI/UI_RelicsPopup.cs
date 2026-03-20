@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,7 +65,6 @@ public class UI_RelicsPopup : UI_Popup
         RelicCenterLevelText,
     }
     #endregion
-    public System.Action OnValueChange;
     Transform parent = null;
     UI_RelicIcon clickRelic;
 
@@ -134,24 +134,23 @@ public class UI_RelicsPopup : UI_Popup
 
     void InitRelicIcon()
     {
-        var datas = Managers.GameM.gameData.Item_Data;
-
         if (relics.Count != 0) ClearIcons();
 
-        foreach (var data in datas)
+        var sortedDatas = Managers.GameM.gameData.Item_Data.Values
+            .Where(x => x.data.ItemType == Define.ItemType.Equipment && x.holder.Count > 0)
+            .OrderByDescending(x => x.data.ItemGrade)
+            .ThenBy(x => x.data.DataID);
+
+        foreach (var data in sortedDatas)
         {
-            if (data.Value.data.ItemType == Define.ItemType.Equipment)
-            {
-                if (data.Value.holder.Count == 0) continue;
+            var go = Managers.UIM.MakeSubItem<UI_RelicIcon>();
+            go.transform.SetParent(parent, false);
+            go.transform.SetAsLastSibling();
+            go.transform.localScale = Vector3.one;
 
-                var go = Managers.UIM.MakeSubItem<UI_RelicIcon>();
-                go.transform.SetParent(parent, false);
-                go.transform.localScale = Vector3.one;
-
-                go.Init().Forget();
-                go.SetInfo(data.Value.data, this);
-                relics.Add(go);
-            }
+            go.Init().Forget();
+            go.SetInfo(data.data, this);
+            relics.Add(go);
         }
     }
     void InitEquippedRelicsUI()
@@ -213,7 +212,7 @@ public class UI_RelicsPopup : UI_Popup
         DelegateHolder.Clear();
         Managers.RelicM.Init();
 
-        OnValueChange?.Invoke();
+        foreach (var r in relics) r.RefreshUI();
         clickRelic = null;
     }
 
@@ -233,12 +232,15 @@ public class UI_RelicsPopup : UI_Popup
         }
     }
 
+    private void OnDisable()
+    {
+        ClearIcons();
+    }
+
     async void OnClickCloseButton()
     {
         Managers.SoundM.PlayButtonClick();
         await TriggerClose(this, false);
-
-        ClearIcons();
     }
 
     void ClearIcons()
@@ -269,6 +271,7 @@ public class UI_RelicsPopup : UI_Popup
         Managers.SoundM.PlayButtonClick();
         if (CheckUpgradeRelic())
         {
+            InitRelicIcon();
             var popup = await Managers.UIM.ShowPopup<UI_UpgradePopup>();
             popup.SetInfo(relicList);
         }
@@ -290,11 +293,10 @@ public class UI_RelicsPopup : UI_Popup
                 if (data.holder.Level == 0) continue;
 
                 int needCount = data.holder.Level * 5;
-                if (needCount < data.holder.Count)
+                if (needCount <= data.holder.Count)
                 {
                     data.holder.Count -= needCount;
                     data.holder.Level++;
-                    OnValueChange?.Invoke();
                     relicList.Add(data);
                 }
             }
@@ -357,7 +359,7 @@ public class UI_RelicsPopup : UI_Popup
         Managers.ItemM.RemoveItem(clickRelic.name);
         SetClickIcon(null);
 
-        OnValueChange?.Invoke();
+        foreach (var r in relics) r.RefreshUI();
         RemoveRelic();
         clickRelic = null;
     }

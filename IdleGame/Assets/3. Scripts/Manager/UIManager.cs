@@ -128,7 +128,7 @@ public class UIManager
         {
             if (_isFade)
             {
-                Managers.StageM.StateChange(Define.StageState.Ready);
+                Managers.StageM.StateChange(prevState);
             }
         }
     }

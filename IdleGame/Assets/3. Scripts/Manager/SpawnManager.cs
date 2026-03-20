@@ -228,29 +228,35 @@ public class SpawnManager : MonoBehaviour, ITickable
         boss.OnMonsterInfoUpdate += scene.UpdateBossInfo;
 
         ApplyKnockBackWithDelay(boss).Forget();
-
     }
 
     async UniTaskVoid ApplyKnockBackWithDelay(MonsterController _boss)
     {
-
         await UniTask.NextFrame();
 
         Vector3 bossPos = _boss.transform.position;
 
         foreach (var player in Managers.CharacterM.AlivePlayers)
         {
-
             Vector3 playerPos = player.transform.position;
             float dist = Vector3.Distance(bossPos, playerPos);
 
             if (dist <= 2.0f)
             {
-                Vector3 knockBackDir = (playerPos - bossPos).normalized;
-                if (knockBackDir == Vector3.zero) knockBackDir = Vector3.forward;
+                Vector3 knockBackDir;
+
+                if (dist < 0.1f)
+                {
+                    // 거의 같은 위치면 랜덤 방향으로 밀어내기
+                    Vector2 rand = UnityEngine.Random.insideUnitCircle.normalized;
+                    knockBackDir = new Vector3(rand.x, 0f, rand.y);
+                }
+                else
+                {
+                    knockBackDir = (playerPos - bossPos).normalized;
+                }
 
                 player.transform.LookAt(bossPos);
-
                 player.KnockBack(3.0f, 0.3f).Forget();
             }
         }

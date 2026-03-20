@@ -64,21 +64,47 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/2022.3.62f3/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/Parser/SkAdNetworkUrlParser.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/Source/ISkAdNetworkSource.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/Parser/SkAdNetworkParser.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/Parser/SkAdNetworkXmlParser.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/Source/SkAdNetworkLocalSourceProvider.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/Parser/ISkAdNetworkParser.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/PostProcessBuildPlist.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/AssemblyInfo.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/Parser/SkAdNetworkJsonParser.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/Parser/SkAdNetworkFileExtension.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/Source/SkAdNetworkRemoteSource.cs" />
-    <Compile Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/Source/SkAdNetworkLocalSource.cs" />
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/Parser/SkAdNetworkUrlParser.cs">
+      <Link>Editor/Parser/SkAdNetworkUrlParser.cs</Link>
+    </Compile>
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/Source/ISkAdNetworkSource.cs">
+      <Link>Editor/Source/ISkAdNetworkSource.cs</Link>
+    </Compile>
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/Parser/SkAdNetworkParser.cs">
+      <Link>Editor/Parser/SkAdNetworkParser.cs</Link>
+    </Compile>
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/Parser/SkAdNetworkXmlParser.cs">
+      <Link>Editor/Parser/SkAdNetworkXmlParser.cs</Link>
+    </Compile>
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/Source/SkAdNetworkLocalSourceProvider.cs">
+      <Link>Editor/Source/SkAdNetworkLocalSourceProvider.cs</Link>
+    </Compile>
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/Parser/ISkAdNetworkParser.cs">
+      <Link>Editor/Parser/ISkAdNetworkParser.cs</Link>
+    </Compile>
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/PostProcessBuildPlist.cs">
+      <Link>Editor/PostProcessBuildPlist.cs</Link>
+    </Compile>
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/AssemblyInfo.cs">
+      <Link>Editor/AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/Parser/SkAdNetworkJsonParser.cs">
+      <Link>Editor/Parser/SkAdNetworkJsonParser.cs</Link>
+    </Compile>
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/Parser/SkAdNetworkFileExtension.cs">
+      <Link>Editor/Parser/SkAdNetworkFileExtension.cs</Link>
+    </Compile>
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/Source/SkAdNetworkRemoteSource.cs">
+      <Link>Editor/Source/SkAdNetworkRemoteSource.cs</Link>
+    </Compile>
+    <Compile Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/Source/SkAdNetworkLocalSource.cs">
+      <Link>Editor/Source/SkAdNetworkLocalSource.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Library/PackageCache/com.unity.ads.ios-support@1.0.1/Editor/Unity.Advertisement.IosSupport.Editor.asmdef" />
+    <None Include="/Users/songjiuk/Downloads/com.unity.ads.ios-support-master/com.unity.ads.ios-support/Editor/Unity.Advertisement.IosSupport.Editor.asmdef">
+      <Link>Editor/Unity.Advertisement.IosSupport.Editor.asmdef</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

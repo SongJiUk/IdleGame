@@ -66,9 +66,6 @@ public class UI_RelicIcon : UI_Base
     {
         data = _data;
         parent = _parent;
-        parent.OnValueChange -= RefreshUI;
-        parent.OnValueChange += RefreshUI;
-
         GetImage(ImagesType, (int)Images.UI_RelicIcon).sprite = Managers.ResourceM.GetAtlas(_data.ItemGrade.ToString());
         GetImage(ImagesType, (int)Images.RelicImage).sprite = Managers.ResourceM.GetAtlas(_data.Name);
         GetImage(ImagesType, (int)Images.RelicImage).SetNativeSize();

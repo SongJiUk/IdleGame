@@ -10,7 +10,6 @@ public class UI_HeroPopup : UI_Popup
 {
     //TODO : 렌더텍스쳐 해상도 값도 수정해줘야함.
     public List<UI_CharacterIcon> characters = new List<UI_CharacterIcon>();
-    Dictionary<string, CharacterHolder> characterDic = new Dictionary<string, CharacterHolder>();
     enum GameObjects
     {
         CharacterContentObject,
@@ -37,7 +36,6 @@ public class UI_HeroPopup : UI_Popup
     }
     UI_CharacterIcon clickCharacter;
     RectTransform rect;
-    public System.Action OnValueChange;
     bool isRemoveCharacter = false;
     List<CharacterHolder> characterList = new List<CharacterHolder>();
     RawImage rawImage;
@@ -80,34 +78,7 @@ public class UI_HeroPopup : UI_Popup
         GetObject(GameObjectsType, (int)GameObjects.CircleButtonsObject).SetActive(false);
         Managers.RenderM.Show(RenderType.Hero, rawImage);
 
-        var datas = Managers.GameM.gameData.Characters_Data;
-
-
-        if (characters.Count != 0) ClearIcons();
-
-
-        characterDic.Clear();
-
-        foreach (var data in datas)
-        {
-            characterDic.Add(data.Value.data.Name, data.Value);
-        }
-
-        //TODO : 정렬 방법 바꾸기
-        var sortdic = characterDic.OrderBy(x => x.Value.data.CharacterGrade);
-
-        foreach (var data in sortdic)
-        {
-            if (data.Value.holder.Count == 0) continue;
-
-            var go = Managers.UIM.MakeSubItem<UI_CharacterIcon>();
-            go.transform.SetParent(rect.transform, false);
-            go.transform.localScale = Vector3.one;
-
-            go.Init().Forget();
-            go.SetInfo(data.Value.data, this);
-            characters.Add(go);
-        }
+        RebuildIcons();
 
         //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(true);
     }
@@ -129,6 +100,7 @@ public class UI_HeroPopup : UI_Popup
     {
         if (CheckUpgradeCharacter())
         {
+            RebuildIcons();
             var popup = await Managers.UIM.ShowPopup<UI_UpgradePopup>();
             popup.SetInfo(characterList);
         }
@@ -151,7 +123,6 @@ public class UI_HeroPopup : UI_Popup
             {
                 data.holder.Count -= needCount;
                 data.holder.Level++;
-                OnValueChange?.Invoke();
                 characterList.Add(data);
             }
         }
@@ -170,7 +141,31 @@ public class UI_HeroPopup : UI_Popup
     private void OnDisable()
     {
         Managers.RenderM.Hide();
+        ClearIcons();
     }
+    void RebuildIcons()
+    {
+        if (characters.Count != 0) ClearIcons();
+
+        var sortdic = Managers.GameM.gameData.Characters_Data.Values
+            .OrderByDescending(x => x.data.CharacterGrade)
+            .ThenBy(x => x.data.DataID);
+
+        foreach (var data in sortdic)
+        {
+            if (data.holder.Count == 0) continue;
+
+            var go = Managers.UIM.MakeSubItem<UI_CharacterIcon>();
+            go.transform.SetParent(rect.transform, false);
+            go.transform.SetAsLastSibling();
+            go.transform.localScale = Vector3.one;
+
+            go.Init().Forget();
+            go.SetInfo(data.data, this);
+            characters.Add(go);
+        }
+    }
+
     void ClearIcons()
     {
         for (int i = 0; i < characters.Count; i++)
@@ -212,7 +207,7 @@ public class UI_HeroPopup : UI_Popup
             (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
 
             Managers.RenderM.renderCharacter.ChangeCharacter();
-            OnValueChange?.Invoke();
+            foreach (var c in characters) c.RefreshUI();
             clickCharacter = null;
             //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(true);
             Managers.StageM.StateChange(Define.StageState.Ready);
@@ -228,7 +223,7 @@ public class UI_HeroPopup : UI_Popup
 
             //여기서 해당 지역에 있던 오브젝트를 변경해줘야할듯
             Managers.RenderM.renderCharacter.InitCharacter();
-            OnValueChange?.Invoke();
+            foreach (var c in characters) c.RefreshUI();
             clickCharacter = null;
             Managers.StageM.StateChange(Define.StageState.Ready);
         }
@@ -253,7 +248,7 @@ public class UI_HeroPopup : UI_Popup
 
 
         Managers.RenderM.renderCharacter.RemoveCharacter();
-        OnValueChange?.Invoke();
+        foreach (var c in characters) c.RefreshUI();
         clickCharacter = null;
 
         Managers.StageM.StateChange(Define.StageState.Ready);

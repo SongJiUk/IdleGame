@@ -72,6 +72,7 @@
     <Compile Include="Assets/3. Scripts/Skill/Player/Hammer_Skill.cs" />
     <Compile Include="Assets/3. Scripts/Manager/UIManager.cs" />
     <Compile Include="Assets/3. Scripts/Manager/Firebase/UI_LoadingLogin.cs" />
+    <Compile Include="Assets/3. Scripts/AppTrackingTransparency.cs" />
     <Compile Include="Assets/3. Scripts/Manager/Firebase/FirebaseDB.cs" />
     <Compile Include="Assets/3. Scripts/UI/UI_UpgradeRelicIcon.cs" />
     <Compile Include="Assets/3. Scripts/Skill/Player/Assassin_Skill.cs" />
@@ -222,7 +223,6 @@
     <Compile Include="Assets/3. Scripts/UI/UI_EventHandler.cs" />
     <Compile Include="Assets/3. Scripts/UI/UI_GameScene.cs" />
     <Compile Include="Assets/3. Scripts/Skill/ParticleController.cs" />
-    <Compile Include="Assets/3. Scripts/RTMobileTest.cs" />
     <Compile Include="Assets/3. Scripts/UI/UI_GachaHeroIcon.cs" />
     <Compile Include="Assets/3. Scripts/Skill/DamageEffect.cs" />
     <Compile Include="Assets/3. Scripts/Manager/UpdateManager.cs" />
@@ -405,7 +405,6 @@
     <None Include="Assets/GoogleMobileAds/GoogleMobileAds.Android.dll" />
     <None Include="Assets/GoogleMobileAds/Resources/Resources/Styles/PropertyNameReferenceField.uss" />
     <None Include="Assets/GoogleMobileAds/Resources/Resources/Resources/Styles/PortInputView.uss" />
-    <None Include="Assets/AddressableAssetsData/link.xml" />
     <None Include="Assets/1. DataAssets/Prefabs/Effect/Shader/Additive.shader" />
     <None Include="Assets/GoogleMobileAds/Resources/Resources/UXML/NodeSettings.uxml" />
     <None Include="Assets/GoogleMobileAds/Resources/Resources/Styles/NodeSettings.uss" />

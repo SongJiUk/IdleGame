@@ -95,7 +95,7 @@ public class UI_SmeltingPopup : UI_Popup
         GameObject slot = GetObject(GameObjectsType, (int)GameObjects.Smelting_1_Object + _count);
         slot.SetActive(true);
 
-        string statusName = _holder.holder.ToString();
+        string statusName = GetSmeltDataName(_holder.holder);
 
         var dataInSheet = Managers.DataM.SmeltDataDic.Values
             .FirstOrDefault(d => d.Name == statusName && d.Grade == _holder.grade);
@@ -136,6 +136,22 @@ public class UI_SmeltingPopup : UI_Popup
     }
 
 
+    private string GetSmeltDataName(Define.Status_Holder _holder)
+    {
+        switch (_holder)
+        {
+            case Define.Status_Holder.Damage:       return "DamageUp";
+            case Define.Status_Holder.HP:           return "HpUp";
+            case Define.Status_Holder.Money:        return "GoldUp";
+            case Define.Status_Holder.Item:         return "ItemDropUp";
+            case Define.Status_Holder.Exp:          return "ExpUp";
+            case Define.Status_Holder.AttackSpeed:  return "AttackSpeed";
+            case Define.Status_Holder.CriticalP:    return "CriticalChanceUp";
+            case Define.Status_Holder.CriticalD:    return "CriticalDamageUp";
+            default: return _holder.ToString();
+        }
+    }
+
     public void SetSlot(Define.Status_Holder _statusName, int _count)
     {
 
@@ -144,7 +160,7 @@ public class UI_SmeltingPopup : UI_Popup
         slot.transform.DOKill();
         slot.SetActive(true);
 
-        string statusName = _statusName.ToString();
+        string statusName = GetSmeltDataName(_statusName);
         var candidate = Managers.DataM.SmeltDataDic.Values
         .Where(d => d.Name == statusName)
         .ToList();

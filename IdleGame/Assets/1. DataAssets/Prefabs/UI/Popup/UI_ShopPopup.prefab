@@ -11574,7 +11574,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -19.999998, y: -16.3477}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3492619168277538492
 CanvasRenderer:
@@ -11631,7 +11631,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 69.95
+  m_fontSize: 64.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11685,7 +11685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 391149ee2cbfb2f4f82b3c693f2c74a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LocalName: MissionHeroSummon
+  LocalName: Mission_HeroGacha
   SemiData: []
 --- !u!1 &3492619168289330395
 GameObject:
@@ -13012,8 +13012,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 6.8}
-  m_SizeDelta: {x: 0, y: -10}
+  m_AnchoredPosition: {x: 0, y: 6.799999}
+  m_SizeDelta: {x: -19.999996, y: -26.4724}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7081735344475780572
 CanvasRenderer:
@@ -13070,10 +13070,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 66.05
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0

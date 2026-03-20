@@ -129,6 +129,17 @@ public class Managers : MonoBehaviour
         PoolM.Clear();
     }
 
+#if UNITY_EDITOR
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            GameM.Dia += 10000;
+            Debug.Log("[Test] 다이아 10000 추가");
+        }
+    }
+#endif
+
     void OnApplicationPause(bool _pause)
     {
         OnAppPause?.Invoke(_pause);
@@ -141,23 +152,4 @@ public class Managers : MonoBehaviour
         GameM.OnApplicationPause(true);
     }
 
-    public void TestManualSave()
-    {
-        Debug.Log("<color=yellow>[개발용] 수동 저장 테스트 시작</color>");
-        OnApplicationPause(true); // 동일한 로직 실행
-    }
-
-    public void TestManualLoad()
-    {
-        Debug.Log("<color=cyan>[개발용] 수동 로드 테스트 시작</color>");
-        OnApplicationPause(false); // 동일한 로직 실행
-    }
-    void Update()
-    {
-        // 에디터에서만 작동하게 제한
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.F)) TestManualSave();
-        if (Input.GetKeyDown(KeyCode.R)) TestManualLoad();
-#endif
-    }
 }
