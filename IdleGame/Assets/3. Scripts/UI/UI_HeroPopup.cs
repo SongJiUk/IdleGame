@@ -100,7 +100,7 @@ public class UI_HeroPopup : UI_Popup
     {
         if (CheckUpgradeCharacter())
         {
-            RebuildIcons();
+            foreach (var c in characters) c.RefreshUI();
             var popup = await Managers.UIM.ShowPopup<UI_UpgradePopup>();
             popup.SetInfo(characterList);
         }

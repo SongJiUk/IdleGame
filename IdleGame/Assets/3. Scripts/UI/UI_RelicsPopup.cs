@@ -271,7 +271,7 @@ public class UI_RelicsPopup : UI_Popup
         Managers.SoundM.PlayButtonClick();
         if (CheckUpgradeRelic())
         {
-            InitRelicIcon();
+            foreach (var r in relics) r.RefreshUI();
             var popup = await Managers.UIM.ShowPopup<UI_UpgradePopup>();
             popup.SetInfo(relicList);
         }
