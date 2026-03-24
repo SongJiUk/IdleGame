@@ -83,6 +83,17 @@ public class UI_GachaPopup : UI_Popup
             int horizontalCount = 0;
             value = _count;
 
+            if (!isAd)
+            {
+                int cost = _count == 11 ? 3000 : 300;
+                if (Managers.GameM.Dia < cost)
+                {
+                    Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDia"));
+                    return;
+                }
+                Managers.GameM.Dia -= cost;
+            }
+
             if (isAd)
             {
                 GetText(TextsType, (int)Texts.OneMoreButtonText).text = Managers.LocalizationM.Get("UIShop_1Summon");
