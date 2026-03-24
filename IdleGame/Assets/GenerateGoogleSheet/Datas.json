@@ -2052,13 +2052,13 @@
       "ja": "騎士は戦場の先頭から味方を導く正義の象徴です。単に剣を振り回すことにとどまらず、自分の闘志と信念を「光の形状」に実体化し、遠く離れた敵まで断罪します。彼の剣光が点滅するたびに、敵は恐怖に震え、仲間は勇気を得ます。"
     },
     {
-      "Key": "Spearman",
+      "Key": "SpearMan",
       "ko": "스피어맨",
       "en": "Spearman",
       "ja": "スピアマン"
     },
     {
-      "Key": "Spearman_Description",
+      "Key": "SpearMan_Description",
       "ko": "스피어맨은 전장의 거리감을 지배하는 달인입니다. 검보다 길고 망치보다 날카로운 창을 자유자재로 휘둘러, 적이 접근하기도 전에 가로막거나 한꺼번에 쓸어버립니다. 그의 공격은 마치 몰아치는 태풍과 같아, 전방의 수많은 적을 단 한 번의 휘두름으로 저지하는 압도적인 위용을 보여줍니다.",
       "en": "The Spearman is a master of dominating the sense of distance on the battlefield. Wielding a spear longer than a sword and sharper than a hammer with ease, he intercepts enemies before they can approach or sweeps them away in a single strike. His attacks resemble a raging typhoon, displaying an overwhelming aura that halts countless foes in front of him with a single swing.",
       "ja": "スピアマンは戦場の距離感を支配する達人です。剣より長く、ハンマーよりも鋭い槍を自由自在に振り回し、敵が接近する前に遮るか、一度に掃きます。彼の攻撃は、まるで吹き荒れる台風のようなもので、前方の数多くの敵を一回の振り回しで阻止する圧倒的な威容を示しています。"
@@ -2076,13 +2076,13 @@
       "ja": "両手剣士は、自分の体ほどの巨大な剣を軽く振り回す腕力の持ち主です。速度は遅くとも、彼が振り回す巨剣の軌跡は避けられない絶望を与えます。"
     },
     {
-      "Key": "Wizard",
+      "Key": "Mage_M",
       "ko": "마법사",
       "en": "Wizard",
       "ja": "ウィザード"
     },
     {
-      "Key": "Wizard_Description",
+      "Key": "Mage_M_Description",
       "ko": "마법사는 세상의 근원인 마나를 다스려 자연의 재해를 인위적으로 불러일으키는 자입니다. 수십 년의 연구 끝에 금지된 고위 마법인 '운석 소환'을 자유자재로 구사하게 된 그는, 적들이 전열을 가다듬기도 전에 하늘로부터 파멸을 선사합니다. 그의 지팡이가 땅을 두드리면, 전장은 곧 거대한 소멸의 장이 됩니다.",
       "en": "The Wizard is one who controls Mana, the source of the world, to artificially conjure natural disasters. Having mastered the forbidden high-level magic of 'Meteor Summoning' after decades of research, he delivers destruction from the heavens before his enemies can even regroup. When his staff strikes the ground, the battlefield instantly becomes a massive arena of annihilation.",
       "ja": "魔法使いは世界の源であるマナを治め、自然の災害を人為的に呼び起こす者です。数十年の研究の末に禁止された上級魔法の「隕石召喚」を自由自在に駆使することになった彼は、敵が態勢を整える前に空から破滅をもたらします。彼の杖が地面を叩くと、戦場はすぐに巨大な消滅の場になります。"
@@ -2226,19 +2226,19 @@
       "ja": "前方の敵に150%で貫通攻撃"
     },
     {
-      "Key": "Spearman_Skill",
+      "Key": "SpearMan_Skill",
       "ko": "전방 광역 휘두르기",
       "en": "Frontal Wide Swing",
       "ja": "前方広域の振り回し"
     },
     {
-      "Key": "Spearman_Skill_Description",
+      "Key": "SpearMan_Skill_Description",
       "ko": "창의 길이를 최대한 활용해 전방으로 부채꼴 모양의 거대한 휘두르기 공격을 가합니다. 사거리 내의 모든 적에게 강력한 물리 피해를 입힙니다.",
       "en": "Utilizing the full length of the spear, unleash a massive fan-shaped swing attack forward. Deals powerful physical damage to all enemies within range.",
       "ja": "槍の長さを最大限に活用し、前方に扇形の巨大な振り回し攻撃を加えます。射程内のすべての敵に強力な物理ダメージを与えます。"
     },
     {
-      "Key": "Spearman_Skill_Effect",
+      "Key": "SpearMan_Skill_Effect",
       "ko": "부채꼴 내의 전방의 적 150%로 공격",
       "en": "Attacks enemies in front within a fan at 150%",
       "ja": "扇形内の前方の敵に150%で攻撃"
@@ -2262,19 +2262,19 @@
       "ja": "前方の敵に150%で攻撃"
     },
     {
-      "Key": "Wizard_Skill",
+      "Key": "Mage_M_Skill",
       "ko": "혜성 낙하",
       "en": "Comet Fall",
       "ja": "彗星落下"
     },
     {
-      "Key": "Wizard_Skill_Description",
+      "Key": "Mage_M_Skill_Description",
       "ko": "하늘이 붉게 물들며 타오르는 거대한 운석이 구름을 뚫고 낙하합니다. 충돌하는 순간 지면이 흔들리며 거대한 화염 폭풍이 휘몰아칩니다.",
       "en": "As the sky turns red, a burning giant meteorite pierces through the clouds and falls. At the moment of impact, the ground shakes and a massive firestorm rages.",
       "ja": "空が赤く染まり、燃える巨大な隕石が雲を突き抜け落ちます。衝突する瞬間、地面が揺れ、巨大な炎の嵐が吹き荒れます。"
     },
     {
-      "Key": "Wizard_Skill_Effect",
+      "Key": "Mage_M_Skill_Effect",
       "ko": "해당적 주변의 적의 200%로 스플래시 공격",
       "en": "Splash attack at 200% to surrounding enemies",
       "ja": "該当する敵周辺の敵に200%でスプラッシュ攻撃"
@@ -3213,7 +3213,7 @@
       "Key": "UIToastNoDungeon",
       "ko": "현재 상태에서는 던전에 입장할 수 없습니다.",
       "en": "You cannot enter the dungeon in your current state.",
-      "ja": "現在の状態ではダンジョンに入場できません。"
+      "ja": "現状ではダンジョンに入場できません。"
     },
     {
       "Key": "UIToastNoDia",

@@ -80,7 +80,7 @@ public partial class FirebaseManager
                 else
                 {
                     Debug.LogWarning($"[WriteData] 저장 실패 ({i + 1}/{maxRetry}회), 2초 후 재시도...");
-                    await UniTask.WaitForSeconds(2f);
+                    await UniTask.WaitForSeconds(2f, ignoreTimeScale: true);
                 }
             }
         }

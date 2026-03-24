@@ -222,13 +222,11 @@ public class GameManager
             Managers.UpdateM.PauseTicking(true);
 
             SaveGameOnPause().Forget();
-            Debug.Log("[기기 정지]");
         }
         else
         {
             Time.timeScale = 1f;
             Managers.UpdateM.PauseTicking(false);
-            Debug.Log("[기기 재개]");
         }
     }
 

@@ -120,7 +120,6 @@ public class UI_RelicsPopup : UI_Popup
 
     public override void SetInfo()
     {
-
         Managers.SoundM.MuteEffectVolume(true);
         RefreshUI();
         InitEquippedRelicsUI();
@@ -134,24 +133,29 @@ public class UI_RelicsPopup : UI_Popup
 
     void InitRelicIcon()
     {
-        if (relics.Count != 0) ClearIcons();
-
+        ClearIcons();
         var sortedDatas = Managers.GameM.gameData.Item_Data.Values
-            .Where(x => x.data.ItemType == Define.ItemType.Equipment && x.holder.Count > 0)
+            .Where(x => x.data.ItemType == Define.ItemType.Equipment && (x.holder.Count > 0 || x.holder.Level > 1))
             .OrderByDescending(x => x.data.ItemGrade)
-            .ThenBy(x => x.data.DataID);
-
+            .ThenBy(x => x.data.DataID)
+            .ToList();
         foreach (var data in sortedDatas)
         {
-            var go = Managers.UIM.MakeSubItem<UI_RelicIcon>();
-            go.transform.SetParent(parent, false);
-            go.transform.SetAsLastSibling();
-            go.transform.localScale = Vector3.one;
-
-            go.Init().Forget();
-            go.SetInfo(data.data, this);
-            relics.Add(go);
+            var icon = Managers.UIM.MakeSubItem<UI_RelicIcon>();
+            icon.transform.SetParent(parent, false);
+            icon.transform.SetAsLastSibling();
+            icon.transform.localScale = Vector3.one;
+            icon.Init().Forget();
+            icon.SetInfo(data.data, this);
+            relics.Add(icon);
         }
+    }
+
+    void ClearIcons()
+    {
+        for (int i = 0; i < relics.Count; i++)
+            if (relics[i] != null) Managers.ResourceM.Destroy(relics[i].gameObject);
+        relics.Clear();
     }
     void InitEquippedRelicsUI()
     {
@@ -212,7 +216,7 @@ public class UI_RelicsPopup : UI_Popup
         DelegateHolder.Clear();
         Managers.RelicM.Init();
 
-        foreach (var r in relics) r.RefreshUI();
+        foreach (var r in relics) if (r.gameObject.activeSelf) r.RefreshUI();
         clickRelic = null;
     }
 
@@ -234,7 +238,6 @@ public class UI_RelicsPopup : UI_Popup
 
     private void OnDisable()
     {
-        ClearIcons();
     }
 
     async void OnClickCloseButton()
@@ -243,13 +246,9 @@ public class UI_RelicsPopup : UI_Popup
         await TriggerClose(this, false);
     }
 
-    void ClearIcons()
+    private void OnDestroy()
     {
-        for (int i = 0; i < relics.Count; i++)
-        {
-            Managers.ResourceM.Destroy(relics[i].gameObject);
-        }
-        relics.Clear();
+        ClearIcons();
     }
 
 
@@ -271,7 +270,8 @@ public class UI_RelicsPopup : UI_Popup
         Managers.SoundM.PlayButtonClick();
         if (CheckUpgradeRelic())
         {
-            foreach (var r in relics) r.RefreshUI();
+            Managers.FirebaseM.WriteData().Forget();
+            InitRelicIcon();
             var popup = await Managers.UIM.ShowPopup<UI_UpgradePopup>();
             popup.SetInfo(relicList);
         }
@@ -359,7 +359,7 @@ public class UI_RelicsPopup : UI_Popup
         Managers.ItemM.RemoveItem(clickRelic.name);
         SetClickIcon(null);
 
-        foreach (var r in relics) r.RefreshUI();
+        foreach (var r in relics) if (r.gameObject.activeSelf) r.RefreshUI();
         RemoveRelic();
         clickRelic = null;
     }

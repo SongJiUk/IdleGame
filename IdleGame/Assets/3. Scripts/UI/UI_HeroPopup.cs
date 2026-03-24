@@ -100,7 +100,8 @@ public class UI_HeroPopup : UI_Popup
     {
         if (CheckUpgradeCharacter())
         {
-            foreach (var c in characters) c.RefreshUI();
+            Managers.FirebaseM.WriteData().Forget();
+            RebuildIcons();
             var popup = await Managers.UIM.ShowPopup<UI_UpgradePopup>();
             popup.SetInfo(characterList);
         }
@@ -126,7 +127,6 @@ public class UI_HeroPopup : UI_Popup
                 characterList.Add(data);
             }
         }
-
         if (characterList.Count == 0) return false;
         else return true;
     }
@@ -135,44 +135,42 @@ public class UI_HeroPopup : UI_Popup
     {
         Managers.SoundM.PlayButtonClick();
         await TriggerClose(this, true);
-        ClearIcons();
     }
 
     private void OnDisable()
     {
         Managers.RenderM.Hide();
-        ClearIcons();
     }
     void RebuildIcons()
     {
-        if (characters.Count != 0) ClearIcons();
-
+        ClearIcons();
         var sortdic = Managers.GameM.gameData.Characters_Data.Values
+            .Where(x => x.holder.Count > 0 || x.holder.Level > 1 || Managers.GameM.gameData.TeamPlacementID.Contains(x.data.DataID))
             .OrderByDescending(x => x.data.CharacterGrade)
-            .ThenBy(x => x.data.DataID);
-
+            .ThenBy(x => x.data.DataID)
+            .ToList();
         foreach (var data in sortdic)
         {
-            if (data.holder.Count == 0) continue;
-
-            var go = Managers.UIM.MakeSubItem<UI_CharacterIcon>();
-            go.transform.SetParent(rect.transform, false);
-            go.transform.SetAsLastSibling();
-            go.transform.localScale = Vector3.one;
-
-            go.Init().Forget();
-            go.SetInfo(data.data, this);
-            characters.Add(go);
+            var icon = Managers.UIM.MakeSubItem<UI_CharacterIcon>();
+            icon.transform.SetParent(rect.transform, false);
+            icon.transform.SetAsLastSibling();
+            icon.transform.localScale = Vector3.one;
+            icon.Init().Forget();
+            icon.SetInfo(data.data, this);
+            characters.Add(icon);
         }
     }
 
     void ClearIcons()
     {
         for (int i = 0; i < characters.Count; i++)
-        {
-            Managers.ResourceM.Destroy(characters[i].gameObject);
-        }
+            if (characters[i] != null) Managers.ResourceM.Destroy(characters[i].gameObject);
         characters.Clear();
+    }
+
+    private void OnDestroy()
+    {
+        ClearIcons();
     }
 
     void OnClickCircleButton(Buttons _clickButton)
@@ -207,7 +205,7 @@ public class UI_HeroPopup : UI_Popup
             (Managers.UIM.SceneUI as UI_GameScene).CheckCharactersState();
 
             Managers.RenderM.renderCharacter.ChangeCharacter();
-            foreach (var c in characters) c.RefreshUI();
+            foreach (var c in characters) if (c.gameObject.activeSelf) c.RefreshUI();
             clickCharacter = null;
             //Managers.RenderM.renderCharacter.GetRenderCharacterParticle(true);
             Managers.StageM.StateChange(Define.StageState.Ready);
@@ -223,7 +221,7 @@ public class UI_HeroPopup : UI_Popup
 
             //여기서 해당 지역에 있던 오브젝트를 변경해줘야할듯
             Managers.RenderM.renderCharacter.InitCharacter();
-            foreach (var c in characters) c.RefreshUI();
+            foreach (var c in characters) if (c.gameObject.activeSelf) c.RefreshUI();
             clickCharacter = null;
             Managers.StageM.StateChange(Define.StageState.Ready);
         }
@@ -248,7 +246,7 @@ public class UI_HeroPopup : UI_Popup
 
 
         Managers.RenderM.renderCharacter.RemoveCharacter();
-        foreach (var c in characters) c.RefreshUI();
+        foreach (var c in characters) if (c.gameObject.activeSelf) c.RefreshUI();
         clickCharacter = null;
 
         Managers.StageM.StateChange(Define.StageState.Ready);

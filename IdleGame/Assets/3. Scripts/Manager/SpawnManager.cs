@@ -215,7 +215,6 @@ public class SpawnManager : MonoBehaviour, ITickable
         int value = _count - Managers.ObjectM.mcList.Count;
         for (int i = 0; i < value; i++)
         {
-            //TODO: 여기 스테이지 마다 생성되는 몬스터가 달라진다면 하드코딩 없애기(10000) 이거 
             Managers.ObjectM.Spawn<MonsterController>(Utils.CreateMonsterSpawnPoint(), 10000);
         }
     }

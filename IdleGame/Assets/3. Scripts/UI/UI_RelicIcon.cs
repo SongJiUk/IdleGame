@@ -80,10 +80,12 @@ public class UI_RelicIcon : UI_Base
     }
     public void RefreshUI()
     {
-        int levelCount = Managers.GameM.gameData.Item_Holder[data.Name].Level * 5;
-        GetImage(ImagesType, (int)Images.CountFillImage).fillAmount = (float)Managers.GameM.gameData.Item_Holder[data.Name].Count / (float)levelCount;
-        GetText(TextsType, (int)Texts.RelicCountText).text = Managers.GameM.gameData.Item_Holder[data.Name].Count.ToString() + " / " + levelCount.ToString();
-        GetText(TextsType, (int)Texts.RelicLevelText).text = "Lv. " + Managers.GameM.gameData.Item_Holder[data.Name].Level.ToString();
+        if (!Managers.GameM.gameData.Item_Data.TryGetValue(data.Name, out var itemData)) return;
+        var holder = itemData.holder;
+        int levelCount = holder.Level * 5;
+        GetImage(ImagesType, (int)Images.CountFillImage).fillAmount = (float)holder.Count / (float)levelCount;
+        GetText(TextsType, (int)Texts.RelicCountText).text = holder.Count.ToString() + " / " + levelCount.ToString();
+        GetText(TextsType, (int)Texts.RelicLevelText).text = "Lv. " + holder.Level.ToString();
 
         this.GetComponent<Outline>().enabled = false;
         GetObject(GameObjectsType, (int)GameObjects.RelicLockObject).SetActive(false);

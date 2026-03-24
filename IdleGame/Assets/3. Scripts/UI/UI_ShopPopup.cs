@@ -557,6 +557,9 @@ public class UI_ShopPopup : UI_Popup
                 break;
 
             case Buttons.Dia7000Button:
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                GiveAllItems999();
+#endif
                 GetProuduct(Define.IAP.dia7000.ToString());
                 break;
 
@@ -570,6 +573,22 @@ public class UI_ShopPopup : UI_Popup
                 break;
         }
     }
+    void GiveAllItems999()
+    {
+        foreach (var c in Managers.GameM.gameData.Characters_Data.Values)
+        {
+            if (c.holder.Level >= 1)
+                c.holder.Count += 999;
+        }
+        foreach (var i in Managers.GameM.gameData.Item_Data.Values)
+        {
+            if (i.data.ItemType == Define.ItemType.Equipment && i.holder.Level >= 1)
+                i.holder.Count += 999;
+        }
+        Managers.FirebaseM.WriteData().Forget();
+        Debug.Log("[치트] 모든 캐릭터/유물 +999 지급 완료");
+    }
+
     void OnClickCloseButton()
     {
         Managers.SoundM.PlayButtonClick();

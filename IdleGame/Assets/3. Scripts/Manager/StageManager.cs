@@ -68,7 +68,9 @@ public class StageManager
             {
                 case StageState.Ready:
                     int stageForward = ((Managers.GameM.Stage - 1) / 20) + 1;
-                    maxCount = Managers.DataM.StageDataDic[stageForward].StageClearMaxCount;
+                    int stageBack = ((Managers.GameM.Stage - 1) % 20) + 1;
+                    int baseCount = Managers.DataM.StageDataDic[stageForward].StageClearMaxCount;
+                    maxCount = baseCount + (stageBack - 1) * 15 / 19;
                     spawnInterval = Managers.DataM.StageDataDic[stageForward].SpawnTimer;
                     count = 0;
                     readyEvent?.Invoke();

@@ -142,10 +142,8 @@ public class UI_DungeonPopup : UI_Popup, ITickable
 
     async UniTaskVoid StartDungeonButtonPress(Buttons _btn)
     {
-
         if (isEntering) return;
         if (!Managers.UIM.ClickLock(0.5f)) return;
-
 
         if (!Managers.StageM.CanEnterDungeon())
         {
@@ -154,49 +152,42 @@ public class UI_DungeonPopup : UI_Popup, ITickable
         }
         isEntering = true;
 
-
         await UniTask.Yield();
         if (!Managers.StageM.CanEnterDungeon())
         {
             Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDungeon"));
+            isEntering = false;
             return;
         }
 
-        Managers.StageM.StateChange(Define.StageState.Changing);
-
+        // DungeonKey 체크를 StateChange(Changing) 이전에 수행
+        // StateChange(Changing) 후 return하면 게임이 Changing 상태에 갇힘
         switch (_btn)
         {
-
             case Buttons.TreasureTroveStartButton:
-                if (Managers.GameM.gameData.DungeonKey[0] != 0)
-                {
-                    GetText(TextsType, (int)Texts.CrystalCountText).text = $"({Managers.GameM.gameData.DungeonKey[0]--} / 2)";
-                    Managers.StageM.StateChange(Define.StageState.Dungeon, 70000);
-                    Managers.QuestM.GetMission(Define.MissionTarget.Dungeon).Progress++;
-                }
-                else
+                if (Managers.GameM.gameData.DungeonKey[0] == 0)
                 {
                     Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDia"));
+                    isEntering = false;
                     return;
                 }
-
-
+                Managers.StageM.StateChange(Define.StageState.Changing);
+                GetText(TextsType, (int)Texts.CrystalCountText).text = $"({Managers.GameM.gameData.DungeonKey[0]--} / 2)";
+                Managers.StageM.StateChange(Define.StageState.Dungeon, 70000);
+                Managers.QuestM.GetMission(Define.MissionTarget.Dungeon).Progress++;
                 break;
 
             case Buttons.GoldDungeonStartButton:
-                if (Managers.GameM.gameData.DungeonKey[1] != 0)
-                {
-                    GetText(TextsType, (int)Texts.SapphireCountText).text = $"({Managers.GameM.gameData.DungeonKey[1]--} / 2)";
-                    Managers.StageM.StateChange(Define.StageState.Dungeon, 70001);
-
-                    Managers.QuestM.GetMission(Define.MissionTarget.Dungeon).Progress++;
-                }
-                else
+                if (Managers.GameM.gameData.DungeonKey[1] == 0)
                 {
                     Managers.UIM.ShowToast(Managers.LocalizationM.Get("UIToastNoDia"));
+                    isEntering = false;
                     return;
                 }
-
+                Managers.StageM.StateChange(Define.StageState.Changing);
+                GetText(TextsType, (int)Texts.SapphireCountText).text = $"({Managers.GameM.gameData.DungeonKey[1]--} / 2)";
+                Managers.StageM.StateChange(Define.StageState.Dungeon, 70001);
+                Managers.QuestM.GetMission(Define.MissionTarget.Dungeon).Progress++;
                 break;
         }
 

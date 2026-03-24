@@ -204,7 +204,7 @@ public class GameData
             if (!Item_Holder.TryGetValue(targetName, out Holder holder))
             {
                 holder = new Holder();
-                Item_Holder.Add(data.Name, holder);
+                Item_Holder.Add(targetName, holder);
                 //Debug.Log($"[신규 아이템 생성] {targetName}");
             }
             else
