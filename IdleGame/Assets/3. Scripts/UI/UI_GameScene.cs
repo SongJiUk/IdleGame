@@ -1830,14 +1830,15 @@ public class UI_GameScene : UI_Scene, ITickable, IUnScaledTickable
     {
         if (!_isPause)
         {
-            Managers.FirebaseM.SyncDataOnly().Forget();
-
+            // IAP/광고 등으로 내부 일시정지 중이었다면 SyncDataOnly 생략
+            // (구매 직후 포그라운드 복귀 시 Firebase 이전 값으로 덮어씌워지는 것 방지)
             if (Managers.GameM.isInternalPause)
             {
                 Managers.GameM.isInternalPause = false;
                 return;
             }
 
+            Managers.FirebaseM.SyncDataOnly().Forget();
             CheckOffLineReward();
         }
     }

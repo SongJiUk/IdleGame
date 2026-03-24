@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading.Tasks;
+using System.Threading;
 
 public class User
 {
@@ -20,11 +21,12 @@ public partial class FirebaseManager
     public bool IsLoading { get; private set; } = false;
     public bool IsDeleting { get; private set; } = false;
 
+    private CancellationTokenSource writeCts;
+
     public async UniTask WriteData()
     {
         if (reference == null || CurrentUser == null) return;
         if (IsLoading) return;
-
 
         GameData data = Managers.GameM.gameData;
         if (data == null || data.Character_Holder == null || data.Character_Holder.Count == 0)
@@ -32,6 +34,12 @@ public partial class FirebaseManager
             Debug.LogWarning("[WriteData] 저장할 유효 데이터가 없거나 캐릭터 정보가 비어있어 취소합니다.");
             return;
         }
+
+        // 이전 WriteData 취소 → 항상 가장 최신 데이터만 저장
+        writeCts?.Cancel();
+        writeCts?.Dispose();
+        writeCts = new CancellationTokenSource();
+        var token = writeCts.Token;
 
         data.LastSaveTimeTicks = TimerNTP.NowTime.Ticks;
 
@@ -53,10 +61,10 @@ public partial class FirebaseManager
         // 4개 노드를 단일 쓰기로 묶어 원자성 보장 (일부만 저장되는 불일치 방지)
         var savePayload = new Dictionary<string, object>
         {
-            ["DATA"]      = JsonConvert.DeserializeObject<object>(default_json),
+            ["DATA"] = JsonConvert.DeserializeObject<object>(default_json),
             ["CHARACTER"] = JsonConvert.DeserializeObject<object>(character_json),
-            ["ITEM"]      = JsonConvert.DeserializeObject<object>(item_json),
-            ["SMELT"]     = JsonConvert.DeserializeObject<object>(smelt_json)
+            ["ITEM"] = JsonConvert.DeserializeObject<object>(item_json),
+            ["SMELT"] = JsonConvert.DeserializeObject<object>(smelt_json)
         };
         string allJson = JsonConvert.SerializeObject(savePayload);
 
@@ -64,11 +72,10 @@ public partial class FirebaseManager
         const int maxRetry = 3;
         for (int i = 0; i < maxRetry; i++)
         {
+            if (token.IsCancellationRequested) return;
             try
             {
                 await userRef.SetRawJsonValueAsync(allJson).AsUniTask();
-
-                //Debug.Log($"[WriteData] Firebase 저장 완료 (User: {userId})");
                 return;
             }
             catch (Exception e)
@@ -80,7 +87,7 @@ public partial class FirebaseManager
                 else
                 {
                     Debug.LogWarning($"[WriteData] 저장 실패 ({i + 1}/{maxRetry}회), 2초 후 재시도...");
-                    await UniTask.WaitForSeconds(2f, ignoreTimeScale: true);
+                    await UniTask.WaitForSeconds(2f, ignoreTimeScale: true, cancellationToken: token);
                 }
             }
         }
