@@ -116,6 +116,7 @@ public class IAPManager : IStoreListener
     {
         // 다이아를 팝업 열기 전에 먼저 지급 → DiaText 즉시 반영
         ApplyIAPRewardImmediate(_iap);
+        Managers.FirebaseM.WriteData().Forget();
 
         var rewardPopup = await Managers.UIM.ShowPopup<UI_Reward>();
         rewardPopup.ShowIAPRewardUI(_iap);
