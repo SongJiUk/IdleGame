@@ -62,20 +62,39 @@ public class UI_Reward : UI_Base
             case Define.IAP.dia1200:
                 GetRewardInit("Dia", 1200);
                 break;
-
             case Define.IAP.dia4000:
-                GetRewardInit("Dia",4000);
+                GetRewardInit("Dia", 4000);
                 break;
-
             case Define.IAP.dia7000:
                 GetRewardInit("Dia", 7000);
                 break;
-
             case Define.IAP.dia13000:
                 GetRewardInit("Dia", 13000);
                 break;
-
         }
+    }
+
+    // IAPManager에서 다이아를 먼저 지급한 뒤 UI 표시만 하는 용도
+    public void ShowIAPRewardUI(Define.IAP _iap)
+    {
+        switch (_iap)
+        {
+            case Define.IAP.removeads:
+                GetRewardInit("ADS", 0);
+                break;
+            case Define.IAP.dia300:   ShowRewardUI("Dia", 300);   break;
+            case Define.IAP.dia550:   ShowRewardUI("Dia", 550);   break;
+            case Define.IAP.dia1200:  ShowRewardUI("Dia", 1200);  break;
+            case Define.IAP.dia4000:  ShowRewardUI("Dia", 4000);  break;
+            case Define.IAP.dia7000:  ShowRewardUI("Dia", 7000);  break;
+            case Define.IAP.dia13000: ShowRewardUI("Dia", 13000); break;
+        }
+    }
+
+    private void ShowRewardUI(string _itemName, int _count)
+    {
+        GetImage(ImagesType, (int)Images.RewardImage).sprite = Managers.ResourceM.GetAtlas(_itemName);
+        GetText(TextsType, (int)Texts.RewardCountText).text = _count <= 1 ? "" : $"x{_count}";
     }
 
     public void GetRewardInit(string _itemName, int _count, bool isPopup = true)

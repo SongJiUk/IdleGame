@@ -114,9 +114,24 @@ public class IAPManager : IStoreListener
 
     public async UniTask HandlePurchaseAsync(Define.IAP _iap)
     {
-        var rewardPopup = await Managers.UIM.ShowPopup<UI_Reward>();
+        // 다이아를 팝업 열기 전에 먼저 지급 → DiaText 즉시 반영
+        ApplyIAPRewardImmediate(_iap);
 
-        rewardPopup.GetIAPReward(_iap);
+        var rewardPopup = await Managers.UIM.ShowPopup<UI_Reward>();
+        rewardPopup.ShowIAPRewardUI(_iap);
+    }
+
+    private void ApplyIAPRewardImmediate(Define.IAP _iap)
+    {
+        switch (_iap)
+        {
+            case Define.IAP.dia300:   Managers.GameM.Dia += 300;   break;
+            case Define.IAP.dia550:   Managers.GameM.Dia += 550;   break;
+            case Define.IAP.dia1200:  Managers.GameM.Dia += 1200;  break;
+            case Define.IAP.dia4000:  Managers.GameM.Dia += 4000;  break;
+            case Define.IAP.dia7000:  Managers.GameM.Dia += 7000;  break;
+            case Define.IAP.dia13000: Managers.GameM.Dia += 13000; break;
+        }
     }
 
     public void Purchase(string _productID)
