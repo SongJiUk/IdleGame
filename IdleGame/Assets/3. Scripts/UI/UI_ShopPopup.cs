@@ -109,9 +109,7 @@ public class UI_ShopPopup : UI_Popup
     public override async UniTask<bool> Init()
     {
         if (!await base.Init()) return false;
-        Managers.GameM.OnGoodsChanged += CheckGoodsCount;
-        Managers.GameM.OnGoodsChanged += CheckButtonTextColor;
-        Managers.IAPM.OnPurchaseSuccess += OnCheckRemoveAD;
+       
 
         GameObjectsType = typeof(GameObjects);
         ButtonsType = typeof(Buttons);
@@ -169,6 +167,10 @@ public class UI_ShopPopup : UI_Popup
     }
     public override void SetInfo()
     {
+        Managers.GameM.OnGoodsChanged += CheckGoodsCount;
+        Managers.GameM.OnGoodsChanged += CheckButtonTextColor;
+        Managers.IAPM.OnPurchaseSuccess += OnCheckRemoveAD;
+
         Managers.SoundM.MuteEffectVolume(true);
         ScrollToTitle(gachaRect, true);
         MoveTarget(gachaButtonRect, false);
@@ -596,5 +598,13 @@ public class UI_ShopPopup : UI_Popup
         Managers.GameM.OnGoodsChanged -= CheckButtonTextColor;
         Managers.IAPM.OnPurchaseSuccess -= OnCheckRemoveAD;
         TriggerClose(this, true).Forget();
+    }
+
+
+    private void OnDisable()
+    {
+        Managers.GameM.OnGoodsChanged -= CheckGoodsCount;
+        Managers.GameM.OnGoodsChanged -= CheckButtonTextColor;
+        Managers.IAPM.OnPurchaseSuccess -= OnCheckRemoveAD;
     }
 }
